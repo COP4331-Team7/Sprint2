@@ -1,0 +1,8 @@
+*.class
+out/
+.idea/*
+Sprint1/.idea/*
+*.iml
+*.xml
+Sprint1/.DS_Store
+Sprint1/src/.DS_Store
