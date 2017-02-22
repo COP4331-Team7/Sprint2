@@ -46,23 +46,23 @@ public class Tile {
 
         //AreaEffect, Item, and Resource generation depend on terrain type
         if(terrain instanceof Desert){
-            //populateAreaEffect(0.1);
+            populateAreaEffect(0.1);
             populateItem(0.05);
             populateResource(0.05);
 
         }
         else if(terrain instanceof Flatland){
-            //populateAreaEffects(0.2);
+            populateAreaEffect(0.2);
             populateItem(0.15);
             populateResource(0.3);
         }
         else if(terrain instanceof Crater){
-            //populateAreaEffects(0.2);
+            populateAreaEffect(0.2);
             populateItem(0.05);
             populateResource(0.25);
         }
         else if(terrain instanceof Mountains){
-            //populateAreaEffects(0);
+            populateAreaEffect(0);
             populateItem(0);
             populateResource(0);
         }
@@ -92,6 +92,13 @@ public class Tile {
             else if(rand == 1)
                 setItem(new Obstacle());
         }
+    }
+
+    //TODO figure out if this violate TDA
+    //Populate AreaEffect for each tile
+    private void populateAreaEffect(double prob) {
+        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
+        setAreaEffect(terrain.getAreaEffects().get(rand));
     }
 
     public AreaEffect getAreaEffect() {
