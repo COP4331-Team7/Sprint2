@@ -3,5 +3,5 @@ package com.team7.model.item;
 /**
  * An impassible item
  */
-public class Obstacle {
+public class Obstacle extends Item {
 }

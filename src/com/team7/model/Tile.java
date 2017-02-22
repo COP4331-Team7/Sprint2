@@ -4,6 +4,8 @@ import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
 import com.team7.model.item.Item;
+import com.team7.model.item.Obstacle;
+import com.team7.model.item.OneShotItem;
 import com.team7.model.resource.Energy;
 import com.team7.model.resource.Food;
 import com.team7.model.resource.Ore;
@@ -45,29 +47,29 @@ public class Tile {
         //AreaEffect, Item, and Resource generation depend on terrain type
         if(terrain instanceof Desert){
             //populateAreaEffect(0.1);
-           //populateItem(0.05);
+            populateItem(0.05);
             populateResource(0.05);
 
         }
         else if(terrain instanceof Flatland){
             //populateAreaEffects(0.2);
-          //populateItem(tile,0.15);
+            populateItem(0.15);
             populateResource(0.3);
         }
         else if(terrain instanceof Crater){
             //populateAreaEffects(0.2);
-            //populateItem(0.05);
+            populateItem(0.05);
             populateResource(0.25);
         }
         else if(terrain instanceof Mountains){
             //populateAreaEffects(0);
-            //populateItem(0);
+            populateItem(0);
             populateResource(0);
         }
     }
 
 
-    // Populate Resource for each tile.
+    //Populate Resource for each tile
     private void populateResource(double prob) {
         if(ProbabilityGenerator.willOccur(prob)){
             int rand = ProbabilityGenerator.randomInteger(0,2);
@@ -78,6 +80,50 @@ public class Tile {
             else if(rand == 2)
                 setResource(new Ore());
         }
+    }
+
+    //Populate Item for each tile
+    private void populateItem(double prob) {
+        if(ProbabilityGenerator.willOccur(prob)){
+            int rand = ProbabilityGenerator.randomInteger(0,1);
+            if(rand == 0)
+                setItem(new OneShotItem());
+
+            else if(rand == 1)
+                setItem(new Obstacle());
+        }
+    }
+
+    public AreaEffect getAreaEffect() {
+        return areaEffect;
+    }
+
+    public void setAreaEffect(AreaEffect areaEffect) {
+        this.areaEffect = areaEffect;
+    }
+
+    public Decal getDecal() {
+        return decal;
+    }
+
+    public void setDecal(Decal decal) {
+        this.decal = decal;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Terrain getTerrain() {
+        return terrain;
+    }
+
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
     }
 
     public Resource getResource() {
