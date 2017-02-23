@@ -3,6 +3,7 @@ package com.team7.model;
 import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.item.Item;
 import com.team7.model.item.Obstacle;
 import com.team7.model.item.OneShotItem;
@@ -11,6 +12,7 @@ import com.team7.model.resource.Food;
 import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
+import com.team7.model.visitor.TileVisitor;
 
 /**
  * Hex shaped which builds the game map
@@ -100,6 +102,26 @@ public class Tile {
         int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
         setAreaEffect(terrain.getAreaEffects().get(rand));
     }
+
+    /*VISITOR TESTING
+    private void structureInteractWithTile(Structure currentStructure){
+        TileVisitor tileVisitor = new TileVisitor();
+        if (resource != null) {
+            resource.accept(tileVisitor);   //a resource is all a Structure interacts with on a Tile
+            int statInfluence = tileVisitor.getResourceHarvestedAmount();
+            if (resource instanceof Energy) {
+                currentStructure.incrementHarvestedEnergy(statInfluence);
+            }else if (resource instanceof Food) {
+                currentStructure.incrementHarvestedFood(statInfluence);
+            } else if (resource instanceof Ore) {
+                currentStructure.incrementHarvestedOre(statInfluence);
+            }
+        }
+    }
+
+    */
+
+
 
     public AreaEffect getAreaEffect() {
         return areaEffect;
