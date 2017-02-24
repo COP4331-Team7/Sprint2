@@ -108,13 +108,14 @@ public class Tile {
     }
 
     /*VISITOR TESTING
-    private void structureInteractWithTile(Structure currentStructure){
+    private int structureInteractWithTile(){
         TileVisitor tileVisitor = new TileVisitor();
         if (resource != null) {
             resource.accept(tileVisitor);   //a resource is all a Structure interacts with on a Tile
             int statInfluence = tileVisitor.getResourceHarvestedAmount();
-            currentStructure.increaseHarvestedResource(statInfluence);
+            return statInfluence;
         }
+        return 0;   //there is nothing here for the structure
     }
 
     */
