@@ -1,0 +1,24 @@
+package com.team7.model.entity.structure.staffedStructure.singleHarvestStructure;
+
+import com.team7.model.entity.structure.staffedStructure.IHarvester;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+
+/**
+ * Can harvest ore which produces metal
+ */
+public class Mine extends StaffedStructure implements IHarvester {
+    @Override
+    public void harvestResource() {
+
+    }
+
+    @Override
+    public void processResource() {
+
+    }
+
+    @Override
+    public void increaseHarvestedResource() {
+
+    }
+}
