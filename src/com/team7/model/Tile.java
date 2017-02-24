@@ -28,10 +28,14 @@ public class Tile {
     private Item item;
     private Resource resource;
     private Terrain terrain;
+    private int xCoordinate;
+    private int yCoordinate;
 
-    //a Tile must have a terrain
-    public Tile(Terrain terrain){
+    //a Tile must have a terrain, and an x/y coordinate
+    public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
         this.terrain = terrain;
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
 
         populateTileBasedOnTerrain(terrain);
 
