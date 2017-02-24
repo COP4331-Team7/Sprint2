@@ -113,13 +113,7 @@ public class Tile {
         if (resource != null) {
             resource.accept(tileVisitor);   //a resource is all a Structure interacts with on a Tile
             int statInfluence = tileVisitor.getResourceHarvestedAmount();
-            if (resource instanceof Energy) {
-                currentStructure.incrementHarvestedEnergy(statInfluence);
-            }else if (resource instanceof Food) {
-                currentStructure.incrementHarvestedFood(statInfluence);
-            } else if (resource instanceof Ore) {
-                currentStructure.incrementHarvestedOre(statInfluence);
-            }
+            currentStructure.increaseHarvestedResource(statInfluence);
         }
     }
 
