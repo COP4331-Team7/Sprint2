@@ -40,17 +40,12 @@ public class Tile {
         populateTileBasedOnTerrain(terrain);
 
     }
-
+    //check tile terrain to populate Tile components
     private void populateTileBasedOnTerrain(Terrain terrain) {
-
-        //check tile terrain
-        //depending on terrain type:
         //Desert has 10% AreaEffect, 5% Item, 5% Resource
-        //FlatLand has 20% AreaEffect, 15% Item, 30% Resource
+        //Flatland has 20% AreaEffect, 15% Item, 30% Resource
         //Crater has 20% AreaEffect, 5% Item, 25% Resource
         //Mountain has 0% AreaEffect, 0% Item, 0% Resource
-
-        //AreaEffect, Item, and Resource generation depend on terrain type
         if(terrain instanceof Desert){
             populateAreaEffect(0.1);
             populateItem(0.05);
@@ -117,7 +112,6 @@ public class Tile {
         }
         return 0;   //there is nothing here for the structure
     }
-
     */
 
 
@@ -161,4 +155,12 @@ public class Tile {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
 }
