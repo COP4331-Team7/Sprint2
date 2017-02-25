@@ -6,6 +6,7 @@ import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Capital can only exist once
@@ -16,7 +17,16 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         setId(1);
         setOwner(player);
         setLocation(location);
-        setStats(new StructureStats());
+
+        HashMap<String, Integer> productionRateMap = new HashMap<>();
+        productionRateMap.put("test", 1);       //TODO figure out how production is used
+        setStats(new StructureStats(
+                0,
+                100,
+                100,
+                productionRateMap,
+                100)
+        );
         setType("Capital");
         setPowered(true);
         setMovesFrozen(0);
