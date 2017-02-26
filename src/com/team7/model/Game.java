@@ -19,8 +19,8 @@ public class Game {
 
         // create map and populate with items/resources/area effects
         this.map = new Map();
-        // map.setMapDetails();
-
+//         map.setMapDetails();
+//
         // players[0].addUnit(new Explorer(this.map.getGrid()[46][3], players[0]));
         // players[0].addUnit(new Explorer(this.map.getGrid()[48][4], players[0]));
         // players[0].addUnit(new Colonist(this.map.getGrid()[45][4], players[0]));

@@ -45,16 +45,6 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     }
 
     @Override
-    public void processResource() {
-
-    }
-
-    @Override
-    public void increaseHarvestedResource() {
-
-    }
-
-    @Override
     public Unit produceUnit(String unitType) {
         return null;
     }

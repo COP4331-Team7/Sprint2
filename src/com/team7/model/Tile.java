@@ -71,7 +71,7 @@ public class Tile {
 
 
     //Populate Resource for each tile
-    private void populateResource(double prob) {
+    public void populateResource(double prob) {
         if(ProbabilityGenerator.willOccur(prob)){
             int rand = ProbabilityGenerator.randomInteger(0,2);
             if(rand == 0)
@@ -84,7 +84,7 @@ public class Tile {
     }
 
     //Populate Item for each tile
-    private void populateItem(double prob) {
+    public void populateItem(double prob) {
         if(ProbabilityGenerator.willOccur(prob)){
             int rand = ProbabilityGenerator.randomInteger(0,1);
             if(rand == 0)
@@ -98,8 +98,8 @@ public class Tile {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
-        setAreaEffect(terrain.getAreaEffects().get(rand));
+//        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
+//        setAreaEffect(terrain.getAreaEffects().get(rand));
     }
 
     //Structure will only interact with Tile for its Resource
