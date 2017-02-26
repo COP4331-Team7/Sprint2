@@ -5,19 +5,19 @@ import com.team7.model.Tile;
 
 public abstract class Entity {
 
-    CommandQueue commandQueue;
     private int id;
     private Player owner;
     private Tile location;
+    private int visibilityRadius;
 
     public int getId() {
         return id;
     }
 
     // Make sure to set the owner before generating an ID in a constructor
-    public int generateID() {
+    public void generateID() {
         IdManager generator = new IdManager(this.owner);
-        return generator.generateID(this);
+        this.id =  generator.generateID(this);
     };
 
     public Player getOwner() {
@@ -35,8 +35,12 @@ public abstract class Entity {
     public void setLocation(Tile location) {
         this.location = location;
     }
-    public CommandQueue getCommandQueue() {
-        return commandQueue;
+
+    public int getVisibilityRadius() {
+        return visibilityRadius;
     }
 
+    public void setVisibilityRadius(int visibilityRadius) {
+        this.visibilityRadius = visibilityRadius;
+    }
 }

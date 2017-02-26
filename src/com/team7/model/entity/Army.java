@@ -1,6 +1,6 @@
 package com.team7.model.entity;
 
 public class Army extends Entity {
-
+    private CommandQueue commandQueue;
 
 }
