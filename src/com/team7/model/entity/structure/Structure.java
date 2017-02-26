@@ -91,4 +91,6 @@ public abstract class Structure extends Entity {
         this.allocatedOre += quantity;
     }
 
+
+
 }

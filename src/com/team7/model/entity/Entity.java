@@ -14,9 +14,11 @@ public abstract class Entity {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // Make sure to set the owner before generating an ID in a constructor
+    public int generateID() {
+        IdManager generator = new IdManager(this.owner);
+        return generator.generateID(this);
+    };
 
     public Player getOwner() {
         return owner;
