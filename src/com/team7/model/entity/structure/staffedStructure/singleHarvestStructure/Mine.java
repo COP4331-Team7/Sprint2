@@ -9,16 +9,7 @@ import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 public class Mine extends StaffedStructure implements IHarvester {
     @Override
     public void harvestResource() {
-
-    }
-
-    @Override
-    public void processResource() {
-
-    }
-
-    @Override
-    public void increaseHarvestedResource() {
-
+        int harvestedResource = getLocation().structureInteractWithTileForResource(getStats().getProductionRates().get("harvestOre"));
+        changeAllocatedOre(harvestedResource);
     }
 }

@@ -16,6 +16,8 @@ public abstract class Structure extends Entity{
     private int influenceRadius;
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
+    private int allocatedEnergy;
+    private int allocatedOre;
 
     public StructureStats getStats() {
         return stats;
@@ -72,4 +74,21 @@ public abstract class Structure extends Entity{
     public void setOreUpkeep(int oreUpkeep) {
         this.oreUpkeep = oreUpkeep;
     }
+
+    public int getAllocatedEnergy() {
+        return allocatedEnergy;
+    }
+
+    public int getAllocatedOre() {
+        return allocatedOre;
+    }
+
+    public void changeAllocatedEnergy(int quantity) {
+        this.allocatedEnergy += quantity;
+    }
+
+    public void changeAllocatedOre(int quantity) {
+        this.allocatedOre += quantity;
+    }
+
 }

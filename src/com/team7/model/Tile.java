@@ -12,7 +12,7 @@ import com.team7.model.resource.Food;
 import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
-import com.team7.model.visitor.TileVisitor;
+
 
 /**
  * Hex shaped which builds the game map
@@ -102,17 +102,20 @@ public class Tile {
         setAreaEffect(terrain.getAreaEffects().get(rand));
     }
 
-    /*VISITOR TESTING
-    private int structureInteractWithTile(){
-        TileVisitor tileVisitor = new TileVisitor();
-        if (resource != null) {
-            resource.accept(tileVisitor);   //a resource is all a Structure interacts with on a Tile
-            int statInfluence = tileVisitor.getResourceHarvestedAmount();
-            return statInfluence;
+    //Structure will only interact with Tile for its Resource
+    //called for each Tile in the Structure's available radius
+    public int structureInteractWithTileForResource(int quantityOfResourceToHarvest){
+        if (resource != null){
+            int resourceQuantity = resource.getStatInfluenceQuantity();
+            resource.decrementResourceQuantity(quantityOfResourceToHarvest);
+            if (resourceQuantity == 0 && !(resource instanceof Food)) {
+                resource = null;    //resource has been depleted and nonrenewable, set to NULL
+            }
+            return resourceQuantity;
         }
-        return 0;   //there is nothing here for the structure
+        return 0;
     }
-    */
+
 
 
 
