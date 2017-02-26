@@ -14,7 +14,6 @@ import java.util.HashMap;
 public class Capital extends StaffedStructure implements IHarvester, IUnitProducer{
 
     public Capital(Player player, Tile location) {
-        setId(1);
         setOwner(player);
         setLocation(location);
 
@@ -44,15 +43,6 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
 
     }
 
-    @Override
-    public void processResource() {
-
-    }
-
-    @Override
-    public void increaseHarvestedResource() {
-
-    }
 
     @Override
     public Unit produceUnit(String unitType) {

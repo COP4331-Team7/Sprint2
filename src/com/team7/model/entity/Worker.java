@@ -1,5 +1,6 @@
 package com.team7.model.entity;
 
-public class Worker {
+public class Worker extends Entity {
+
 
 }

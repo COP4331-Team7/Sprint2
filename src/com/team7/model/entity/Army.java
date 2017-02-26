@@ -1,4 +1,6 @@
 package com.team7.model.entity;
 
-public class Army {
+public class Army extends Entity {
+
+
 }
