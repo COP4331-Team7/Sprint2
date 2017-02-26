@@ -2,7 +2,9 @@ package com.team7.model;
 
 import com.team7.model.entity.Army;
 import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 
 import java.util.ArrayList;
 
@@ -13,9 +15,7 @@ public class Player {
     private int research;
     private int construction;
     private int money;
-    private boolean noUnits;
-    private boolean noStructures;
-    private boolean noArmies;
+
 
     public Player() {
         units = new ArrayList<Unit>();                               // max size should be 25
@@ -24,9 +24,7 @@ public class Player {
         research = 0;
         construction = 0;
         money = 500;
-        noUnits = true;
-        noStructures = true;
-        noArmies = true;
+
     }
 
 
@@ -34,19 +32,26 @@ public class Player {
 
 
     public boolean isDefeated() {
-        return noArmies && noUnits && noStructures;
+        return !hasCapital();
     }
 
-    public boolean isNoUnits() {
-        return noUnits;
-    }
 
-    public boolean isNoStructures() {
-        return noStructures;
-    }
+    // check if the player has either capital or colonist
+    public boolean hasCapital() {
 
-    public boolean isNoArmies() {
-        return noArmies;
+        for(int i = 0; i < this.units.size(); i++){
+            if(this.units.get(i) instanceof Colonist){
+                return true;
+            }
+        }
+
+        for(int i = 0; i < this.structures.size(); i++){
+            if(this.structures.get(i) instanceof Capital){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
