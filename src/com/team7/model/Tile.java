@@ -4,6 +4,7 @@ import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.item.Item;
@@ -37,6 +38,7 @@ public class Tile {
     private Structure structure;
     ArrayList<Unit> units;
     ArrayList<Army> armies;
+    ArrayList<Worker> workers;
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
@@ -45,6 +47,7 @@ public class Tile {
         this.yCoordinate = yCoordinate;
         units = new ArrayList<Unit>();
         armies = new ArrayList<Army>();
+        workers = new ArrayList<Worker>();
 
         populateTileBasedOnTerrain(terrain);
 
@@ -195,7 +198,7 @@ public class Tile {
         return unit;
     }
 
-    // Adds unit to Tile's ArrayList of Units
+    // Adds army to Tile's ArrayList of Armies
     public Army addArmyToTile(Army army) {
 
         // Physically add the unit
@@ -204,12 +207,37 @@ public class Tile {
         return army;
     }
 
-    // Removes unit from Tile's ArrayList of Units
+    // Removes army from Tile's ArrayList of Armies
     public Army removeArmyFromTile(Army army) {
 
         this.armies.remove(army);
 
         return army;
+    }
+
+    // Adds worker to Tile's ArrayList of Workers
+    public Worker addWorkerToTile(Worker worker) {
+
+        // Physically add the unit
+        this.workers.add(worker);
+
+        return worker;
+    }
+
+    // Removes worker from Tile's ArrayList of Workers
+    public Worker removeWorkerFromTile(Worker worker) {
+
+        this.workers.remove(worker);
+
+        return worker;
+    }
+
+    public Structure getStructure() {
+        return structure;
+    }
+
+    public void setStructure(Structure structure) {
+        this.structure = structure;
     }
 
 }

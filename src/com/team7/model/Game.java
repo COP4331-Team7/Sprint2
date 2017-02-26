@@ -1,5 +1,8 @@
 package com.team7.model;
 
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
+import com.team7.model.entity.unit.nonCombatUnit.Explorer;
+
 public class Game {
 
     private Player[] players = new Player[2];
@@ -21,14 +24,13 @@ public class Game {
         this.map = new Map();
         // map.setMapDetails();
 
-        // players[0].addUnit(new Explorer(this.map.getGrid()[46][3], players[0]));
-        // players[0].addUnit(new Explorer(this.map.getGrid()[48][4], players[0]));
-        // players[0].addUnit(new Colonist(this.map.getGrid()[45][4], players[0]));
+         players[0].addUnit(new Explorer(this.map.getGrid()[46][3], players[0]));
+         players[0].addUnit(new Explorer(this.map.getGrid()[48][4], players[0]));
+         players[0].addUnit(new Colonist(this.map.getGrid()[45][4], players[0]));
 
-        // players[1].addUnit(new Explorer(this.map.getGrid()[3][45], players[1]));
-        // players[1].addUnit(new Explorer(this.map.getGrid()[47][4], players[1]));
-        // players[1].addUnit(new Colonist(this.map.getGrid()[46]3], players[1]));
-
+         players[1].addUnit(new Explorer(this.map.getGrid()[3][45], players[1]));
+         players[1].addUnit(new Explorer(this.map.getGrid()[47][4], players[1]));
+         players[1].addUnit(new Colonist(this.map.getGrid()[46][3], players[1]));
 
 
     }

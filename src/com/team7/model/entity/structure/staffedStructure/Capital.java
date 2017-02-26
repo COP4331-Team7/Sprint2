@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Capital extends StaffedStructure implements IHarvester, IUnitProducer{
 
-    public Capital(Player player, Tile location) {
+    public Capital(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
 
