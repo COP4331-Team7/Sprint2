@@ -7,7 +7,7 @@ import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
 
-public abstract class Structure extends Entity{
+public abstract class Structure extends Entity {
 
     private StructureStats stats;
     private String type;

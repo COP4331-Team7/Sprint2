@@ -30,7 +30,6 @@ public class Player {
 
     }
 
-
     // Unit and Army helper function
     public ArrayList<Unit> getUnits() {
         return units;
@@ -46,7 +45,16 @@ public class Player {
 
         // Physically add the unit to player and put it on the map
         this.units.add(unit);
-        //unit.getLocation().addUnitToTile(unit);
+        unit.getLocation().addUnitToTile(unit);
+
+        return unit;
+    }
+
+    // Removes unit from Player's ArrayList of Units
+    public Unit removeUnit(Unit unit) {
+
+        this.units.remove(unit);
+        unit.getLocation().removeUnitFromTile(unit);
 
         return unit;
     }
@@ -90,6 +98,8 @@ public class Player {
         }
         return false;
     }
+
+
 
     public boolean isDefeated() {
         return !hasCapital();

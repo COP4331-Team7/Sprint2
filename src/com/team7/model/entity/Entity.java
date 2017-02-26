@@ -33,5 +33,8 @@ public abstract class Entity {
     public void setLocation(Tile location) {
         this.location = location;
     }
+    public CommandQueue getCommandQueue() {
+        return commandQueue;
+    }
 
 }

@@ -3,7 +3,9 @@ package com.team7.model;
 import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
+import com.team7.model.entity.Army;
 import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.item.Item;
 import com.team7.model.item.Obstacle;
 import com.team7.model.item.OneShotItem;
@@ -12,6 +14,8 @@ import com.team7.model.resource.Food;
 import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,6 +34,9 @@ public class Tile {
     private Terrain terrain;
     private int xCoordinate;
     private int yCoordinate;
+    private Structure structure;
+    ArrayList<Unit> units;
+    ArrayList<Army> armies;
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
@@ -164,6 +171,41 @@ public class Tile {
 
     public int getyCoordinate() {
         return yCoordinate;
+    }
+
+
+    // Adds unit to Tile's ArrayList of Units
+    public Unit addUnitToTile(Unit unit) {
+
+        // Physically add the unit
+        this.units.add(unit);
+
+        return unit;
+    }
+
+    // Removes unit from Tile's ArrayList of Units
+    public Unit removeUnitFromTile(Unit unit) {
+
+        this.units.remove(unit);
+
+        return unit;
+    }
+
+    // Adds unit to Tile's ArrayList of Units
+    public Army addArmyToTile(Army army) {
+
+        // Physically add the unit
+        this.armies.add(army);
+
+        return army;
+    }
+
+    // Removes unit from Tile's ArrayList of Units
+    public Army removeArmyFromTile(Army army) {
+
+        this.armies.remove(army);
+
+        return army;
     }
 
 }
