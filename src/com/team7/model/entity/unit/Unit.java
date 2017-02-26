@@ -1,7 +1,8 @@
 package com.team7.model.entity.unit;
 
 
-public class Unit {
+import com.team7.model.entity.Entity;
 
+public class Unit extends Entity {
 
 }

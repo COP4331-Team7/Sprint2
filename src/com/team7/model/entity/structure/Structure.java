@@ -2,14 +2,13 @@ package com.team7.model.entity.structure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Entity;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
 
-public abstract class Structure {
-    private int id;
-    private Player owner;
-    private Tile location;
+public abstract class Structure extends Entity{
+
     private StructureStats stats;
     private String type;
     private boolean isPowered;
@@ -17,30 +16,6 @@ public abstract class Structure {
     private int influenceRadius;
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Player getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Player owner) {
-        this.owner = owner;
-    }
-
-    public Tile getLocation() {
-        return location;
-    }
-
-    public void setLocation(Tile location) {
-        this.location = location;
-    }
 
     public StructureStats getStats() {
         return stats;

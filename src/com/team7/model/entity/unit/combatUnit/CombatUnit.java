@@ -1,5 +1,7 @@
 package com.team7.model.entity.unit.combatUnit;
 
-public class CombatUnit {
+import com.team7.model.entity.unit.Unit;
+
+public class CombatUnit extends Unit {
 
 }
