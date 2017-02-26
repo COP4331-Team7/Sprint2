@@ -7,7 +7,7 @@ import com.team7.ProbabilityGenerator;
  */
 public class DamageAreaEffect extends AreaEffect {
     public DamageAreaEffect() {
-        setHealthEffect(ProbabilityGenerator.randomInteger(-10,-30));
+        setHealthEffect(ProbabilityGenerator.randomInteger(-30,-10));
         setInstantDeath(false);
     }
 }

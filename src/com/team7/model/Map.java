@@ -28,7 +28,7 @@ public class Map {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-                int n = ProbabilityGenerator.randomInteger(0,4);
+                int n = ProbabilityGenerator.randomInteger(0,3);
                 switch( n ) {
                     case 0:
                         grid[i][j] = new Tile(new Mountains(), i , j);
@@ -56,5 +56,8 @@ public class Map {
         int currentY = currentTile.getyCoordinate();
         return null;
     }
-    
+
+    public Tile[][] getGrid() {
+        return grid;
+    }
 }

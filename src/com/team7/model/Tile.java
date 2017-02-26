@@ -43,6 +43,8 @@ public class Tile {
         this.terrain = terrain;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
+        units = new ArrayList<Unit>();
+        armies = new ArrayList<Army>();
 
         populateTileBasedOnTerrain(terrain);
 
@@ -105,8 +107,10 @@ public class Tile {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
-        setAreaEffect(terrain.getAreaEffects().get(rand));
+        if (ProbabilityGenerator.willOccur(prob)) {
+            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
+            setAreaEffect(terrain.getAreaEffects().get(rand));
+        }
     }
 
     //Structure will only interact with Tile for its Resource
