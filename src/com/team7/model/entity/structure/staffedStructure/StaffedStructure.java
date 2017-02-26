@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public abstract class StaffedStructure extends Structure {
     private ArrayList<Unit> workerStaff = new ArrayList<>();
     private int foodUpkeep; //all staffedStructures requires Nutrient from Player
+    private int allocatedFood;
 
     public ArrayList<Unit> getWorkerStaff() {
         return workerStaff;
@@ -26,5 +27,13 @@ public abstract class StaffedStructure extends Structure {
 
     public void setFoodUpkeep(int foodUpkeep) {
         this.foodUpkeep = foodUpkeep;
+    }
+
+    public int getAllocatedFood() {
+        return allocatedFood;
+    }
+
+    public void changeAllocatedFood(int quantity) {
+        this.allocatedFood += quantity;
     }
 }
