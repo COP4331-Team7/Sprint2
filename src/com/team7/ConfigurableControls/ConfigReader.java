@@ -1,8 +1,14 @@
+package com.team7.ConfigurableControls;
+
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.Properties;
 /*
  * Author Or Oz:
@@ -11,17 +17,21 @@ import java.util.Properties;
 */
 public class ConfigReader {
 
-  private final String fileName = "config.properties";
-  private final String defaultFileName = "defaultConfig.properties"; //location of prop file with all default values
+  private final String fileName = "src/com/team7/ConfigurableControls/config.properties";
+  private final String defaultFileName = "src/com/team7/ConfigurableControls/defaultConfig.properties"; //location of prop file with all default values
 
-  public static void main(String[] args) {
-    ConfigReader reader = new ConfigReader();
+ // public static void main(String[] args) {
+ //   ConfigReader reader = new ConfigReader();
 
     //example usages:
   //  reader.printAllProperties();
   //  reader.getValueByKey("PlayerOneNorth");
   //  reader.changeValueByKey("PlayerOneNorth", "test");
   //  reader.resetToDefault();
+
+  //}
+
+  public ConfigReader() {
 
   }
 
@@ -51,7 +61,7 @@ public class ConfigReader {
   }
 
   //changes value of key according to input
-  private void changeValueByKey(String key, String value){
+  public void changeValueByKey(String key, String value){
 
     Properties prop = new Properties();
     InputStream input = null;
@@ -108,6 +118,40 @@ public class ConfigReader {
         }
       }
     }
+  }
+
+  public HashMap<String, String> getAllControlsByPlayer(String currentPlayer) {
+    HashMap<String, String> controls = new HashMap<>();
+
+    Properties prop = new Properties();
+    InputStream input = null;
+
+    try {
+      input = new FileInputStream(fileName);
+      prop.load(input);
+
+      Enumeration<?> e = prop.propertyNames();
+      while (e.hasMoreElements()) {
+        String key = (String) e.nextElement();
+        if (key.contains(currentPlayer)) {
+          String value = prop.getProperty(key);
+          controls.put(key, value);
+        }
+      }
+    }catch (IOException ex) {
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+
+    return controls;
   }
 
   //resets properties file to default values by overwriting with a different file
