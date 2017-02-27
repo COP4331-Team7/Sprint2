@@ -2,13 +2,15 @@ package com.team7.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Set;
 
 /**
  * Used to display configurable controls
  */
-public class OptionsScreen extends JPanel{
+public class OptionsScreen extends JPanel implements KeyListener{
 
     private JButton resetControlsButton = new JButton("Reset Controls");
     private JButton changeControlButton = new JButton("Change selected control");
@@ -41,8 +43,10 @@ public class OptionsScreen extends JPanel{
         listPanel.add(label, BorderLayout.NORTH);
         textPanel.add(keyInputArea);
         textPanel.add(textInputLabel, BorderLayout.NORTH);
-       // keyInputArea.setEditable(false);
+        keyInputArea.setEditable(false);
 
+        this.addKeyListener(this);
+        this.setFocusable(true);
         this.setLayout(new BorderLayout());
         this.add(gridPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -81,7 +85,23 @@ public class OptionsScreen extends JPanel{
         return keyInputArea.getText();
     }
 
-    public void changeKeyInputArea(int keyCode) {
-        keyInputArea.setText("" + keyCode);
+    public void changeKeyInputArea(String inputAreaString) {
+        keyInputArea.setText(inputAreaString);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        String inputAreaString = "Key selected: " + e.getKeyChar() + "     Corresponding code: " + e.getKeyCode();
+        changeKeyInputArea(inputAreaString);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

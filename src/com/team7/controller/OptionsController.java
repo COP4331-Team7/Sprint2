@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 /**
  * Actionlisteners and interaction for ConfigReader/OptionsScreen
  */
-public class OptionsController implements KeyListener{
+public class OptionsController{
     private OptionsScreen optionsScreen;
     private ConfigReader reader;
 
@@ -22,8 +22,7 @@ public class OptionsController implements KeyListener{
         reader = new ConfigReader();
         addActionListeners();
 
-        optionsScreen.setModel(reader.getAllControlsByPlayer("PlayerOne"));
-
+        optionsScreen.setModel(reader.getAllControlsByPlayer("playerOne"));
     }
 
     private void addActionListeners() {
@@ -35,29 +34,16 @@ public class OptionsController implements KeyListener{
                     String selectedString = optionsScreen.getControlsList().getSelectedValue();
                     int colonIndex = selectedString.indexOf(':');
                     String key = selectedString.substring(0, colonIndex);
-                    String newControlValue = optionsScreen.getKeyInputArea();
-
+                    String newControlValueToParse = optionsScreen.getKeyInputArea();
+                    System.out.println(newControlValueToParse);
+                    int lastColonIndex = newControlValueToParse.lastIndexOf(':');
+                    String value = newControlValueToParse.substring(lastColonIndex, newControlValueToParse.length());
+                    System.out.println(value);
                     //change properties files
-                    reader.changeValueByKey(key, newControlValue);
+                  //  reader.changeValueByKey("playerOne", key, newControlValue);
                 }
             }
         });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyChar());
-        System.out.println(e.getKeyCode());
-        optionsScreen.changeKeyInputArea(e.getKeyCode());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }
