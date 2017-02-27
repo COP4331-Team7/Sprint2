@@ -61,4 +61,4 @@ fabric.properties
 # *.ipr
 
 .idea/
-src/resource/
+src/resource/test_image.jpg
