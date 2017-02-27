@@ -8,6 +8,7 @@ import com.team7.model.terrain.Mountains;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,8 +21,10 @@ public class Map{
 
 
     private Tile[][] grid;
+    Set<Tile> treeSet = new HashSet<Tile>();
     private static final int NUM_TILES_X = 40;
     private static final int NUM_TILES_Y = 40;
+    int[] direction = {8,9,3,2,1,7};
 
     public Map() {
         createTilesForMap(); //for purposes of later abstraction
@@ -61,69 +64,129 @@ public class Map{
 
 
     //calculates all Tiles in the radius of influence/visibility of the selected entity
-    private Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
+    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
         int currentX = currentTile.getxCoordinate();
         int currentY = currentTile.getyCoordinate();
-        TreeSet<Tile> treeSet = new TreeSet<Tile>();
-        if(radius == 0)
-        {
-         return treeSet;
+        treeSet.add(currentTile);
+
+
+        if(radius == 0) {
+            return treeSet;
         }
-        if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && !isEven(currentY))){
+        if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && isEven(currentY))){
             //calculate movement for even X, even Y
            // moveEvenXEvenY(currentTile);
-            treeSet.add(moveTypeOne(currentTile,"8"));
-            treeSet.add(moveTypeOne(currentTile,"9"));
-            treeSet.add(moveTypeOne(currentTile,"3"));
-            treeSet.add(moveTypeOne(currentTile,"2"));
-            treeSet.add(moveTypeOne(currentTile,"1"));
-            treeSet.add(moveTypeOne(currentTile,"7"));
-            getTilesInRadius(moveTypeOne(currentTile,"8"),radius-1);
-            getTilesInRadius(moveTypeOne(currentTile,"9"),radius-1);
-            getTilesInRadius(moveTypeOne(currentTile,"3"),radius-1);
-            getTilesInRadius(moveTypeOne(currentTile,"3"),radius-1);
-            getTilesInRadius(moveTypeOne(currentTile,"1"),radius-1);
-            getTilesInRadius(moveTypeOne(currentTile,"7"),radius-1);
-
-        } else if ((isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))){
+            for(int i : direction) {
+                treeSet.add(moveTypeOne(currentX, currentY, i));
+            }
+            for(int i : direction) {
+            getTilesInRadius(moveTypeOne(currentX, currentY, i), radius - 1);
+            }
+        }
+        else if ((!isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))){
             //calculate movement for even X, odd Y
             //moveEvenXOddY();
-            treeSet.add(moveTypeTwo(currentTile,"8"));
-            treeSet.add(moveTypeTwo(currentTile,"9"));
-            treeSet.add(moveTypeTwo(currentTile,"3"));
-            treeSet.add(moveTypeTwo(currentTile,"2"));
-            treeSet.add(moveTypeTwo(currentTile,"1"));
-            treeSet.add(moveTypeTwo(currentTile,"7"));
-            getTilesInRadius(moveTypeTwo(currentTile,"8"),radius-1);
-            getTilesInRadius(moveTypeTwo(currentTile,"9"),radius-1);
-            getTilesInRadius(moveTypeTwo(currentTile,"3"),radius-1);
-            getTilesInRadius(moveTypeTwo(currentTile,"3"),radius-1);
-            getTilesInRadius(moveTypeTwo(currentTile,"1"),radius-1);
-            getTilesInRadius(moveTypeTwo(currentTile,"7"),radius-1);
-
+            for(int i : direction) {
+                treeSet.add(moveTypeTwo(currentX, currentY, i));
+            }
+            for(int i : direction) {
+                getTilesInRadius(moveTypeTwo(currentX, currentY, i), radius - 1);
+            }
         }
-        return null;
+        return treeSet;
     }
 
-    private Tile moveTypeOne(Tile tileToMove, String command){
+    private Tile moveTypeOne(int x, int y, int direction){
         //8 move north: y-2
         //9 move northeast: x+1, y-1
         //3 move southeast: x+1, y+1
         //2 move south: y+2
         //1 move southwest: y+1
         //7 move northwest: y-1
-        return null;
+        int tmpX = x;
+        int tmpY = y;
+        switch (direction){
+            case 8:
+                tmpY = y-2;
+                break;
+            case 9:
+                tmpX = x+1;
+                tmpY = y-1;
+                break;
+            case 3:
+                tmpX = x+1;
+                tmpY = y+1;
+                break;
+            case 2:
+                tmpY = y+2;
+                break;
+            case 1:
+                tmpY = y+1;
+                break;
+            case 7:
+                tmpY = y-1;
+                break;
+            default:
+                break;
+        }
+
+        if (isInbounds(tmpX,tmpY)){
+            return grid[tmpX][tmpY];
+        }
+
+
+        return grid[x][y];
     }
 
-    private Tile moveTypeTwo(Tile tileToMove, String command){
+    private Tile moveTypeTwo(int x, int y, int direction){
         //8 move north: y-2
         //9 move northeast: y-1
         //3 move southeast: y+1
         //2 move south: y+2
         //1 move southwest: x-1, y+1
         //7 move northwest: x-1, y-1
-        return null;
+        int tmpX = x;
+        int tmpY = y;
+        switch (direction){
+            case 8:
+                tmpY = y-2;
+                break;
+            case 9:
+                tmpY = y-1;
+                break;
+            case 3:
+                tmpY = y+1;
+                break;
+            case 2:
+                tmpY = y+2;
+                break;
+            case 1:
+                tmpX = x-1;
+                tmpY = y+1;
+                break;
+            case 7:
+                tmpX = x-1;
+                tmpY = y-1;
+                break;
+            default:
+                break;
+        }
+
+        if (isInbounds(tmpX,tmpY)){
+            return grid[tmpX][tmpY];
+        }
+
+
+        return grid[x][y];
     }
+
+    private boolean isInbounds(int x, int y){
+        if (x >= 0 && x < NUM_TILES_X && y >= 0 && y < NUM_TILES_Y){
+            return true;
+        }
+        return false;
+    }
+
     private boolean isEven(int num){
         return ((num & 1) == 0);
     }
