@@ -5,6 +5,7 @@ import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
+import com.team7.view.MapStats;
 
 import java.util.ArrayList;
 
@@ -13,12 +14,12 @@ import static java.lang.StrictMath.abs;
 /**
  * Map is composed of a 2d array of Tiles
  */
-public class Map {
+public class Map implements MapStats {
 
 
     private Tile[][] grid;
-    private static final int NUM_TILES_X = 50;
-    private static final int NUM_TILES_Y = 50;
+    private static final int NUM_TILES_X = MAP_TILE_WIDTH;
+    private static final int NUM_TILES_Y = MAP_TILE_HEIGHT;
 
     public Map() {
         createTilesForMap(); //for purposes of later abstraction

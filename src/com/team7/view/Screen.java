@@ -7,13 +7,15 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import com.team7.model.*;
+
 
 public class Screen extends JFrame
 {
     private HomeScreen homeScreen = null;
     private MainScreen mainScreen = null;
-    // private UnitScreen unitScreen = null;
-    // private StructureScreen structureScreen = null;
+    //private UnitScreen unitScreen = null;
+    //private StructureScreen structureScreen = null;
 
     public Screen( int width, int height)
     {
@@ -21,11 +23,10 @@ public class Screen extends JFrame
         this.setSize( width, height );
         addMenu();
 
-        // GUI components
         homeScreen = new HomeScreen();
         mainScreen = new MainScreen();
-        // unitScreen = new UnitScreen();
-        // structureScreen = new StructureScreen();
+       // unitScreen = new UnitScreen();
+       // structureScreen = new StructureScreen();
 
         setCurrScreen("MAIN");
 
@@ -38,12 +39,12 @@ public class Screen extends JFrame
     public MainScreen getMainScreen() {
             return mainScreen;
     }
-    // public UnitScreen getUnitScreen() {
-    //         return unitScreen;
-    // }
-    // public StructureScreen getStructureScreen() {
-    //         return structureScreen;
-    // }
+//   // public UnitScreen getUnitScreen() {
+//            return unitScreen;
+//    }
+//   // public StructureScreen getStructureScreen() {
+//      //      return structureScreen;
+//   // }
 
     public void setCurrScreen(String selected_screen) {
 
@@ -55,12 +56,12 @@ public class Screen extends JFrame
         else if (selected_screen == "MAIN") {
             displayMainScreen();
         }
-        // else if (selected_screen == "UNIT_OVERVIEW") {
-        //    displayUnitOverviewScreen();
-        // }
-        // else if (selected_screen == "STRUCTURE_OVERVIEW") {
-        //     displayStructureOverviewScreen();
-        // }
+        else if (selected_screen == "UNIT_OVERVIEW") {
+           displayUnitOverviewScreen();
+        }
+        else if (selected_screen == "STRUCTURE_OVERVIEW") {
+            displayStructureOverviewScreen();
+        }
 
         revalidate();
         repaint();
@@ -71,14 +72,13 @@ public class Screen extends JFrame
     }
     private void displayMainScreen() {
             this.getContentPane().add( mainScreen );
-            mainScreen.giveCommandFocus();
     }
-    // private void displayUnitOverviewScreen() {
-    //         this.getContentPane().add( unitScreen );
-    // }
-    // private void displayStructureOverviewScreen() {
-    //         this.getContentPane().add( structureScreen );
-    // }
+    private void displayUnitOverviewScreen() {
+           // this.getContentPane().add( unitScreen );
+    }
+    private void displayStructureOverviewScreen() {
+        //    this.getContentPane().add( structureScreen );
+    }
 
     private void addMenu()
     {                       	   // addMenu() method used to setup a frame's menu bar
@@ -93,7 +93,7 @@ public class Screen extends JFrame
         } );
         fileMenu.add( exitItem );
 
-        JMenuItem drawMapItem = new JMenuItem( "Draw Map" );
+        JMenuItem drawMapItem = new JMenuItem( "Re-draw map" );
         drawMapItem.addActionListener( new ActionListener()    // define what happens when this menu item is selected
         {
             public void actionPerformed( ActionEvent event )

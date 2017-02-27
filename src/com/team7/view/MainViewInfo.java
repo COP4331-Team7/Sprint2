@@ -1,6 +1,8 @@
 package com.team7.view;
 
 import com.team7.model.*;
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.unit.Unit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,6 @@ public class MainViewInfo extends JPanel {
     private JLabel productionLabel;
     private JLabel itemLabel;
     private JLabel typeLabel;
-    //
     private JLabel lifeLabel;
     private JLabel researchLabel;
     private JLabel constructionLabel;
@@ -29,10 +30,6 @@ public class MainViewInfo extends JPanel {
         {
             JPanel t = new JPanel();
             t.setLayout(new GridLayout(0,1));
-            //JLabel p = new JLabel("Statistics:");
-            // p.setFont(new Font("Serif", Font.BOLD, 18));
-
-            //t.add(p);   // large first label so the panel takes up more space and is spaced out
 
             offensiveDamageLabel = new JLabel("Offensive damage:");
             offensiveDamageLabel.setFont(new Font("Serif", 0, 12));
@@ -67,20 +64,6 @@ public class MainViewInfo extends JPanel {
             this.add( t, BorderLayout.SOUTH );
         }
 
-//    public void setUnit(Unit unit) {
-//        if(unit == null)
-//            clearStats();
-//        else
-//            updateStats( unit );
-//    }
-//
-//    public void setStructure(Structure structure) {
-//        if(structure == null)
-//            clearStats();
-//        else
-//            updateStats( structure );
-//    }
-
     public void clearStats() {
         offensiveDamageLabel.setText("Offensive damage:");
         defensiveDamageLabel.setText("Defensive damage:");
@@ -98,36 +81,8 @@ public class MainViewInfo extends JPanel {
         constructionLabel.setText("Construction:");
     }
 
-//    public  void updateStats( Structure structure ) {
-//
-//    }
-//    public  void updateStats( Unit unit ) {
-//        UnitStats stats = unit.getUnitStats();
-//        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
-//        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
-//        setArmorLabel( Integer.toString( stats.getArmor() ) );
-//        setHealthLabel( Integer.toString( stats.getHealth() ) );
-//        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
-//        setProductionLabel( "N/A" );
-//        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
-//        // setItemLabel( );
-//    }
-//    public void updateStats(Player player) {
-//        currentPlayer = player;
-//        setLifeLabel( Integer.toString( player.getMoney() ) );
-//        setResearchLabel( Integer.toString( player.getResearch() ) );
-//        setConstructionLabel( Integer.toString( player.getConstruction() ) );
-//    }
-//
-//    public void updateStats() {
-//        currentPlayer = currentPlayer;
-//        setLifeLabel( Integer.toString( currentPlayer.getMoney() ) );
-//        setResearchLabel( Integer.toString( currentPlayer.getResearch() ) );
-//        setConstructionLabel( Integer.toString( currentPlayer.getConstruction() ) );
-//    }
-
     public void setOffensiveDamageLabel(String s) {
-            offensiveDamageLabel.setText("Offensive damage: " + s);
+        offensiveDamageLabel.setText("Offensive damage: " + s);
     }
     public void setDefensiveDamageLabel(String s) {
         defensiveDamageLabel.setText("Defensive damage: " + s);
@@ -153,13 +108,51 @@ public class MainViewInfo extends JPanel {
     public void setConstructionLabel(String s) {
         constructionLabel.setText("Construction:  " + s);
     }
-
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
     }
 
-  //  public void setCurrentPlayer( Player player ) {
-     //   updateStats( player );
-   // }
+
+    //    public void setUnit(Unit unit) {
+//        if(unit == null)
+//            clearStats();
+//        else
+//            updateStats( unit );
+//    }
+//
+//    public void setStructure(Structure structure) {
+//        if(structure == null)
+//            clearStats();
+//        else
+//            updateStats( structure );
+//    }
+
+//    public  void updateStats( Unit unit ) {
+//        UnitStats stats = unit.getUnitStats();
+//        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
+//        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
+//        setArmorLabel( Integer.toString( stats.getArmor() ) );
+//        setHealthLabel( Integer.toString( stats.getHealth() ) );
+//        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
+//        setProductionLabel( "N/A" );
+//        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
+//        // setItemLabel( );
+//    }
+//    public void updateStats(Player player) {
+//        currentPlayer = player;
+//        setLifeLabel( Integer.toString( player.getMoney() ) );
+//        setResearchLabel( Integer.toString( player.getResearch() ) );
+//        setConstructionLabel( Integer.toString( player.getConstruction() ) );
+//    }
+//
+//    public void updateStats() {
+//        currentPlayer = currentPlayer;
+//        setLifeLabel( Integer.toString( currentPlayer.getMoney() ) );
+//        setResearchLabel( Integer.toString( currentPlayer.getResearch() ) );
+//        setConstructionLabel( Integer.toString( currentPlayer.getConstruction() ) );
+//    }
+//    public void setCurrentPlayer( Player player ) {
+//          updateStatsteStats( player );
+//    }
 
 }

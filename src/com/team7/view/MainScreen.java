@@ -1,7 +1,5 @@
 package com.team7.view;
 
-// import com.team7.controller.MainScreenController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,23 +8,16 @@ public class MainScreen extends JPanel {
     private ScreenSelectButtons screenSelectBtns = null;
     private MainViewImage mainAreaView = null;
     private MainViewInfo mainStatusInfo = null;
-    // private Command commandSelecter = null;
-    private MainViewSelection mainViewSelection = null;
-    // private MainScreenController msc = null;
+    private MainViewMiniMap mainViewSelection = null;
 
     public MainScreen() {
 
         this.setLayout(new BorderLayout());
 
         screenSelectBtns = new ScreenSelectButtons();
-        mainViewSelection = new MainViewSelection(  );
+        mainViewSelection = new MainViewMiniMap(  );
         mainAreaView = new MainViewImage( mainViewSelection );
         mainStatusInfo = new MainViewInfo( );
-//        try {commandSelecter = new Command( ); }
-//        catch (Exception e) {
-//
-//        }
-
 
         this.add( screenSelectBtns, BorderLayout.NORTH );
         this.add( mainAreaView, BorderLayout.CENTER );
@@ -36,16 +27,11 @@ public class MainScreen extends JPanel {
                                     // then add the single panel where we want both panels
 
         //temp.add( mainStatusInfo, BorderLayout.WEST );
-        //temp.add( commandSelecter, BorderLayout.SOUTH);
         temp.add( mainViewSelection, BorderLayout.NORTH);
 
         this.add( temp, BorderLayout.SOUTH );
     }
 
-    public void giveCommandFocus() {          // give JPanel (commandSelecter) focus to 'make its KeyListener is active'
-//        commandSelecter.setFocusable(true);
-//        commandSelecter.requestFocus();
-    }
 
     public ScreenSelectButtons getScreenSelectButtons() {
             return screenSelectBtns;
@@ -63,7 +49,4 @@ public class MainScreen extends JPanel {
         return mainStatusInfo;
     }
 
-//    public Command getCommand() {
-//        return commandSelecter;
-//    }
 }

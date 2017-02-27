@@ -3,14 +3,10 @@ package com.team7.view;
 import com.team7.Main;
 import com.team7.model.Map;
 import com.team7.model.Tile;
-import com.team7.model.*;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
-import sun.security.krb5.internal.crypto.Des;
-
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,10 +14,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -33,13 +26,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private int TILES_VISIBLE_X;
         private int TILES_VISIBLE_Y;
 
-        private final static double mapScale_x = 0.950;
+        private final static double mapScale_x = 0.95;
         private final static double mapScale_y = 0.60;
 
-        //
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
-        //
+
         private BufferedImage tileImage_1;
         private BufferedImage tileImage_2;
         private BufferedImage tileImage_3;
@@ -65,22 +57,17 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         private  BufferedImage skullImage;
         private  BufferedImage baseImage;
-    BufferedImage tempImg ;
-    Graphics2D g2ds;
+        BufferedImage tempImg ;
+        Graphics2D g2ds;
+        private MainViewMiniMap mainViewSelection;
 
-            //
-        private MainViewSelection mainViewSelection;
-
-        // -------
         private Map map;
         private Tile[][] grid;
 
-        //  private Player currentPlayer = null;
-
-        public MainViewImage( MainViewSelection ms )
+        public MainViewImage( MainViewMiniMap ms )
         {
-            MAP_IMAGE_WIDTH_IN_PIXELS = (int)(java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()   * mapScale_x);
-            MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
+            MAP_IMAGE_WIDTH_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()   * mapScale_x);
+            MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
 
             TILES_VISIBLE_Y = (int)((MAP_IMAGE_WIDTH_IN_PIXELS / (2 * TILE_SIZE - TILE_SIZE/1.73))) - 1;
             TILES_VISIBLE_X = (int)(2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
@@ -116,12 +103,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                 skullImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/decals/skullImage.png"));
 
-
                 baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/baseImage.png"));
-
-
-                // hieroglyphicBookImage.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-
 
             }
             catch (IOException e) {}
@@ -130,31 +112,26 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             tempImg = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
             g2ds = (Graphics2D)tempImg.createGraphics();
-            drawMapArea();
 
             x_center = 0;   // initially focus on top left corner of the map
             y_center = 0;
             x_dest = 0;
             y_dest = 0;
-
         }
 
         public void setMap(Map map) {
             this.map = map;
             this.grid = map.getGrid();
             mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
-
-       }
+        }
 
 //        public void setCurrentPlayer( Player player ) {
 //            this.currentPlayer = player;
-//
 //            // focus on one of the current players units.
 //            ArrayList<Unit> units = (ArrayList<Unit>) currentPlayer.getUnits();
 //            if( !units.isEmpty() ) {
 //                zoomToDestination( units.get(0).getLocation().getxCoordinate() - TILES_VISIBLE_X/2, units.get(0).getLocation().getyCoordinate() - TILES_VISIBLE_Y/2, 50);
 //            }
-//
 //         }
 
          public BufferedImage getFullMapImage() {
@@ -184,7 +161,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                  step++;
                  for(int i = 0; i < MAP_TILE_HEIGHT; i++) {
 
-
                      counter = 1;
 
                      int xx = i;                // tile index on whole map
@@ -208,25 +184,21 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                      if( grid[xx][yy].getTerrain() instanceof Mountains) {
                          g2.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
                          x_offset += changePerStep * counter;
-                         // y_offset += changePerYstep;
                          counter++;
                      }
                      else if (grid[xx][yy].getTerrain() instanceof Crater) {
                          g2.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
                          x_offset += changePerStep * counter;
-                         //  y_offset += changePerYstep;
                          counter++;
                      }
                      else if (grid[xx][yy].getTerrain() instanceof Desert) {
                          g2.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
                          x_offset += changePerStep * counter;
-                         //   y_offset += changePerYstep;
                          counter++;
                      }
                      else if (grid[xx][yy].getTerrain() instanceof Flatland) {
                          g2.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                          x_offset += changePerStep * counter;
-                         //     y_offset += changePerYstep;
                          counter++;
                      }
 
@@ -241,7 +213,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             g2ds.setFont(new Font("default", Font.BOLD, 11));
             g2ds.setColor( new Color(230, 230, 230, 140)  );
-
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
             int x_offset = 0;
@@ -264,7 +235,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 step++;
                 for(int i = 0; i < TILES_VISIBLE_Y; i++) {
 
-
                 counter = 1;
 
                     int xx = x + i;                // tile index on whole map
@@ -283,30 +253,25 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     x_coord = i * TILE_SIZE;
                     y_coord = (int)(j * TILE_SIZE / 2.4);
 
-
                     // draw terrain
                     if( grid[xx][yy].getTerrain() instanceof Mountains) {
                         g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
                         x_offset += changePerStep * counter;
-                       // y_offset += changePerYstep;
                         counter++;
                     }
                     else if (grid[xx][yy].getTerrain() instanceof Crater) {
                         g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
                         x_offset += changePerStep * counter;
-                      //  y_offset += changePerYstep;
                         counter++;
                     }
                     else if (grid[xx][yy].getTerrain() instanceof Desert) {
                         g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
                         x_offset += changePerStep * counter;
-                     //   y_offset += changePerYstep;
                         counter++;
                     }
-                    else if (grid[xx][yy].getTerrain() instanceof Desert) {
+                    else if (grid[xx][yy].getTerrain() instanceof Flatland) {
                         g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                         x_offset += changePerStep * counter;
-                   //     y_offset += changePerYstep;
                         counter++;
                     }
 
@@ -314,12 +279,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     int s1_y =  31;
 
                     g2ds.setColor( new Color(0, 30, 230, 90)  ); // blue
-                    // g2ds.setColor( new Color(0x015E83BF)  );
-                    // g2ds.setColor( new Color(36, 255, 244, 70)  );
-                   // g2ds.setColor( new Color(0, 200, 61, 70)  );
-                    //g2ds.setColor( new Color(255, 71, 71, 90)  );
-                    //g2ds.setColor( new Color(0, 7, 222, 100)  );
-                    //g2ds.setColor( new Color(0, 30, 100, 70)  );
+
                     if(drawOnTile) {
 
                         g2ds.fillOval(x_coord + x_offset + s1_x, y_coord + s1_y, 18, 18);
@@ -332,17 +292,17 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         g2ds.setColor(new Color(0, 0, 0, 255));
 
                         String s = Integer.toString(xx);
-  //                      g2ds.drawString(s, x_coord + x_offset + s1_x + 3, y_coord + s1_y + 13);
+                        g2ds.drawString(s, x_coord + x_offset + s1_x + 3, y_coord + s1_y + 13);
 
                         s = Integer.toString(yy);
-    //                    g2ds.drawString(s, x_coord + x_offset + s1_x + 22, y_coord + s1_y + 13);
+                        g2ds.drawString(s, x_coord + x_offset + s1_x + 22, y_coord + s1_y + 13);
                     }
 
                 }
             }
 
-            //int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
-            //int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
+             //int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
+             //int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
              //g2ds.setColor(Color.BLACK);
              //g2ds.drawLine(center_pixel_x - 5, center_pixel_y, center_pixel_x + 5, center_pixel_y );
              //g2ds.drawLine(center_pixel_x , center_pixel_y - 5, center_pixel_x, center_pixel_y + 5 );
@@ -353,14 +313,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public void paintComponent( Graphics g )
         {
             super.paintComponent( g );
-            g.drawImage( image, (int)(java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()  * (1-mapScale_x)), 0, this );
+            g.drawImage( image, (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()  * (1-mapScale_x)), 0, this );
         }
-
-    public void drawMapArea() {
-        g2d.setColor( new Color(210, 210, 230) );
-        g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
-        repaint();
-    }
 
     public void reDrawMap() {
         image = drawSubsectionOfMap(x_center, y_center);
@@ -407,16 +361,13 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
            }
 
             //System.out.println("offset (" + (int)x_offset + ", " + (int)y_offset + ")" );
-
-
             x_dest = x_center + (int)x_offset;
-           y_dest = y_center + (int)(y_offset * 1.5);
+            y_dest = y_center + (int)(y_offset * 1.5);
 
            //System.out.println("center (" + (int)x_center + ", " + (int)y_center + ")" );
            // System.out.println("dest (" + (int)x_dest + ", " + (int)y_dest + ")" );
 
-
-            zoomToDestination( x_dest, y_dest, 50 );
+            zoomToDestination( x_dest, y_dest, 100 );
         }
 
         public void zoomToDestination(int x_dest, int y_dest, int delayInMs) {
@@ -485,7 +436,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             catch(Exception e) {}
 
                         }   // end of while loop
-
                     }
                 } ).start();
 
@@ -506,4 +456,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public BufferedImage getImage() {
         return image;
     }
+
+
 }

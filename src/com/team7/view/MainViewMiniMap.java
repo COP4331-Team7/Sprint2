@@ -6,7 +6,7 @@ import java.awt.image.*;
 import java.io.PipedReader;
 import javax.swing.*;
 
-class MainViewSelection extends JPanel implements MouseListener, MapStats  {
+class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
 
     public static BufferedImage image;
     public static BufferedImage fullMapImage;
@@ -16,7 +16,6 @@ class MainViewSelection extends JPanel implements MouseListener, MapStats  {
     private int TILES_VISIBLE_Y;
     private Graphics2D g2d;
 
-
     private final static double scale = 10.0; // mini map % size of full map
 
     private static int WIDTH;
@@ -24,12 +23,10 @@ class MainViewSelection extends JPanel implements MouseListener, MapStats  {
     private static int SUB_WIDTH;
     private static int SUB_HEIGHT;
 
-
     private MainViewImage mainViewImage;
-    //
     public int x_center, y_center;    // where the window in focused on
 
-    public MainViewSelection()
+    public MainViewMiniMap()
     {
 
         int tempInt = (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE);
@@ -58,14 +55,11 @@ class MainViewSelection extends JPanel implements MouseListener, MapStats  {
     }
 
     public void drawMapArea() {
-      // g2d.setColor( new Color( 0xFF000000 ) );
-      // g2d.fillRect(0, 0, WIDTH, HEIGHT);
 
         g2d.drawImage(fullMapImage, 0, 5, WIDTH, (int)(HEIGHT * 1.5), 0, 0, fullMapImage.getWidth(),
                 fullMapImage.getHeight(), null);
 
         shadeUnselectedArea();
-
         repaint();
     }
 
@@ -111,7 +105,6 @@ class MainViewSelection extends JPanel implements MouseListener, MapStats  {
         drawMapArea();
     }
 
-
     // implement MouseListener interface methods:
     public void mousePressed(MouseEvent e) {}
 
@@ -136,7 +129,6 @@ class MainViewSelection extends JPanel implements MouseListener, MapStats  {
         else if(y_offset >= MAP_TILE_HEIGHT - TILES_VISIBLE_Y)
             y_offset = MAP_TILE_HEIGHT - TILES_VISIBLE_Y;
 
-        // setFocus((int)x_offset, (int)y_offset);
         mainViewImage.zoomToDestination( (int)x_offset, (int)y_offset, zoomRate );
     }
 
