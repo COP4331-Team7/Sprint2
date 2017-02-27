@@ -27,9 +27,9 @@ public class Game {
          players[0].addUnit(new Explorer(this.map.getGrid()[map.MAP_TILE_WIDTH - 4][4], players[0]));
          players[0].addUnit(new Colonist(this.map.getGrid()[map.MAP_TILE_WIDTH - 5][4], players[0]));
 
-         players[1].addUnit(new Explorer(this.map.getGrid()[3][map.MAP_TILE_WIDTH - 3], players[1]));
-         players[1].addUnit(new Explorer(this.map.getGrid()[4][map.MAP_TILE_WIDTH - 4], players[1]));
-         players[1].addUnit(new Colonist(this.map.getGrid()[4][map.MAP_TILE_WIDTH - 5], players[1]));
+         players[1].addUnit(new Explorer(this.map.getGrid()[3][map.MAP_TILE_HEIGHT - 3], players[1]));
+         players[1].addUnit(new Explorer(this.map.getGrid()[4][map.MAP_TILE_HEIGHT - 4], players[1]));
+         players[1].addUnit(new Colonist(this.map.getGrid()[4][map.MAP_TILE_HEIGHT - 5], players[1]));
 
     }
 
