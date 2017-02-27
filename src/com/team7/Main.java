@@ -1,5 +1,6 @@
 package com.team7;
 
+import com.team7.controller.ScreenSelectController;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;
@@ -19,9 +20,7 @@ public class Main {
 
         waitForGUI( view );
 
-        view.getScreen().getMainScreen().getMainViewImage().setMap( game.getMap() );
-        view.getScreen().getMainScreen().drawMap();
-
+        view.setMap( game.getMap() );
 
     }
 
