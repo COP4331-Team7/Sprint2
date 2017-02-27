@@ -6,7 +6,9 @@ import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 import static java.lang.StrictMath.abs;
 
@@ -58,10 +60,53 @@ public class Map{
 
 
     //calculates all Tiles in the radius of influence/visibility of the selected entity
-    private ArrayList<Tile> getTilesInRadius(Tile currentTile, int radius) {
+    private Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
         int currentX = currentTile.getxCoordinate();
         int currentY = currentTile.getyCoordinate();
+
+
+        if (isEven(currentX) && isEven(currentY)){
+            //calculate movement for even X, even Y
+           // moveEvenXEvenY(currentTile);
+            moveTypeOne(currentTile);
+        } else if (isEven(currentX) && !isEven(currentY)){
+            //calculate movement for even X, odd Y
+            //moveEvenXOddY();
+            moveTypeTwo(currentTile);
+        } else if (!isEven(currentX) && isEven(currentY)){
+            //calculate movement for odd X, even Y
+            //moveOddXEvenY();
+            moveTypeOne(currentTile);
+        } else if (!isEven(currentX) && !isEven(currentY)) {
+            //calculate movement for odd X, odd Y
+           //moveOddXOddY();
+            moveTypeTwo(currentTile);
+        }
+
         return null;
+    }
+
+    private Tile moveTypeOne(Tile tileToMove){
+        //8 move north: y-2
+        //9 move northeast: x+1, y-1
+        //3 move southeast: x+1, y+1
+        //2 move south: y+2
+        //1 move southwest: y+1
+        //7 move northwest: y-1
+        return null;
+    }
+
+    private Tile moveTypeTwo(Tile tileToMove){
+        //8 move north: y-2
+        //9 move northeast: y-1
+        //3 move southeast: y+1
+        //2 move south: y+2
+        //1 move southwest: x-1, y+1
+        //7 move northwest: x-1, y-1
+        return null;
+    }
+    private boolean isEven(int num){
+        return ((num & 1) == 0);
     }
 
 }
