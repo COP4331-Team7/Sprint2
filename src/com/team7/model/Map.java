@@ -9,6 +9,7 @@ import com.team7.model.terrain.Mountains;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static java.lang.StrictMath.abs;
 
@@ -63,30 +64,48 @@ public class Map{
     private Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
         int currentX = currentTile.getxCoordinate();
         int currentY = currentTile.getyCoordinate();
-
-
-        if (isEven(currentX) && isEven(currentY)){
+        TreeSet<Tile> treeSet = new TreeSet<Tile>();
+        if(radius == 0)
+        {
+         return treeSet;
+        }
+        if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && !isEven(currentY))){
             //calculate movement for even X, even Y
            // moveEvenXEvenY(currentTile);
-            moveTypeOne(currentTile);
-        } else if (isEven(currentX) && !isEven(currentY)){
+            treeSet.add(moveTypeOne(currentTile,"8"));
+            treeSet.add(moveTypeOne(currentTile,"9"));
+            treeSet.add(moveTypeOne(currentTile,"3"));
+            treeSet.add(moveTypeOne(currentTile,"2"));
+            treeSet.add(moveTypeOne(currentTile,"1"));
+            treeSet.add(moveTypeOne(currentTile,"7"));
+            getTilesInRadius(moveTypeOne(currentTile,"8"),radius-1);
+            getTilesInRadius(moveTypeOne(currentTile,"9"),radius-1);
+            getTilesInRadius(moveTypeOne(currentTile,"3"),radius-1);
+            getTilesInRadius(moveTypeOne(currentTile,"3"),radius-1);
+            getTilesInRadius(moveTypeOne(currentTile,"1"),radius-1);
+            getTilesInRadius(moveTypeOne(currentTile,"7"),radius-1);
+
+        } else if ((isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))){
             //calculate movement for even X, odd Y
             //moveEvenXOddY();
-            moveTypeTwo(currentTile);
-        } else if (!isEven(currentX) && isEven(currentY)){
-            //calculate movement for odd X, even Y
-            //moveOddXEvenY();
-            moveTypeOne(currentTile);
-        } else if (!isEven(currentX) && !isEven(currentY)) {
-            //calculate movement for odd X, odd Y
-           //moveOddXOddY();
-            moveTypeTwo(currentTile);
-        }
+            treeSet.add(moveTypeTwo(currentTile,"8"));
+            treeSet.add(moveTypeTwo(currentTile,"9"));
+            treeSet.add(moveTypeTwo(currentTile,"3"));
+            treeSet.add(moveTypeTwo(currentTile,"2"));
+            treeSet.add(moveTypeTwo(currentTile,"1"));
+            treeSet.add(moveTypeTwo(currentTile,"7"));
+            getTilesInRadius(moveTypeTwo(currentTile,"8"),radius-1);
+            getTilesInRadius(moveTypeTwo(currentTile,"9"),radius-1);
+            getTilesInRadius(moveTypeTwo(currentTile,"3"),radius-1);
+            getTilesInRadius(moveTypeTwo(currentTile,"3"),radius-1);
+            getTilesInRadius(moveTypeTwo(currentTile,"1"),radius-1);
+            getTilesInRadius(moveTypeTwo(currentTile,"7"),radius-1);
 
+        }
         return null;
     }
 
-    private Tile moveTypeOne(Tile tileToMove){
+    private Tile moveTypeOne(Tile tileToMove, String command){
         //8 move north: y-2
         //9 move northeast: x+1, y-1
         //3 move southeast: x+1, y+1
@@ -96,7 +115,7 @@ public class Map{
         return null;
     }
 
-    private Tile moveTypeTwo(Tile tileToMove){
+    private Tile moveTypeTwo(Tile tileToMove, String command){
         //8 move north: y-2
         //9 move northeast: y-1
         //3 move southeast: y+1
