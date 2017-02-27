@@ -22,6 +22,7 @@ public class Main {
         view.getScreen().getMainScreen().getMainViewImage().setMap( game.getMap() );
         view.getScreen().getMainScreen().drawMap();
 
+
     }
 
 
