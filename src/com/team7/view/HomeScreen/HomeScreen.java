@@ -1,4 +1,4 @@
-package com.team7.view;
+package com.team7.view.HomeScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

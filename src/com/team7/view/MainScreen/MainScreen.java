@@ -1,4 +1,6 @@
-package com.team7.view;
+package com.team7.view.MainScreen;
+
+import com.team7.view.ScreenSelectButtons;
 
 import javax.swing.*;
 import java.awt.*;

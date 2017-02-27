@@ -1,4 +1,4 @@
-package com.team7.view;
+package com.team7.view.MainScreen;
 
 import com.team7.model.*;
 import com.team7.model.entity.structure.Structure;

@@ -1,6 +1,8 @@
 package com.team7.view;
 
 import com.team7.model.Map;
+import com.team7.view.HomeScreen.HomeScreen;
+import com.team7.view.MainScreen.MainScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

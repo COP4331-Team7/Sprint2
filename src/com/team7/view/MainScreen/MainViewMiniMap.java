@@ -1,12 +1,11 @@
-package com.team7.view;
+package com.team7.view.MainScreen;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
-import java.io.PipedReader;
 import javax.swing.*;
 
-class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
+class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
 
     public static BufferedImage image;
     public static BufferedImage fullMapImage;

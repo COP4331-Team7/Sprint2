@@ -1,4 +1,4 @@
-package com.team7.view;
+package com.team7.view.MainScreen;
 
 
 public interface MapStats {
