@@ -33,6 +33,7 @@ public class Map implements MapStats {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
+
                 int n = ProbabilityGenerator.randomInteger(0, 3);
                 switch (n) {
                     case 0:
@@ -54,4 +55,14 @@ public class Map implements MapStats {
             }
         }
     }
+
+
+
+    //calculates all Tiles in the radius of influence/visibility of the selected entity
+    private ArrayList<Tile> getTilesInRadius(Tile currentTile, int radius) {
+        int currentX = currentTile.getxCoordinate();
+        int currentY = currentTile.getyCoordinate();
+        return null;
+    }
+
 }

@@ -3,7 +3,10 @@ package com.team7.model;
 import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
+import com.team7.model.entity.Army;
+import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.item.Item;
 import com.team7.model.item.Obstacle;
 import com.team7.model.item.OneShotItem;
@@ -12,6 +15,8 @@ import com.team7.model.resource.Food;
 import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,12 +35,19 @@ public class Tile {
     private Terrain terrain;
     private int xCoordinate;
     private int yCoordinate;
+    private Structure structure;
+    ArrayList<Unit> units;
+    ArrayList<Army> armies;
+    ArrayList<Worker> workers;
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
         this.terrain = terrain;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
+        units = new ArrayList<Unit>();
+        armies = new ArrayList<Army>();
+        workers = new ArrayList<Worker>();
 
         populateTileBasedOnTerrain(terrain);
 
@@ -98,8 +110,14 @@ public class Tile {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-//        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
+
+        //        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
 //        setAreaEffect(terrain.getAreaEffects().get(rand));
+
+//        if (ProbabilityGenerator.willOccur(prob)) {
+//            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
+//            setAreaEffect(terrain.getAreaEffects().get(rand));
+//        }
     }
 
     //Structure will only interact with Tile for its Resource
@@ -164,6 +182,66 @@ public class Tile {
 
     public int getyCoordinate() {
         return yCoordinate;
+    }
+
+
+    // Adds unit to Tile's ArrayList of Units
+    public Unit addUnitToTile(Unit unit) {
+
+        // Physically add the unit
+        this.units.add(unit);
+
+        return unit;
+    }
+
+    // Removes unit from Tile's ArrayList of Units
+    public Unit removeUnitFromTile(Unit unit) {
+
+        this.units.remove(unit);
+
+        return unit;
+    }
+
+    // Adds army to Tile's ArrayList of Armies
+    public Army addArmyToTile(Army army) {
+
+        // Physically add the unit
+        this.armies.add(army);
+
+        return army;
+    }
+
+    // Removes army from Tile's ArrayList of Armies
+    public Army removeArmyFromTile(Army army) {
+
+        this.armies.remove(army);
+
+        return army;
+    }
+
+    // Adds worker to Tile's ArrayList of Workers
+    public Worker addWorkerToTile(Worker worker) {
+
+        // Physically add the unit
+        this.workers.add(worker);
+
+        return worker;
+    }
+
+    // Removes worker from Tile's ArrayList of Workers
+    public Worker removeWorkerFromTile(Worker worker) {
+
+        this.workers.remove(worker);
+
+        return worker;
+    }
+
+    public Structure getStructure() {
+        return structure;
+    }
+
+    public void setStructure(Structure structure) {
+        this.structure = structure;
     }
 
 }

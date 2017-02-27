@@ -2,13 +2,14 @@ package com.team7.model.entity.structure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
 
-public abstract class Structure extends Entity{
-
+public abstract class Structure extends Entity {
+    private CommandQueue commandQueue;
     private StructureStats stats;
     private String type;
     private boolean isPowered;
@@ -90,5 +91,7 @@ public abstract class Structure extends Entity{
     public void changeAllocatedOre(int quantity) {
         this.allocatedOre += quantity;
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.team7.model;
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.unit.Unit;
@@ -15,6 +16,8 @@ public class Player {
     private ArrayList<Unit> units;
     private ArrayList<Structure> structures;
     private ArrayList<Army> armies;
+    private ArrayList<Worker> workers;
+
     private int research;
     private int construction;
     private int money;
@@ -24,14 +27,14 @@ public class Player {
         units = new ArrayList<Unit>();                               // max size should be 25
         structures = new ArrayList<Structure>();                     // max size should be 10
         armies = new ArrayList<Army>();                              // max size should be 10
+        workers = new ArrayList<Worker>();
         research = 0;
         construction = 0;
         money = 500;
 
     }
 
-
-    // Unit and Army helper function
+    // Unit and Army helper functions
     public ArrayList<Unit> getUnits() {
         return units;
     }
@@ -41,12 +44,21 @@ public class Player {
 
         // Ensures we are able to have a unit
         if(checkMaxUnitsFull() || checkMaxUnitsIndividual()){
-            return unit;
+            return null;
         }
 
         // Physically add the unit to player and put it on the map
         this.units.add(unit);
-        //unit.getLocation().addUnitToTile(unit);
+        unit.getLocation().addUnitToTile(unit);
+
+        return unit;
+    }
+
+    // Removes unit from Player's ArrayList of Units
+    public Unit removeUnit(Unit unit) {
+
+        this.units.remove(unit);
+        unit.getLocation().removeUnitFromTile(unit);
 
         return unit;
     }
@@ -91,6 +103,69 @@ public class Player {
         return false;
     }
 
+
+    // Worker helpers
+
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
+
+    // Adds unit to Player's ArrayList of Units
+    public Worker addWorker(Worker worker) {
+
+        // Ensures we are able to have a unit
+        if(this.workers.size() == 100){
+            return null;
+        }
+
+        // Physically add the unit to player and put it on the map
+        this.workers.add(worker);
+        worker.getLocation().addWorkerToTile(worker);
+
+        return worker;
+    }
+
+    // Removes worker from Player's ArrayList of Units
+    public Worker removeWorker(Worker worker) {
+
+        this.workers.remove(worker);
+        worker.getLocation().removeWorkerFromTile(worker);
+
+        return worker;
+    }
+
+    // Structure helpers
+
+    public ArrayList<Structure> getStructures() {
+        return structures;
+    }
+
+    public Structure addStructure(Structure structure) {
+
+        // Ensures we are able to have a unit
+        if(this.structures.size() == 25){
+            System.out.println("You have too many structures.");
+            return null;
+        }
+
+        // Physically add the unit and put it on the map
+        this.structures.add(structure);
+        structure.getLocation().setStructure(structure);
+
+        return structure;
+    }
+
+    // Removes unit from Player's ArrayList of Units
+    public Structure removeStructure(Structure structure) {
+
+        // Physically remove unit form player and tile
+        this.structures.remove(structure);
+        structure.getLocation().setStructure(null);
+
+        return structure;
+    }
+
     public boolean isDefeated() {
         return !hasCapital();
     }
@@ -114,4 +189,28 @@ public class Player {
         return false;
     }
 
+
+    public int getResearch() {
+        return research;
+    }
+
+    public void setResearch(int research) {
+        this.research = research;
+    }
+
+    public int getConstruction() {
+        return construction;
+    }
+
+    public void setConstruction(int construction) {
+        this.construction = construction;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
 }
