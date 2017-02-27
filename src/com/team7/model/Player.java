@@ -63,7 +63,7 @@ public class Player {
         return unit;
     }
 
-    // Checks if we have 25 Units
+    // Checks if we have 25 Units, returns true if too many
     public boolean checkMaxUnitsFull(){
         if(this.units.size() == 25){
             System.out.println("You have too many units.");
@@ -72,7 +72,7 @@ public class Player {
         return false;
     }
 
-    // Check if we have 10 units of a certain type
+    // Check if we have 10 units of a certain type, returns true if too many
     public boolean checkMaxUnitsIndividual(){
         int explorerCount = 0;
         int colonistCount = 0;
@@ -95,7 +95,7 @@ public class Player {
                 rangedCount++;
             }
 
-            if(colonistCount == 10 || explorerCount == 10 || meleeCount == 10 || rangedCount == 10) {
+            if(colonistCount >= 10 || explorerCount >= 10 || meleeCount >= 10 || rangedCount >= 10) {
                 System.out.println("You have too many units of a particular type.");
                 return true;
             }
@@ -144,7 +144,7 @@ public class Player {
     public Structure addStructure(Structure structure) {
 
         // Ensures we are able to have a unit
-        if(this.structures.size() == 25){
+        if(this.structures.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
@@ -189,6 +189,11 @@ public class Player {
         return false;
     }
 
+    // Army helpers
+
+    public ArrayList<Army> getArmies() {
+        return armies;
+    }
 
     public int getResearch() {
         return research;
