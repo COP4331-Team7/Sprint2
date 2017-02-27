@@ -32,10 +32,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
 
-        private BufferedImage tileImage_1;
-        private BufferedImage tileImage_2;
-        private BufferedImage tileImage_3;
-        private BufferedImage tileImage_4;
+        private BufferedImage tileImage_1, tileImage_2, tileImage_3, tileImage_4;
 
         private BufferedImage moneyBagImage;
         private BufferedImage moonRockImage;
@@ -61,7 +58,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         Graphics2D g2ds;
         private MainViewMiniMap mainViewSelection;
 
-        private Map map;
         private Tile[][] grid;
 
         public MainViewImage( MainViewMiniMap ms )
@@ -70,7 +66,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
 
             TILES_VISIBLE_Y = (int)((MAP_IMAGE_WIDTH_IN_PIXELS / (2 * TILE_SIZE - TILE_SIZE/1.73))) - 1;
-            TILES_VISIBLE_X = (int)(2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
+            TILES_VISIBLE_X = (2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
 
             image = new BufferedImage(MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
             g2d = (Graphics2D)image.createGraphics();
@@ -120,7 +116,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         }
 
         public void setMap(Map map) {
-            this.map = map;
             this.grid = map.getGrid();
             mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
         }
@@ -141,16 +136,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
              int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
              int x_offset = 0;
-             int y_offset = 0;
              int counter = 0;
              int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
-             int changePerYstep = 10;
              int step = 0;
 
              for(int j = 0; j < MAP_TILE_WIDTH; j++) {          // tile index on sub-screen
                  x_offset = changePerStep;
-                 y_offset = 0;
-                 counter = 0;
                  if(step % 2 == 0) {
                      x_offset += changePerStep;
                  }
@@ -216,15 +207,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
             int x_offset = 0;
-            int y_offset = 0;
             int counter = 0;
             int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
-            int changePerYstep = 10;
             int step = 0;
             for(int j = 0; j < TILES_VISIBLE_X; j++) {          // tile index on sub-screen
                 x_offset = changePerStep;
-                y_offset = 0;
-                counter = 0;
                 if(step % 2 == 0) {
                     x_offset += changePerStep;
                 }
@@ -300,12 +287,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                 }
             }
-
-             //int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
-             //int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
-             //g2ds.setColor(Color.BLACK);
-             //g2ds.drawLine(center_pixel_x - 5, center_pixel_y, center_pixel_x + 5, center_pixel_y );
-             //g2ds.drawLine(center_pixel_x , center_pixel_y - 5, center_pixel_x, center_pixel_y + 5 );
 
             return tempImg;
         }
@@ -438,24 +419,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }   // end of while loop
                     }
                 } ).start();
-
             }
-
         }
-
-
-        public int getXdest() {
-            return x_center;
-        }
-        public int getYdest() {
-         return y_center;
-        }
-        public void rePaintMap() {
-            repaint();
-    }
-        public BufferedImage getImage() {
-        return image;
-    }
-
 
 }

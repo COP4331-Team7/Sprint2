@@ -10,13 +10,11 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
 
     public static BufferedImage image;
     public static BufferedImage fullMapImage;
-    private final static int zoomRate = 40; // 1000 / 40 = 25 frames per second!
+    private final static int zoomRate = 40; // 1000 / 40 = 25 frames per second
     private final static int SIZE = 250;
     private int TILES_VISIBLE_X;
     private int TILES_VISIBLE_Y;
     private Graphics2D g2d;
-
-    private final static double scale = 10.0; // mini map % size of full map
 
     private static int WIDTH;
     private static int HEIGHT;
@@ -38,15 +36,13 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
         g2d = (Graphics2D)image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        Dimension size = new Dimension( image.getWidth(), image.getHeight());
-        setPreferredSize( size );
-        addMouseListener(this);
-        //this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        setPreferredSize(  new Dimension( image.getWidth(), image.getHeight()) );
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         x_center = 0;
         y_center = 0;
         drawMapArea();
+        addMouseListener(this);
     }
-
 
     public void paintComponent( Graphics g )
     {
@@ -60,7 +56,6 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
                 fullMapImage.getHeight(), null);
 
         shadeUnselectedArea();
-        repaint();
     }
 
     public void shadeUnselectedArea() {
@@ -78,6 +73,7 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
                 }
             }
         }
+        repaint();
     }
 
     public void setMiniMapImage(BufferedImage img, int x, int y) {
@@ -89,7 +85,7 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats  {
     }
 
     public void setFocus(int x, int y) {
-        x_center = (int)(x * WIDTH / MAP_TILE_WIDTH);
+        x_center = (int)(x  * WIDTH / MAP_TILE_WIDTH);
         y_center = (int)(y  * HEIGHT / MAP_TILE_HEIGHT);
 
         if(x_center < 0)              // adjust if out of bounds

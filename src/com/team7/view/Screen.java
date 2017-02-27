@@ -19,7 +19,7 @@ public class Screen extends JFrame
 
     public Screen( int width, int height)
     {
-        this.setTitle( "OOP" );
+        this.setTitle( " " );
         this.setSize( width, height );
         addMenu();
 
@@ -103,7 +103,7 @@ public class Screen extends JFrame
         } );
         fileMenu.add( drawMapItem );
 
-        JMenuItem saveItem = new JMenuItem( "Save full map image" );     // create a new menu item
+        JMenuItem saveItem = new JMenuItem( "Save full size map image" );     // create a new menu item
         saveItem.addActionListener( new ActionListener()
                                    {
             public void actionPerformed( ActionEvent event )

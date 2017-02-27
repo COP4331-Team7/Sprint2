@@ -34,7 +34,6 @@ public class HomeScreen extends JPanel {
         public HomeImage()
         {
             try {
-//                System.out.println("hello"+String.valueOf(Main.class.getClass().getResourceAsStream("/terrains/bg1.png")));
                 image = ImageIO.read(getClass().getResourceAsStream("/terrains/bg1.png"));
             }
             catch (IOException e) {
