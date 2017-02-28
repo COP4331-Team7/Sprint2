@@ -10,45 +10,36 @@ import java.util.Set;
 /**
  * Used to display configurable controls
  */
-public class OptionsScreen extends JPanel implements KeyListener{
+public class OptionsScreen extends JPanel{
 
     private JButton resetControlsButton = new JButton("Reset Controls");
     private JButton changeControlButton = new JButton("Change selected control");
+    private JButton saveControlButton = new JButton("Save changes and exit");
 
     private JList<String> controlsList = new JList<>();
     private DefaultListModel<String> defaultListModel = new DefaultListModel<>();
     private JScrollPane jScrollPane = new JScrollPane(controlsList);
 
-    private JPanel gridPanel = new JPanel(new GridLayout(2,1));
     private JPanel listPanel = new JPanel(new BorderLayout());
 
-    private JPanel textPanel = new JPanel(new BorderLayout());
-    private JTextArea keyInputArea = new JTextArea();
 
     private JPanel buttonPanel = new JPanel(new BorderLayout());
 
-    private JLabel label = new JLabel("Controls");
-    private JLabel textInputLabel = new JLabel("Enter one key");
+    private JLabel label = new JLabel("Controls:");
 
     public OptionsScreen() {
-        gridPanel.add(listPanel);
-        gridPanel.add(textPanel);
 
         controlsList.setModel(defaultListModel);
         listPanel.add(jScrollPane);
 
         buttonPanel.add(resetControlsButton, BorderLayout.WEST);
         buttonPanel.add(changeControlButton, BorderLayout.EAST);
+        buttonPanel.add(saveControlButton, BorderLayout.CENTER);
 
         listPanel.add(label, BorderLayout.NORTH);
-        textPanel.add(keyInputArea);
-        textPanel.add(textInputLabel, BorderLayout.NORTH);
-        keyInputArea.setEditable(false);
 
-        this.addKeyListener(this);
-        this.setFocusable(true);
         this.setLayout(new BorderLayout());
-        this.add(gridPanel, BorderLayout.CENTER);
+        this.add(listPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
 
@@ -61,6 +52,8 @@ public class OptionsScreen extends JPanel implements KeyListener{
 
     //adds text to the defaultListModel
     public void setModel(HashMap<String, String> controls){
+        defaultListModel.clear();
+
         Set<String> allKeys = controls.keySet();
         for (String key : allKeys){
             defaultListModel.addElement(key + ": " + controls.get(key) );
@@ -81,27 +74,11 @@ public class OptionsScreen extends JPanel implements KeyListener{
         return controlsList;
     }
 
-    public String getKeyInputArea() {
-        return keyInputArea.getText();
+
+    public JButton getSaveControlButton() {
+        return saveControlButton;
     }
 
-    public void changeKeyInputArea(String inputAreaString) {
-        keyInputArea.setText(inputAreaString);
-    }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        String inputAreaString = "Key selected: " + e.getKeyChar() + "     Corresponding code: " + e.getKeyCode();
-        changeKeyInputArea(inputAreaString);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }

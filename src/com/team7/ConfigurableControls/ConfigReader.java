@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 /*
- * Author Or Oz:
  * a class instance to be created when user specifies controls to change
  * uses Java Properties API to read/write controls to a file in root directory 'configPlayerTwo.properties'
 */
@@ -64,6 +63,8 @@ public class ConfigReader {
 
   //changes value of key according to input
   public void changeValueByKey(String player, String key, String value){
+    System.out.println("changing controls of " + player + " key: " + key + " value: " + value);
+
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();
@@ -128,7 +129,9 @@ public class ConfigReader {
   }
 
   //resets properties file to default values by overwriting with a different file
-  private void resetToDefault(String player){
+  public void resetToDefault(String player){
+    System.out.println("resetting controls of " + player);
+
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();

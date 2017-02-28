@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
+ * TODO figure out a way to keep special key cases configurable (ie arrow keys)
  * Actionlisteners and interaction for ConfigReader/OptionsScreen
  */
 public class OptionsController{
@@ -22,7 +23,8 @@ public class OptionsController{
         reader = new ConfigReader();
         addActionListeners();
 
-        optionsScreen.setModel(reader.getAllControlsByPlayer("playerOne"));
+        reloadControls("playerOne");
+
     }
 
     private void addActionListeners() {
@@ -30,20 +32,51 @@ public class OptionsController{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getChangeControlButton()) {
+
                     //get currently selected key:value
                     String selectedString = optionsScreen.getControlsList().getSelectedValue();
                     int colonIndex = selectedString.indexOf(':');
                     String key = selectedString.substring(0, colonIndex);
-                    String newControlValueToParse = optionsScreen.getKeyInputArea();
-                    System.out.println(newControlValueToParse);
-                    int lastColonIndex = newControlValueToParse.lastIndexOf(':');
-                    String value = newControlValueToParse.substring(lastColonIndex, newControlValueToParse.length());
-                    System.out.println(value);
-                    //change properties files
-                  //  reader.changeValueByKey("playerOne", key, newControlValue);
+                    String popupMessage = "Change " + key + " *note only one input character alllowed!";
+
+                    if(!key.isEmpty()){
+                        String input = JOptionPane.showInputDialog(optionsScreen.getParent(), popupMessage, null);
+                        if (input != null){ //user pressed OK, and did not press CANCEL
+                            System.out.println(input);
+                            //get first char from input
+                            String newValue = input.substring(0,1);
+                            reader.changeValueByKey("playerOne", key, newValue);
+                            reloadControls("playerOne");
+                        }
+                    }
                 }
             }
         });
+
+        optionsScreen.getSaveControlButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getSaveControlButton()) {
+                    //return to main screen
+                }
+            }
+        });
+
+
+        optionsScreen.getResetControlsButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getResetControlsButton()) {
+                    //reset player's config file by overwriting with a default file
+                    reader.resetToDefault("playerOne");
+                    reloadControls("playerOne");
+                }
+            }
+        });
+    }
+
+    private void reloadControls(String player){
+        optionsScreen.setModel(reader.getAllControlsByPlayer("playerOne"));
     }
 
 }

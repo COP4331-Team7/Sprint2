@@ -19,6 +19,7 @@ public class Main {
         OptionsController optionsController = new OptionsController(screen);
         frame.add(screen);
         frame.setVisible(true);
+        screen.requestFocusInWindow();
 
         frame.repaint();
     }
