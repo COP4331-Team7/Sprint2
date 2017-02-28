@@ -7,10 +7,7 @@ import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static java.lang.StrictMath.abs;
 
@@ -61,6 +58,60 @@ public class Map{
         }
     }
 
+
+ /* //TODO figure if this iterative method is needed, as it requires no global Set for Tiles
+    //TODO fix iterating by depth (radius)
+ //calculates all Tiles in the radius of influence/visibility of the selected entity
+    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
+        int currentX;
+        int currentY;
+        int[] possibleDirections = {8, 9, 3, 2, 1, 7};
+
+        Set<Tile> tilesInRadius = new HashSet<>();
+        //bfs iteratively
+        Queue<Tile> tileQ = new LinkedList<>();
+        Queue<Integer> depthQ = new LinkedList<>();
+        depthQ.add(0);
+        tilesInRadius.add(currentTile);
+        tileQ.add(currentTile);
+        int currentDepth = 0;
+
+        while (!tileQ.isEmpty() && radius > currentDepth){
+            currentDepth = depthQ.remove();
+
+            Tile tmp = tileQ.remove();  //operate on current
+            tilesInRadius.add(tmp);
+            currentX = tmp.getxCoordinate();
+            currentY = tmp.getyCoordinate();
+            Tile childTile = tmp;
+            for(int direction : possibleDirections){
+                if (isEven(currentX) && isEven(currentY)){
+                    //calculate movement for even X, even Y
+                    childTile = moveTypeOne(currentX, currentY, direction);
+                } else if (isEven(currentX) && !isEven(currentY)){
+                    //calculate movement for even X, odd Y
+                    childTile = moveTypeTwo(currentX, currentY, direction);
+                } else if (!isEven(currentX) && isEven(currentY)){
+                    //calculate movement for odd X, even Y
+                    childTile = moveTypeOne(currentX, currentY, direction);
+                } else if (!isEven(currentX) && !isEven(currentY)) {
+                    //calculate movement for odd X, odd Y
+                    childTile = moveTypeTwo(currentX, currentY, direction);
+                }
+                // System.out.println("New Tile coords: " + childTile.getxCoordinate() + ", " + childTile.getyCoordinate());
+                if (!tilesInRadius.contains(childTile)){
+                    //tile is unvisited
+                    // System.out.println("adding new Tile to q");
+                    depthQ.add(currentDepth+1);
+                    tilesInRadius.add(childTile);
+                    tileQ.add(childTile);
+                }
+            }
+
+        }
+
+        return tilesInRadius;
+    }*/
 
 
     //calculates all Tiles in the radius of influence/visibility of the selected entity
