@@ -14,7 +14,7 @@ public class Worker extends Entity {
         generateID();
         setArmy(null);
         setVisibilityRadius(3);
-        constructionRate = 1;
+        constructionRate = 10;
     }
 
     public int getConstructionRate() {
