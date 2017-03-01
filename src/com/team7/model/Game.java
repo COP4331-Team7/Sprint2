@@ -23,6 +23,7 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
+        //TODO check if this violates TDA
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
          players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
@@ -38,7 +39,7 @@ public class Game {
         //executeQueues();
         //currentPlayer.takeTurn();
 
-        if(currentPlayer.isDefeated() == true){
+        if(currentPlayer.isDefeated()){
             endGame();
         }
 
