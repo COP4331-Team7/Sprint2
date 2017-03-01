@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * TODO figure out a way to keep special key cases configurable (ie arrow keys)
+ * TODO figure out a way to keep special key cases configurable (ie arrow keys) if needed
  * Actionlisteners and interaction for ConfigReader/OptionsScreen
  */
 public class OptionsController{
