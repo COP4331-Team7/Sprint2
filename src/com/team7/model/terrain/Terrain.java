@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * May contain a specific AreaEffect
  */
 public abstract class Terrain {
-    private long id;
     private boolean isPassable;
     private int movementInfluence;
     private ArrayList<AreaEffect> areaEffects;
