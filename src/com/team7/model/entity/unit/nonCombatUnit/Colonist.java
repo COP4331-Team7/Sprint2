@@ -6,6 +6,7 @@ import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.UnitStats;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 
@@ -27,8 +28,8 @@ public class Colonist extends NonCombatUnit {
 
     public void buildCapital() {
         // create capital, 5 workers and 2 melee units
-        Structure capital = new Capital(this.getLocation(), this.getOwner());
-        this.getOwner().addStructure(capital);
+        StaffedStructure capital = new Capital(this.getLocation(), this.getOwner());
+        this.getOwner().addStaffedStructure(capital);
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));

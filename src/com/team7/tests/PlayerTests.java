@@ -52,7 +52,7 @@ public class PlayerTests {
         assertEquals(testPLayer.isDefeated(), false);
 
         // remove capital and see if player lost
-        testPLayer.removeStructure(testPLayer.getStructures().get(0));
+        testPLayer.removeStaffedStructure(testPLayer.getStaffedStructures().get(0));
         assertEquals(testPLayer.isDefeated(), true);
 
     }
