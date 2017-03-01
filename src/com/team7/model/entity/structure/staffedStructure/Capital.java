@@ -27,24 +27,35 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
                 100)
         );
         setType("Capital");
-        setPowered(true);
+        setPowered(false);
         setMovesFrozen(0);
         setInfluenceRadius(5);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
         setWorkerStaff(new ArrayList<>()); //TODO fill up with 5 workers
-        setFoodUpkeep(2);       //amount of upkeep needed PER WORKER
+        setFoodUpkeepPerWorker(2);       //amount of upkeep needed PER WORKER
+        setLevelOfCompletion(80);
 
     }
 
     //can harvest, and thus produce, Energy/Food/Ore -> Power/Nutrients/Metal
     @Override
-    public void harvestResource() {
+    public void harvestResource(Tile tile) {
 
     }
 
     @Override
     public Unit produceUnit(String unitType) {
         return null;
+    }
+
+    @Override
+    public void beginStructureFunction() {
+
+        //harvest
+        ArrayList<Tile> tilesInRadius = computeTilesInRadius();
+        for(Tile availableTile : tilesInRadius) {
+            harvestResource(availableTile);
+        }
     }
 }
