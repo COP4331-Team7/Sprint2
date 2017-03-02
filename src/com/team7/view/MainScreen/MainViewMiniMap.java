@@ -53,6 +53,10 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
+
+                if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
+                    continue;
+                }
                 if( !(i > x_center && i < x_center + SUB_WIDTH && j > y_center && j < y_center + SUB_HEIGHT) ) {
                     int intARGB = image.getRGB(i, j);
                     newR = (int) ( (( intARGB >> 16) & 0xFF) * (1 - shade_factor) );
