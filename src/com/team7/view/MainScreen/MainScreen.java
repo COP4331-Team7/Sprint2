@@ -27,28 +27,21 @@ public class MainScreen extends JPanel {
         JPanel temp = new JPanel(); // create JPanel to hold two other JPanels
                                     // only one JPanel can be in a specific location, so we add 2 panels to a single panel
                                     // then add the single panel where we want both panels
-
         //temp.add( mainStatusInfo, BorderLayout.WEST );
         temp.add( mainViewSelection, BorderLayout.NORTH);
-
         this.add( temp, BorderLayout.SOUTH );
-    }
-
-
-    public ScreenSelectButtons getScreenSelectButtons() {
-            return screenSelectBtns;
     }
 
     public void drawMap() {
         mainAreaView.reDrawMap();
     }
-
+    public ScreenSelectButtons getScreenSelectButtons() {
+            return screenSelectBtns;
+    }
     public MainViewImage getMainViewImage() {
         return mainAreaView;
     }
-
     public MainViewInfo getMainViewInfo() {
         return mainStatusInfo;
     }
-
 }

@@ -25,7 +25,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private final static double mapScale_x = 0.95;  // what % of screen the map takes up
         private final static double mapScale_y = 0.60;
 
-        private Graphics2D g2d, g2ds;
+        private Graphics2D g2ds;
         public static BufferedImage image, tempImg;
         private BufferedImage tileImage_1, tileImage_2, tileImage_3, tileImage_4;
         private BufferedImage moneyBagImage;
@@ -54,14 +54,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         {
             MAP_IMAGE_WIDTH_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()   * mapScale_x);
             MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
-
             TILES_VISIBLE_Y = (int)((MAP_IMAGE_WIDTH_IN_PIXELS / (2 * TILE_SIZE - TILE_SIZE/1.73))) - 1;
             TILES_VISIBLE_X = (2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
 
-            image = new BufferedImage(MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-            g2d = (Graphics2D)image.createGraphics();
             addMouseListener(this);
-
             this.mainViewSelection = ms;
 
             try {
