@@ -40,16 +40,35 @@ public class Tile {
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
 
+    TileState playerOneTileState;
+    TileState playerTwoTileState;
+    TileState realTileState;
+
+    private enum VisibilityState {
+        Visible, NonVisible, Shrouded
+    }
+
+    private VisibilityState playerOneVisibility;
+    private VisibilityState playerTwoVisibility;
+
+
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
         this.terrain = terrain;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        units = new ArrayList<Unit>();
-        armies = new ArrayList<Army>();
-        workers = new ArrayList<Worker>();
+        realTileState = new TileState();
 
         populateTileBasedOnTerrain(terrain);
+
+        //copy real state to both players when Tile is initialized
+        playerOneTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
+        playerTwoTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
+
+        //set Tile enum visibility
+        playerOneVisibility = VisibilityState.NonVisible;
+        playerTwoVisibility = VisibilityState.NonVisible;
+
 
     }
     //check tile terrain to populate Tile components
@@ -117,15 +136,28 @@ public class Tile {
     }
 
     //Structure will only interact with Tile for its Resource
-    //called for each Tile in the Structure's available radius
-    //TODO change each interaction to specific type: interactFood, Ore, Energy
-    public int structureInteractWithTileForResource(int quantityOfResourceToHarvest){
-        if (resource != null){
+    public int structureHarvestOre(int quantityOfOreToHarvest){
+        if (resource != null && resource instanceof Ore){
             int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.decrementResourceQuantity(quantityOfResourceToHarvest);
-            if (resourceQuantity == 0 && !(resource instanceof Food)) {
-                resource = null;    //resource has been depleted and nonrenewable, set to NULL
-            }
+            resource.decrementResourceQuantity(quantityOfOreToHarvest);
+            return resourceQuantity;
+        }
+        return 0;
+    }
+
+    public int structureHarvestFood(int quantityOfFoodToHarvest){
+        if (resource != null && resource instanceof Food){
+            int resourceQuantity = resource.getStatInfluenceQuantity();
+            resource.decrementResourceQuantity(quantityOfFoodToHarvest);
+            return resourceQuantity;
+        }
+        return 0;
+    }
+
+    public int structureHarvestEnergy(int quantityOfEnergyToHarvest) {
+        if (resource != null && resource instanceof Energy){
+            int resourceQuantity = resource.getStatInfluenceQuantity();
+            resource.decrementResourceQuantity(quantityOfEnergyToHarvest);
             return resourceQuantity;
         }
         return 0;
@@ -139,7 +171,8 @@ public class Tile {
     }
 
     public void setAreaEffect(AreaEffect areaEffect) {
-        this.areaEffect = areaEffect;
+      //  this.areaEffect = areaEffect;
+        realTileState.setAreaEffect(areaEffect);
     }
 
     public Decal getDecal() {
@@ -155,7 +188,8 @@ public class Tile {
     }
 
     public void setItem(Item item) {
-        this.item = item;
+        //this.item = item;
+        realTileState.setItem(item);
     }
 
     public Terrain getTerrain() {
@@ -171,7 +205,8 @@ public class Tile {
     }
 
     public void setResource(Resource resource) {
-        this.resource = resource;
+       // this.resource = resource;
+        realTileState.setResource(resource);
     }
     public int getxCoordinate() {
         return xCoordinate;
@@ -241,4 +276,11 @@ public class Tile {
         this.structure = structure;
     }
 
+    public VisibilityState getPlayerOneVisibility() {
+        return playerOneVisibility;
+    }
+
+    public VisibilityState getPlayerTwoVisibility() {
+        return playerTwoVisibility;
+    }
 }
