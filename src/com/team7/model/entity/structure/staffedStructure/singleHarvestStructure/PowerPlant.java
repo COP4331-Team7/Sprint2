@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PowerPlant extends StaffedStructure implements IHarvester {
     @Override
     public void harvestResource(Tile tile) {
-        int harvestedResource = tile.structureInteractWithTileForResource(getStats().getProductionRates().get("harvestEnergy"));
+        int harvestedResource = tile.structureHarvestEnergy(getStats().getProductionRates().get("harvestEnergy"));
         changeAllocatedEnergy(harvestedResource);
     }
 

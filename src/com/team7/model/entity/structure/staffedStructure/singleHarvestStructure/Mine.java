@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Mine extends StaffedStructure implements IHarvester {
     @Override
     public void harvestResource(Tile tile) {
-        int harvestedResource = tile.structureInteractWithTileForResource(getStats().getProductionRates().get("harvestOre"));
+        int harvestedResource = tile.structureHarvestOre(getStats().getProductionRates().get("harvestOre"));
         changeAllocatedOre(harvestedResource);
     }
 
