@@ -118,6 +118,7 @@ public class Tile {
 
     //Structure will only interact with Tile for its Resource
     //called for each Tile in the Structure's available radius
+    //TODO change each interaction to specific type: interactFood, Ore, Energy
     public int structureInteractWithTileForResource(int quantityOfResourceToHarvest){
         if (resource != null){
             int resourceQuantity = resource.getStatInfluenceQuantity();
