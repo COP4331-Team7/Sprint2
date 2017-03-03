@@ -36,9 +36,16 @@ public class Tile {
     private int xCoordinate;
     private int yCoordinate;
     private Structure structure;
+
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
     ArrayList<Unit> units;
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
+
+    public boolean isVisible = false;
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){

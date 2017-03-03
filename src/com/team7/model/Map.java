@@ -131,7 +131,7 @@ public class Map{
                 treeSet.add(moveTypeOne(currentX, currentY, i));
             }
             for(int i : direction) {
-            getTilesInRadius(moveTypeOne(currentX, currentY, i), radius - 1);
+                getTilesInRadius(moveTypeOne(currentX, currentY, i), radius - 1);
             }
         }
         else if ((!isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))){
