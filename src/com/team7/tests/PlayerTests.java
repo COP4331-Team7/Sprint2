@@ -16,15 +16,15 @@ public class PlayerTests {
 
         // create map and player
         Map map = new Map();
-        Player testPLayer = new Player();
+        Player testPlayer = new Player("playerOne");
 
         // attempt to add 15 players
         for(int i = 0; i < 15; i++){
-            testPLayer.addUnit(new Colonist(map.getGrid()[0][0], testPLayer));
+            testPlayer.addUnit(new Colonist(map.getGrid()[0][0], testPlayer));
         }
 
         //check that only 10 players are added
-        int numberColonists = testPLayer.getUnits().size();
+        int numberColonists = testPlayer.getUnits().size();
 
         assertEquals(10, numberColonists);
 
@@ -38,22 +38,22 @@ public class PlayerTests {
 
         // create map and player
         Map map = new Map();
-        Player testPLayer = new Player();
+        Player testPlayer = new Player("playerOne");
 
         // create colonist and base
-        Unit colonist = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist);
+        Unit colonist = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist);
         ((Colonist) colonist).buildCapital();
 
         // Test removing a worker and that the player is not defeated yet
-        assertEquals(testPLayer.getWorkers().size(), 5);
-        testPLayer.removeWorker(testPLayer.getWorkers().remove(0));
-        assertEquals(testPLayer.getWorkers().size(), 4);
-        assertEquals(testPLayer.isDefeated(), false);
+        assertEquals(testPlayer.getWorkers().size(), 5);
+        testPlayer.removeWorker(testPlayer.getWorkers().remove(0));
+        assertEquals(testPlayer.getWorkers().size(), 4);
+        assertEquals(testPlayer.isDefeated(), false);
 
         // remove capital and see if player lost
-        testPLayer.removeStaffedStructure(testPLayer.getStaffedStructures().get(0));
-        assertEquals(testPLayer.isDefeated(), true);
+        testPlayer.removeStaffedStructure(testPlayer.getStaffedStructures().get(0));
+        assertEquals(testPlayer.isDefeated(), true);
 
     }
 
@@ -63,43 +63,43 @@ public class PlayerTests {
 
         // create map and player
         Map map = new Map();
-        Player testPLayer = new Player();
+        Player testPlayer = new Player("playerOne");
 
         // create colonists
-        Unit colonist1 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist1);
-        Unit colonist2 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist2);
-        Unit colonist3 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist3);
-        Unit colonist4 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist4);
-        Unit colonist5 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist5);
+        Unit colonist1 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist1);
+        Unit colonist2 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist2);
+        Unit colonist3 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist3);
+        Unit colonist4 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist4);
+        Unit colonist5 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist5);
 
 
 
-        assertEquals(testPLayer.getUnits().get(0).getId(), 0);
-        assertEquals(testPLayer.getUnits().get(1).getId(), 1);
-        assertEquals(testPLayer.getUnits().get(2).getId(), 2);
-        assertEquals(testPLayer.getUnits().get(3).getId(), 3);
-        assertEquals(testPLayer.getUnits().get(4).getId(), 4);
+        assertEquals(testPlayer.getUnits().get(0).getId(), 0);
+        assertEquals(testPlayer.getUnits().get(1).getId(), 1);
+        assertEquals(testPlayer.getUnits().get(2).getId(), 2);
+        assertEquals(testPlayer.getUnits().get(3).getId(), 3);
+        assertEquals(testPlayer.getUnits().get(4).getId(), 4);
 
-        testPLayer.removeUnit(testPLayer.getUnits().get(1));
-        assertEquals(testPLayer.getUnits().get(0).getId(), 0);
-        assertEquals(testPLayer.getUnits().get(1).getId(), 2);
-        assertEquals(testPLayer.getUnits().get(2).getId(), 3);
-        assertEquals(testPLayer.getUnits().get(3).getId(), 4);
+        testPlayer.removeUnit(testPlayer.getUnits().get(1));
+        assertEquals(testPlayer.getUnits().get(0).getId(), 0);
+        assertEquals(testPlayer.getUnits().get(1).getId(), 2);
+        assertEquals(testPlayer.getUnits().get(2).getId(), 3);
+        assertEquals(testPlayer.getUnits().get(3).getId(), 4);
 
-        testPLayer.removeUnit(testPLayer.getUnits().get(1));
-        testPLayer.removeUnit(testPLayer.getUnits().get(1));
-        testPLayer.removeUnit(testPLayer.getUnits().get(1));
-        assertEquals(testPLayer.getUnits().size(), 1);
+        testPlayer.removeUnit(testPlayer.getUnits().get(1));
+        testPlayer.removeUnit(testPlayer.getUnits().get(1));
+        testPlayer.removeUnit(testPlayer.getUnits().get(1));
+        assertEquals(testPlayer.getUnits().size(), 1);
 
-        Unit colonist6 = new Colonist(map.getGrid()[0][0], testPLayer);
-        testPLayer.addUnit(colonist6);
+        Unit colonist6 = new Colonist(map.getGrid()[0][0], testPlayer);
+        testPlayer.addUnit(colonist6);
 
-        assertEquals(testPLayer.getUnits().get(1).getId(), 1);
+        assertEquals(testPlayer.getUnits().get(1).getId(), 1);
 
     }
 
