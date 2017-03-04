@@ -40,6 +40,9 @@ public class PathSelectController {
     }
 
     public void startRecordingPath(Tile startTile) {
+        if( selectedTile != null )
+            selectedTile.isSelectedPath = false;
+
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
