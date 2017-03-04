@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Set;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -47,6 +48,15 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
 
+
+        private  BufferedImage skullImage;
+        private  BufferedImage baseImage;
+
+    private  BufferedImage ghostImage;
+
+        BufferedImage tempImg ;
+        Graphics2D g2ds;
+
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
@@ -74,12 +84,18 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                explorerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/explorerImage.png"));
                oneShotImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/obstacles/oneShot.png"));
                obstacleImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/obstacles/stopIcon.png"));
-               meleeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/meleeImage.png"));
-               rangeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/rangeImage.png"));
-               armyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/armyImagepng.png"));
-               ventImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/vent.png"));
-               skullImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/decals/skullImage.png"));
-               baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/baseImage.png"));
+
+                meleeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/meleeImage.png"));
+                rangeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/rangeImage.png"));
+                armyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/armyImagepng.png"));
+                ventImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/vent.png"));
+
+                skullImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/decals/skullImage.png"));
+
+                baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/baseImage.png"));
+
+                ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/dark_image.png"));
+
             }
             catch (IOException e) {}
 
@@ -156,7 +172,37 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              return mapImage;
          }
 
+        public void highlightRadius(Set<Tile> tiles) {
+
+          for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    if( tiles.contains( grid[i][j] ) ) {
+                        grid[i][j].isVisible = true;
+                    }
+                    else {
+                        grid[i][j].isVisible = false;
+                    }
+                }
+          }
+
+        }
+
+
+//        public void highlightTile(Tile tile) {
+//            if(grid[tile.getxCoordinate()][tile.getyCoordinate()]==tile){
+//                g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
+//
+//            }
+//        }
+
+
         private BufferedImage drawSubsectionOfMap(int x, int y) {
+
+            System.out.println(x + "," + y);
+            if(y%2!=0){
+                System.out.println("Error");
+            }
+
             g2ds.setFont(new Font("default", Font.BOLD, 11));
             g2ds.setColor( new Color(230, 230, 230, 140)  );
 
@@ -179,8 +225,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 counter = 1;
 
                     int xx = x + i;                // tile index on whole map
-                    int yy = y + j;
-
+                    int yy;
+                   //Fixing the bug
+                     if(y%2==1)
+                        yy = y-1 + j;
+                    else
+                    yy = y+j;
                     if(xx < 0)                     // adjust if out of bounds
                         xx = 0;
                     else if (xx >= MAP_TILE_WIDTH)
@@ -193,28 +243,36 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     x_coord = i * TILE_SIZE;
                     y_coord = (int)(j * TILE_SIZE / 2.4);
 
+
+                    // draw terrain
                     if( grid[xx][yy].getTerrain() instanceof Mountains) {
                         g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
-                        x_offset += changePerStep * counter;
-                        counter++;
                     }
                     else if (grid[xx][yy].getTerrain() instanceof Crater) {
                         g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
-                        x_offset += changePerStep * counter;
-                        counter++;
                     }
                     else if (grid[xx][yy].getTerrain() instanceof Desert) {
                         g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
-                        x_offset += changePerStep * counter;
-                        counter++;
                     }
                     else if (grid[xx][yy].getTerrain() instanceof Flatland) {
                         g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
-                        x_offset += changePerStep * counter;
-                        counter++;
                     }
 
-                    int s1_x = -15, s1_y =  31;
+
+                    if (grid[xx][yy].getUnits().size() > 0 ) {
+                        g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
+                    }
+                    // set opacity before drawing tile
+                    if( !grid[xx][yy].isVisible ) {
+                        g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                    }
+
+                    x_offset += changePerStep * counter;
+                    counter++;
+
+                    int s1_x = -15;
+                    int s1_y =  31
+
 
                     g2ds.setColor( new Color(0, 30, 230, 90)  ); // blue
                     if(drawOnTile) {
@@ -222,7 +280,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         g2ds.setColor(new Color(255, 255, 100, 70));
                         g2ds.setColor(new Color(255, 128, 100, 150));
                         g2ds.fillOval(x_coord + x_offset + 5, y_coord + s1_y, 18, 18);
-                        g2ds.setColor(new Color(0, 0, 0, 255));
+
+                        g2ds.setColor(new Color(255, 255, 255, 255));
+
                         String s = Integer.toString(xx);
                         g2ds.drawString(s, x_coord + x_offset + s1_x + 3, y_coord + s1_y + 13);
                         s = Integer.toString(yy);

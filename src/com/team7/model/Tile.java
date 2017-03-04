@@ -41,9 +41,17 @@ public class Tile {
     private int xCoordinate;
     private int yCoordinate;
     private Structure structure;
+
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
     ArrayList<Unit> units;
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
+
+
+    public boolean isVisible = false;
 
 //    TileState playerOneTileState;
 //    TileState playerTwoTileState;
