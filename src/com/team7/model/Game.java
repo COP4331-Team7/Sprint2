@@ -23,10 +23,9 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
-        players[0].addUnit(new Explorer(this.map.getGrid()[20][20], players[0]));
 
-
-        players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
+        //TODO check if this violates TDA
+         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
          players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
 
@@ -44,7 +43,19 @@ public class Game {
         //executeQueues();
         //currentPlayer.takeTurn();
 
-        if(currentPlayer.isDefeated() == true){
+        //TODO update tile states:
+        //currentPlayer.getAllCurrentTilesWithRadius <-- stored in HashMap<Tile, Radius>
+        //for each entry in HashMap
+        //  get Set<Tile> of tiles in radius
+        //  append Sets to represent ALL visible tiles for currentPlayer
+        //for each Tile in GAME MAP
+        //  if set contains gamemap[i]
+        //      gamemap[i].updateToVisible(currentPlayer.getName)
+        //  else
+        //      gamemap[i].updateToShrouded(currentPlayer.getName)
+
+
+        if(currentPlayer.isDefeated()){
             endGame();
         }
 
