@@ -4,6 +4,7 @@ import com.team7.model.Map;
 import com.team7.model.Tile;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +15,8 @@ public class MapTest {
     public void getTilesInRadius() throws Exception{
         Map map = new Map();
         Tile[][] grid = map.getGrid();
-        Set<Tile> tiles = map.getTilesInRadius(grid[4][4],6);
+        Set<Tile> tiles = null;
+        tiles  = map.getTilesInRadius(grid[4][4],2,tiles);
         System.out.println(tiles.size());
         for (Tile t : tiles){
             System.out.println(t.getxCoordinate()+","+ t.getyCoordinate());

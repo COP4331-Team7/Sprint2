@@ -64,36 +64,38 @@ public class Map{
 
 
     //calculates all Tiles in the radius of influence/visibility of the selected entity
-    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
+    public Set<Tile> getTilesInRadius(Tile currentTile, int radius, Set<Tile> tileSet) {
         int currentX = currentTile.getxCoordinate();
         int currentY = currentTile.getyCoordinate();
-        treeSet.add(currentTile);
-
+        if(tileSet == null){
+            tileSet = new HashSet<Tile>();
+        }
+        tileSet.add(currentTile);
 
         if(radius == 0) {
-            return treeSet;
+            return tileSet;
         }
         if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && isEven(currentY))){
             //calculate movement for even X, even Y
            // moveEvenXEvenY(currentTile);
             for(int i : direction) {
-                treeSet.add(moveTypeOne(currentX, currentY, i));
+                tileSet.add(moveTypeOne(currentX, currentY, i));
             }
             for(int i : direction) {
-            getTilesInRadius(moveTypeOne(currentX, currentY, i), radius - 1);
+            getTilesInRadius(moveTypeOne(currentX, currentY, i), radius - 1,tileSet);
             }
         }
         else if ((!isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))){
             //calculate movement for even X, odd Y
             //moveEvenXOddY();
             for(int i : direction) {
-                treeSet.add(moveTypeTwo(currentX, currentY, i));
+                tileSet.add(moveTypeTwo(currentX, currentY, i));
             }
             for(int i : direction) {
-                getTilesInRadius(moveTypeTwo(currentX, currentY, i), radius - 1);
+                getTilesInRadius(moveTypeTwo(currentX, currentY, i), radius - 1, tileSet);
             }
         }
-        return treeSet;
+        return tileSet;
     }
 
     private Tile moveTypeOne(int x, int y, int direction){
