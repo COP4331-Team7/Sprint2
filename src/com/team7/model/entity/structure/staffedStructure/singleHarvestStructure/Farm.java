@@ -40,8 +40,7 @@ public class Farm extends StaffedStructure implements IHarvester {
 
     @Override
     public void harvestResource(Tile tile) {
-        int harvestedResource = tile.structureHarvestFood(getStats().getProductionRates().get("harvestFood"));
-        changeAllocatedFood(harvestedResource);
+
     }
 
     @Override
