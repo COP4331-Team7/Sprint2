@@ -2,12 +2,9 @@ package com.team7;
 
 
 import com.team7.controller.OptionsController;
-import com.team7.view.OptionsScreen;
+import com.team7.view.OptionsScreen.OptionsScreen;
 
-import javax.swing.*;
-import java.awt.*;
 import com.team7.controller.InfluenceRadiusController;
-import com.team7.controller.ScreenSelectController;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;

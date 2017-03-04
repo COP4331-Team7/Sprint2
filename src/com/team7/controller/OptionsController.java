@@ -1,14 +1,11 @@
 package com.team7.controller;
 
 import com.team7.ConfigurableControls.ConfigReader;
-import com.team7.view.OptionsScreen;
+import com.team7.view.OptionsScreen.OptionsScreen;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * TODO figure out a way to keep special key cases configurable (ie arrow keys) if needed

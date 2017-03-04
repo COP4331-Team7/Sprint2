@@ -1,4 +1,4 @@
-package com.team7.view;
+package com.team7.view.OptionsScreen;
 
 import javax.swing.*;
 import java.awt.*;
