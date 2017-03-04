@@ -7,6 +7,7 @@ package com.team7.model.item;
 public abstract class Item {
     private boolean isPassable;
     private int statInfluence;
+    private String type;
 
     public boolean isPassable() {
         return isPassable;
@@ -24,4 +25,11 @@ public abstract class Item {
         this.statInfluence = statInfluence;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

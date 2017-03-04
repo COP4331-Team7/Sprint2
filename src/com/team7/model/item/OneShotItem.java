@@ -9,5 +9,6 @@ public class OneShotItem extends Item {
     public OneShotItem() {
         setPassable(true);
         setStatInfluence(ProbabilityGenerator.randomInteger(15,30));
+        setType("OneShotItem");
     }
 }
