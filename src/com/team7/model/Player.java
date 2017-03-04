@@ -12,6 +12,7 @@ import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
     private ArrayList<Unit> units;
@@ -78,6 +79,17 @@ public class Player {
         power += energyLevelsOfStructures;
         nutrients += foodLevelOfStructures;
         metal += oreLevelOfStructures;
+    }
+
+    public HashMap<Tile, Integer> getAllTileRadiusMap() {
+        HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
+        for (Unit unit : units) {
+            Tile tile = unit.getLocation();
+            int radius = unit.getVisibilityRadius();
+            tileRadiusMap.put(tile, radius);
+        }
+
+        return tileRadiusMap;
     }
 
     // Unit and Army helper functions
