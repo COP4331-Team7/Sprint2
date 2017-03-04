@@ -1,15 +1,21 @@
 package com.team7;
 
+
+import com.team7.controller.OptionsController;
+import com.team7.view.OptionsScreen;
+
+import javax.swing.*;
+import java.awt.*;
 import com.team7.controller.InfluenceRadiusController;
 import com.team7.controller.ScreenSelectController;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;
 
+
 public class Main {
 
     public static void main(String[] args) {
-
         // Model
         Player player1 = new Player("playerOne");
         Player player2 = new Player("playerTwo");
@@ -23,6 +29,9 @@ public class Main {
         view.setMap( game.getMap() );
 
         InfluenceRadiusController c = new InfluenceRadiusController(game.getMap(), view);
+        
+        OptionsScreen screen = new OptionsScreen();
+        OptionsController optionsController = new OptionsController(screen);
 
         c.getRadius( player1.getUnits().get(0).getLocation(),4 );
 //        c.getRadius( player1.getUnits().get(1).getLocation(),3 );
@@ -46,5 +55,6 @@ public class Main {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;  // time elapsed in milliseconds
         System.out.println("view construction time: " + duration + " ms");
+
     }
 }
