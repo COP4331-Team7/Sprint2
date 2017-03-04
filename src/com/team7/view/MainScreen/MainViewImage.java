@@ -26,8 +26,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private final static double mapScale_x = 0.95;  // what % of screen the map takes up
         private final static double mapScale_y = 0.60;
 
-        private Graphics2D g2ds;
-        public static BufferedImage image, tempImg;
+        
+        public static BufferedImage image;
         private BufferedImage tileImage_1, tileImage_2, tileImage_3, tileImage_4;
         private BufferedImage moneyBagImage;
         private BufferedImage moonRockImage;
@@ -48,9 +48,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
 
-
-        private  BufferedImage skullImage;
-        private  BufferedImage baseImage;
 
     private  BufferedImage ghostImage;
 
@@ -271,7 +268,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     counter++;
 
                     int s1_x = -15;
-                    int s1_y =  31
+                    int s1_y =  31;
 
 
                     g2ds.setColor( new Color(0, 30, 230, 90)  ); // blue
