@@ -24,7 +24,7 @@ public class Main {
 
         InfluenceRadiusController c = new InfluenceRadiusController(game.getMap(), view);
 
-        c.getRadius( player1.getUnits().get(0).getLocation(),4 );
+        c.getRadius( player1.getUnits().get(0).getLocation(),3 );
 //        c.getRadius( player1.getUnits().get(1).getLocation(),3 );
 
 

@@ -23,14 +23,14 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
-        players[0].addUnit(new Explorer(this.map.getGrid()[20][20], players[0]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[5][20], players[0]));
 
 
         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
          players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
 
-        players[0].addUnit(new Explorer(this.map.getGrid()[20][20], players[1]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[5][20], players[1]));
 
 
         players[1].addUnit(new Explorer(this.map.getGrid()[3][map.getGrid().length - 3], players[1]));

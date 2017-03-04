@@ -1,5 +1,6 @@
 package com.team7.view.MainScreen;
 
+import com.team7.model.entity.Command;
 import com.team7.view.ScreenSelectButtons;
 
 import javax.swing.*;
@@ -28,7 +29,9 @@ public class MainScreen extends JPanel {
                                     // only one JPanel can be in a specific location, so we add 2 panels to a single panel
                                     // then add the single panel where we want both panels
 
-        //temp.add( mainStatusInfo, BorderLayout.WEST );
+        temp.add( mainStatusInfo, BorderLayout.WEST );
+        CommandSelect c = new CommandSelect();
+        temp.add( c, BorderLayout.EAST);
         temp.add( mainViewSelection, BorderLayout.NORTH);
 
         this.add( temp, BorderLayout.SOUTH );

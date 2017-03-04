@@ -232,10 +232,19 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         private BufferedImage drawSubsectionOfMap(int x, int y) {
 
-            System.out.println(x + "," + y);
-            if(y%2!=0){
-                System.out.println("Error");
-            }
+             /* ----------------------------------------------------
+             * |   (x, y)      (x + 1, y)        (x + 2, y)   ..    |
+             * | (x, y + 1)  (x + 1, y + 1)    (x + 2, y + 1) ..    |
+             * |     .             .                 .              |
+             * |     .             .                 .              |
+                --------------------------------------------------- */
+
+
+
+            //System.out.println(x + "," + y);
+//            if(y%2!=0){
+//                System.out.println("Error");
+//            }
             g2ds.setFont(new Font("default", Font.BOLD, 11));
             g2ds.setColor( new Color(230, 230, 230, 140)  );
 
