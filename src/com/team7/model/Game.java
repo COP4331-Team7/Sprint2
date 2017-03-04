@@ -39,6 +39,18 @@ public class Game {
         //executeQueues();
         //currentPlayer.takeTurn();
 
+        //TODO update tile states:
+        //currentPlayer.getAllCurrentTilesWithRadius <-- stored in HashMap<Tile, Radius>
+        //for each entry in HashMap
+        //  get Set<Tile> of tiles in radius
+        //  append Sets to represent ALL visible tiles for currentPlayer
+        //for each Tile in GAME MAP
+        //  if set contains gamemap[i]
+        //      gamemap[i].updateToVisible(currentPlayer.getName)
+        //  else
+        //      gamemap[i].updateToShrouded(currentPlayer.getName)
+
+
         if(currentPlayer.isDefeated()){
             endGame();
         }
