@@ -52,6 +52,7 @@ public class Tile {
     private VisibilityState playerTwoVisibility;
 
 
+
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
         this.terrain = terrain;
@@ -136,28 +137,15 @@ public class Tile {
     }
 
     //Structure will only interact with Tile for its Resource
-    public int structureHarvestOre(int quantityOfOreToHarvest){
-        if (resource != null && resource instanceof Ore){
+    //called for each Tile in the Structure's available radius
+    //TODO determine how harvesting will work: via structure? worker? resource itself?
+    public int structureInteractWithTileForResource(int quantityOfResourceToHarvest){
+        if (resource != null){
             int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.decrementResourceQuantity(quantityOfOreToHarvest);
-            return resourceQuantity;
-        }
-        return 0;
-    }
-
-    public int structureHarvestFood(int quantityOfFoodToHarvest){
-        if (resource != null && resource instanceof Food){
-            int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.decrementResourceQuantity(quantityOfFoodToHarvest);
-            return resourceQuantity;
-        }
-        return 0;
-    }
-
-    public int structureHarvestEnergy(int quantityOfEnergyToHarvest) {
-        if (resource != null && resource instanceof Energy){
-            int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.decrementResourceQuantity(quantityOfEnergyToHarvest);
+            resource.decrementResourceQuantity(quantityOfResourceToHarvest);
+            if (resourceQuantity == 0 && !(resource instanceof Food)) {
+                resource = null;    //resource has been depleted and nonrenewable, set to NULL
+            }
             return resourceQuantity;
         }
         return 0;
@@ -216,9 +204,54 @@ public class Tile {
         return yCoordinate;
     }
 
+    //once a Tile is visible to a Player, his Tile state would match the real state
+    public void updateTileToVisible(String playerToUpdate) {
+        if (playerToUpdate.contains("One")){
+            playerOneVisibility = VisibilityState.Visible;
+            playerOneTileState.update(realTileState);
+
+        } else{
+            playerTwoVisibility = VisibilityState.Visible;
+            playerTwoTileState.update(realTileState);
+        }
+    }
+
+    //once a Tile is shrouded to a Player, his Tile state should remain in the last seen version
+    //a Tile can only become shrouded if it was visible beforehand!
+    public void updateTileToShrouded(String playerToUpdate) {
+        if (playerToUpdate.contains("One")){
+            if(playerOneVisibility == VisibilityState.Visible){
+                playerOneVisibility = VisibilityState.Shrouded;
+            }
+
+        } else{
+            if(playerTwoVisibility == VisibilityState.Visible){
+                playerTwoVisibility = VisibilityState.Shrouded;
+            }
+
+        }
+    }
+
+
+    //adds a Unit to the real state
+    public void addUnitToTile(Unit unit) {
+        realTileState.addUnit(unit);
+    }
+
+    public void removeUnitFromTile(Unit unit) {
+        realTileState.removeUnit(unit);
+    }
+
+    public void addWorkerToTile(Worker worker) {
+        realTileState.addWorker(worker);
+    }
+
+    public void removeWorkerFromTile(Worker worker) {
+        realTileState.removeWorker(worker);
+    }
 
     // Adds unit to Tile's ArrayList of Units
-    public Unit addUnitToTile(Unit unit) {
+   /* public Unit addUnitToTile(Unit unit) {
 
         // Physically add the unit
         this.units.add(unit);
@@ -266,7 +299,7 @@ public class Tile {
         this.workers.remove(worker);
 
         return worker;
-    }
+    }*/
 
     public Structure getStructure() {
         return structure;

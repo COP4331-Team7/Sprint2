@@ -47,6 +47,13 @@ public class TileState {
 
     }
 
+    //copy constructor
+    public TileState(TileState tileStateToCopy) {
+        this.item = tileStateToCopy.getItem();  //will this.item be a NEW item, or a REFERENCE to tileStateToCopy?
+        this.resource = tileStateToCopy.getResource();
+        //etc...
+    }
+
     public AreaEffect getAreaEffect() {
         return areaEffect;
     }
@@ -109,5 +116,25 @@ public class TileState {
 
     public void setWorkers(ArrayList<Worker> workers) {
         this.workers = workers;
+    }
+
+    public void addUnit(Unit unit) {
+        units.add(unit);
+    }
+
+    public void removeUnit(Unit unit) {
+        units.remove(unit);
+    }
+
+    public void addWorker(Worker worker) {
+        workers.add(worker);
+    }
+
+    public void removeWorker(Worker worker) {
+        workers.remove(worker);
+    }
+
+    public void update(TileState tileStateToCopy) {
+
     }
 }
