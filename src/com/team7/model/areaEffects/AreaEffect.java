@@ -9,6 +9,7 @@ package com.team7.model.areaEffects;
 public abstract class AreaEffect {
     private boolean isInstantDeath;
     private int healthEffect; // -100 to 100
+    private String type;
 
     public boolean isInstantDeath() {
         return isInstantDeath;
@@ -24,5 +25,13 @@ public abstract class AreaEffect {
 
     public void setHealthEffect(int healthEffect) {
         this.healthEffect = healthEffect;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

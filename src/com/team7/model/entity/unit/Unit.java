@@ -2,13 +2,12 @@ package com.team7.model.entity.unit;
 
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
-import com.team7.model.entity.unit.combatUnit.RangedUnit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Unit extends Entity {
+    private CommandQueue commandQueue;
     private String type;
     private UnitStats unitStats;
     private boolean isPowered;
@@ -81,4 +80,11 @@ public class Unit extends Entity {
         this.direction = dir;
     }
 
+    public CommandQueue getCommandQueue() {
+        return commandQueue;
+    }
+
+    public void setCommandQueue(CommandQueue commandQueue) {
+        this.commandQueue = commandQueue;
+    }
 }
