@@ -153,6 +153,10 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             pathSelectController.startRecordingPath( pathSelectController.getPlayer().getUnits().get(0).getLocation()  );
             isRecordingPath = true;
         }
+        else if( e.getKeyChar() == '5') {        // TODO: change current selection's location
+            pathSelectController.drawPath( pathSelectController.getPlayer().getUnits().get(0) );
+            isRecordingPath = false;
+        }
 
         if( isRecordingPath ) {
             pathSelectController.moveCursor( Character.getNumericValue( e.getKeyChar() ) );

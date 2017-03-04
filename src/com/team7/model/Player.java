@@ -103,7 +103,6 @@ public class Player {
 
     // Removes unit from Player's ArrayList of Units
     public Unit removeUnit(Unit unit) {
-
         this.units.remove(unit);
         unit.getLocation().removeUnitFromTile(unit);
 
@@ -235,7 +234,11 @@ public class Player {
 
         return false;
     }
-
+    public void moveUnit(Unit unit, Tile destination){
+        unit.getLocation().removeUnitFromTile(unit);
+        destination.addUnitToTile(unit);
+        unit.setLocation(destination);
+    }
     // Army helpers
 
     public ArrayList<Army> getArmies() {

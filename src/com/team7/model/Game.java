@@ -27,16 +27,16 @@ public class Game {
 
 
         //TODO check if this violates TDA
-         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
-         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
-         players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
+//         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
+//         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
+//         players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
 
-        players[0].addUnit(new Explorer(this.map.getGrid()[5][20], players[1]));
+     //   players[1].addUnit(new Explorer(this.map.getGrid()[5][20], players[1]));
 
 
-        players[1].addUnit(new Explorer(this.map.getGrid()[3][map.getGrid().length - 3], players[1]));
-         players[1].addUnit(new Explorer(this.map.getGrid()[4][map.getGrid().length - 4], players[1]));
-         players[1].addUnit(new Colonist(this.map.getGrid()[4][map.getGrid().length - 5], players[1]));
+//        players[1].addUnit(new Explorer(this.map.getGrid()[3][map.getGrid().length - 3], players[1]));
+//         players[1].addUnit(new Explorer(this.map.getGrid()[4][map.getGrid().length - 4], players[1]));
+//         players[1].addUnit(new Colonist(this.map.getGrid()[4][map.getGrid().length - 5], players[1]));
 
     }
 

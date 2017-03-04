@@ -287,11 +287,8 @@ public class Tile {
     }
 
     // Removes unit from Tile's ArrayList of Units
-    public Unit removeUnitFromTile(Unit unit) {
-
+    public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
-
-        return unit;
     }
 
     // Adds army to Tile's ArrayList of Armies
