@@ -41,6 +41,9 @@ public class View
     public Screen getScreen() {
         return frame;
     }
+    public MainScreen getMainScreen() {
+        return frame.getMainScreen();
+    }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );

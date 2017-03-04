@@ -1,5 +1,6 @@
 package com.team7;
 
+import com.team7.controller.InfluenceRadiusController;
 import com.team7.controller.ScreenSelectController;
 import com.team7.model.Game;
 import com.team7.model.Player;
@@ -19,8 +20,14 @@ public class Main {
         View view = new View();
 
         waitForGUI( view );
-
         view.setMap( game.getMap() );
+
+        InfluenceRadiusController c = new InfluenceRadiusController(game.getMap(), view);
+
+        c.getRadius( player1.getUnits().get(0).getLocation(),4 );
+//        c.getRadius( player1.getUnits().get(1).getLocation(),3 );
+
+
 
     }
 
