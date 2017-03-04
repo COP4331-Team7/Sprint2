@@ -25,8 +25,11 @@ public class Player {
     private int nutrients;  //from harvested food
     private int metal;      //from harvested ore
 
+    private String name;    //used to check player type easily
 
-    public Player() {
+
+    public Player(String name) {
+        this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
         staffedStructures = new ArrayList<>();                        // max size of staffed + observation should be 10
        // observationTowers = new ArrayList<>();
