@@ -27,7 +27,6 @@ public class Player {
 
     private String name;    //used to check player type easily
 
-
     public Player(String name) {
         this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
@@ -273,5 +272,9 @@ public class Player {
 
     public void setMetal(int metal) {
         this.metal = metal;
+    }
+
+    public String getName() {
+        return name;
     }
 }
