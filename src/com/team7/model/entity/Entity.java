@@ -17,7 +17,7 @@ public abstract class Entity {
     // Make sure to set the owner before generating an ID in a constructor
     public void generateID() {
         IdManager generator = new IdManager(this.owner);
-        this.id =  generator.generateID(this);
+        this.id = generator.generateID(this);
     };
 
     public Player getOwner() {

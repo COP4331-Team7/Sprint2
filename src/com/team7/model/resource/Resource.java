@@ -9,7 +9,7 @@ package com.team7.model.resource;
 public abstract class Resource{
     private boolean isDiscovered; //a Resource isDiscovered when it is revealed by Explorer
     private int statInfluenceQuantity; //affects Power, Nutrients, or Metal
-    abstract void addResourceToPlayer(int harvestedQuantity);
+    public String type;
 
     public boolean isDiscovered() {
         return isDiscovered;
@@ -34,4 +34,11 @@ public abstract class Resource{
         }
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

@@ -32,26 +32,21 @@ public class MainScreen extends JPanel {
         temp.add( mainStatusInfo, BorderLayout.WEST );
         CommandSelect c = new CommandSelect();
         temp.add( c, BorderLayout.EAST);
+
         temp.add( mainViewSelection, BorderLayout.NORTH);
-
         this.add( temp, BorderLayout.SOUTH );
-    }
-
-
-    public ScreenSelectButtons getScreenSelectButtons() {
-            return screenSelectBtns;
     }
 
     public void drawMap() {
         mainAreaView.reDrawMap();
     }
-
+    public ScreenSelectButtons getScreenSelectButtons() {
+            return screenSelectBtns;
+    }
     public MainViewImage getMainViewImage() {
         return mainAreaView;
     }
-
     public MainViewInfo getMainViewInfo() {
         return mainStatusInfo;
     }
-
 }

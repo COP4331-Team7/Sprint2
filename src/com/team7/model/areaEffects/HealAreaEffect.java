@@ -9,5 +9,6 @@ public class HealAreaEffect extends AreaEffect {
     public HealAreaEffect() {
         setHealthEffect(ProbabilityGenerator.randomInteger(10,30));
         setInstantDeath(false);
+        setType("HealAreaEffect");
     }
 }

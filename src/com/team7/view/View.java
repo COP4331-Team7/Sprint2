@@ -160,6 +160,10 @@ public class View
         {
             BufferedImage temp_img = getMainScreen().getMainViewImage().getFullMapImage();
             String inputString = JOptionPane.showInputDialog("ouput file?");
+
+            if(inputString == null)
+                return;
+
             try
             {
                 File outputFile = new File( inputString );

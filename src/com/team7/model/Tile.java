@@ -26,6 +26,11 @@ import java.util.ArrayList;
  *  2. Non-visible: not currently in line of sight of player's avatar, display last seen state of tile
  *  3. Shrouded: never been seen
  * Each Tile must be described by a Terrain, all other properties are optionally generated 'randomly'
+ * Notes on drawing:
+ *  Controller->View will draw the terrain in ALL circumstances
+ *  A Nonvisible tile will draw nothing else
+ *  A Visible tile will return 'realDraw' to Controller
+ *  A Shrouded tile will return 'playerXDraw' to Controller
  */
 public class Tile {
     private AreaEffect areaEffect;
@@ -45,18 +50,49 @@ public class Tile {
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
 
+
     public boolean isVisible = false;
+
+//    TileState playerOneTileState;
+//    TileState playerTwoTileState;
+//    TileState realTileState;
+
+    private DrawableTileState playerOneDraw;
+    private DrawableTileState playerTwoDraw;
+    private DrawableTileState realDraw;
+
+    private enum VisibilityState {
+        Visible, NonVisible, Shrouded
+    }
+
+    private VisibilityState playerOneVisibility;
+    private VisibilityState playerTwoVisibility;
+
+
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate){
         this.terrain = terrain;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        units = new ArrayList<Unit>();
-        armies = new ArrayList<Army>();
-        workers = new ArrayList<Worker>();
+        units = new ArrayList<>();
+        armies = new ArrayList<>();
+        workers = new ArrayList<>();
+    //    realTileState = new TileState();
+        realDraw = new DrawableTileState();
 
         populateTileBasedOnTerrain(terrain);
+
+        //copy real state to both players when Tile is initialized
+        playerOneDraw = new DrawableTileState(realDraw);
+        playerTwoDraw = new DrawableTileState(realDraw);
+     //   playerOneTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
+      //  playerTwoTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
+
+        //set Tile enum visibility
+        playerOneVisibility = VisibilityState.NonVisible;
+        playerTwoVisibility = VisibilityState.NonVisible;
+
 
     }
     //check tile terrain to populate Tile components
@@ -117,18 +153,15 @@ public class Tile {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-
-        //        int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size()-1);
-//        setAreaEffect(terrain.getAreaEffects().get(rand));
-
-//        if (ProbabilityGenerator.willOccur(prob)) {
-//            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
-//            setAreaEffect(terrain.getAreaEffects().get(rand));
-//        }
+        if (ProbabilityGenerator.willOccur(prob)) {
+            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
+            setAreaEffect(terrain.getAreaEffects().get(rand));
+        }
     }
 
     //Structure will only interact with Tile for its Resource
     //called for each Tile in the Structure's available radius
+    //TODO determine how harvesting will work: via structure? worker? resource itself?
     public int structureInteractWithTileForResource(int quantityOfResourceToHarvest){
         if (resource != null){
             int resourceQuantity = resource.getStatInfluenceQuantity();
@@ -150,6 +183,8 @@ public class Tile {
 
     public void setAreaEffect(AreaEffect areaEffect) {
         this.areaEffect = areaEffect;
+        realDraw.setAreaEffectType(areaEffect.getType());
+      //  realTileState.setAreaEffect(areaEffect);
     }
 
     public Decal getDecal() {
@@ -166,6 +201,8 @@ public class Tile {
 
     public void setItem(Item item) {
         this.item = item;
+        realDraw.setItemType(item.getType());
+       // realTileState.setItem(item);
     }
 
     public Terrain getTerrain() {
@@ -182,6 +219,9 @@ public class Tile {
 
     public void setResource(Resource resource) {
         this.resource = resource;
+        realDraw.setResourceType(resource.getType());
+        realDraw.setResourceQuantity(String.valueOf(resource.getStatInfluenceQuantity()));
+       // realTileState.setResource(resource);
     }
     public int getxCoordinate() {
         return xCoordinate;
@@ -191,6 +231,50 @@ public class Tile {
         return yCoordinate;
     }
 
+    //once a Tile is visible to a Player, his Tile state would match the real state
+    public void updateTileToVisible(String playerToUpdate) {
+        if (playerToUpdate.contains("One")){
+            playerOneVisibility = VisibilityState.Visible;
+            playerOneDraw = new DrawableTileState(realDraw);
+
+        } else{
+            playerTwoVisibility = VisibilityState.Visible;
+            playerTwoDraw = new DrawableTileState(realDraw);
+        }
+    }
+
+    //once a Tile is shrouded to a Player, his Tile state should remain in the last seen version
+    //a Tile can only become shrouded if it was visible beforehand!
+    public void updateTileToShrouded(String playerToUpdate) {
+        if (playerToUpdate.contains("One")){
+            if(playerOneVisibility == VisibilityState.Visible){
+                playerOneVisibility = VisibilityState.Shrouded;
+            }
+        } else{
+            if(playerTwoVisibility == VisibilityState.Visible){
+                playerTwoVisibility = VisibilityState.Shrouded;
+            }
+
+        }
+    }
+
+
+/*    //adds a Unit to the real state
+    public void addUnitToTile(Unit unit) {
+        realTileState.addUnit(unit);
+    }
+
+    public void removeUnitFromTile(Unit unit) {
+        realTileState.removeUnit(unit);
+    }
+
+    public void addWorkerToTile(Worker worker) {
+        realTileState.addWorker(worker);
+    }
+
+    public void removeWorkerFromTile(Worker worker) {
+        realTileState.removeWorker(worker);
+    }*/
 
     // Adds unit to Tile's ArrayList of Units
     public Unit addUnitToTile(Unit unit) {

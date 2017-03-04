@@ -60,3 +60,5 @@ fabric.properties
 # .idea/misc.xml
 # *.ipr
 
+.idea/
+src/resource/test_image.jpg

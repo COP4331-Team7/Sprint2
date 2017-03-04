@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) {
 
         // Model
-        Player player1 = new Player();
-        Player player2 = new Player();
+        Player player1 = new Player("playerOne");
+        Player player2 = new Player("playerTwo");
         Game game      = new Game(player1, player2);
         game.startGame();
 
