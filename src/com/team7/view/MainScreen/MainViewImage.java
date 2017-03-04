@@ -49,7 +49,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
 
-    private  BufferedImage ghostImage;
+         private  BufferedImage ghostImage;
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
@@ -59,6 +59,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
             TILES_VISIBLE_Y = (int)((MAP_IMAGE_WIDTH_IN_PIXELS / (2 * TILE_SIZE - TILE_SIZE/1.73))) - 1;
             TILES_VISIBLE_X = (2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
+
+            System.out.print(TILES_VISIBLE_Y + "   " + TILES_VISIBLE_X);
 
             addMouseListener(this);
             this.mainViewSelection = ms;
@@ -350,7 +352,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             //System.out.println("offset (" + (int)x_offset + ", " + (int)y_offset + ")" );
             x_dest = x_center + (int)x_offset;
-            y_dest = y_center + (int)(y_offset * 1.5);
+            y_dest = y_center + (int)(y_offset * 3.5);
            //System.out.println("center (" + (int)x_center + ", " + (int)y_center + ")" );
            // System.out.println("dest (" + (int)x_dest + ", " + (int)y_dest + ")" );
             zoomToDestination( x_dest, y_dest, 50 );

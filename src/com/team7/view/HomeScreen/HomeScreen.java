@@ -22,6 +22,15 @@ public class HomeScreen extends JPanel {
         this.add(homeButtons, BorderLayout.SOUTH);
     }
 
+    public JButton getQuitButton() {
+        return homeButtons.getQuitButton();
+    }
+    public JButton getPlayButton() {
+        return homeButtons.getPlayButton();
+    }
+
+
+
     public HomeButtons getHomeButtons() {
             return homeButtons;
     }
@@ -48,6 +57,14 @@ public class HomeScreen extends JPanel {
             super.paintComponent( g );
             g.drawImage( image, 0, 0, this );
         }
+
+        public JButton getQuitButton() {
+            return homeButtons.getQuitButton();
+        }
+        public JButton getPlayButton() {
+            return homeButtons.getPlayButton();
+        }
+
     }
 
     class HomeButtons extends JPanel {

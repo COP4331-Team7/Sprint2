@@ -4,6 +4,7 @@ import com.team7.model.Map;
 import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
+import com.team7.view.MainScreen.MainViewImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -48,11 +49,28 @@ public class View
     public MainScreen getMainScreen() {
         return frame.getMainScreen();
     }
+    public HomeScreen getHomeScreen() { return frame.getHomeScreen(); }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
         frame.getMainScreen().drawMap();
+        frame.getMainScreen().setFocusable( true );
+        frame.getMainScreen().giveCommandSelectFocus();
+
     }
+
+    public void setCurrScreen(String selected_screen) {
+        frame.setCurrScreen( selected_screen );
+    }
+
+    public void redrawView() {
+        frame.redrawView();
+    }
+
+    public MainViewImage getMainViewImage() {
+        return frame.getMainViewImage();
+    }
+
 
 // ==================== INNER CLASS ==========================
 
@@ -75,7 +93,12 @@ public class View
             // structureScreen = new StructureScreen();
 
             setCurrScreen("MAIN");
+
             this.setVisible( true );
+        }
+
+        public MainViewImage getMainViewImage() {
+            return mainScreen.getMainViewImage();
         }
 
         public HomeScreen getHomeScreen() {
@@ -100,7 +123,8 @@ public class View
             }
             else if (selected_screen == "MAIN") {
                 displayMainScreen();
-                mainScreen.giveCommandSelectFocus();
+                mainScreen.getCommandSelect().setFocusable(true);
+                mainScreen.getCommandSelect().requestFocus();
             }
             else if (selected_screen == "UNIT_OVERVIEW") {
                 displayUnitOverviewScreen();
@@ -121,9 +145,11 @@ public class View
         }
         private void displayUnitOverviewScreen() {
             // this.getContentPane().add( unitScreen );
+            this.getContentPane().add( homeScreen );
         }
         private void displayStructureOverviewScreen() {
             //    this.getContentPane().add( structureScreen );
+            this.getContentPane().add( homeScreen );
         }
 
         private void addMenu()
@@ -159,6 +185,10 @@ public class View
             JMenuBar menuBar = new JMenuBar();                  // create a new menu bar
             menuBar.add( fileMenu );                           	// add the "File" menu to the menu bar
             this.setJMenuBar( menuBar );                        // attach the menu bar to this frame
+        }
+
+        public void redrawView() {
+            mainScreen.redraw();
         }
 
         private void saveImage()    // prompt the user to specify the size of the n by n image

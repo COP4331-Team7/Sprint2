@@ -1,7 +1,9 @@
 package com.team7;
 
 import com.team7.controller.CommandSelectController;
+import com.team7.controller.HomeScreenController;
 import com.team7.controller.PathSelectController;
+import com.team7.controller.MainScreenController;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;
@@ -22,16 +24,11 @@ public class Main {
         waitForGUI( view );
         view.setMap( game.getMap() );
 
+        HomeScreenController hsc = new HomeScreenController(game, view);
+        MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
-        CommandSelectController c = new CommandSelectController(game.getMap(), view);
-
-        c.getRadius( player1.getUnits().get(0).getLocation(),3 );
-//        c.getRadius( player1.getUnits().get(1).getLocation(),3 );
-
-
-
-        view.getMainScreen().giveCommandSelectFocus();
-
+        CommandSelectController csc = new CommandSelectController(game.getMap(), view);
+        csc.getRadius( player1.getUnits().get(0).getLocation(),3 );
     }
 
 

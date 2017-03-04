@@ -46,6 +46,15 @@ public class MainScreen extends JPanel {
     public void drawMap() {
         mainAreaView.reDrawMap();
     }
+    public void redraw() { mainAreaView.reDrawMap(); }
+    public JButton getMainScreenButton() { return screenSelectBtns.getMainScreenButton(); }
+    public JButton getUnitScreenButton() {
+        return screenSelectBtns.getUnitScreenButton();
+    }
+    public JButton getStructureScreenButton() {
+        return screenSelectBtns.getStructureScreenButton();
+    }
+
     public ScreenSelectButtons getScreenSelectButtons() {
             return screenSelectBtns;
     }
@@ -57,5 +66,11 @@ public class MainScreen extends JPanel {
     }
     public CommandSelect getCommandSelect() {
         return commandSelect;
+    }
+    public JButton getEndTurnButton() {
+        return commandSelect.getEndTurnButton();
+    }
+    public JButton getExecuteCommandButton() {
+        return commandSelect.getExecuteCommandButton();
     }
 }

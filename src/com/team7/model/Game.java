@@ -23,7 +23,9 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
-        players[0].addUnit(new Explorer(this.map.getGrid()[5][20], players[0]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[30][10], players[0]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[10][30], players[1]));
+
 
 
         //TODO check if this violates TDA
@@ -57,9 +59,9 @@ public class Game {
         //      gamemap[i].updateToShrouded(currentPlayer.getName)
 
 
-        if(currentPlayer.isDefeated()){
-            endGame();
-        }
+//        if(currentPlayer.isDefeated()){
+//            endGame();
+//        }
 
         if(currentPlayer == players[0])
             currentPlayer = players[1];

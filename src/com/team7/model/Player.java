@@ -277,4 +277,11 @@ public class Player {
     public void setMetal(int metal) {
         this.metal = metal;
     }
+
+    public Unit getRandomUnit() {
+        if(units != null && units.size() > 0) {
+            return units.get(0);
+        }
+        return null;
+    }
 }

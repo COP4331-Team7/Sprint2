@@ -17,11 +17,12 @@ public class CommandSelectController {
         this.view = view;
     }
 
+    // ===============================================
 
     public void getRadius(Tile currTile, int radius) {
         Set<Tile> tiles = null;
-        view.getMainScreen().getMainViewImage().highlightRadius( map.getTilesInRadius(currTile, radius, tiles));
-        view.getMainScreen().getMainViewImage().reDrawMap();
+        view.getMainViewImage().highlightRadius( map.getTilesInRadius(currTile, radius, tiles));
+        view.redrawView();
     }
 
 

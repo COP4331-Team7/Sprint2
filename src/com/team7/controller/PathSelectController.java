@@ -9,20 +9,18 @@ import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.View;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
-
-    private CommandSelect commandView = null;
     private View view = null;
 
+    private CommandSelect commandView = null;
 
     boolean isRecording = false;
     Tile selectedTile = null;
-    Tile startTile=null;
+    Tile startTile = null;
 
     ArrayList<Tile> pathTile = new ArrayList<Tile>();;
 
@@ -43,70 +41,62 @@ public class PathSelectController {
         selectedTile = game.getMap().moveUnit(selectedTile, direction);
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
-        view.getMainScreen().getMainViewImage().reDrawMap();
+        view.redrawView();
     }
 
     public void startRecordingPath(Tile startTile) {
 
         pathTile.clear();
-
         this.startTile = startTile;
-        if( selectedTile != null ) {
+
+        if( selectedTile != null )
             selectedTile.isSelectedPath = false;
-
-
-        }
 
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
-        view.getMainScreen().getMainViewImage().reDrawMap();
+        view.redrawView();
     }
 
     public Player getPlayer () {
         return game.getCurrentPlayer();
-    }
+    } // TODO: remove this was for testing
 
     public void drawPath(Unit unit){
 
         startTile.removeUnitFromTile(unit);
+        startTile.isSelectedPath = false;
 
         new Thread( new Runnable() {
                 public void run() {
-
                     for (Tile tile:pathTile) {
-
-                        game.getCurrentPlayer().moveUnit(unit, tile);
+                        game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         tile.isSelectedPath = false;
+
 
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
                             public void run() {
-                                view.getMainScreen().getMainViewImage().reDrawMap();
+                                view.redrawView();
                             }
                         });
+
+                        Set<Tile> tiles = null;
+                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
 
                         try {
                             Thread.sleep(200);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+
+                        //view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 75  );
+
                     }
-
                 }
+        }).start();
 
-
-            }).start();
-
-
-
-        view.getMainScreen().getMainViewImage().reDrawMap();
-       // pathTile.clear();
-
+        view.redrawView();
     }
-
-
-
-
 
 }
