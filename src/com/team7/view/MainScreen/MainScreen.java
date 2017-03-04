@@ -12,6 +12,7 @@ public class MainScreen extends JPanel {
     private MainViewImage mainAreaView = null;
     private MainViewInfo mainStatusInfo = null;
     private MainViewMiniMap mainViewSelection = null;
+    private CommandSelect commandSelect = null;
 
     public MainScreen() {
 
@@ -30,11 +31,16 @@ public class MainScreen extends JPanel {
                                     // then add the single panel where we want both panels
 
         temp.add( mainStatusInfo, BorderLayout.WEST );
-        CommandSelect c = new CommandSelect();
-        temp.add( c, BorderLayout.EAST);
+        commandSelect = new CommandSelect();
+        temp.add( commandSelect, BorderLayout.EAST);
 
         temp.add( mainViewSelection, BorderLayout.NORTH);
         this.add( temp, BorderLayout.SOUTH );
+    }
+
+    public void giveCommandSelectFocus() {
+        commandSelect.setFocusable( true );
+        commandSelect.requestFocus();
     }
 
     public void drawMap() {
@@ -48,5 +54,8 @@ public class MainScreen extends JPanel {
     }
     public MainViewInfo getMainViewInfo() {
         return mainStatusInfo;
+    }
+    public CommandSelect getCommandSelect() {
+        return commandSelect;
     }
 }

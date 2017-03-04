@@ -2,6 +2,7 @@ package com.team7.view;
 
 import com.team7.model.Map;
 import com.team7.view.HomeScreen.HomeScreen;
+import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 
 import javax.imageio.ImageIO;
@@ -38,6 +39,9 @@ public class View
         frame.setVisible( true );                                  // make the frame visible
     }
 
+    public CommandSelect getCommandSelect() {
+        return frame.getMainScreen().getCommandSelect();
+    }
     public Screen getScreen() {
         return frame;
     }
@@ -96,6 +100,7 @@ public class View
             }
             else if (selected_screen == "MAIN") {
                 displayMainScreen();
+                mainScreen.giveCommandSelectFocus();
             }
             else if (selected_screen == "UNIT_OVERVIEW") {
                 displayUnitOverviewScreen();

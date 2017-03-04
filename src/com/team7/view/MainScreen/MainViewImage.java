@@ -3,6 +3,7 @@ package com.team7.view.MainScreen;
 import com.team7.Main;
 import com.team7.model.Map;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
@@ -197,9 +198,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              * |     .             .                 .              |
                 --------------------------------------------------- */
 
-            System.out.println(x + "," + y);
+           // System.out.println(x + "," + y);
             if(y%2!=0){
-                System.out.println("Error");
+               // System.out.println("Error");
             }
             g2ds.setFont(new Font("default", Font.BOLD, 11));
             g2ds.setColor( new Color(230, 230, 230, 140)  );
@@ -264,6 +265,15 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     if( !grid[xx][yy].isVisible ) {
                         g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                     }
+
+
+                    if( grid[xx][yy].isSelectedPath ) {
+                        g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                    }
+
+
+
+
 
                     x_offset += changePerStep * counter;
                     counter++;
@@ -407,6 +417,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 } ).start();
             }
         }
+
+
 
     //        public void setCurrentPlayer( Player player ) {
 //            this.currentPlayer = player;

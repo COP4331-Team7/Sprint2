@@ -191,6 +191,17 @@ public class Map{
 
         return grid[x][y];
     }
+    public Tile moveUnit(Tile currentTile, int direction){
+        int currentX = currentTile.getxCoordinate();
+        int currentY = currentTile.getyCoordinate();
+        if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && isEven(currentY))){
+           return moveTypeOne(currentX,currentY,direction);
+        }
+        else if ((!isEven(currentX) && !isEven(currentY)) || (isEven(currentX) && !isEven(currentY))) {
+            return moveTypeTwo(currentX,currentY,direction);
+        }
+        return null;
+    }
 
     private Tile moveTypeTwo(int x, int y, int direction){
         //8 move north: y-2

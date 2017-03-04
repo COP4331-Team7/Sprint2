@@ -52,6 +52,7 @@ public class Tile {
 
 
     public boolean isVisible = false;
+    public boolean isSelectedPath = false;
 
 //    TileState playerOneTileState;
 //    TileState playerTwoTileState;

@@ -1,7 +1,7 @@
 package com.team7;
 
-import com.team7.controller.InfluenceRadiusController;
-import com.team7.controller.ScreenSelectController;
+import com.team7.controller.CommandSelectController;
+import com.team7.controller.PathSelectController;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;
@@ -22,12 +22,15 @@ public class Main {
         waitForGUI( view );
         view.setMap( game.getMap() );
 
-        InfluenceRadiusController c = new InfluenceRadiusController(game.getMap(), view);
+        PathSelectController psc = new PathSelectController(game, view );
+        CommandSelectController c = new CommandSelectController(game.getMap(), view);
 
         c.getRadius( player1.getUnits().get(0).getLocation(),3 );
 //        c.getRadius( player1.getUnits().get(1).getLocation(),3 );
 
 
+
+        view.getMainScreen().giveCommandSelectFocus();
 
     }
 

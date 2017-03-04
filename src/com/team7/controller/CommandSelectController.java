@@ -7,12 +7,12 @@ import com.team7.view.View;
 
 import java.util.Set;
 
-public class InfluenceRadiusController {
+public class CommandSelectController {
 
     private Map map = null;
     private View view = null;
 
-    public InfluenceRadiusController(Map map, View view) {
+    public CommandSelectController(Map map, View view) {
         this.map = map;
         this.view = view;
     }
@@ -22,7 +22,6 @@ public class InfluenceRadiusController {
         Set<Tile> tiles = null;
         view.getMainScreen().getMainViewImage().highlightRadius( map.getTilesInRadius(currTile, radius, tiles));
         view.getMainScreen().getMainViewImage().reDrawMap();
-
     }
 
 

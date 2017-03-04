@@ -1,5 +1,6 @@
 package com.team7.view.MainScreen;
 
+import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.unit.Unit;
 
@@ -7,10 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import static javax.swing.SwingUtilities.convertPointFromScreen;
 
 public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
@@ -77,6 +74,8 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private static final int DOWN_KEY_CODE = 40;
 
     private char key_char = '1';
+    private boolean isRecordingPath = false;
+    PathSelectController pathSelectController = null;
 
     public CommandSelect() {
 
@@ -107,10 +106,10 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         addKeyListener(this);
     }
 
-//    public void setController( MainScreenController msc ) {
-//        this.msc = msc;
-//        this.statusInfo = msc.getStatusInfo();
-//    }
+    public void setController( PathSelectController msc ) {
+        this.pathSelectController = msc;
+       // this.statusInfo = pathSelectController.getStatusInfo();
+    }
 
 
     // update the text displaying the currently selected command
@@ -141,7 +140,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         if(currTypeInstance == -1) {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): ");
-            statusInfo.clearStats();
+           // statusInfo.clearStats();
         }
 
     }
@@ -149,6 +148,17 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void keyTyped(KeyEvent e)    {}
     public void keyReleased(KeyEvent e) {}
     public void keyPressed(KeyEvent e)  {
+
+        if( e.getKeyChar() == '0') {        // TODO: change current selection's location
+            pathSelectController.startRecordingPath( pathSelectController.getPlayer().getUnits().get(0).getLocation()  );
+            isRecordingPath = true;
+        }
+
+        if( isRecordingPath ) {
+            pathSelectController.moveCursor( Character.getNumericValue( e.getKeyChar() ) );
+        }
+
+
 
         key_char = e.getKeyChar();
 
