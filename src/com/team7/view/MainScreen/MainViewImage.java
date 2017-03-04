@@ -203,7 +203,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                // System.out.println("Error");
             }
             g2ds.setFont(new Font("default", Font.BOLD, 11));
-            g2ds.setColor( new Color(230, 230, 230, 140)  );
+            g2ds.setColor( new Color(238, 238, 238, 238) );
+
+            g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
             int x_offset, counter, step = 0;
