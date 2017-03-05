@@ -60,6 +60,15 @@ public abstract class StaffedStructure extends Structure {
         return allocatedFood;
     }
 
+    public void influenceWorkersAccordingToFood(){
+        if (!hasEnoughFood){
+            for (Worker worker : workerStaff){
+                worker.changeConstructionRate(-1);
+                worker.changeTaskCompletionRate(-1);
+            }
+        }
+    }
+
     public abstract void beginStructureFunction();
 
     public int advanceConstruction() {

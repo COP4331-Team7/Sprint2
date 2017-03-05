@@ -25,7 +25,7 @@ public abstract class Structure extends Entity {
     private ArrayList<Worker> workerAssigned = new ArrayList<>();
 
 
-    public boolean checkConstructionComplete(){       //called at end of every turn
+    protected boolean checkConstructionComplete(){       //called at end of every turn
         if(levelOfCompletion >= 100){
             levelOfCompletion = 100;
             return true;
@@ -34,20 +34,16 @@ public abstract class Structure extends Entity {
     }
 
     public abstract int advanceConstruction(); //returns how much food was necessary that turn
-
-/*
-    public void advanceConstruction() {
-        if (!checkConstructionComplete()) {
-            //construction not complete
-            for(Worker worker : workerAssigned){
-                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
-            }
-            if(checkConstructionComplete()){
-                setPowered(true);   //construction has finished at this turn
-            }
+    public void influenceStructureAccordingToSupply(){
+        if (!isSufficientlySupplied){
+            degradeStructurePerformance();
         }
     }
-*/
+
+    private void degradeStructurePerformance() {
+        stats.changeHealth(-10);
+    }
+
 
     //called at the end of every turn for all Player structures
     public int computeOreUpkeep() {
@@ -74,6 +70,14 @@ public abstract class Structure extends Entity {
         }
 
         return allocatedEnergy;
+    }
+
+    public void addStructureToCurrentTile(){
+        getLocation().setStructure(this);
+    }
+
+    public void removeStructureFromCurrentTile(){
+        getLocation().setStructure(null);
     }
 
     public void addWorkerToConstruction(Worker worker){
