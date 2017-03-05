@@ -72,10 +72,12 @@ public class PathSelectController {
 
         new Thread( new Runnable() {
                 public void run() {
-                    for (Tile tile:pathTile) {
-                        game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
+                    for(Tile tile: pathTile)
                         tile.isSelectedPath = false;
 
+                    for (int i = 0; i < pathTile.size(); i++) {
+                        Tile tile = pathTile.get(i);
+                        game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         Set<Tile> tiles = null;
                         view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
 
