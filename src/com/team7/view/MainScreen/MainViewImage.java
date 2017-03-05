@@ -310,12 +310,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                         if(player.getName() == "One") {
                             if (tileState.getPlayerOneUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
+                                g2ds.drawImage(meleeImage, x_coord + x_offset+5, y_coord, null);
                             }
                         }
                         else {
                             if (tileState.getPlayerTwoUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
+                                g2ds.drawImage(meleeImage, x_coord + x_offset+5, y_coord, null);
                             }
                         }
 
