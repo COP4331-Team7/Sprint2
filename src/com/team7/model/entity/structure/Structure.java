@@ -15,7 +15,6 @@ public abstract class Structure extends Entity {
     private String type;
     private boolean isPowered;
     private int movesFrozen;
-    private int influenceRadius;
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
     private int allocatedEnergy;
@@ -23,6 +22,66 @@ public abstract class Structure extends Entity {
     private int levelOfCompletion;  //range 0 to 100, incremented at a rate of +1 per worker per turn
     private boolean isSufficientlySupplied;
     private ArrayList<Worker> workerAssigned = new ArrayList<>();
+
+
+    protected boolean checkConstructionComplete(){       //called at end of every turn
+        if(levelOfCompletion >= 100){
+            levelOfCompletion = 100;
+            return true;
+        }
+        return false;
+    }
+
+    public abstract int advanceConstruction(); //returns how much food was necessary that turn
+    public void influenceStructureAccordingToSupply(){
+        if (!isSufficientlySupplied){
+            degradeStructurePerformance();
+        }
+    }
+
+    private void degradeStructurePerformance() {
+        stats.changeHealth(-10);
+    }
+
+
+    //called at the end of every turn for all Player structures
+    public int computeOreUpkeep() {
+        changeAllocatedOre(0-oreUpkeep);
+        if (allocatedOre >= oreUpkeep){
+            //structure is in good standing
+            setSufficientlySupplied(true);
+        }
+        else {
+            setSufficientlySupplied(false);
+        }
+
+        return allocatedOre;
+    }
+
+    public int computeEnergyUpkeep() {
+        changeAllocatedEnergy(0-energyUpkeep);
+        if (allocatedEnergy >= energyUpkeep) {
+            //structure is in good standing
+            setSufficientlySupplied(true);
+        }
+        else{
+            setSufficientlySupplied(false);
+        }
+
+        return allocatedEnergy;
+    }
+
+    public void addStructureToCurrentTile(){
+        getLocation().setStructure(this);
+    }
+
+    public void removeStructureFromCurrentTile(){
+        getLocation().setStructure(null);
+    }
+
+    public void addWorkerToConstruction(Worker worker){
+        workerAssigned.add(worker);
+    }
 
     public StructureStats getStats() {
         return stats;
@@ -54,14 +113,6 @@ public abstract class Structure extends Entity {
 
     public void setMovesFrozen(int movesFrozen) {
         this.movesFrozen = movesFrozen;
-    }
-
-    public int getInfluenceRadius() {
-        return influenceRadius;
-    }
-
-    public void setInfluenceRadius(int influenceRadius) {
-        this.influenceRadius = influenceRadius;
     }
 
     public int getEnergyUpkeep() {
@@ -116,56 +167,11 @@ public abstract class Structure extends Entity {
         this.allocatedOre += quantity;
     }
 
-    private boolean checkConstructionComplete(){       //called at end of every turn
-        if(levelOfCompletion >= 100){
-            levelOfCompletion = 100;
-            return true;
-        }
-        return false;
+    public ArrayList<Worker> getWorkerAssigned() {
+        return workerAssigned;
     }
 
-    public void advanceConstruction() {
-        if (!checkConstructionComplete()) {
-            //construction not complete
-            for(Worker worker : workerAssigned){
-                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
-            }
-            if(checkConstructionComplete()){
-                setPowered(true);   //construction has finished at this turn
-            }
-        }
+    public void setWorkerAssigned(ArrayList<Worker> workerAssigned) {
+        this.workerAssigned = workerAssigned;
     }
-
-    //called at the end of every turn for all Player structures
-    public int computeOreUpkeep() {
-        changeAllocatedOre(0-oreUpkeep);
-        if (allocatedOre >= oreUpkeep){
-            //structure is in good standing
-            setSufficientlySupplied(true);
-        }
-        else {
-            setSufficientlySupplied(false);
-        }
-
-        return allocatedOre;
-    }
-
-    public int computeEnergyUpkeep() {
-        changeAllocatedEnergy(0-energyUpkeep);
-        if (allocatedEnergy >= energyUpkeep) {
-            //structure is in good standing
-            setSufficientlySupplied(true);
-        }
-        else{
-            setSufficientlySupplied(false);
-        }
-
-        return allocatedEnergy;
-    }
-
-    public ArrayList<Tile> computeTilesInRadius() {
-        //call method compute(location, radius)
-        return null;
-    }
-
 }

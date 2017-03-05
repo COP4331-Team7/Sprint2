@@ -30,11 +30,10 @@ public class Farm extends StaffedStructure implements IHarvester {
         setType("Farm");
         setPowered(false);
         setMovesFrozen(0);
-        setInfluenceRadius(3);
+        setVisibilityRadius(3);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
-        setWorkerStaff(new ArrayList<>()); //TODO fill up with 5 workers
-        setFoodUpkeepPerWorker(2);       //amount of upkeep needed PER WORKER
+        setWorkerStaff(new ArrayList<>());
         setLevelOfCompletion(80);
     }
 
@@ -45,10 +44,6 @@ public class Farm extends StaffedStructure implements IHarvester {
 
     @Override
     public void beginStructureFunction() {
-        ArrayList<Tile> tilesInRadius = computeTilesInRadius();
-        for(Tile availableTile : tilesInRadius) {
-            harvestResource(availableTile);
-        }
     }
 
 

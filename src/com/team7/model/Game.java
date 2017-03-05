@@ -1,5 +1,6 @@
 package com.team7.model;
 
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
@@ -29,6 +30,10 @@ public class Game {
 
         //TODO check if this violates TDA
         players[0].addUnit(new Explorer(this.map.getGrid()[30][10], players[0]));
+
+        players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
+        players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
+
         players[1].addUnit(new Explorer(this.map.getGrid()[10][30], players[1]));
 
         updateTileGameState();

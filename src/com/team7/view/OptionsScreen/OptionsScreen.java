@@ -18,7 +18,6 @@ public class OptionsScreen extends JPanel{
 
     private JButton resetControlsButton = new JButton("Reset Controls");
     private JButton changeControlButton = new JButton("Change selected control");
-    private JButton saveControlButton = new JButton("Save changes and exit");
 
     private JList<String> controlsList = new JList<>();
     private DefaultListModel<String> defaultListModel = new DefaultListModel<>();
@@ -44,7 +43,6 @@ public class OptionsScreen extends JPanel{
 
         buttonPanel.add(resetControlsButton, BorderLayout.WEST);
         buttonPanel.add(changeControlButton, BorderLayout.EAST);
-        buttonPanel.add(saveControlButton, BorderLayout.CENTER);
 
         temp.add(screenSelectBtns, BorderLayout.NORTH);
         temp.add(label, BorderLayout.SOUTH);
@@ -86,12 +84,6 @@ public class OptionsScreen extends JPanel{
     public JList<String> getControlsList() {
         return controlsList;
     }
-
-
-    public JButton getSaveControlButton() {
-        return saveControlButton;
-    }
-
 
     public JButton getMainScreenButton() {
         return screenSelectBtns.getMainScreenButton();

@@ -1,8 +1,9 @@
 package com.team7.model;
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
-import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 public class Player {
     private ArrayList<Unit> units;
     private ArrayList<StaffedStructure> staffedStructures;
-    //private ArrayList<ObservationTower> observationTowers;
+    private ArrayList<ObservationTower> observationTowers;
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
@@ -32,7 +33,7 @@ public class Player {
         this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
         staffedStructures = new ArrayList<>();                        // max size of staffed + observation should be 10
-       // observationTowers = new ArrayList<>();
+        observationTowers = new ArrayList<>();
         armies = new ArrayList<Army>();                              // max size should be 10
         workers = new ArrayList<Worker>();
         research = 0;
@@ -51,42 +52,75 @@ public class Player {
 
 
    /* at every turn:
-    *  1. build/check if structure is construction complete.  if ready, isPowered should be true
+    *  1. build/check if structure is construction complete.
     *  2. check sufficient upkeep, decrement Player's resources.
     *  3. do automatic structure functions (if applicable)
     *  4. execute structure Q
    */
-
-
     private void initiateStructureEffects() {
         int energyLevelsOfStructures = 0;
         int foodLevelOfStructures = 0;
         int oreLevelOfStructures = 0;
 
+        int foodCostOfConstruction = 0;
+
+        //iterate through all staffed structures, which also have a function
         for(StaffedStructure staffedStructure : staffedStructures){
-            staffedStructure.advanceConstruction();    //builds a structure, does nothing if already complete
+            foodCostOfConstruction += staffedStructure.advanceConstruction();    //builds a structure, does nothing if already complete
 
             energyLevelsOfStructures += staffedStructure.computeEnergyUpkeep();
             foodLevelOfStructures += staffedStructure.computeFoodUpkeep();
             oreLevelOfStructures += staffedStructure.computeOreUpkeep();
 
+            staffedStructure.influenceStructureAccordingToSupply();
+            staffedStructure.influenceWorkersAccordingToFood();
+
             staffedStructure.beginStructureFunction();
 
-            //staffedStructure.executeQ();
         }
 
-        //TODO iterate thru Observation Towers as well
+        //iterate through obsv towers to ensure they are build and supplied with energy/ore
+        for(ObservationTower observationTower : observationTowers){
+            foodCostOfConstruction += observationTower.advanceConstruction();
+
+            energyLevelsOfStructures += observationTower.computeEnergyUpkeep();
+            oreLevelOfStructures += observationTower.computeOreUpkeep();
+
+            observationTower.influenceStructureAccordingToSupply();
+        }
+
+        nutrients -= foodCostOfConstruction;
+
         power += energyLevelsOfStructures;
         nutrients += foodLevelOfStructures;
         metal += oreLevelOfStructures;
     }
 
+    //TODO simplify iterating via Entities
     public HashMap<Tile, Integer> getAllTileRadiusMap() {
         HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
         for (Unit unit : units) {
-            Tile tile = unit.getLocation();
-            int radius = unit.getVisibilityRadius();
-            tileRadiusMap.put(tile, radius);
+            if(unit.isPowered()){
+                Tile tile = unit.getLocation();
+                int radius = unit.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (StaffedStructure structure : staffedStructures) {
+            if (structure.isPowered()){
+                Tile tile = structure.getLocation();
+                int radius = structure.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (ObservationTower observationTower : observationTowers) {
+            //if (observationTower.isPowered()){    COMMENTED OUT FOR TESTING
+                Tile tile = observationTower.getLocation();
+                int radius = observationTower.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+          //  }
         }
 
         return tileRadiusMap;
@@ -193,22 +227,43 @@ public class Player {
     }
 
     // Structure helpers
-    //TODO add helper for obsv tower
+
+    public ObservationTower addObservationTower(ObservationTower observationTower){
+
+        // Ensures we are able to add a structure
+        if(staffedStructures.size() + observationTowers.size() == 10){
+            System.out.println("You have too many structures.");
+            return null;
+        }
+
+        // Physically add the structure and put it on the map
+        observationTowers.add(observationTower);
+        observationTower.addStructureToCurrentTile();
+
+        return observationTower;
+    }
+
+    public ObservationTower removeObservationTower(ObservationTower observationTower) {
+        // Physically remove unit form player and tile
+        observationTowers.remove(observationTower);
+        observationTower.removeStructureFromCurrentTile();
+
+        return observationTower;
+    }
     public ArrayList<StaffedStructure> getStaffedStructures() {
         return staffedStructures;
     }
 
     public StaffedStructure addStaffedStructure(StaffedStructure staffedStructure) {
-
-        // Ensures we are able to have a unit
-        if(staffedStructures.size() == 10){ //TODO add +obsvtower.size
+        // Ensures we are able to add a structure
+        if(staffedStructures.size() + observationTowers.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
 
         // Physically add the structure and put it on the map
         staffedStructures.add(staffedStructure);
-        staffedStructure.getLocation().setStructure(staffedStructure);
+        staffedStructure.addStructureToCurrentTile();
 
         return staffedStructure;
     }
@@ -218,7 +273,7 @@ public class Player {
 
         // Physically remove unit form player and tile
         staffedStructures.remove(staffedStructure);
-        staffedStructure.getLocation().setStructure(null);
+        staffedStructure.removeStructureFromCurrentTile();
 
         return staffedStructure;
     }

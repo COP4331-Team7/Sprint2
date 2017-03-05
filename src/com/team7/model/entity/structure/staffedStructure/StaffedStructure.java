@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class StaffedStructure extends Structure {
     private ArrayList<Worker> workerStaff = new ArrayList<>();
-    private int foodUpkeepPerWorker; //all staffedStructures requires Nutrient from Player
+    private final int foodUpkeepPerWorker = 2; //all staffedStructures requires Nutrient from Player
     private int allocatedFood;
     private boolean hasEnoughFood;
 
@@ -24,10 +24,6 @@ public abstract class StaffedStructure extends Structure {
 
     public int getFoodUpkeepPerWorker() {
         return foodUpkeepPerWorker;
-    }
-
-    public void setFoodUpkeepPerWorker(int foodUpkeepPerWorker) {
-        this.foodUpkeepPerWorker = foodUpkeepPerWorker;
     }
 
     public int getAllocatedFood() {
@@ -47,6 +43,10 @@ public abstract class StaffedStructure extends Structure {
     }
 
     public int computeFoodUpkeep() {
+        if(!checkConstructionComplete()){
+            //food upkeep only necessary once workers are actively staffing the structure
+            return 0;
+        }
         int totalFoodUpkeep = workerStaff.size() * foodUpkeepPerWorker;
         changeAllocatedFood(0- totalFoodUpkeep);
         if (allocatedFood >= totalFoodUpkeep) {
@@ -60,6 +60,31 @@ public abstract class StaffedStructure extends Structure {
         return allocatedFood;
     }
 
+    public void influenceWorkersAccordingToFood(){
+        if (!hasEnoughFood){
+            for (Worker worker : workerStaff){
+                worker.changeConstructionRate(-1);
+                worker.changeTaskCompletionRate(-1);
+            }
+        }
+    }
+
     public abstract void beginStructureFunction();
+
+    public int advanceConstruction() {
+        int foodUpkeepDuringConstruction = 0;
+        if (!checkConstructionComplete()) {
+            //construction not complete
+            for(Worker worker : getWorkerAssigned()){
+                foodUpkeepDuringConstruction += 2;
+                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
+            }
+            if(checkConstructionComplete()){
+                setWorkerStaff(getWorkerAssigned());    //move workers from building to staff
+                setPowered(true);   //construction has finished at this turn
+            }
+        }
+        return foodUpkeepDuringConstruction;
+    }
 
 }
