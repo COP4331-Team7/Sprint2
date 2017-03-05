@@ -76,10 +76,17 @@ public class ConfigReader {
       prop.load(input);   // load a properties file
       input.close();      //close input stream
 
-      FileOutputStream out = new FileOutputStream(currentFile);  //create output to same file location
-      prop.setProperty(key, value); //change property values
-      prop.store(out, null);  //store output stream to 'overwrite' old file
-      out.close();  //close
+
+      if(!prop.contains(value)){
+        FileOutputStream out = new FileOutputStream(currentFile);  //create output to same file location
+        prop.setProperty(key, value); //change property values
+        prop.store(out, null);  //store output stream to 'overwrite' old file
+        out.close();  //close
+      } else{
+        System.out.println(value + " already exists. Choose a different control.");
+      }
+
+
 
     } catch (IOException ex) {
       ex.printStackTrace();
