@@ -76,13 +76,14 @@ public class IdManager {
             }
             ID = availableIDs.get(0);
         }
+        //TODO figure out logic now that structures is separated into two lists
         else if(entity instanceof Structure) {
-            if(player.getStaffedStructures().size() >= 10) {
+            if(player.getStaffedStructures().size() + player.getObservationTowers().size() >= 10) {
                 return -1;
             }
 
             ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
-            for(int i = 0; i < player.getStaffedStructures().size(); i++){
+            for(int i = 0; i < (player.getStaffedStructures().size() + player.getObservationTowers().size()); i++){
                 availableIDs.remove(Integer.valueOf(player.getStaffedStructures().get(i).getId()));
             }
             ID = availableIDs.get(0);
