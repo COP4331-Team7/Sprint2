@@ -53,16 +53,6 @@ public class OptionsController{
             }
         });
 
-        optionsScreen.getSaveControlButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == optionsScreen.getSaveControlButton()) {
-                    //return to main screen
-                }
-            }
-        });
-
-
         optionsScreen.getResetControlsButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
