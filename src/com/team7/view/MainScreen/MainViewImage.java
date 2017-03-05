@@ -1,7 +1,9 @@
 package com.team7.view.MainScreen;
 
 import com.team7.Main;
+import com.team7.model.DrawableTileState;
 import com.team7.model.Map;
+import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
 import com.team7.model.terrain.Crater;
@@ -57,14 +59,15 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
+        /****************************************************************/
+        Player player = null;
+
         public MainViewImage( MainViewMiniMap ms )
         {
             MAP_IMAGE_WIDTH_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()   * mapScale_x);
             MAP_IMAGE_HEIGHT_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * mapScale_y);
             TILES_VISIBLE_Y = (int)((MAP_IMAGE_WIDTH_IN_PIXELS / (2 * TILE_SIZE - TILE_SIZE/1.73))) - 1;
             TILES_VISIBLE_X = (2 * MAP_IMAGE_HEIGHT_IN_PIXELS / TILE_SIZE) + 2;
-
-            System.out.print(TILES_VISIBLE_Y + "   " + TILES_VISIBLE_X);
 
             addMouseListener(this);
             this.mainViewSelection = ms;
@@ -108,6 +111,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
             zoomToDestination(28, 6, 60);
         }
+
+         public void setCurrPlayer(Player p) {
+              player = p;
+            }
 
          public BufferedImage getFullMapImage() {
              BufferedImage mapImage;
@@ -178,10 +185,19 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 for (int j = 0; j < grid[i].length; j++) {
                     if( tiles.contains( grid[i][j] ) ) {
                         grid[i][j].isVisible = true;
+                        if(player != null)
+                            grid[i][j].markVisible( player.getName() );
                     }
+//                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] )  ) {
+//                        grid[i][j].markShrouded( player.getName() );
+//                    }
                     else {
                         grid[i][j].isVisible = false;
+                        if(player != null)
+                            grid[i][j].markHidden( player.getName() );
                     }
+
+                    grid[i][j].refreshDrawableState();
                 }
           }
 
@@ -230,7 +246,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 step++;
 
                 for(int i = 0; i < TILES_VISIBLE_Y; i++) {
-                counter = 1;
+                counter = 0;
 
                     int xx = x + i;                // tile index on whole map
                     int yy;
@@ -251,41 +267,63 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     x_coord = i * TILE_SIZE;
                     y_coord = (int)(j * TILE_SIZE / 2.4);
 
+                    x_offset += changePerStep * ++counter;
 
-                    // draw terrain
-                    if( grid[xx][yy].getTerrain() instanceof Mountains) {
-                        g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
-                    }
-                    else if (grid[xx][yy].getTerrain() instanceof Crater) {
-                        g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
-                    }
-                    else if (grid[xx][yy].getTerrain() instanceof Desert) {
-                        g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
-                    }
-                    else if (grid[xx][yy].getTerrain() instanceof Flatland) {
-                        g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
+                    DrawableTileState tileState = null;
+
+                    if( player != null) {
+                        if (grid[xx][yy].getDrawableStateByPlayer(player.getName()) != null) {
+                            tileState = grid[xx][yy].getDrawableStateByPlayer(player.getName());
+                        }
                     }
 
-
-                    if (grid[xx][yy].getUnits().size() > 0 ) {
-                        g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
-                    }
-                    // set opacity before drawing tile
-                    if( !grid[xx][yy].isVisible ) {
+                    if(tileState == null) {
                         g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                        continue;
                     }
+                    else {
+                        // draw terrain
+                        if( tileState.getTerrainType() == "Mountains") {
+                            g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
+                        }
+                        else if (tileState.getTerrainType() == "Crater") {
+                            g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
+                        }
+                        else if (tileState.getTerrainType() == "Desert") {
+                            g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
+                        }
+                        else if (tileState.getTerrainType() == "Flatland") {
+                            g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
+                        }
+
+                        if(player.getName() == "One") {
+                            if(grid[xx][yy].getPlayerOneShrouded()) {
+                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                            }
+                        }
+                        else {
+                            if(grid[xx][yy].getPlayerTwoShrouded()) {
+                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                            }
+                        }
 
 
-                    if( grid[xx][yy].isSelectedPath ) {
-                        g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                        if(player.getName() == "One") {
+                            if (tileState.getPlayerOneUnits() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
+                            }
+                        }
+                        else {
+                            if (tileState.getPlayerTwoUnits() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset - 10, y_coord, null);
+                            }
+                        }
+
+                        if( grid[xx][yy].isSelectedPath ) {
+                            g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                        }
+
                     }
-
-
-
-
-
-                    x_offset += changePerStep * counter;
-                    counter++;
 
                     int s1_x = -15;
                     int s1_y =  31;

@@ -88,7 +88,7 @@ public class PathSelectController {
                         });
 
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(300);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

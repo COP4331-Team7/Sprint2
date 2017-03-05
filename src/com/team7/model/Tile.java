@@ -79,9 +79,13 @@ public class Tile {
         armies = new ArrayList<>();
         workers = new ArrayList<>();
         //    realTileState = new TileState();
-        realDraw = new DrawableTileState();
+
+
+        realDraw = new DrawableTileState( this );
 
         populateTileBasedOnTerrain(terrain);
+        realDraw = new DrawableTileState( this );
+
 
         //copy real state to both players when Tile is initialized
         playerOneDraw = new DrawableTileState(realDraw);
@@ -92,8 +96,6 @@ public class Tile {
         //set Tile enum visibility
         playerOneVisibility = VisibilityState.NonVisible;
         playerTwoVisibility = VisibilityState.NonVisible;
-
-
     }
 
     //check tile terrain to populate Tile components
@@ -255,6 +257,12 @@ public class Tile {
         }
     }
 
+    public void refreshDrawableState() {
+        playerTwoDraw.refresh( this);
+        playerOneDraw.refresh( this);
+        realDraw.refresh( this);
+    }
+
 
 /*    //adds a Unit to the real state
     public void addUnitToTile(Unit unit) {
@@ -278,6 +286,9 @@ public class Tile {
 
         // Physically add the unit
         this.units.add(unit);
+        realDraw.incrementPlayerOneUnits(1);
+        realDraw.incrementPlayerTwoUnits(1);
+
 
         return unit;
     }
@@ -351,5 +362,47 @@ public class Tile {
             }
         }
         return null;
+    }
+
+    //        Visible, NonVisible, Shrouded
+
+    public boolean getPlayerOneVisibility() {
+        return playerOneVisibility == VisibilityState.Visible;
+    }
+
+    public boolean getPlayerOneShrouded() {
+        return playerOneVisibility == VisibilityState.Shrouded;
+    }
+    public boolean getPlayerTwoShrouded() {
+        return playerOneVisibility == VisibilityState.Shrouded;
+    }
+
+
+    public boolean getPlayerTwoVisibility() {
+        return playerTwoVisibility == VisibilityState.Visible;
+    }
+
+    public void markVisible(String name) {
+        if(name == "One") {
+            playerOneVisibility = VisibilityState.Visible;
+        }
+        else
+            playerTwoVisibility = VisibilityState.Visible;
+    }
+
+    public void markShrouded(String name) {
+        if(name == "One") {
+            playerOneVisibility = VisibilityState.Shrouded;
+        }
+        else
+            playerTwoVisibility = VisibilityState.Shrouded;
+    }
+
+    public void markHidden(String name) {
+        if(name == "One") {
+            playerOneVisibility = VisibilityState.NonVisible;
+        }
+        else
+            playerTwoVisibility = VisibilityState.NonVisible;
     }
 }
