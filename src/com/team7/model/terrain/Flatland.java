@@ -11,6 +11,7 @@ import java.util.Arrays;
  */
 public class Flatland extends Terrain {
     public Flatland() {
+        setTerrainType("Flatland");
         setPassable(true);
         setMovementInfluence(0);
         setAreaEffects(new ArrayList<>

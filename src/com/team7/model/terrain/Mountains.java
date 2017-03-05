@@ -11,6 +11,7 @@ import java.util.Arrays;
  */
 public class Mountains extends Terrain {
     public Mountains() {
+        setTerrainType("Mountains");
         setPassable(false);
         setMovementInfluence(0);
         setAreaEffects(new ArrayList<>

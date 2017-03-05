@@ -64,7 +64,7 @@ public abstract class StaffedStructure extends Structure {
         if (!hasEnoughFood){
             for (Worker worker : workerStaff){
                 worker.changeConstructionRate(-1);
-                worker.changeTaskCompletionRate(-1);
+                worker.setFed(false);       //isFed is used when using workers for specific productions
             }
         }
     }
