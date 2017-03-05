@@ -1,6 +1,7 @@
 package com.team7.model;
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.staffedStructure.Capital;
@@ -51,7 +52,7 @@ public class Player {
 
 
    /* at every turn:
-    *  1. build/check if structure is construction complete. 
+    *  1. build/check if structure is construction complete.
     *  2. check sufficient upkeep, decrement Player's resources.
     *  3. do automatic structure functions (if applicable)
     *  4. execute structure Q
@@ -95,12 +96,31 @@ public class Player {
         metal += oreLevelOfStructures;
     }
 
+    //TODO simplify iterating via Entities
     public HashMap<Tile, Integer> getAllTileRadiusMap() {
         HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
         for (Unit unit : units) {
-            Tile tile = unit.getLocation();
-            int radius = unit.getVisibilityRadius();
-            tileRadiusMap.put(tile, radius);
+            if(unit.isPowered()){
+                Tile tile = unit.getLocation();
+                int radius = unit.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (StaffedStructure structure : staffedStructures) {
+            if (structure.isPowered()){
+                Tile tile = structure.getLocation();
+                int radius = structure.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (ObservationTower observationTower : observationTowers) {
+            //if (observationTower.isPowered()){    COMMENTED OUT FOR TESTING
+                Tile tile = observationTower.getLocation();
+                int radius = observationTower.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+          //  }
         }
 
         return tileRadiusMap;
