@@ -159,7 +159,7 @@ public class Tile {
     public int structureInteractWithTileForResource(int quantityOfResourceToHarvest) {
         if (resource != null) {
             int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.decrementResourceQuantity(quantityOfResourceToHarvest);
+            resource.changeResourceQuantity(0-quantityOfResourceToHarvest);
             if (resourceQuantity == 0 && !(resource instanceof Food)) {
                 resource = null;    //resource has been depleted and nonrenewable, set to NULL
             }
