@@ -96,7 +96,7 @@ public class PathSelectController {
                         }
                                                                                         // 11 = numTilesVisibleX, 16 = numTilesVisibleY
                         if(i == pathTile.size() - 1) {
-                            view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 200  );
+                            view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 100  );
                             view.redrawView();
                         }
 

@@ -279,8 +279,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     }
 
                     if(tileState == null) {
+                       // tileState = grid[xx][yy].getDrawableStateByPlayer("real");
                         g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
-                        continue;
                     }
                     else {
                         // draw terrain
@@ -322,6 +322,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                             }
                         }
+
 
                     }
 

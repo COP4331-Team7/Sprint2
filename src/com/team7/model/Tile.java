@@ -317,6 +317,9 @@ public class Tile {
 
     //called by controller to determine which tile state to draw
     public DrawableTileState getDrawableStateByPlayer(String playerName) {
+        if(playerName.contains(("real"))) {
+            return realDraw;
+        }
         if (playerName.contains("One")) {
             switch (playerOneVisibility) {
                 case Shrouded:
