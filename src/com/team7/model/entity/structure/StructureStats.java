@@ -38,4 +38,8 @@ public class StructureStats {
     public int getHealth() {
         return health;
     }
+
+    public void changeHealth(int delta){
+        health += delta;
+    }
 }
