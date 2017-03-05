@@ -34,8 +34,8 @@ public class PathSelectController {
 
     public void moveCursor(int direction) {
 
-        if (game.getMap().moveUnit(selectedTile, direction).isVisible == false  )
-            return;
+       // if (game.getMap().moveUnit(selectedTile, direction).isVisible == false  )
+           // return;
 
         selectedTile.isSelectedPath = false;
         selectedTile = game.getMap().moveUnit(selectedTile, direction);
@@ -64,6 +64,9 @@ public class PathSelectController {
 
     public void drawPath(Unit unit){
 
+        if(unit == null)
+            return;
+
         startTile.removeUnitFromTile(unit);
         startTile.isSelectedPath = false;
 
@@ -73,6 +76,9 @@ public class PathSelectController {
                         game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         tile.isSelectedPath = false;
 
+                        Set<Tile> tiles = null;
+                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
+
 
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
@@ -81,16 +87,13 @@ public class PathSelectController {
                             }
                         });
 
-                        Set<Tile> tiles = null;
-                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
-
                         try {
                             Thread.sleep(200);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-                        //view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 75  );
+                                                                                        // 11 = numTilesVisibleX, 16 = numTilesVisibleY
+                        view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 200  );
 
                     }
                 }

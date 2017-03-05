@@ -102,6 +102,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public void setMap(Map map) {
             this.grid = map.getGrid();
             mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
+            zoomToDestination(28, 6, 60);
         }
 
          public BufferedImage getFullMapImage() {
