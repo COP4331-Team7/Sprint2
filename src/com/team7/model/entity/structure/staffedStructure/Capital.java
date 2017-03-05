@@ -32,8 +32,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         setInfluenceRadius(5);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
-        setWorkerStaff(new ArrayList<>()); //TODO fill up with 5 workers
-        setFoodUpkeepPerWorker(2);       //amount of upkeep needed PER WORKER
+        setWorkerStaff(new ArrayList<>());
         setLevelOfCompletion(80);
 
     }
@@ -52,10 +51,5 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     @Override
     public void beginStructureFunction() {
 
-        //harvest
-        ArrayList<Tile> tilesInRadius = computeTilesInRadius();
-        for(Tile availableTile : tilesInRadius) {
-            harvestResource(availableTile);
-        }
     }
 }

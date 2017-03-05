@@ -16,9 +16,5 @@ public class Mine extends StaffedStructure implements IHarvester {
 
     @Override
     public void beginStructureFunction() {
-        ArrayList<Tile> tilesInRadius = computeTilesInRadius();
-        for(Tile availableTile : tilesInRadius) {
-            harvestResource(availableTile);
-        }
     }
 }
