@@ -15,7 +15,6 @@ public abstract class Structure extends Entity {
     private String type;
     private boolean isPowered;
     private int movesFrozen;
-    private int influenceRadius;
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
     private int allocatedEnergy;
@@ -114,14 +113,6 @@ public abstract class Structure extends Entity {
 
     public void setMovesFrozen(int movesFrozen) {
         this.movesFrozen = movesFrozen;
-    }
-
-    public int getInfluenceRadius() {
-        return influenceRadius;
-    }
-
-    public void setInfluenceRadius(int influenceRadius) {
-        this.influenceRadius = influenceRadius;
     }
 
     public int getEnergyUpkeep() {

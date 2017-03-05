@@ -22,7 +22,7 @@ public class ObservationTower extends Structure {
         setType("Observation Tower");
         setPowered(false);
         setMovesFrozen(0);
-        setInfluenceRadius(5);
+        setVisibilityRadius(4);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
         setLevelOfCompletion(95);

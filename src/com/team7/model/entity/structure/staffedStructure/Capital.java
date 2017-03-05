@@ -29,7 +29,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         setType("Capital");
         setPowered(false);
         setMovesFrozen(0);
-        setInfluenceRadius(5);
+        setVisibilityRadius(4);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
         setWorkerStaff(new ArrayList<>());
