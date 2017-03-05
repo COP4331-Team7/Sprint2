@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 import com.team7.model.Game;
+import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.view.View;
 
@@ -20,6 +21,16 @@ public class MainScreenController {
 
     // ===============================================
 
+
+    // update status info when turn changes
+    public void updatePlayerStatusInfo() {
+        Player currPlayer = game.getCurrentPlayer();
+        view.getMainScreen().getMainViewInfo().setLifeLabel( Integer.toString( currPlayer.getNutrients() ) );
+        view.getMainScreen().getMainViewInfo().setResearchLabel( Integer.toString( currPlayer.getResearch() ) );
+        view.getMainScreen().getMainViewInfo().setConstructionLabel( Integer.toString( currPlayer.getMetal() ) );
+        view.getMainScreen().getMainViewInfo().setPowerLabel( Integer.toString( currPlayer.getPower() ) );
+    }
+
     // add action listeners to Main Screen buttons
     public void addActionListeners() {
         view.getMainScreen().getMainScreenButton().addActionListener(new ActionListener() {
@@ -38,19 +49,19 @@ public class MainScreenController {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getEndTurnButton())
                     game.nextTurn();
-                      Set<Tile> tiles = null;
-                     view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 3, tiles));
+                    updatePlayerStatusInfo();
+                    Set<Tile> tiles = null;
+                    view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 3, tiles));
                     view.getMainScreen().getMainViewImage().zoomToDestination( game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11/2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16/2, 75  );
                     view.getMainScreen().getCommandSelect().setFocusable(true);
                     view.getMainScreen().getCommandSelect().requestFocus();
-
             }
         });
 
         view.getMainScreen().getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getExecuteCommandButton())
-                    System.out.println("execute command");
+                    System.out.println("do command");
             }
         });
 

@@ -25,8 +25,10 @@ public class MainViewInfo extends JPanel {
     private JLabel lifeLabel;
     private JLabel researchLabel;
     private JLabel constructionLabel;
+    private JLabel powerLabel;
 
-        public MainViewInfo()
+
+    public MainViewInfo()
         {
             JPanel t = new JPanel();
             t.setLayout(new GridLayout(0,1));
@@ -52,16 +54,33 @@ public class MainViewInfo extends JPanel {
             productionLabel.setFont(new Font("Serif", 0, 12));
             itemLabel.setFont(new Font("Serif", 0, 12));
             t.add(itemLabel);
-            lifeLabel = new JLabel("Money:");
-            lifeLabel.setForeground(Color.red);
+
+
+
+
+            lifeLabel = new JLabel("Nutrients:");
+            lifeLabel.setFont(new Font("Serif", Font.BOLD, 15));
+            lifeLabel.setForeground(Color.blue);
             t.add(lifeLabel);
             researchLabel = new JLabel("Research:");
-            researchLabel.setForeground(Color.red);
+            researchLabel.setFont(new Font("Serif", Font.BOLD, 15));
+            researchLabel.setForeground(Color.blue);
             t.add(researchLabel);
-            constructionLabel = new JLabel("Construction:");
+            constructionLabel = new JLabel("Metal:");
+            constructionLabel.setFont(new Font("Serif", Font.BOLD, 15));
+            researchLabel.setForeground(Color.blue);
+            constructionLabel.setForeground(Color.blue);
             t.add(constructionLabel);
-            constructionLabel.setForeground(Color.red);
+            researchLabel.setForeground(Color.blue);
+            powerLabel = new JLabel("Power: ");
+            powerLabel.setForeground(Color.blue);
+            powerLabel.setFont(new Font("Serif", Font.BOLD, 15));
+            t.add(powerLabel);
             this.add( t, BorderLayout.SOUTH );
+
+            setPreferredSize(new Dimension(200, 200));
+
+            repaint();
         }
 
     public void clearStats() {
@@ -76,9 +95,11 @@ public class MainViewInfo extends JPanel {
     }
 
     public void clearPlayerStats() {
-        lifeLabel.setText("Money:");
+        lifeLabel.setText("Nutrients:");
         researchLabel.setText("Research:");
-        constructionLabel.setText("Construction:");
+        constructionLabel.setText("Metal:");
+        powerLabel.setText("Power:");
+
     }
 
     public void setOffensiveDamageLabel(String s) {
@@ -100,18 +121,22 @@ public class MainViewInfo extends JPanel {
         productionLabel.setText("Production rates: " + s);
     }
     public void setLifeLabel(String s) {
-        lifeLabel.setText("Money: " + s);
+        lifeLabel.setText("Nutrients: " + s);
     }
     public void setResearchLabel(String s) {
         researchLabel.setText("Research: " + s);
     }
     public void setConstructionLabel(String s) {
-        constructionLabel.setText("Construction:  " + s);
+        constructionLabel.setText("Metal:  " + s);
     }
+    public void setPowerLabel(String s) {
+        powerLabel.setText("Power:  " + s);
+    }
+
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
     }
-
+    }
 
     //    public void setUnit(Unit unit) {
 //        if(unit == null)
@@ -138,12 +163,14 @@ public class MainViewInfo extends JPanel {
 //        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
 //        // setItemLabel( );
 //    }
+
 //    public void updateStats(Player player) {
 //        currentPlayer = player;
 //        setLifeLabel( Integer.toString( player.getMoney() ) );
 //        setResearchLabel( Integer.toString( player.getResearch() ) );
 //        setConstructionLabel( Integer.toString( player.getConstruction() ) );
 //    }
+
 //
 //    public void updateStats() {
 //        currentPlayer = currentPlayer;
@@ -155,4 +182,5 @@ public class MainViewInfo extends JPanel {
 //          updateStatsteStats( player );
 //    }
 
-}
+
+

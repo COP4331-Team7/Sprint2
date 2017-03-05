@@ -102,6 +102,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.add( endTurnButton );
 
         this.add( commandSelectPanel, BorderLayout.SOUTH );
+        setPreferredSize(new Dimension(350, 200));
 
         addKeyListener(this);
     }

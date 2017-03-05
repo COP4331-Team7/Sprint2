@@ -101,8 +101,8 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void mouseExited(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {
 
-        double x_offset = ( (double)e.getX() / WIDTH ) * MAP_TILE_WIDTH;
-        double y_offset = ( (double)e.getY() / HEIGHT ) * MAP_TILE_HEIGHT;
+        double x_offset = ( (double)e.getX() / WIDTH ) * MAP_TILE_WIDTH - 5;
+        double y_offset = ( (double)e.getY() / HEIGHT ) * MAP_TILE_HEIGHT - 5;
 
         if(x_offset < 0)              // adjust if out of bounds
             x_offset = 0;
