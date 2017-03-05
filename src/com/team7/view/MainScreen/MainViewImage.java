@@ -188,9 +188,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if(player != null)
                             grid[i][j].markVisible( player.getName() );
                     }
-//                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] )  ) {
-//                        grid[i][j].markShrouded( player.getName() );
-//                    }
+                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] )  ) {
+                        grid[i][j].markShrouded( player.getName() );
+                    }
                     else {
                         grid[i][j].isVisible = false;
                         if(player != null)

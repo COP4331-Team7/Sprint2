@@ -72,6 +72,7 @@ public class PathSelectController {
 
         new Thread( new Runnable() {
                 public void run() {
+
                     for(Tile tile: pathTile)
                         tile.isSelectedPath = false;
 
@@ -81,7 +82,6 @@ public class PathSelectController {
                         Set<Tile> tiles = null;
                         view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
 
-
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
                             public void run() {
@@ -90,12 +90,11 @@ public class PathSelectController {
                         });
 
                         try {
-                            Thread.sleep(300);
+                            Thread.sleep(200);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                                                                                         // 11 = numTilesVisibleX, 16 = numTilesVisibleY
-
                         if(i == pathTile.size() - 1) {
                             view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 200  );
                             view.redrawView();
@@ -104,8 +103,6 @@ public class PathSelectController {
                     }
                 }
         }).start();
-
-
 
     }
 
