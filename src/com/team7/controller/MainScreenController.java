@@ -47,16 +47,18 @@ public class MainScreenController {
         });
         view.getMainScreen().getEndTurnButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getMainScreen().getEndTurnButton())
+                if (e.getSource() == view.getMainScreen().getEndTurnButton()) {
+                    PathSelectController.isRecording = false;
                     game.nextTurn();
                     updatePlayerStatusInfo();
                     // BAD!!!!!!!!! TODO: fix
-                    view.getMainScreen().getMainViewImage().setCurrPlayer( game.getCurrentPlayer()  );
+                    view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
                     Set<Tile> tiles = null;
-                    view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 3, tiles));
-                    view.getMainScreen().getMainViewImage().zoomToDestination( game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11/2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16/2, 75  );
+                    view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 3, tiles));
+                    view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, 75);
                     view.getMainScreen().getCommandSelect().setFocusable(true);
                     view.getMainScreen().getCommandSelect().requestFocus();
+                }
             }
         });
         view.getMainScreen().getOptionScreenButton().addActionListener(new ActionListener() {

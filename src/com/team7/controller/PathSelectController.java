@@ -18,7 +18,7 @@ public class PathSelectController {
 
     private CommandSelect commandView = null;
 
-    boolean isRecording = false;
+    public static boolean isRecording = false;
     Tile selectedTile = null;
     Tile startTile = null;
 

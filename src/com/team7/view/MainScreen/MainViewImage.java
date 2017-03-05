@@ -1,6 +1,7 @@
 package com.team7.view.MainScreen;
 
 import com.team7.Main;
+import com.team7.controller.PathSelectController;
 import com.team7.model.DrawableTileState;
 import com.team7.model.Map;
 import com.team7.model.Player;
@@ -188,9 +189,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if(player != null)
                             grid[i][j].markVisible( player.getName() );
                     }
-//                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] )  ) {
-//                        grid[i][j].markShrouded( player.getName() );
-//                    }
+                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] ) && PathSelectController.isRecording) {
+                        grid[i][j].markShrouded( player.getName() );
+                    }
                     else {
                         grid[i][j].isVisible = false;
                         if(player != null)
