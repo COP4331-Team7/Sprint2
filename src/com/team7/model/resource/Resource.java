@@ -27,8 +27,8 @@ public abstract class Resource{
         this.statInfluenceQuantity = statInfluenceQuantity;
     }
 
-    public void decrementResourceQuantity(int amountToDecrementBy) {
-        statInfluenceQuantity -= amountToDecrementBy;
+    public void changeResourceQuantity(int delta) {
+        statInfluenceQuantity += delta;
         if(statInfluenceQuantity < 0){
             statInfluenceQuantity = 0;  //reset to 0
         }
