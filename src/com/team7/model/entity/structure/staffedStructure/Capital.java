@@ -18,7 +18,12 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         setLocation(location);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
-        productionRateMap.put("test", 1);       //TODO figure out how production is used
+        productionRateMap.put("harvestOre", 2);   //can harvest 2 ore per turn per worker per resource
+        productionRateMap.put("harvestEnergy", 2);   //can harvest 2 energy per turn per worker per resource
+        productionRateMap.put("harvestFood", 2);   //can harvest 2 food per turn per resource per worker
+        productionRateMap.put("heal", 20);      //can heal all units on tile by +20 per turn
+        productionRateMap.put("produceExplorer", 2); //takes 2 turns to produce an explorer
+        productionRateMap.put("produceWorker", 1);  //takes 1 turn to produce a worker
         setStats(new StructureStats(
                 0,
                 100,
