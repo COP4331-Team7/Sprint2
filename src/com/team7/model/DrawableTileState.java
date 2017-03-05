@@ -25,34 +25,14 @@ public class DrawableTileState {
     private String resourceType;
     private String resourceQuantity;
     private String structureType;
-    private String structureStatus;
+    private boolean structureStatus;
     private ArrayList<String> units;
     private ArrayList<String> armies;
     private ArrayList<String> workers;
 
     private int numUnits = 0;
 
-    public DrawableTileState(Tile tile){
-
-        // set terrain
-        if( tile.getTerrain() instanceof Mountains) {
-            terrainType = "Mountains";
-        }
-        else if (tile.getTerrain() instanceof Crater) {
-            terrainType = "Crater";
-        }
-        else if (tile.getTerrain() instanceof Desert) {
-            terrainType = "Desert";
-        }
-        else if (tile.getTerrain() instanceof Flatland) {
-            terrainType = "Flatland";
-        }
-
-        // set units
-        if (tile.getUnits()!=null) {
-            playerOneUnits = tile.getUnits().size();
-            playerTwoUnits = tile.getUnits().size();
-        }
+    public DrawableTileState(){
 
     }
 
@@ -156,12 +136,16 @@ public class DrawableTileState {
         this.structureType = structureType;
     }
 
-    public String getStructureStatus() {
+    public boolean getStructureStatus() {
         return structureStatus;
     }
 
-    public void setStructureStatus(String structureStatus) {
+    public void setStructureStatus(boolean structureStatus) {
         this.structureStatus = structureStatus;
+    }
+
+    public void setTerrainType(String terrainType) {
+        this.terrainType = terrainType;
     }
 
     public void incrementPlayerOneUnits(int amount) {

@@ -54,9 +54,6 @@ public class Tile {
     public boolean isVisible = false;
     public boolean isSelectedPath = false;
 
-//    TileState playerOneTileState;
-//    TileState playerTwoTileState;
-//    TileState realTileState;
 
     private DrawableTileState playerOneDraw;
     private DrawableTileState playerTwoDraw;
@@ -78,20 +75,17 @@ public class Tile {
         units = new ArrayList<>();
         armies = new ArrayList<>();
         workers = new ArrayList<>();
-        //    realTileState = new TileState();
 
 
-        realDraw = new DrawableTileState( this );
+        realDraw = new DrawableTileState();
+        realDraw.setTerrainType(terrain.getTerrainType());
 
         populateTileBasedOnTerrain(terrain);
-        realDraw = new DrawableTileState( this );
 
 
         //copy real state to both players when Tile is initialized
         playerOneDraw = new DrawableTileState(realDraw);
         playerTwoDraw = new DrawableTileState(realDraw);
-        //   playerOneTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
-        //  playerTwoTileState = new TileState(realTileState.getAreaEffect(), realTileState.getItem(), realTileState.getResource());
 
         //set Tile enum visibility
         playerOneVisibility = VisibilityState.NonVisible;
@@ -207,9 +201,6 @@ public class Tile {
         return terrain;
     }
 
-    public void setTerrain(Terrain terrain) {
-        this.terrain = terrain;
-    }
 
     public Resource getResource() {
         return resource;
@@ -219,7 +210,6 @@ public class Tile {
         this.resource = resource;
         realDraw.setResourceType(resource.getType());
         realDraw.setResourceQuantity(String.valueOf(resource.getStatInfluenceQuantity()));
-        // realTileState.setResource(resource);
     }
 
     public int getxCoordinate() {
@@ -263,23 +253,6 @@ public class Tile {
         realDraw.refresh( this);
     }
 
-
-/*    //adds a Unit to the real state
-    public void addUnitToTile(Unit unit) {
-        realTileState.addUnit(unit);
-    }
-
-    public void removeUnitFromTile(Unit unit) {
-        realTileState.removeUnit(unit);
-    }
-
-    public void addWorkerToTile(Worker worker) {
-        realTileState.addWorker(worker);
-    }
-
-    public void removeWorkerFromTile(Worker worker) {
-        realTileState.removeWorker(worker);
-    }*/
 
     // Adds unit to Tile's ArrayList of Units
     public Unit addUnitToTile(Unit unit) {
@@ -338,6 +311,8 @@ public class Tile {
 
     public void setStructure(Structure structure) {
         this.structure = structure;
+        realDraw.setStructureType(structure.getType());
+        realDraw.setStructureStatus(structure.isPowered());
     }
 
     //called by controller to determine which tile state to draw
@@ -364,12 +339,6 @@ public class Tile {
         return null;
     }
 
-    //        Visible, NonVisible, Shrouded
-
-    public boolean getPlayerOneVisibility() {
-        return playerOneVisibility == VisibilityState.Visible;
-    }
-
     public boolean getPlayerOneShrouded() {
         return playerOneVisibility == VisibilityState.Shrouded;
     }
@@ -377,10 +346,6 @@ public class Tile {
         return playerOneVisibility == VisibilityState.Shrouded;
     }
 
-
-    public boolean getPlayerTwoVisibility() {
-        return playerTwoVisibility == VisibilityState.Visible;
-    }
 
     public void markVisible(String name) {
         if(name == "One") {
