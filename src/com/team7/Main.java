@@ -4,6 +4,10 @@ import com.team7.controller.CommandSelectController;
 import com.team7.controller.HomeScreenController;
 import com.team7.controller.PathSelectController;
 import com.team7.controller.MainScreenController;
+
+import com.team7.controller.OptionsController;
+import com.team7.view.OptionsScreen.OptionsScreen;
+
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.view.View;
@@ -11,7 +15,6 @@ import com.team7.view.View;
 public class Main {
 
     public static void main(String[] args) {
-
         // Model
         Player player1 = new Player("playerOne");
         Player player2 = new Player("playerTwo");
@@ -29,6 +32,9 @@ public class Main {
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game.getMap(), view);
         csc.getRadius( player1.getUnits().get(0).getLocation(),3 );
+
+        OptionsController optionsController = new OptionsController( view );
+
     }
 
 
@@ -46,5 +52,6 @@ public class Main {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;  // time elapsed in milliseconds
         System.out.println("view construction time: " + duration + " ms");
+
     }
 }

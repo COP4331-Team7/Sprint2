@@ -5,6 +5,7 @@ import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
+import com.team7.view.OptionsScreen.OptionsScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -50,6 +51,8 @@ public class View
         return frame.getMainScreen();
     }
     public HomeScreen getHomeScreen() { return frame.getHomeScreen(); }
+    public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
+
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
@@ -78,6 +81,7 @@ public class View
     {
         private HomeScreen homeScreen = null;
         private MainScreen mainScreen = null;
+        private OptionsScreen optionsScreen = null;
         //private UnitScreen unitScreen = null;
         //private StructureScreen structureScreen = null;
 
@@ -89,6 +93,7 @@ public class View
 
             homeScreen = new HomeScreen();
             mainScreen = new MainScreen();
+            optionsScreen = new OptionsScreen();
             // unitScreen = new UnitScreen();
             // structureScreen = new StructureScreen();
 
@@ -107,6 +112,7 @@ public class View
         public MainScreen getMainScreen() {
             return mainScreen;
         }
+        public OptionsScreen getOptionsScreen() { return  optionsScreen; }
         //    public UnitScreen getUnitScreen() {
         //            return unitScreen;
         //    }
@@ -132,6 +138,9 @@ public class View
             else if (selected_screen == "STRUCTURE_OVERVIEW") {
                 displayStructureOverviewScreen();
             }
+            else if (selected_screen == "OPTIONS") {
+                displayOptionScreen();
+            }
 
             revalidate();
             repaint();
@@ -143,6 +152,10 @@ public class View
         private void displayMainScreen() {
             this.getContentPane().add( mainScreen );
         }
+        private void displayOptionScreen() {
+            this.getContentPane().add( optionsScreen );
+        }
+
         private void displayUnitOverviewScreen() {
             // this.getContentPane().add( unitScreen );
             this.getContentPane().add( homeScreen );

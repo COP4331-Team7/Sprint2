@@ -57,6 +57,15 @@ public class MainScreenController {
                     view.getMainScreen().getCommandSelect().requestFocus();
             }
         });
+        view.getMainScreen().getOptionScreenButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == view.getMainScreen().getOptionScreenButton())
+                    view.setCurrScreen("OPTIONS");
+            }
+        });
+
+
+
 
         view.getMainScreen().getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +73,8 @@ public class MainScreenController {
                     System.out.println("do command");
             }
         });
+
+
 
     }
 

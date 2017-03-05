@@ -3,6 +3,10 @@ package com.team7.model;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 public class Game {
 
     private Player[] players = new Player[2];
@@ -23,23 +27,43 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
+        //TODO check if this violates TDA
         players[0].addUnit(new Explorer(this.map.getGrid()[30][10], players[0]));
         players[1].addUnit(new Explorer(this.map.getGrid()[10][30], players[1]));
 
+        updateTileGameState();
+
+    }
 
 
-        //TODO check if this violates TDA
-//         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
-//         players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
-//         players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));
+    //called at the end of each turn and everytime gamestate changes (namely movement)
+    //1. find all tiles currently visited by current player, along with the radius
+    //2. use radius to collect a set of all visible tiles to current player
+    //3. iterate through game map to mark tiles correctly
+    public void updateTileGameState(){
+        HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
+        Set<Tile> visibleTiles = new HashSet<>();
 
-     //   players[1].addUnit(new Explorer(this.map.getGrid()[5][20], players[1]));
+        //1
+        for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
+            visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
+        }
 
-
-//        players[1].addUnit(new Explorer(this.map.getGrid()[3][map.getGrid().length - 3], players[1]));
-//         players[1].addUnit(new Explorer(this.map.getGrid()[4][map.getGrid().length - 4], players[1]));
-//         players[1].addUnit(new Colonist(this.map.getGrid()[4][map.getGrid().length - 5], players[1]));
-
+        //2
+        //iterate through entire map and update each tile
+        for (Tile[] tileArray : map.getGrid()) {
+            for (Tile tile : tileArray) {
+                //3
+                if (visibleTiles.contains(tile)){
+                    //the tile is marked as visible
+                    tile.updateTileToVisible(currentPlayer.getName());
+                } else{
+                    //the tile is marked as nonvisible/shrouded
+                    //tile method handles if it will turn shrouded or not
+                    tile.updateTileToShrouded(currentPlayer.getName());
+                }
+            }
+        }
     }
 
     //Switches the turn to the next player
@@ -47,16 +71,7 @@ public class Game {
         //executeQueues();
         //currentPlayer.takeTurn();
 
-        //TODO update tile states:
-        //currentPlayer.getAllCurrentTilesWithRadius <-- stored in HashMap<Tile, Radius>
-        //for each entry in HashMap
-        //  get Set<Tile> of tiles in radius
-        //  append Sets to represent ALL visible tiles for currentPlayer
-        //for each Tile in GAME MAP
-        //  if set contains gamemap[i]
-        //      gamemap[i].updateToVisible(currentPlayer.getName)
-        //  else
-        //      gamemap[i].updateToShrouded(currentPlayer.getName)
+        updateTileGameState();
 
 
 //        if(currentPlayer.isDefeated()){

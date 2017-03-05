@@ -27,8 +27,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private final static double mapScale_x = 0.95;  // what % of screen the map takes up
         private final static double mapScale_y = 0.60;
 
-        private Graphics2D g2ds;
-        public static BufferedImage image, tempImg;
+        
+        public static BufferedImage image;
         private BufferedImage tileImage_1, tileImage_2, tileImage_3, tileImage_4;
         private BufferedImage moneyBagImage;
         private BufferedImage moonRockImage;
@@ -50,6 +50,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public int x_dest, y_dest;        // where the window should be focused on
 
          private  BufferedImage ghostImage;
+
+         BufferedImage tempImg ;
+        Graphics2D g2ds;
+
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
