@@ -17,8 +17,12 @@ import java.util.HashMap;
 
 public class Player {
     private ArrayList<Unit> units;
+
+    //need to separate because staffed has a function (command q), and food upkeep
+    //obsv only reduce from ore/energy
     private ArrayList<StaffedStructure> staffedStructures;
     private ArrayList<ObservationTower> observationTowers;
+
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
@@ -350,6 +354,11 @@ public class Player {
         }
         return null;
 
+    }
+
+
+    public ArrayList<ObservationTower> getObservationTowers() {
+        return observationTowers;
     }
 
     public String getName() {
