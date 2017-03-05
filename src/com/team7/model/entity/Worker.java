@@ -8,6 +8,7 @@ public class Worker extends Entity {
     private Army army;
     private int constructionRate;
     private boolean isFed;
+    private boolean isAssigned;
 
     public Worker(Tile startTile, Player player) {
         setOwner(player);
@@ -17,6 +18,7 @@ public class Worker extends Entity {
         setVisibilityRadius(3);
         constructionRate = 10;
         setFed(true);   //worker has enough food when created
+        setAssigned(false); //worker is not assigned until specified
     }
 
     public boolean isFed() {
@@ -25,6 +27,14 @@ public class Worker extends Entity {
 
     public void setFed(boolean fed) {
         isFed = fed;
+    }
+
+    public boolean isAssigned() {
+        return isAssigned;
+    }
+
+    public void setAssigned(boolean assigned) {
+        isAssigned = assigned;
     }
 
     public int getConstructionRate() {
