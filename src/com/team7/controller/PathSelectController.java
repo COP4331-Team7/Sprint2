@@ -95,13 +95,18 @@ public class PathSelectController {
                             e.printStackTrace();
                         }
                                                                                         // 11 = numTilesVisibleX, 16 = numTilesVisibleY
-                        view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 200  );
+
+                        if(i == pathTile.size() - 1) {
+                            view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 200  );
+                            view.redrawView();
+                        }
 
                     }
                 }
         }).start();
 
-        view.redrawView();
+
+
     }
 
 }
