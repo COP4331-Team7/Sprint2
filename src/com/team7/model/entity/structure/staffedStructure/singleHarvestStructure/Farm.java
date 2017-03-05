@@ -19,7 +19,7 @@ public class Farm extends StaffedStructure implements IHarvester {
         setLocation(location);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
-        productionRateMap.put("harvestFood", 20);   //can harvest 20 food per turn per resource
+        productionRateMap.put("harvestFood", 2);   //can harvest 2 food per turn per resource per worker
         setStats(new StructureStats(
                 0,
                 100,
