@@ -297,18 +297,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
 
                         if(player.getName() == "One") {
-                            if(grid[xx][yy].getPlayerOneShrouded()) {
-                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
-                            }
-                        }
-                        else {
-                            if(grid[xx][yy].getPlayerTwoShrouded()) {
-                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
-                            }
-                        }
-
-
-                        if(player.getName() == "One") {
                             if (tileState.getPlayerOneUnits() > 0) {
                                 g2ds.drawImage(meleeImage, x_coord + x_offset+5, y_coord, null);
                             }
@@ -323,7 +311,20 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                         }
 
+                        if(player.getName() == "One") {
+                            if(grid[xx][yy].getPlayerOneShrouded()) {
+                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                            }
+                        }
+                        else {
+                            if(grid[xx][yy].getPlayerTwoShrouded()) {
+                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                            }
+                        }
+
                     }
+
+
 
                     int s1_x = -15;
                     int s1_y =  31;

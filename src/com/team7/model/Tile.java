@@ -343,7 +343,7 @@ public class Tile {
         return playerOneVisibility == VisibilityState.Shrouded;
     }
     public boolean getPlayerTwoShrouded() {
-        return playerOneVisibility == VisibilityState.Shrouded;
+        return playerTwoVisibility == VisibilityState.Shrouded;
     }
 
 
