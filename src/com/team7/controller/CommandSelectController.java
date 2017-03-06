@@ -21,7 +21,7 @@ public class CommandSelectController {
 
     public void getRadius(Tile currTile, int radius) {
         Set<Tile> tiles = null;
-        view.getMainViewImage().highlightRadius( map.getTilesInRadius(currTile, radius, tiles));
+        view.getMainViewImage().highlightRadius( map.getTilesInRadius(currTile, 2, tiles));
         view.redrawView();
     }
 

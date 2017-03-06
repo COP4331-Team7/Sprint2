@@ -248,8 +248,6 @@ public class Tile {
     }
 
     public void refreshDrawableState() {
-        playerTwoDraw.refresh( this);
-        playerOneDraw.refresh( this);
         realDraw.refresh( this);
     }
 
@@ -342,29 +340,45 @@ public class Tile {
         return null;
     }
 
-    public boolean getPlayerOneShrouded() {
-        return playerOneVisibility == VisibilityState.Shrouded;
-    }
-    public boolean getPlayerTwoShrouded() {
-        return playerTwoVisibility == VisibilityState.Shrouded;
+    public boolean getVisible(String name) {
+         if(name == "One") {
+            return playerOneVisibility == VisibilityState.Visible;
+        }
+        else
+            return playerTwoVisibility == VisibilityState.Visible;
+
     }
 
+    public boolean getShrouded(String name) {
+        if(name == "One") {
+            return playerOneVisibility == VisibilityState.Shrouded;
+        }
+        else
+            return playerTwoVisibility == VisibilityState.Shrouded;
+
+    }
 
     public void markVisible(String name) {
         if(name == "One") {
             playerOneVisibility = VisibilityState.Visible;
+            playerOneDraw.refresh(realDraw);
         }
-        else
+        else {
             playerTwoVisibility = VisibilityState.Visible;
-    }
+            playerTwoDraw.refresh(realDraw);
+        }
+        }
 
     public void markShrouded(String name) {
         if(name == "One") {
             playerOneVisibility = VisibilityState.Shrouded;
+            playerOneDraw.refresh(realDraw);
         }
-        else
+        else {
             playerTwoVisibility = VisibilityState.Shrouded;
-    }
+            playerTwoDraw.refresh(realDraw);
+        }
+        }
 
     public void markHidden(String name) {
         if(name == "One") {

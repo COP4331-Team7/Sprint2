@@ -80,7 +80,7 @@ public class PathSelectController {
                         Tile tile = pathTile.get(i);
                         game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         Set<Tile> tiles = null;
-                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 3, tiles));
+                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 2, tiles));
 
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {

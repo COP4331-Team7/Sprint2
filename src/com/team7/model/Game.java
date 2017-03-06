@@ -29,10 +29,10 @@ public class Game {
         this.map = new Map();
 
         //TODO check if this violates TDA
-        players[0].addUnit(new Explorer(this.map.getGrid()[30][10], players[0]));
-        players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
-        players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[10][30], players[1]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[30][15], players[0]));
+       // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
+        //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[10][25], players[1]));
 
         updateTileGameState();
     }
@@ -43,29 +43,30 @@ public class Game {
     //2. use radius to collect a set of all visible tiles to current player
     //3. iterate through game map to mark tiles correctly
     public void updateTileGameState(){
-        HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
-        Set<Tile> visibleTiles = new HashSet<>();
-
-        //1
-        for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
-            visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
-        }
-
-        //2
-        //iterate through entire map and update each tile
-        for (Tile[] tileArray : map.getGrid()) {
-            for (Tile tile : tileArray) {
-                //3
-                if (visibleTiles.contains(tile)){
-                    //the tile is marked as visible
-                    tile.updateTileToVisible(currentPlayer.getName());
-                } else{
-                    //the tile is marked as nonvisible/shrouded
-                    //tile method handles if it will turn shrouded or not
-                    tile.updateTileToShrouded(currentPlayer.getName());
-                }
-            }
-        }
+        // don't need to use this atm
+//        HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
+//        Set<Tile> visibleTiles = new HashSet<>();
+//
+//        //1
+//        for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
+//            visibleTiles.addAll(map.getTilesInRadius(tileKey, 2, null));
+//        }
+//
+//        //2
+//        //iterate through entire map and update each tile
+//        for (Tile[] tileArray : map.getGrid()) {
+//            for (Tile tile : tileArray) {
+//                //3
+//                if (visibleTiles.contains(tile)){
+//                    //the tile is marked as visible
+//                    tile.updateTileToVisible(currentPlayer.getName());
+//                } else{
+//                    //the tile is marked as nonvisible/shrouded
+//                    //tile method handles if it will turn shrouded or not
+//                    tile.updateTileToShrouded(currentPlayer.getName());
+//                }
+//            }
+//        }
     }
 
     //Switches the turn to the next player

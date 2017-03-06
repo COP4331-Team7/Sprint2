@@ -31,7 +31,7 @@ public class Main {
         MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game.getMap(), view);
-        csc.getRadius( player1.getUnits().get(0).getLocation(),3 );
+        csc.getRadius( player1.getUnits().get(0).getLocation(),2 );
 
         OptionsController optionsController = new OptionsController( view );
 

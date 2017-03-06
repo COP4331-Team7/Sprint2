@@ -48,6 +48,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage ventImage;
         private BufferedImage skullImage;
         private BufferedImage baseImage;
+        private BufferedImage highlightImage;
 
         public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
@@ -98,6 +99,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/baseImage.png"));
 
                 ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/dark_image.png"));
+                highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
+
 
             }
             catch (IOException e) {}
@@ -182,20 +185,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         public void highlightRadius(Set<Tile> tiles) {
 
+            if(player == null)
+                return;
+
           for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[i].length; j++) {
                     if( tiles.contains( grid[i][j] ) ) {
-                        grid[i][j].isVisible = true;
-                        if(player != null)
-                            grid[i][j].markVisible( player.getName() );
+                        grid[i][j].markVisible(player.getName());
                     }
-                    else if( grid[i][j].isVisible && !tiles.contains( grid[i][j] ) && PathSelectController.isRecording) {
+                    else if(grid[i][j].getVisible(player.getName()) && !tiles.contains( grid[i][j] ) && PathSelectController.isRecording) {
                         grid[i][j].markShrouded( player.getName() );
-                    }
-                    else {
-                        grid[i][j].isVisible = false;
-                        if(player != null)
-                            grid[i][j].markHidden( player.getName() );
                     }
 
                     grid[i][j].refreshDrawableState();
@@ -203,15 +202,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
           }
 
         }
-
-
-//        public void highlightTile(Tile tile) {
-//            if(grid[tile.getxCoordinate()][tile.getyCoordinate()]==tile){
-//                g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
-//
-//            }
-//        }
-
 
         private BufferedImage drawSubsectionOfMap(int x, int y) {
 
@@ -223,9 +213,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 --------------------------------------------------- */
 
            // System.out.println(x + "," + y);
-            if(y%2!=0){
+            //if(y%2!=0){
                // System.out.println("Error");
-            }
+           // }
             g2ds.setFont(new Font("default", Font.BOLD, 11));
             g2ds.setColor( new Color(238, 238, 238, 238) );
 
@@ -284,53 +274,42 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     }
                     else {
                         // draw terrain
-                        if( tileState.getTerrainType() == "Mountains") {
+                        if( tileState.getTerrainType().equals("Mountains")) {
                             g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
                         }
-                        else if (tileState.getTerrainType() == "Crater") {
+                        else if (tileState.getTerrainType().equals("Crater")) {
                             g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
                         }
-                        else if (tileState.getTerrainType() == "Desert") {
+                        else if (tileState.getTerrainType().equals("Desert")) {
                             g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
                         }
-                        else if (tileState.getTerrainType() == "Flatland") {
+                        else if (tileState.getTerrainType().equals("Flatland")) {
                             g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                         }
 
                         if(player.getName() == "One") {
                             if (tileState.getPlayerOneUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset+5, y_coord, null);
+                                g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
                             }
                         }
                         else {
                             if (tileState.getPlayerTwoUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset+5, y_coord, null);
+                                g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
                             }
                         }
 
-                        if( grid[xx][yy].isSelectedPath ) {
+                        if(grid[xx][yy].getShrouded(player.getName())) {
                             g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                         }
 
-                        if(player.getName() == "One") {
-                            if(grid[xx][yy].getPlayerOneShrouded()) {
-                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
-                            }
-                        }
-                        else {
-                            if(grid[xx][yy].getPlayerTwoShrouded()) {
-                                g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
-                            }
-                        }
-
-
                     }
 
-
+                    if( grid[xx][yy].isSelectedPath ) {
+                        g2ds.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
+                    }
 
                     int s1_x = -15;
                     int s1_y =  31;
-
 
                     g2ds.setColor( new Color(0, 30, 230, 90)  ); // blue
                     if(drawOnTile) {

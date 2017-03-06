@@ -76,6 +76,14 @@ public class DrawableTileState {
         }
     }
 
+
+    public void refresh(DrawableTileState state) {
+
+        this.terrainType = state.terrainType;
+        this.playerOneUnits = state.playerOneUnits;
+        this.playerTwoUnits = state.playerTwoUnits;
+    }
+
     public int getPlayerOneUnits() {
         return  playerOneUnits;
     }
