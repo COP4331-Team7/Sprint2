@@ -32,7 +32,7 @@ public class Game {
         players[0].addUnit(new Explorer(this.map.getGrid()[30][15], players[0]));
        // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
         //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[10][25], players[1]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[25][15], players[1]));
 
         updateTileGameState();
     }

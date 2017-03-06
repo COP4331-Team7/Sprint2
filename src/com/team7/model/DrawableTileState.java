@@ -105,6 +105,13 @@ public class DrawableTileState {
     public void refresh(DrawableTileState state) {
 
         this.terrainType = state.terrainType;
+
+        this.meleeUnit = state.meleeUnit;
+        this.rangeUnit = state.rangeUnit;
+        this.explorer = state.explorer;
+        this.workerUnit = state.workerUnit;
+
+        this.areaEffectType = state.areaEffectType;
     }
 
     public String getTerrainType() {
