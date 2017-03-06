@@ -276,6 +276,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                     }
                     else {
+
                         // draw terrain
                         if( tileState.getTerrainType().equals("Mountains")) {
                             g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
@@ -290,17 +291,22 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                         }
 
-                        if(player.getName() == "One") {
-                            if (tileState.getPlayerOneUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
-                            }
+                        // draw units
+                        if (tileState.getExplorer() > 0) {
+                                g2ds.drawImage(explorerImage, x_coord + x_offset+10, y_coord, null);
                         }
-                        else {
-                            if (tileState.getPlayerTwoUnits() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
-                            }
+                        if (tileState.getColonist() > 0) {
+                            g2ds.drawImage(colonistImage, x_coord + x_offset+10, y_coord, null);
+                        }
+                        if (tileState.getMeleeUnit() > 0) {
+                            g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
+                        }
+                        if (tileState.getRangeUnit() > 0) {
+                            g2ds.drawImage(rangeImage, x_coord + x_offset+10, y_coord, null);
                         }
 
+
+                        // shroud tile
                         if(grid[xx][yy].getShrouded(player.getName())) {
                             g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                         }

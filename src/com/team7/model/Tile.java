@@ -257,9 +257,6 @@ public class Tile {
 
         // Physically add the unit
         this.units.add(unit);
-        realDraw.incrementPlayerOneUnits(1);
-        realDraw.incrementPlayerTwoUnits(1);
-
 
         return unit;
     }

@@ -1,5 +1,15 @@
 package com.team7.model;
 
+import com.team7.model.areaEffects.DamageAreaEffect;
+import com.team7.model.areaEffects.HealAreaEffect;
+import com.team7.model.areaEffects.InstantDeathAreaEffect;
+import com.team7.model.entity.Entity;
+import com.team7.model.entity.Worker;
+import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
+import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
@@ -15,9 +25,11 @@ import java.util.ArrayList;
 public class DrawableTileState {
 
     private String terrainType;
-    private int playerOneUnits;
-    private int playerTwoUnits;
-    boolean isShrouded;
+    private int Colonist;
+    private int explorer;
+    private int meleeUnit;
+    private int rangeUnit;
+    private int workerUnit;
 
     private String areaEffectType;
     private String decal;
@@ -40,9 +52,6 @@ public class DrawableTileState {
     public DrawableTileState(DrawableTileState stateToCopy) {
 
         this.terrainType = stateToCopy.terrainType;
-        this.playerOneUnits = stateToCopy.playerOneUnits;
-        this.playerTwoUnits = stateToCopy.playerTwoUnits;
-
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
         this.itemType = stateToCopy.itemType;
@@ -50,7 +59,6 @@ public class DrawableTileState {
         this.resourceQuantity = stateToCopy.resourceQuantity;
         this.structureType = stateToCopy.structureType;
         this.structureStatus = stateToCopy.structureStatus;
-        this.numUnits = numUnits;
     }
 
     public void refresh(Tile tile) {
@@ -68,28 +76,35 @@ public class DrawableTileState {
         else if (tile.getTerrain() instanceof Flatland) {
             terrainType = "Flatland";
         }
-
         // set units
-        if (tile.getUnits()!=null) {
-            playerOneUnits = tile.getUnits().size();
-            playerTwoUnits = tile.getUnits().size();
+        meleeUnit = 0; rangeUnit = 0; explorer = 0; Colonist = 0; workerUnit = 0;
+        for(Unit unit : tile.getUnits()) {
+            if(unit instanceof MeleeUnit)
+                meleeUnit++;
+            if(unit instanceof RangedUnit)
+                rangeUnit++;
+            if(unit instanceof Explorer)
+                explorer++;
+            if(unit instanceof com.team7.model.entity.unit.nonCombatUnit.Colonist)
+                Colonist++;
+            if((Entity)unit instanceof Worker)
+                workerUnit++;
         }
+        // area affect
+        if(tile.getAreaEffect() instanceof DamageAreaEffect)
+            areaEffectType = "Damage";
+        if(tile.getAreaEffect() instanceof HealAreaEffect)
+            areaEffectType = "Heal";
+        if(tile.getAreaEffect() instanceof InstantDeathAreaEffect)
+            areaEffectType = "InstantDeath";
+
+
     }
 
 
     public void refresh(DrawableTileState state) {
 
         this.terrainType = state.terrainType;
-        this.playerOneUnits = state.playerOneUnits;
-        this.playerTwoUnits = state.playerTwoUnits;
-    }
-
-    public int getPlayerOneUnits() {
-        return  playerOneUnits;
-    }
-
-    public int getPlayerTwoUnits() {
-        return  playerTwoUnits;
     }
 
     public String getTerrainType() {
@@ -156,14 +171,24 @@ public class DrawableTileState {
         this.terrainType = terrainType;
     }
 
-    public void incrementPlayerOneUnits(int amount) {
-        playerOneUnits += amount;
-    }
-    public void incrementPlayerTwoUnits(int amount) {
-        playerTwoUnits += amount;
+    public int getWorkerUnit() {
+        return workerUnit;
     }
 
+    public int getRangeUnit() {
+        return rangeUnit;
+    }
 
+    public int getMeleeUnit() {
+        return meleeUnit;
+    }
 
+    public int getExplorer() {
+        return explorer;
+    }
+
+    public int getColonist() {
+        return Colonist;
+    }
 
 }
