@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 
+import com.team7.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.model.Tile;
@@ -23,6 +24,7 @@ public class PathSelectController {
     public static boolean isRecording = false;
     Tile selectedTile = null;
     Tile startTile = null;
+    ConfigReader configReader;
 
     ArrayList<Tile> pathTile = new ArrayList<Tile>();;
 
@@ -31,6 +33,9 @@ public class PathSelectController {
         this.view = view;
         this.mainViewImage = view.getMainViewImage();
         this.commandView = view.getCommandSelect();
+
+         configReader = new ConfigReader();
+
         commandView.setController(this);
     }
     // ===============================================
@@ -41,7 +46,26 @@ public class PathSelectController {
            // return;
 
         selectedTile.isSelectedPath = false;
-        selectedTile = game.getMap().moveUnit(selectedTile, direction);
+
+        if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 7);
+        }
+        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 1);
+        }
+        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "South")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 2);
+        }
+        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "North")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 8);
+        }
+        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 9);
+        }
+        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast")) {
+            selectedTile = game.getMap().moveUnit(selectedTile, 3);
+        }
+
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
         view.redrawView();

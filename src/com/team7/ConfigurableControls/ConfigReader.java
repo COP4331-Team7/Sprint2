@@ -36,7 +36,7 @@ public class ConfigReader {
   }
 
   //prints value of key input
-  private int getValueByKey(String player, String key){
+  public int getValueByKey(String player, String key){
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();

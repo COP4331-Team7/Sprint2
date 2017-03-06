@@ -160,7 +160,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
 
         if( isRecordingPath ) {
-            pathSelectController.moveCursor( Character.getNumericValue( e.getKeyChar() ) );
+            pathSelectController.moveCursor(            Character.getNumericValue( e.getKeyChar() ) );
         }
 
 
