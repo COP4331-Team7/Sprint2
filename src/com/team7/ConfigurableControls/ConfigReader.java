@@ -36,18 +36,18 @@ public class ConfigReader {
   }
 
   //prints value of key input
-  public int getValueByKey(String player, String key){
+  public String getValueByKey(String player, String key){
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();
     InputStream input = null;
-    int value = 0;
+    String value = null;
 
     try {
 
       input = new FileInputStream(currentFile);
       prop.load(input);   // load a properties file
-      value = Integer.parseInt(prop.getProperty(key));
+      value = prop.getProperty(key);
       System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
 
     } catch (IOException ex) {
@@ -106,6 +106,7 @@ public class ConfigReader {
 
 
   public HashMap<String, String> getAllControlsByPlayer(String player) {
+      System.out.println(player);
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
     HashMap<String, String> controls = new HashMap<>();
 

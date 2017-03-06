@@ -40,29 +40,29 @@ public class PathSelectController {
     }
     // ===============================================
 
-    public void moveCursor(int direction) {
+    public void moveCursor(String direction) {
 
        // if (game.getMap().moveUnit(selectedTile, direction).isVisible == false  )
            // return;
 
         selectedTile.isSelectedPath = false;
 
-        if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest")) {
+        if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 7);
         }
-        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest")) {
+        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 1);
         }
-        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "South")) {
+        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "South"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 2);
         }
-        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "North")) {
+        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "North"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 8);
         }
-        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast")) {
+        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 9);
         }
-        else if(direction == configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast")) {
+        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 3);
         }
 

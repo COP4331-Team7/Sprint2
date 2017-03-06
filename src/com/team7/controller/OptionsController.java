@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 import com.team7.ConfigurableControls.ConfigReader;
+import com.team7.model.Game;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
@@ -16,14 +17,16 @@ public class OptionsController{
     private OptionsScreen optionsScreen;
     private ConfigReader reader;
     private View view;
+    private Game game ;
 
-    public OptionsController(View view) {
+    public OptionsController(View view, Game game) {
         this.view = view;
+        this.game = game;
         this.optionsScreen = view.getOptionScreen();
         reader = new ConfigReader();
         addActionListeners();
 
-        reloadControls("playerOne");
+        reloadControls(game.getCurrentPlayer().getName());
 
     }
 
@@ -45,8 +48,8 @@ public class OptionsController{
                             System.out.println(input);
                             //get first char from input
                             String newValue = input.substring(0,1);
-                            reader.changeValueByKey("playerOne", key, newValue);
-                            reloadControls("playerOne");
+                            reader.changeValueByKey(game.getCurrentPlayer().getName(), key, newValue);
+                            reloadControls(game.getCurrentPlayer().getName());
                         }
                     }
                 }
@@ -58,8 +61,8 @@ public class OptionsController{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getResetControlsButton()) {
                     //reset player's config file by overwriting with a default file
-                    reader.resetToDefault("playerOne");
-                    reloadControls("playerOne");
+                    reader.resetToDefault(game.getCurrentPlayer().getName());
+                    reloadControls(game.getCurrentPlayer().getName());
                 }
             }
         });
@@ -83,8 +86,8 @@ public class OptionsController{
 
     }
 
-    private void reloadControls(String player){
-        optionsScreen.setModel(reader.getAllControlsByPlayer("playerOne"));
+    public void reloadControls(String player){
+        optionsScreen.setModel(reader.getAllControlsByPlayer(player));
     }
 
 }
