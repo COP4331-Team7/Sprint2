@@ -36,16 +36,18 @@ public class ConfigReader {
   }
 
   //prints value of key input
-  private void getValueByKey(String player, String key){
+  private int getValueByKey(String player, String key){
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();
     InputStream input = null;
+    int value = 0;
 
     try {
 
       input = new FileInputStream(currentFile);
       prop.load(input);   // load a properties file
+      value = Integer.parseInt(prop.getProperty(key));
       System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
 
     } catch (IOException ex) {
@@ -59,6 +61,7 @@ public class ConfigReader {
         }
       }
     }
+    return value;
   }
 
   //changes value of key according to input
