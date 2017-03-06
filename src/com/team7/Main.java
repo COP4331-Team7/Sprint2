@@ -33,7 +33,7 @@ public class Main {
         CommandSelectController csc = new CommandSelectController(game.getMap(), view);
         csc.getRadius( player1.getUnits().get(0).getLocation(),2 );
 
-        OptionsController optionsController = new OptionsController( view );
+        OptionsController optionsController = new OptionsController( view,game );
 
     }
 

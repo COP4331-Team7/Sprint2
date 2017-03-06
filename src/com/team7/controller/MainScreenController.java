@@ -58,6 +58,8 @@ public class MainScreenController {
                     view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, 75);
                     view.getMainScreen().getCommandSelect().setFocusable(true);
                     view.getMainScreen().getCommandSelect().requestFocus();
+                    OptionsController optionsController = new OptionsController(view,game);
+                    optionsController.reloadControls(game.getCurrentPlayer().getName());
                 }
             }
         });
