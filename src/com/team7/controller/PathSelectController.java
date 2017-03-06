@@ -6,6 +6,7 @@ import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.CommandSelect;
+import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.View;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ import java.util.Set;
 public class PathSelectController {
     private Game game = null;
     private View view = null;
+    private MainViewImage mainViewImage = null;
 
     private CommandSelect commandView = null;
 
@@ -27,6 +29,7 @@ public class PathSelectController {
     public PathSelectController(Game game, View view) {
         this.game = game;
         this.view = view;
+        this.mainViewImage = view.getMainViewImage();
         this.commandView = view.getCommandSelect();
         commandView.setController(this);
     }
@@ -85,7 +88,7 @@ public class PathSelectController {
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
                             public void run() {
-                                view.redrawView();
+                                mainViewImage.reDrawMap();
                             }
                         });
 
@@ -94,15 +97,17 @@ public class PathSelectController {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                                                                                        // 11 = numTilesVisibleX, 16 = numTilesVisibleY
-                        if(i == pathTile.size() - 1) {
-                            view.getMainScreen().getMainViewImage().zoomToDestination( tile.getxCoordinate() - 11/2, tile.getyCoordinate() - 16/2, 100  );
-                            view.redrawView();
-                        }
+
+                        if(i == pathTile.size() - 1)
+                            view.getMainScreen().getMainViewImage().zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 100  );
+
 
                     }
                 }
         }).start();
+
+
+
 
     }
 

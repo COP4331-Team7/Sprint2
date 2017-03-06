@@ -49,8 +49,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage skullImage;
         private BufferedImage baseImage;
         private BufferedImage highlightImage;
+         private BufferedImage invisible;
 
-        public int x_center, y_center;    // where the window is focused on
+
+    public int x_center, y_center;    // where the window is focused on
         public int x_dest, y_dest;        // where the window should be focused on
 
          private  BufferedImage ghostImage;
@@ -100,6 +102,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                 ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/dark_image.png"));
                 highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
+                invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/invisible.png"));
 
 
             }
@@ -245,7 +248,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                      if(y%2==1)
                         yy = y-1 + j;
                     else
-                    yy = y+j;
+                       yy = y+j;
                     if(xx < 0)                     // adjust if out of bounds
                         xx = 0;
                     else if (xx >= MAP_TILE_WIDTH)
@@ -301,7 +304,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if(grid[xx][yy].getShrouded(player.getName())) {
                             g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
                         }
-
                     }
 
                     if( grid[xx][yy].isSelectedPath ) {
@@ -400,6 +402,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             if( x_center != x_destination || y_center != y_destination) {
                 new Thread( new Runnable()
                 {
+
+
                     public void run()
                     {
                         int x_diff = (x_destination - x_center);
