@@ -83,9 +83,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             try {
                tileImage_1 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/a.png"));
-               tileImage_2 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/a.png"));
+               tileImage_2 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/b.png"));
                tileImage_3 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/c.png"));
-               tileImage_4 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/c.png"));
+               tileImage_4 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/d.png"));
                moneyBagImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moneyBag.png"));
                moonRockImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moonRock.png"));
                hieroglyphicBookImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/bookImage1.png"));
