@@ -106,7 +106,6 @@ public class ConfigReader {
 
 
   public HashMap<String, String> getAllControlsByPlayer(String player) {
-      System.out.println(player);
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
     HashMap<String, String> controls = new HashMap<>();
 

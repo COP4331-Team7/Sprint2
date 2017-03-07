@@ -208,8 +208,7 @@ public class Tile {
 
     public void setResource(Resource resource) {
         this.resource = resource;
-        realDraw.setResourceType(resource.getType());
-        realDraw.setResourceQuantity(String.valueOf(resource.getStatInfluenceQuantity()));
+
     }
 
     public int getxCoordinate() {
