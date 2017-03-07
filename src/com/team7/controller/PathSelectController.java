@@ -42,9 +42,6 @@ public class PathSelectController {
 
     public void moveCursor(String direction) {
 
-       // if (game.getMap().moveUnit(selectedTile, direction).isVisible == false  )
-           // return;
-
         selectedTile.isSelectedPath = false;
 
         if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
@@ -65,6 +62,9 @@ public class PathSelectController {
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 3);
         }
+
+//        if ( selectedTile.getVisible(game.getCurrentPlayer().getName()) == false )
+//            return;
 
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
@@ -117,13 +117,13 @@ public class PathSelectController {
                         });
 
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(120);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
                         if(i == pathTile.size() - 1)
-                            view.getMainScreen().getMainViewImage().zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 100  );
+                            view.getMainScreen().getMainViewImage().zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 50  );
 
 
                     }
