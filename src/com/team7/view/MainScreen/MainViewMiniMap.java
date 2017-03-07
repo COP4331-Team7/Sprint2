@@ -7,13 +7,15 @@ import javax.swing.*;
 
 class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
 
-    public static BufferedImage image, fullMapImage;
-    private Graphics2D g2d;
+    public static BufferedImage image, fullMapImage, backgroundImg, backgroundImg2;
+    private Graphics2D g2d, g2ds, g2dss;
     private final static int zoomRate = 45; // 1000 / 40 = 25 frames per second
     private final static int SIZE = 200;
     private int TILES_VISIBLE_X, TILES_VISIBLE_Y;
     private static int WIDTH, HEIGHT;
     private static int SUB_WIDTH, SUB_HEIGHT;
+    private final static int BORDER_WIDTH = 40;
+    private final static int BORDER_WIDTH2 = 20;
 
     private MainViewImage mainViewImage;
     public int x_center, y_center;    // where the window in focused on
@@ -23,12 +25,22 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         fullMapImage = new BufferedImage(TILE_SIZE*MAP_TILE_WIDTH + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
         double ratio = fullMapImage.getWidth()/fullMapImage.getHeight();
         WIDTH =  (int)(SIZE *  ratio);
-        HEIGHT = (int)(SIZE / ratio);
+        HEIGHT = (int)(SIZE /  ratio);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        backgroundImg = new BufferedImage(WIDTH + BORDER_WIDTH/2, HEIGHT + BORDER_WIDTH/2, BufferedImage.TYPE_INT_ARGB);
+        backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
+        g2dss = (Graphics2D)backgroundImg2.createGraphics();
+        g2dss.setColor(new Color(0x0AAAAAAA));
+        g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
+
+
+        g2ds = (Graphics2D)backgroundImg.createGraphics();
+        g2ds.setColor(new Color(0x0A000000));
+        g2ds.fillRect(0, 0, backgroundImg.getWidth(), backgroundImg.getHeight());
         g2d = (Graphics2D)image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        setPreferredSize(  new Dimension( image.getWidth(), image.getHeight()) );
+        setPreferredSize(  new Dimension( backgroundImg2.getWidth(), backgroundImg2.getHeight()) );
         this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         drawMapArea();
         addMouseListener(this);
@@ -37,7 +49,9 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
-        g.drawImage( image, 0, 0, this );
+        g.drawImage( backgroundImg2, 0, 0, this );
+        g.drawImage( backgroundImg, BORDER_WIDTH2/2, BORDER_WIDTH2/2, this );
+        g.drawImage( image, BORDER_WIDTH/2, BORDER_WIDTH/2, this );
     }
 
     public void drawMapArea() {
