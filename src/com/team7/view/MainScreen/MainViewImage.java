@@ -221,7 +221,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public void setMap(Map map) {
             this.grid = map.getGrid();
             mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
-            zoomToDestination(28, 6, 60);
+            if(player == null)
+                return;
+            zoomToDestination(player.getRandomUnit().getLocation().getxCoordinate() - 11/2, player.getRandomUnit().getLocation().getyCoordinate() - 16/2, 60);
         }
 
          public void setCurrPlayer(Player p) {
