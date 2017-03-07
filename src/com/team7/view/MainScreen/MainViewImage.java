@@ -152,13 +152,13 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             } );
 
 
-            timer = new Timer(200, new ActionListener()
+            timer = new Timer(300, new ActionListener()
             {
                 public void actionPerformed( ActionEvent e)
                 {
                     timer.stop();
 
-                    zoomToDestination( x_center + x_dir, y_center + y_dir*2, 30 );
+                    zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 30 );
 
                     timer.restart();
                 }
@@ -169,48 +169,61 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
     private void updateSelection( Point p )
     {
-        x_dir = (int)p.getX() - 667;
-        y_dir = (int)p.getY() - 240;
-        if(x_dir > 0 )
+        x_dir = ((int)p.getX() - 667)/60;
+        y_dir = ((int)p.getY() - 240)/40;
+        if(x_dir > 1 )
             x_dir = 1;
-        else if (x_dir < 0)
+        else if (x_dir < -1)
             x_dir = -1;
+        else
+            x_dir = 0;
 
-        if(y_dir > 0 )
+        if(y_dir > 1 )
             y_dir = 1;
-        else if (y_dir < 0)
+        else if (y_dir < -1)
             y_dir = -1;
+        else
+            y_dir = 0;
     }
 
     private void LMBisPressed( Point p )
     {
         timer.start();                      // start zooming
-        x_dir = (int)p.getX() - 667;
-        y_dir = (int)p.getY() - 240;
-        if(x_dir > 0 )
+        x_dir = ((int)p.getX() - 667)/60;
+        y_dir = ((int)p.getY() - 240)/40;
+        if(x_dir > 1 )
             x_dir = 1;
-        else if (x_dir < 0)
+        else if (x_dir < -1)
             x_dir = -1;
+        else
+            x_dir = 0;
 
-        if(y_dir > 0 )
+        if(y_dir > 1 )
             y_dir = 1;
-        else if (y_dir < 0)
-            y_dir = -1;    }
+        else if (y_dir < -1)
+            y_dir = -1;
+        else
+            y_dir = 0;
+    }
 
     private void RMBisPressed( Point p )
     {
         timer.start();                      // start zooming
-        x_dir = (int)p.getX() - 667;
-        y_dir = (int)p.getY() - 240;
-        if(x_dir > 0 )
+        x_dir = ((int)p.getX() - 667)/60;
+        y_dir = ((int)p.getY() - 240)/40;
+        if(x_dir > 1 )
             x_dir = 1;
-        else if (x_dir < 0)
+        else if (x_dir < -1)
             x_dir = -1;
+        else
+            x_dir = 0;
 
-        if(y_dir > 0 )
+        if(y_dir > 1 )
             y_dir = 1;
-        else if (y_dir < 0)
+        else if (y_dir < -1)
             y_dir = -1;
+        else
+            y_dir = 0;
     }
 
     private void mouseIsReleased( Point p )
@@ -423,12 +436,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     int s1_x = -15;
                     int s1_y =  31;
 
-                    int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
-                    int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
-
-                    g2ds.setColor( new Color(220, 220, 220, 50)  ); // blue
-                    g2ds.drawLine(center_pixel_x - 7, center_pixel_y, center_pixel_x + 7, center_pixel_y );
-                    g2ds.drawLine(center_pixel_x, center_pixel_y - 7, center_pixel_x, center_pixel_y + 7 );
+//                    int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
+//                    int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
+//
+//                    g2ds.setColor( new Color(220, 220, 220, 50)  ); // blue
+//                    g2ds.drawLine(center_pixel_x - 7, center_pixel_y, center_pixel_x + 7, center_pixel_y );
+//                    g2ds.drawLine(center_pixel_x, center_pixel_y - 7, center_pixel_x, center_pixel_y + 7 );
 
 
                     if(drawOnTile) {

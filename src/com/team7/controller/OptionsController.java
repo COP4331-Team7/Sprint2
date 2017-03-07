@@ -27,7 +27,6 @@ public class OptionsController{
         addActionListeners();
 
         reloadControls(game.getCurrentPlayer().getName());
-
     }
 
     private void addActionListeners() {

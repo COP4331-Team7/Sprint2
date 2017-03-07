@@ -7,15 +7,17 @@ import javax.swing.*;
 
 class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
 
-    public static BufferedImage image, fullMapImage, backgroundImg, backgroundImg2;
-    private Graphics2D g2d, g2ds, g2dss;
+    public static BufferedImage image, fullMapImage, backgroundImg, backgroundImg2, backgroundImg3;
+    private Graphics2D g2d, g2ds, g2dss, g2dsss;
     private final static int zoomRate = 45; // 1000 / 40 = 25 frames per second
     private final static int SIZE = 200;
     private int TILES_VISIBLE_X, TILES_VISIBLE_Y;
     private static int WIDTH, HEIGHT;
     private static int SUB_WIDTH, SUB_HEIGHT;
     private final static int BORDER_WIDTH = 40;
-    private final static int BORDER_WIDTH2 = 20;
+    private final static int BORDER_WIDTH2 = 15;
+    private final static int BORDER_WIDTH3 = 15;
+
 
     private MainViewImage mainViewImage;
     public int x_center, y_center;    // where the window in focused on
@@ -29,19 +31,24 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         backgroundImg = new BufferedImage(WIDTH + BORDER_WIDTH/2, HEIGHT + BORDER_WIDTH/2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
+        backgroundImg3 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2 + BORDER_WIDTH3, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2 + BORDER_WIDTH3, BufferedImage.TYPE_INT_ARGB);
+        g2dsss = (Graphics2D)backgroundImg3.createGraphics();
+        g2dsss.setColor(new Color(0x03999999));
+        g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
+
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
-        g2dss.setColor(new Color(0x0AAAAAAA));
+        g2dss.setColor(new Color(0x01555555));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
         g2ds = (Graphics2D)backgroundImg.createGraphics();
-        g2ds.setColor(new Color(0x0A000000));
+        g2ds.setColor(new Color(0xFF000000));
         g2ds.fillRect(0, 0, backgroundImg.getWidth(), backgroundImg.getHeight());
         g2d = (Graphics2D)image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        setPreferredSize(  new Dimension( backgroundImg2.getWidth(), backgroundImg2.getHeight()) );
-        this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        setPreferredSize(  new Dimension( backgroundImg3.getWidth(), backgroundImg3.getHeight()) );
+       // this.setBorder(BorderFactory.createLineBorder(Color.white, 2));
         drawMapArea();
         addMouseListener(this);
     }
@@ -49,26 +56,37 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
-        g.drawImage( backgroundImg2, 0, 0, this );
-        g.drawImage( backgroundImg, BORDER_WIDTH2/2, BORDER_WIDTH2/2, this );
-        g.drawImage( image, BORDER_WIDTH/2, BORDER_WIDTH/2, this );
+        g.drawImage( backgroundImg3, 0, 0, this );
+        g.drawImage( backgroundImg2, BORDER_WIDTH3/2, BORDER_WIDTH3/2, this );
+        g.drawImage( backgroundImg, BORDER_WIDTH2/2 + BORDER_WIDTH3/2, BORDER_WIDTH2/2 + BORDER_WIDTH3/2, this );
+        g.drawImage( image, BORDER_WIDTH/2 + BORDER_WIDTH3/2, BORDER_WIDTH/2 + BORDER_WIDTH3/2, this );
     }
 
     public void drawMapArea() {
 
-        g2d.drawImage(fullMapImage, 0, 5, WIDTH, (int)(HEIGHT * 1.5), 0, 0, fullMapImage.getWidth(),
+        g2d.drawImage(fullMapImage, 0, 0, WIDTH, (int)(HEIGHT * 1.5), 0, 0, fullMapImage.getWidth(),
                 fullMapImage.getHeight(), null);
 
         shadeUnselectedArea();
     }
 
     public void shadeUnselectedArea() {
-        double shade_factor = 0.75;// shade factor, [0, 1]
+        double shade_factor = 0.80;// shade factor, [0, 1]
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
 
                 if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
+
+                    int intARGB = image.getRGB(i, j);
+                    newR = (int) ( (( intARGB >> 16) & 0xFF) * (1 - .6) );
+                    newG = (int) ( (( intARGB >>  8) & 0xFF) * (1 - .6) );
+                    newB = (int) ( (( intARGB >>  0) & 0xFF) * (1 - .6) );
+                    newColor = ( 0xFF000000 | (newR << 16) | (newG << 8) | (newB << 0) );
+                    image.setRGB( i, j, newColor);
+
+
+
                     continue;
                 }
                 if( !(i > x_center && i < x_center + SUB_WIDTH && j > y_center && j < y_center + SUB_HEIGHT) ) {

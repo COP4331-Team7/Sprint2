@@ -71,8 +71,6 @@ public class MainScreenController {
         });
 
 
-
-
         view.getMainScreen().getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getExecuteCommandButton())

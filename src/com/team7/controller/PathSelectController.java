@@ -123,7 +123,7 @@ public class PathSelectController {
                         }
 
                         if(i == pathTile.size() - 1)
-                            view.getMainScreen().getMainViewImage().zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 50  );
+                            mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
 
 
                     }

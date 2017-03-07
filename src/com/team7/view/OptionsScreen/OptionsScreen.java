@@ -4,7 +4,9 @@ import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.ScreenSelectButtons;
 
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
+import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,29 +38,53 @@ public class OptionsScreen extends JPanel{
 
         JPanel temp = new JPanel(new BorderLayout() );
         screenSelectBtns = new ScreenSelectButtons();
-       // temp.add( screenSelectBtns, BorderLayout.NORTH );
 
         controlsList.setModel(defaultListModel);
         listPanel.add(jScrollPane);
 
-        buttonPanel.add(resetControlsButton, BorderLayout.WEST);
-        buttonPanel.add(changeControlButton, BorderLayout.EAST);
+        buttonPanel.add(resetControlsButton, BorderLayout.EAST);
+        buttonPanel.add(changeControlButton, BorderLayout.WEST);
 
         temp.add(screenSelectBtns, BorderLayout.NORTH);
         temp.add(label, BorderLayout.SOUTH);
 
         listPanel.add(temp, BorderLayout.NORTH);
 
+        JPanel sliderHolder = new JPanel(new GridLayout(0,1));
+        JPanel p1 = new JPanel();
+        JPanel p2 = new JPanel();
+        JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
+        p1.add(l2, BorderLayout.EAST);
+        JSlider s1 = new JSlider(0, 30, 15);
+        l2.setForeground(new Color(0xFF00AAFF));
+        l2.setFont( new Font(  "Serif", Font.BOLD, 18));
+        s1.setMinorTickSpacing(3);
+        s1.setPaintTicks(true);
+        s1.setSnapToTicks(true);
+        s1.setMajorTickSpacing(6);
+        p1.add(s1, BorderLayout.WEST);
+        JLabel l1 = new JLabel("UNIT MOVEMENT SPEED         ");
+        l1.setForeground(new Color(0xFF00AAFF));
+        l1.setFont( new Font(  "Serif", Font.BOLD, 18));
+        p2.add(l1, BorderLayout.EAST);
+        JSlider s2 = new JSlider(0, 30, 15);
+        s2.setMinorTickSpacing(3);
+        s2.setPaintTicks(true);
+        s2.setSnapToTicks(true);
+        s2.setMajorTickSpacing(6);
+        p2.add(s2, BorderLayout.WEST);
+        sliderHolder.add(p1);
+        sliderHolder.add(p2);
+
+        listPanel.add(sliderHolder, BorderLayout.SOUTH);
+
         this.setLayout(new BorderLayout());
         this.add(listPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-
-
         this.repaint();
 
         controlsList.setFont(new Font("Serif", Font.BOLD, 50));
-
     }
 
     //adds text to the defaultListModel
