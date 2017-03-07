@@ -16,6 +16,7 @@ import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -36,7 +37,11 @@ public class Tile {
     private AreaEffect areaEffect;
     private Decal decal;
     private Item item;
-    private Resource resource;
+
+    private Resource energy;
+    private Resource food;
+    private Resource ore;
+
     private Terrain terrain;
     private int xCoordinate;
     private int yCoordinate;
@@ -101,35 +106,39 @@ public class Tile {
         if (terrain instanceof Desert) {
             populateAreaEffect(0.1);
             populateItem(0.05);
-            populateResource(0.05);
+            populateResource(0.05, .7, .25);
 
         } else if (terrain instanceof Flatland) {
             populateAreaEffect(0.2);
             populateItem(0.15);
-            populateResource(0.3);
+            populateResource(0.3,.07, .7);
         } else if (terrain instanceof Crater) {
             populateAreaEffect(0.2);
             populateItem(0.05);
-            populateResource(0.25);
+            populateResource(0.25, .8, .01);
         } else if (terrain instanceof Mountains) {
             populateAreaEffect(0);
             populateItem(0);
-            populateResource(0);
+            populateResource(0,0,.99);
         }
     }
 
 
     //Populate Resource for each tile
-    public void populateResource(double prob) {
-        if (ProbabilityGenerator.willOccur(prob)) {
-            int rand = ProbabilityGenerator.randomInteger(0, 2);
-            if (rand == 0)
-                setResource(new Energy());
-            else if (rand == 1)
-                setResource(new Food());
-            else if (rand == 2)
-                setResource(new Ore());
+    public void populateResource(double probEnergy, double probOre, double probFood) {
+        if (ProbabilityGenerator.willOccur(probEnergy)) {
+            energy = new Energy();
         }
+
+        if (ProbabilityGenerator.willOccur(probOre)) {
+            ore = new Ore();
+        }
+
+        if (ProbabilityGenerator.willOccur(probFood)) {
+            food = new Food();
+        }
+
+
     }
 
     //Populate Item for each tile
@@ -151,21 +160,6 @@ public class Tile {
             int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
             setAreaEffect(terrain.getAreaEffects().get(rand));
         }
-    }
-
-    //Structure will only interact with Tile for its Resource
-    //called for each Tile in the Structure's available radius
-    //TODO determine how harvesting will work: via structure? worker? resource itself?
-    public int structureInteractWithTileForResource(int quantityOfResourceToHarvest) {
-        if (resource != null) {
-            int resourceQuantity = resource.getStatInfluenceQuantity();
-            resource.changeResourceQuantity(0-quantityOfResourceToHarvest);
-            if (resourceQuantity == 0 && !(resource instanceof Food)) {
-                resource = null;    //resource has been depleted and nonrenewable, set to NULL
-            }
-            return resourceQuantity;
-        }
-        return 0;
     }
 
 
@@ -202,15 +196,16 @@ public class Tile {
     }
 
 
-    public Resource getResource() {
-        return resource;
+    public ArrayList<Resource> getResources() {
+        ArrayList<Resource> resources = new ArrayList<Resource>();
+
+        resources.add(0,energy);
+        resources.add(1,ore);
+        resources.add(2, food);
+
+        return resources;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
-        realDraw.setResourceType(resource.getType());
-        realDraw.setResourceQuantity(String.valueOf(resource.getStatInfluenceQuantity()));
-    }
 
     public int getxCoordinate() {
         return xCoordinate;
