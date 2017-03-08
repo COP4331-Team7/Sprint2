@@ -24,24 +24,24 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     boolean isTrackingPath = false;
 
-    private final static String[] armyCommands = {          "attack [direction] applies to the battle-group",
-            "defend [direction] applies to the battle-group",
-            "move [changes the rally-point]",
-            "wait  [applies to the battle-group]",
-            "disband  [the army ceases to exist, all units go to standby]",
-            "decommission [destroy all units in the army]",
-            "power down [applies to the battle-group]",
-            "power up [applies to the battle-group]",
-            "cancel queued orders [immediate effect]"};
+    private final static String[] armyCommands = {          "attack",
+            "defend",
+            "move",
+            "wait",
+            "disband",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"};
 
-    private final static String[] structureCommands = {"attack [direction]",
-            "make[unit type]",
-            "defend [direction]",
+    private final static String[] structureCommands = {"attack",
+            "make",
+            "defend",
             "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders [immediate effect]"};
+            "cancel queued orders"};
 
     private final static String[] unitCommands = {    "REINFORCE",
             "DECOMMISSION",
@@ -184,8 +184,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if( isRecordingPath ) {
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }
-
-
 
         key_char = e.getKeyChar();
 

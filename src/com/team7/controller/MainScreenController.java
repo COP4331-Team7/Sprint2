@@ -54,6 +54,7 @@ public class MainScreenController {
                     // BAD!!!!!!!!! TODO: fix
                     view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
                     view.getMainScreen().getMainViewInfo().updateStats(game.getCurrentPlayer().getRandomUnit());
+                    view.getMainScreen().getMainViewInfo().setTitle2(game.getCurrentPlayer().getName());
                     Set<Tile> tiles = null;
                     view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 2, tiles));
 

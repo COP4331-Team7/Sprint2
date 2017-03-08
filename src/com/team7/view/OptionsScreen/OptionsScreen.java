@@ -58,7 +58,7 @@ public class OptionsScreen extends JPanel{
 //        resetControlsButton.setBackground( new Color(0xff000000) );
 //        resetControlsButton.setOpaque(true);
 
-        changeControlButton.setForeground( new Color(0xFF0000FF));
+        changeControlButton.setForeground( new Color(0xFF0FAAF0));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
 //        changeControlButton.setBackground( new Color(0xff000000) );
 //        changeControlButton.setOpaque(true);
@@ -124,10 +124,10 @@ public class OptionsScreen extends JPanel{
         JPanel temp2 = new JPanel();
         temp2.add(changeControlButton, BorderLayout.EAST);
         temp2.add(resetControlsButton, BorderLayout.WEST);
-        p1.setBackground( new Color(0xFF00FF00) );
+        p1.setBackground( new Color(0xff75fff8) );
         p1.setOpaque(true);
 
-        p2.setBackground( new Color(0xFFAFFC00) );
+        p2.setBackground( new Color(0xff75fff8) );
         p2.setOpaque(true);
 
         p3.setBackground( new Color(0xff75fff8) );

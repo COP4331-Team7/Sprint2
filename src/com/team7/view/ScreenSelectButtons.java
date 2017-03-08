@@ -16,6 +16,10 @@ public class ScreenSelectButtons extends JPanel {
             structureScreenSelectButton = new JButton("STRUCTURE OVERVIEW");
             optionsScreenSelectButton = new JButton("CONTROLS");
 
+
+
+//            mainScreenSelectButton.setFont(new Font("Serif", Font.BOLD, 30));
+
             this.add( mainScreenSelectButton );
             this.add( unitScreenSelectButton );
             this.add( structureScreenSelectButton );
