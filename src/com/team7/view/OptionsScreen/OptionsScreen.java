@@ -85,7 +85,7 @@ public class OptionsScreen extends JPanel{
         listPanel.add(jScrollPane);
 
         buttonPanel.add(resetControlsButton, BorderLayout.EAST);
-        buttonPanel.add(changeControlButton, BorderLayout.WEST);
+       // buttonPanel.add(changeControlButton, BorderLayout.WEST);
 
 
         showScreenSelectBtns();
@@ -155,7 +155,10 @@ public class OptionsScreen extends JPanel{
         showUnitsButton.setForeground( new Color(0, 175, 0, 255) );
         showUnitsButton.setFont(new Font("Serif", Font.BOLD, 20));
 
-        JPanel btns = new JPanel( new GridLayout(0, 2) );
+        JPanel btns = new JPanel( new GridLayout(0, 3) );
+        btns.add(changeControlButton, BorderLayout.WEST);
+        changeControlButton.setForeground( new Color(0xffCABD80) );
+        changeControlButton.setFont(new Font("Serif", Font.BOLD, 20));
         btns.add( showUnitsButton );
         btns.add( showResourceButton );
 
