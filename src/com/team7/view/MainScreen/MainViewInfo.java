@@ -148,7 +148,6 @@ public class MainViewInfo extends JPanel {
             researchLabel.setBackground( new Color(0xFFAFFC00) );
             researchLabel.setOpaque(true);
            // researchLabel.setForeground(Color.blue);
-            t.add(researchLabel);
 //            t.add(researchLabel_bar);
 
             constructionLabel = new JLabel("Metal:");
@@ -169,6 +168,8 @@ public class MainViewInfo extends JPanel {
             powerLabel.setBackground( new Color(0xFFAFFC00) );
             powerLabel.setOpaque(true);
             t.add(powerLabel);
+            t.add(researchLabel);
+
 //            t.add(powerLabel_bar);
 
             this.add( t, BorderLayout.SOUTH );
