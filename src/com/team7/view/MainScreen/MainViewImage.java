@@ -63,6 +63,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private Tile[][] grid;
 
         private int scrollSpeed = 300; // ms
+        private boolean drawResources = false;
+        private boolean drawUnits = true;
+
 
     /****************************************************************/
         Player player = null;
@@ -404,38 +407,41 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                         }
 
-                        // draw units
-                        if (tileState.getExplorer() > 0) {
-                                g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
+                        if(drawUnits) {
+                            // draw units
+                            if (tileState.getExplorer() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                            if (tileState.getColonist() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                            if (tileState.getMeleeUnit() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                            if (tileState.getRangeUnit() > 0) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                            }
                         }
-                        if (tileState.getColonist() > 0) {
-                            g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
-                        }
-                        if (tileState.getMeleeUnit() > 0) {
-                            g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
-                        }
-                        if (tileState.getRangeUnit() > 0) {
-                            g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
-                        }
-
                         //draw resource counts
-                        // ore
-                        if(tileState.getOreQuantity() > 0) {
-                            g2ds.setColor(new Color(0xFFDDAAAA));
-                            String s = Integer.toString(tileState.getOreQuantity());
-                            g2ds.drawString(s, x_coord + x_offset + 16, y_coord + 30);
-                        }
-                        // energy
-                        if(tileState.getEnergyQuantity() > 0) {
-                            g2ds.setColor(new Color(0xaf75fff8));
-                        String s = Integer.toString(tileState.getEnergyQuantity());
-                        g2ds.drawString(s, x_coord + x_offset+30, y_coord + 30);
-                        }
-                        //food
-                        if(tileState.getFoodQuantity() > 0) {
-                            g2ds.setColor(new Color(0xAFAFFC00));
-                            String s = Integer.toString(tileState.getFoodQuantity());
-                            g2ds.drawString(s, x_coord + x_offset+44, y_coord + 30);
+                        if(drawResources) {
+                            // ore
+                            if (tileState.getOreQuantity() > 0) {
+                                g2ds.setColor(new Color(0xFFDDAAAA));
+                                String s = Integer.toString(tileState.getOreQuantity());
+                                g2ds.drawString(s, x_coord + x_offset + 16, y_coord + 30);
+                            }
+                            // energy
+                            if (tileState.getEnergyQuantity() > 0) {
+                                g2ds.setColor(new Color(0xaf75fff8));
+                                String s = Integer.toString(tileState.getEnergyQuantity());
+                                g2ds.drawString(s, x_coord + x_offset + 30, y_coord + 30);
+                            }
+                            //food
+                            if (tileState.getFoodQuantity() > 0) {
+                                g2ds.setColor(new Color(0xAFAFFC00));
+                                String s = Integer.toString(tileState.getFoodQuantity());
+                                g2ds.drawString(s, x_coord + x_offset + 44, y_coord + 30);
+                            }
                         }
 
                         // shroud tile
@@ -590,6 +596,13 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 timer.restart();
             }
         } );
+    }
+
+    public void drawResources(boolean draw) {
+            this.drawResources = draw;
+    }
+    public void drawUnits(boolean draw) {
+        this.drawUnits = draw;
     }
 
     public MainViewMiniMap getMiniMap() {

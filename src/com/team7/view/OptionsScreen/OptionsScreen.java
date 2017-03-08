@@ -3,11 +3,14 @@ package com.team7.view.OptionsScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.ScreenSelectButtons;
+import javafx.scene.control.ToggleButton;
 
 import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
@@ -49,6 +52,8 @@ public class OptionsScreen extends JPanel{
     private JSlider s1 = null;
     private JSlider s2 = null;
     private JSlider s3 = null;
+    JToggleButton showResourceButton = null;
+    JToggleButton showUnitsButton = null;
 
 
     public OptionsScreen() {
@@ -133,6 +138,15 @@ public class OptionsScreen extends JPanel{
         p3.setBackground( new Color(0xff75fff8) );
         p3.setOpaque(true);
 
+        showResourceButton = new JToggleButton("Resource display [OFF]");
+        showUnitsButton = new JToggleButton("Unit display [ON]");
+
+        JPanel btns = new JPanel( new GridLayout(0, 2) );
+        btns.add( showUnitsButton );
+        btns.add( showResourceButton );
+
+        sliderHolder.add( btns );
+
         sliderHolder.add(p1);
         sliderHolder.add(p2);
         sliderHolder.add(p3);
@@ -175,7 +189,7 @@ public class OptionsScreen extends JPanel{
         if(s3.getValue() == s3.getMaximum())
             return 1 * 10;
         else
-            return 20 * Math.abs(s3.getMaximum() - s3.getValue());
+            return 15 * Math.abs(s3.getMaximum() - s3.getValue());
     }
 
 
@@ -206,6 +220,12 @@ public class OptionsScreen extends JPanel{
         s3.setValue(15);
     }
 
+    public JToggleButton getShowResourceButton() {
+        return showResourceButton;
+    }
+    public JToggleButton getShowUnitsButton() {
+        return showUnitsButton;
+    }
 
 
 }

@@ -6,6 +6,8 @@ import com.team7.model.entity.unit.Unit;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -132,8 +134,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
        // setPreferredSize(new Dimension(350, 200));
 
        // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
-
-
         addKeyListener(this);
     }
 

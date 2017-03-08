@@ -10,6 +10,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * TODO figure out a way to keep special key cases configurable (ie arrow keys) if needed
@@ -93,6 +95,38 @@ public class OptionsController{
                 view.getMainViewImage().setScrollSpeed( optionsScreen.getScrollSpeed() );
             }
         });
+
+
+        ItemListener itemListener = new ItemListener() {
+            public void itemStateChanged(ItemEvent itemEvent) {
+                int state = itemEvent.getStateChange();
+                if (state == ItemEvent.SELECTED) {
+                    view.getMainViewImage().drawResources( true );
+                    optionsScreen.getShowResourceButton().setText("Resource display [ON]");
+                } else {
+                    view.getMainViewImage().drawResources( false );
+                    optionsScreen.getShowResourceButton().setText("Resource display [OFF]");
+                }
+                view.redrawView();
+            }
+        };
+        optionsScreen.getShowResourceButton().addItemListener(itemListener);
+
+        ItemListener itemListener2 = new ItemListener() {
+            public void itemStateChanged(ItemEvent itemEvent) {
+                int state = itemEvent.getStateChange();
+                if (state == ItemEvent.SELECTED) {
+                    view.getMainViewImage().drawUnits( false );
+                    optionsScreen.getShowUnitsButton().setText("Unit display [OFF]");
+                } else {
+                    view.getMainViewImage().drawUnits( true );
+                    optionsScreen.getShowUnitsButton().setText("Unit display [ON]");
+                }
+                view.redrawView();
+            }
+        };
+        optionsScreen.getShowUnitsButton().addItemListener(itemListener2);
+
 
 
     }
