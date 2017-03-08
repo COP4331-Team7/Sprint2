@@ -18,7 +18,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     private final static int BORDER_WIDTH2 = 10;
     private final static int BORDER_WIDTH3 = 10;
 
-    double stretch = 1.5;
+    double stretch = 1.6;
 
 
     private MainViewImage mainViewImage;
@@ -48,8 +48,13 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2ds.setColor(new Color(0xFF000000));
         g2ds.fillRect(0, 0, backgroundImg.getWidth(), backgroundImg.getHeight());
         g2d = (Graphics2D)image.createGraphics();
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+        g2d.setComposite(AlphaComposite.Src);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
+
         setPreferredSize(  new Dimension( backgroundImg2.getWidth(), backgroundImg2.getHeight()) );
       // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
         drawMapArea();
@@ -141,7 +146,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void mouseClicked(MouseEvent e) {
 
         double x_offset = ( (double)e.getX() / WIDTH ) * MAP_TILE_WIDTH - 7;
-        double y_offset = ( (double)e.getY() / HEIGHT ) * MAP_TILE_HEIGHT - 15;
+        double y_offset = ( (double)e.getY() / HEIGHT ) * MAP_TILE_HEIGHT - 10;
 
         if(x_offset < 0)              // adjust if out of bounds
             x_offset = 0;
