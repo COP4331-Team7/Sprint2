@@ -55,6 +55,10 @@ public class MainScreenController {
                     view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
                     Set<Tile> tiles = null;
                     view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 2, tiles));
+
+                    view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
+
+                    // TODO: fix
                     view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
                     view.getMainScreen().getCommandSelect().setFocusable(true);
                     view.getMainScreen().getCommandSelect().requestFocus();

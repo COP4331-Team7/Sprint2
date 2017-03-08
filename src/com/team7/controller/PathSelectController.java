@@ -93,7 +93,7 @@ public class PathSelectController {
 
     public void drawPath(Unit unit){
 
-        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 30;
+        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 20;
 
         if(unit == null)
             return;
@@ -131,11 +131,9 @@ public class PathSelectController {
 
 
                     }
+                    view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
                 }
         }).start();
-
-
-
 
     }
 

@@ -66,6 +66,7 @@ public class OptionsController{
                     //reset player's config file by overwriting with a default file
                     reader.resetToDefault(game.getCurrentPlayer().getName());
                     reloadControls(game.getCurrentPlayer().getName());
+                    optionsScreen.setSlidersToDefault();
                 }
             }
         });

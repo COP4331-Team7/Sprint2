@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.swing.*;
 
-class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
+public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
 
     public static BufferedImage image, fullMapImage, backgroundImg, backgroundImg2, backgroundImg3;
     private Graphics2D g2d, g2ds, g2dss, g2dsss;
@@ -33,11 +33,11 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg3 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2 + BORDER_WIDTH3, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2 + BORDER_WIDTH3, BufferedImage.TYPE_INT_ARGB);
         g2dsss = (Graphics2D)backgroundImg3.createGraphics();
-        g2dsss.setColor(new Color(0x0FAAAAAA));
+        g2dsss.setColor(new Color(0xFFCCCCCC));
         g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
-        g2dss.setColor(new Color(0xFF000000));
+        g2dss.setColor(new Color(0xAAAA8888));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
@@ -48,10 +48,15 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         setPreferredSize(  new Dimension( backgroundImg3.getWidth(), backgroundImg3.getHeight()) );
-       // this.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+       this.setBorder(BorderFactory.createLineBorder(new Color(0xAAAA8888), 2));
         drawMapArea();
         addMouseListener(this);
     }
+
+    public void setMainViewImage(MainViewImage mainViewImage) {
+        this.mainViewImage = mainViewImage;
+    }
+
 
     public void paintComponent( Graphics g )
     {
@@ -68,27 +73,19 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
                 fullMapImage.getHeight(), null);
 
         shadeUnselectedArea();
+        repaint();
     }
 
     public void shadeUnselectedArea() {
-        double shade_factor = 0.75;// shade factor, [0, 1]
+        double shade_factor = .5;// shade factor, [0, 1]
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
-
                 if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
-
-                    int intARGB = image.getRGB(i, j);
-                    newR = (int) ( (( intARGB >> 16) & 0xFF) * (1 - .5) );
-                    newG = (int) ( (( intARGB >>  8) & 0xFF) * (1 - .5) );
-                    newB = (int) ( (( intARGB >>  0) & 0xFF) * (1 - .5) );
-                    newColor = ( 0xFF000000 | (newR << 16) | (newG << 8) | (newB << 0) );
-                    image.setRGB( i, j, newColor);
-
-
-
+                    image.setRGB( i, j, 0xAAAA8888);
                     continue;
                 }
+
                 if( !(i > x_center && i < x_center + SUB_WIDTH && j > y_center && j < y_center + SUB_HEIGHT) ) {
                     int intARGB = image.getRGB(i, j);
                     newR = (int) ( (( intARGB >> 16) & 0xFF) * (1 - shade_factor) );
@@ -97,9 +94,9 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
                     newColor = ( 0xFF000000 | (newR << 16) | (newG << 8) | (newB << 0) );
                     image.setRGB( i, j, newColor);
                 }
+
             }
         }
-        repaint();
     }
 
     public void setMiniMapImage(BufferedImage img, int x, int y) {
@@ -108,6 +105,11 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         SUB_WIDTH  = (int) (WIDTH * TILES_VISIBLE_Y /  MAP_TILE_WIDTH);
         SUB_HEIGHT = (int)(HEIGHT * TILES_VISIBLE_X / MAP_TILE_HEIGHT);
         fullMapImage = img;
+    }
+
+    public void setMiniMapImage(BufferedImage img) {
+        fullMapImage = img;
+        drawMapArea();
     }
 
     public void setFocus(int x, int y) {
@@ -146,9 +148,5 @@ class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
             y_offset = MAP_TILE_HEIGHT - TILES_VISIBLE_Y;
 
         mainViewImage.zoomToDestination( (int)x_offset, (int)y_offset, zoomRate );
-    }
-
-    public void setMainViewImage(MainViewImage mainViewImage) {
-        this.mainViewImage = mainViewImage;
     }
 }

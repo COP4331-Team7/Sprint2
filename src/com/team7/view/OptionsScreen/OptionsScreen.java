@@ -96,7 +96,7 @@ public class OptionsScreen extends JPanel{
         l1.setForeground(new Color(0xFF00AAFF));
         l1.setFont( new Font(  "Serif", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
-        s2 = new JSlider(0, 20, 15);
+        s2 = new JSlider(0, 20, 10);
         s2.setMinorTickSpacing(1);
         s2.setPaintTicks(true);
         s2.setSnapToTicks(true);
@@ -143,10 +143,6 @@ public class OptionsScreen extends JPanel{
             defaultListModel.addElement(key + ": " + controls.get(key) );
         }
 
-        s1.setValue( s1.getMaximum()/2 );
-        s2.setValue( s2.getMaximum()/2 );
-        s3.setValue( s3.getMaximum() - 5 );
-
         this.repaint();
     }
 
@@ -191,7 +187,11 @@ public class OptionsScreen extends JPanel{
     public JButton getStructureScreen() {
         return screenSelectBtns.getStructureScreenButton();
     }
-
+    public void setSlidersToDefault() {
+        s1.setValue(10);
+        s2.setValue(10);
+        s3.setValue(15);
+    }
 
 
 

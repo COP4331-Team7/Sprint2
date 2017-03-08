@@ -62,7 +62,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
-        private int scrollSpeed = 600; // ms
+        private int scrollSpeed = 300; // ms
 
     /****************************************************************/
         Player player = null;
@@ -209,9 +209,13 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             }
 
          public BufferedImage getFullMapImage() {
+
              BufferedImage mapImage;
              mapImage = new BufferedImage(TILE_SIZE*MAP_TILE_WIDTH + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
              Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
+             g2.setColor(new Color(0xFF000000));
+             g2.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
+
              int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
              int x_offset, counter, step = 0;
              int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
@@ -227,45 +231,81 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                  }
                  step++;
 
-                 for(int i = 0; i < MAP_TILE_HEIGHT; i++) {
-                     counter = 1;
+                 for (int i = 0; i < MAP_TILE_HEIGHT; i++) {
+                     counter = 0;
 
                      int xx = i;                   //  index in Map's grid[][]
                      int yy = j;
 
-                     if(xx < 0)                     // adjust if out of bounds
+                     if (xx < 0)                     // adjust if out of bounds
                          xx = 0;
                      else if (xx >= MAP_TILE_WIDTH)
                          xx = MAP_TILE_WIDTH - 1;
-                     if(yy < 0)
+                     if (yy < 0)
                          yy = 0;
-                     else if(yy >= MAP_TILE_HEIGHT)
+                     else if (yy >= MAP_TILE_HEIGHT)
                          yy = MAP_TILE_HEIGHT - 1;
 
                      x_coord = i * TILE_SIZE;
-                     y_coord = (int)(j * TILE_SIZE / 2.4);
+                     y_coord = (int) (j * TILE_SIZE / 2.4);
 
-                     if( grid[xx][yy].getTerrain() instanceof Mountains) {
+                     x_offset += changePerStep * ++counter;
+
+                     DrawableTileState tileState = null;
+
+//                    if(grid[xx][yy].getResource()!= null)
+//                         System.out.println( grid[xx][yy].getResource().getStatInfluenceQuantity() );
+
+                     if (player != null) {
+                         if (grid[xx][yy].getDrawableStateByPlayer(player.getName()) != null) {
+                             tileState = grid[xx][yy].getDrawableStateByPlayer(player.getName());
+                         }
+                     }
+
+                     if (tileState == null) {
+                        // tileState = grid[xx][yy].getDrawableStateByPlayer("real");
+                         g2.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                         continue;
+                         //System.out.print("null");
+                     }
+                    else {
+
+                     // draw terrain
+                     if (tileState.getTerrainType().equals("Mountains")) {
                          g2.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
-                         x_offset += changePerStep * counter;
-                         counter++;
-                     }
-                     else if (grid[xx][yy].getTerrain() instanceof Crater) {
+                     } else if (tileState.getTerrainType().equals("Crater")) {
                          g2.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
-                         x_offset += changePerStep * counter;
-                         counter++;
-                     }
-                     else if (grid[xx][yy].getTerrain() instanceof Desert) {
+                     } else if (tileState.getTerrainType().equals("Desert")) {
                          g2.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
-                         x_offset += changePerStep * counter;
-                         counter++;
-                     }
-                     else if (grid[xx][yy].getTerrain() instanceof Flatland) {
+                     } else if (tileState.getTerrainType().equals("Flatland")) {
                          g2.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
-                         x_offset += changePerStep * counter;
-                         counter++;
                      }
-                 }
+
+                     // draw units
+                     if (tileState.getExplorer() > 0) {
+                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                     }
+                     if (tileState.getColonist() > 0) {
+                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                     }
+                     if (tileState.getMeleeUnit() > 0) {
+                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                     }
+                     if (tileState.getRangeUnit() > 0) {
+                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                     }
+
+                     // shroud tile
+                     if(player != null)
+                     if (grid[xx][yy].getShrouded(player.getName())) {
+                         g2.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+                     }
+
+
+                 if (grid[xx][yy].isSelectedPath) {
+                     g2.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
+                 }}
+             }
              }
 
              return mapImage;
@@ -544,7 +584,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         }
 
     public void setScrollSpeed(int scrollSpeed) {
-        this.scrollSpeed = scrollSpeed * 50;
+        this.scrollSpeed = scrollSpeed * 30;
        // timer.setDelay( this.scrollSpeed );
         timer = new Timer(this.scrollSpeed, new ActionListener()
         {
@@ -555,6 +595,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 timer.restart();
             }
         } );
+    }
+
+    public MainViewMiniMap getMiniMap() {
+            return  mainViewSelection;
     }
 
 }
