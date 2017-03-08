@@ -6,7 +6,6 @@ import com.team7.model.DrawableTileState;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
-import com.team7.model.entity.Command;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
@@ -63,7 +62,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
-        private int scrollSpeed = 12 * 50;
+        private int scrollSpeed = 600; // ms
 
     /****************************************************************/
         Player player = null;

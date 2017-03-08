@@ -18,8 +18,8 @@ import java.util.Set;
  */
 public class OptionsScreen extends JPanel{
 
-    private JButton resetControlsButton = new JButton("Reset Controls");
-    private JButton changeControlButton = new JButton("Change selected control");
+    private JButton resetControlsButton = new JButton("Reset controls to default");
+    private JButton changeControlButton = new JButton("Update selected control");
 
     private JList<String> controlsList = new JList<>();
     private DefaultListModel<String> defaultListModel = new DefaultListModel<>();
@@ -30,7 +30,8 @@ public class OptionsScreen extends JPanel{
 
     private JPanel buttonPanel = new JPanel(new BorderLayout());
 
-    private JLabel label = new JLabel("Controls:");
+    private JLabel label = new JLabel("Key Bindings:");
+
 
     private ScreenSelectButtons screenSelectBtns = null;
 
@@ -41,11 +42,25 @@ public class OptionsScreen extends JPanel{
     public JSlider getS2() {
         return s2;
     }
+    public JSlider getS3() {
+        return s3;
+    }
 
     private JSlider s1 = null;
     private JSlider s2 = null;
+    private JSlider s3 = null;
+
 
     public OptionsScreen() {
+
+        resetControlsButton.setForeground( new Color(0xFFFF0000));
+        resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
+
+        changeControlButton.setForeground( new Color(0xFF0FAAF0));
+        changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
+
+        label.setForeground( new Color(0xFF0FAAF0));
+        label.setFont(new Font("Serif", Font.BOLD, 30));
 
         JPanel temp = new JPanel(new BorderLayout() );
         screenSelectBtns = new ScreenSelectButtons();
@@ -64,6 +79,7 @@ public class OptionsScreen extends JPanel{
         JPanel sliderHolder = new JPanel(new GridLayout(0,1));
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
+        JPanel p3 = new JPanel();
         JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
         p1.add(l2, BorderLayout.EAST);
         s1 = new JSlider(0, 20, 10);
@@ -71,30 +87,50 @@ public class OptionsScreen extends JPanel{
         l2.setFont( new Font(  "Serif", Font.BOLD, 18));
         s1.setMinorTickSpacing(1);
         s1.setPaintTicks(true);
-        s1.setPaintLabels(true);
+        //s1.setPaintLabels(true);
         s1.setSnapToTicks(true);
         s1.setMajorTickSpacing(5);
+        s1.setPreferredSize(new Dimension(400, 50));
         p1.add(s1, BorderLayout.WEST);
         JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
         l1.setForeground(new Color(0xFF00AAFF));
         l1.setFont( new Font(  "Serif", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
-        s2 = new JSlider(0, 20, 10);
+        s2 = new JSlider(0, 20, 15);
         s2.setMinorTickSpacing(1);
         s2.setPaintTicks(true);
         s2.setSnapToTicks(true);
-        s2.setPaintLabels(true);
+        //s2.setPaintLabels(true);
         s2.setMajorTickSpacing(5);
+        s2.setPreferredSize(new Dimension(400, 50));
         p2.add(s2, BorderLayout.WEST);
+        JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
+        l3.setForeground(new Color(0xFF00AAFF));
+        l3.setFont( new Font(  "Serif", Font.BOLD, 18));
+        s3 = new JSlider(0, 20, 15);
+        s3.setMinorTickSpacing(1);
+        s3.setPaintTicks(true);
+        s3.setSnapToTicks(true);
+        // s3.setPaintLabels(true);
+        s3.setMajorTickSpacing(5);
+        s3.setPreferredSize(new Dimension(400, 50));
+        JPanel temp1 = new JPanel();
+        p3.add(l3, BorderLayout.WEST);
+        p3.add(s3, BorderLayout.EAST);
+        JPanel temp2 = new JPanel();
+        temp2.add(changeControlButton, BorderLayout.EAST);
+        temp2.add(resetControlsButton, BorderLayout.WEST);
         sliderHolder.add(p1);
         sliderHolder.add(p2);
+        sliderHolder.add(p3);
+        sliderHolder.add(temp2);
+
         listPanel.add(sliderHolder, BorderLayout.SOUTH);
         this.setLayout(new BorderLayout());
         this.add(listPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.repaint();
-
         controlsList.setFont(new Font("Serif", Font.BOLD, 50));
     }
 
@@ -106,6 +142,11 @@ public class OptionsScreen extends JPanel{
         for (String key : allKeys){
             defaultListModel.addElement(key + ": " + controls.get(key) );
         }
+
+        s1.setValue( s1.getMaximum()/2 );
+        s2.setValue( s2.getMaximum()/2 );
+        s3.setValue( s3.getMaximum() - 5 );
+
         this.repaint();
     }
 
@@ -120,6 +161,12 @@ public class OptionsScreen extends JPanel{
             return 1;
         else
             return Math.abs(s1.getMaximum() - s1.getValue());
+    }
+    public int getFocusSpeed() {
+        if(s3.getValue() == s3.getMaximum())
+            return 1 * 10;
+        else
+            return 10 * Math.abs(s3.getMaximum() - s3.getValue());
     }
 
 

@@ -39,6 +39,8 @@ public class OptionsController{
 
                     //get currently selected key:value
                     String selectedString = optionsScreen.getControlsList().getSelectedValue();
+                    if(selectedString == null)
+                        return;
                     int colonIndex = selectedString.indexOf(':');
                     String key = selectedString.substring(0, colonIndex);
                     String popupMessage = "Change " + key + " *note only one input character alllowed!";

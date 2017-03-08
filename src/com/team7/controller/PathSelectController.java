@@ -28,7 +28,7 @@ public class PathSelectController {
 
     ArrayList<Tile> pathTile = new ArrayList<Tile>();;
 
-    private int moveAnimationSpeed = 10 * 40;
+    private int moveAnimationSpeed = 10 * 30;
 
     public PathSelectController(Game game, View view) {
         this.game = game;
@@ -93,7 +93,7 @@ public class PathSelectController {
 
     public void drawPath(Unit unit){
 
-        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 40;
+        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 30;
 
         if(unit == null)
             return;
