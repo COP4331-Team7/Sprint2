@@ -50,9 +50,10 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2d = (Graphics2D)image.createGraphics();
 
         g2d.setComposite(AlphaComposite.Src);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 
 
         setPreferredSize(  new Dimension( backgroundImg2.getWidth(), backgroundImg2.getHeight()) );
@@ -76,6 +77,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     }
 
     public void drawMapArea() {
+
 
         g2d.drawImage(fullMapImage, 0, 0, WIDTH, (int)(HEIGHT * 1.5), 0, 0, fullMapImage.getWidth(),
                 fullMapImage.getHeight(), null);
