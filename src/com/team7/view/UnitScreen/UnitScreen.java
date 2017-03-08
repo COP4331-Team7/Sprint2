@@ -22,9 +22,6 @@ public class UnitScreen extends JPanel {
     public JButton getOptionScreenButton() {
         return screenSelectBtns.getOptionsScreenSelectButton();
     }
-    public JButton getUnitScreenButton() {
-        return screenSelectBtns.getUnitScreenButton();
-    }
     public JButton getStructureScreenButton() {
         return screenSelectBtns.getStructureScreenButton();
     }

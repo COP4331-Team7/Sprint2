@@ -26,10 +26,10 @@ public class UnitOverviewController {
                     view.setCurrScreen("MAIN");
             }
         });
-        view.getUnitScreen().getUnitScreenButton().addActionListener(new ActionListener() {
+        view.getUnitScreen().getStructureScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getUnitScreen().getUnitScreenButton())
-                    view.setCurrScreen("UNIT_OVERVIEW");
+                if (e.getSource() == view.getUnitScreen().getStructureScreenButton())
+                    view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
         view.getUnitScreen().getOptionScreenButton().addActionListener(new ActionListener() {
