@@ -24,24 +24,24 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     boolean isTrackingPath = false;
 
-    private final static String[] armyCommands = {          "attack [direction] applies to the battle-group",
-            "defend [direction] applies to the battle-group",
-            "move [changes the rally-point]",
-            "wait  [applies to the battle-group]",
-            "disband  [the army ceases to exist, all units go to standby]",
-            "decommission [destroy all units in the army]",
-            "power down [applies to the battle-group]",
-            "power up [applies to the battle-group]",
-            "cancel queued orders [immediate effect]"};
+    private final static String[] armyCommands = {          "attack",
+            "defend",
+            "move",
+            "wait",
+            "disband",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"};
 
-    private final static String[] structureCommands = {"attack [direction]",
-            "make[unit type]",
-            "defend [direction]",
+    private final static String[] structureCommands = {"attack",
+            "make",
+            "defend",
             "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders [immediate effect]"};
+            "cancel queued orders"};
 
     private final static String[] unitCommands = {    "REINFORCE",
             "DECOMMISSION",
@@ -83,9 +83,21 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.setLayout(new GridLayout(0,1));
 
         modeLabel = new JLabel("MODE: "); //up / down arrow
+        //modeLabel.setBackground( new Color(0xFF00FF00) );
+        //modeLabel.setOpaque(true);
         typeLabel = new JLabel("TYPE: "); //left / right arrow
         typeInstanceLabel = new JLabel("TYPE INSTANCE: "); //left / right arrow
         commandLabel = new JLabel("COMMAND: "); //up / down arrow
+
+
+        modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        modeLabel.setForeground(new Color(0xAAAA8888));
+        typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeLabel.setForeground(new Color(0xAAAA8888));
+        typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeInstanceLabel.setForeground(new Color(0xAAAA8888));
+        commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        commandLabel.setForeground(new Color(0xAAAA8888));
 
         //JLabel my_static_label = new JLabel("CONSTRUCT COMMAND BELOW");
         //my_static_label.setFont(new Font("Serif", Font.BOLD, 22));
@@ -97,12 +109,22 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.add(commandLabel);
 
         executeCommandButton = new JButton("ISSUE COMMAND");
+        executeCommandButton.setFont(new Font("Serif", Font.BOLD, 15));
+        executeCommandButton.setForeground(new Color(0xAAAA8888));
+        executeCommandButton.setBackground( new Color(0xFF00FF00) );
+        executeCommandButton.setOpaque(true);
+
         endTurnButton = new JButton("END TURN");
+        endTurnButton.setFont(new Font("Serif", Font.BOLD, 15));
+        endTurnButton.setBackground( new Color(0xFFAFFC00) );
+        endTurnButton.setForeground(new Color(0xAAAA8888));
+        endTurnButton.setOpaque(true);
+
         commandSelectPanel.add( executeCommandButton );
         commandSelectPanel.add( endTurnButton );
 
         this.add( commandSelectPanel, BorderLayout.SOUTH );
-        setPreferredSize(new Dimension(350, 200));
+       // setPreferredSize(new Dimension(350, 200));
 
         addKeyListener(this);
     }
@@ -162,8 +184,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if( isRecordingPath ) {
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }
-
-
 
         key_char = e.getKeyChar();
 

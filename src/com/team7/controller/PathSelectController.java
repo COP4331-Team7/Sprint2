@@ -28,6 +28,8 @@ public class PathSelectController {
 
     ArrayList<Tile> pathTile = new ArrayList<Tile>();;
 
+    private int moveAnimationSpeed = 10 * 30;
+
     public PathSelectController(Game game, View view) {
         this.game = game;
         this.view = view;
@@ -41,9 +43,6 @@ public class PathSelectController {
     // ===============================================
 
     public void moveCursor(String direction) {
-
-       // if (game.getMap().moveUnit(selectedTile, direction).isVisible == false  )
-           // return;
 
         selectedTile.isSelectedPath = false;
 
@@ -65,6 +64,9 @@ public class PathSelectController {
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
             selectedTile = game.getMap().moveUnit(selectedTile, 3);
         }
+
+//        if ( selectedTile.getVisible(game.getCurrentPlayer().getName()) == false )
+//            return;
 
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
@@ -91,6 +93,8 @@ public class PathSelectController {
 
     public void drawPath(Unit unit){
 
+        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 20;
+
         if(unit == null)
             return;
 
@@ -108,6 +112,8 @@ public class PathSelectController {
                         game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         Set<Tile> tiles = null;
                         view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 2, tiles));
+                        view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
+
 
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
@@ -117,21 +123,19 @@ public class PathSelectController {
                         });
 
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(moveAnimationSpeed);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
+
                         if(i == pathTile.size() - 1)
-                            view.getMainScreen().getMainViewImage().zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 100  );
+                            mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
 
 
                     }
                 }
         }).start();
-
-
-
 
     }
 

@@ -1,6 +1,7 @@
 package com.team7.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ScreenSelectButtons extends JPanel {
 
@@ -13,12 +14,19 @@ public class ScreenSelectButtons extends JPanel {
             mainScreenSelectButton      = new JButton("MAIN SCREEN");
             unitScreenSelectButton      = new JButton("UNIT OVERVIEW");
             structureScreenSelectButton = new JButton("STRUCTURE OVERVIEW");
-            optionsScreenSelectButton = new JButton("OPTIONS");
+            optionsScreenSelectButton = new JButton("CONTROLS");
+
+
+
+//            mainScreenSelectButton.setFont(new Font("Serif", Font.BOLD, 30));
 
             this.add( mainScreenSelectButton );
             this.add( unitScreenSelectButton );
             this.add( structureScreenSelectButton );
             this.add( optionsScreenSelectButton) ;
+
+            this.setForeground( new Color(0xAAffccf8) );
+            //this.setOpaque(true);
        }
 
        public JButton getMainScreenButton() { return mainScreenSelectButton; }

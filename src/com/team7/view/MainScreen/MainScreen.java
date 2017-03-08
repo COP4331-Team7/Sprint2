@@ -77,4 +77,7 @@ public class MainScreen extends JPanel {
     public JButton getExecuteCommandButton() {
         return commandSelect.getExecuteCommandButton();
     }
+    public MainViewMiniMap getMiniMap() {
+        return mainViewSelection;
+    }
 }

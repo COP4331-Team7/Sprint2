@@ -53,9 +53,15 @@ public class MainScreenController {
                     updatePlayerStatusInfo();
                     // BAD!!!!!!!!! TODO: fix
                     view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
+                    view.getMainScreen().getMainViewInfo().updateStats(game.getCurrentPlayer().getRandomUnit());
+                    view.getMainScreen().getMainViewInfo().setTitle2(game.getCurrentPlayer().getName());
                     Set<Tile> tiles = null;
                     view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 2, tiles));
-                    view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, 75);
+
+                    view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
+
+                    // TODO: fix
+                    view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
                     view.getMainScreen().getCommandSelect().setFocusable(true);
                     view.getMainScreen().getCommandSelect().requestFocus();
                     OptionsController optionsController = new OptionsController(view,game);
@@ -69,8 +75,6 @@ public class MainScreenController {
                     view.setCurrScreen("OPTIONS");
             }
         });
-
-
 
 
         view.getMainScreen().getExecuteCommandButton().addActionListener(new ActionListener() {

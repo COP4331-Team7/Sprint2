@@ -194,12 +194,14 @@ public class Tile {
 
     public ArrayList<Resource> getResources() {
         ArrayList<Resource> resources = new ArrayList<Resource>();
-
-        resources.add(0,energy);
-        resources.add(1,ore);
+        resources.add(0, energy);
+        resources.add(1, ore);
         resources.add(2, food);
+        return  resources;
+    }
 
-        return resources;
+    public void setResource(Resource resource) {
+//        this.resource = resource;
     }
 
 

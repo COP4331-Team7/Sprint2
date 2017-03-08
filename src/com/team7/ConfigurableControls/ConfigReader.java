@@ -48,7 +48,7 @@ public class ConfigReader {
       input = new FileInputStream(currentFile);
       prop.load(input);   // load a properties file
       value = prop.getProperty(key);
-      System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
+//      System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
 
     } catch (IOException ex) {
       ex.printStackTrace();
@@ -66,7 +66,7 @@ public class ConfigReader {
 
   //changes value of key according to input
   public void changeValueByKey(String player, String key, String value){
-    System.out.println("changing controls of " + player + " key: " + key + " value: " + value);
+//    System.out.println("changing controls of " + player + " key: " + key + " value: " + value);
 
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
@@ -86,7 +86,7 @@ public class ConfigReader {
         prop.store(out, null);  //store output stream to 'overwrite' old file
         out.close();  //close
       } else{
-        System.out.println(value + " already exists. Choose a different control.");
+//        System.out.println(value + " already exists. Choose a different control.");
       }
 
 
@@ -106,7 +106,6 @@ public class ConfigReader {
 
 
   public HashMap<String, String> getAllControlsByPlayer(String player) {
-      System.out.println(player);
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
     HashMap<String, String> controls = new HashMap<>();
 
@@ -141,7 +140,7 @@ public class ConfigReader {
 
   //resets properties file to default values by overwriting with a different file
   public void resetToDefault(String player){
-    System.out.println("resetting controls of " + player);
+//    System.out.println("resetting controls of " + player);
 
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 

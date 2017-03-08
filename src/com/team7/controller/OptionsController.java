@@ -6,6 +6,8 @@ import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +29,6 @@ public class OptionsController{
         addActionListeners();
 
         reloadControls(game.getCurrentPlayer().getName());
-
     }
 
     private void addActionListeners() {
@@ -38,6 +39,8 @@ public class OptionsController{
 
                     //get currently selected key:value
                     String selectedString = optionsScreen.getControlsList().getSelectedValue();
+                    if(selectedString == null)
+                        return;
                     int colonIndex = selectedString.indexOf(':');
                     String key = selectedString.substring(0, colonIndex);
                     String popupMessage = "Change " + key + " *note only one input character alllowed!";
@@ -63,6 +66,7 @@ public class OptionsController{
                     //reset player's config file by overwriting with a default file
                     reader.resetToDefault(game.getCurrentPlayer().getName());
                     reloadControls(game.getCurrentPlayer().getName());
+                    optionsScreen.setSlidersToDefault();
                 }
             }
         });
@@ -80,6 +84,13 @@ public class OptionsController{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getStructureScreen() )
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
+            }
+        });
+
+        optionsScreen.getS1().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                view.getMainViewImage().setScrollSpeed( optionsScreen.getScrollSpeed() );
             }
         });
 
