@@ -97,7 +97,7 @@ public class View
             // unitScreen = new UnitScreen();
             // structureScreen = new StructureScreen();
 
-            setCurrScreen("MAIN");
+            setCurrScreen("HOME");
 
             this.setVisible( true );
         }
