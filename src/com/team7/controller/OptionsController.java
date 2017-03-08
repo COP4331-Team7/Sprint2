@@ -8,6 +8,7 @@ import com.team7.view.View;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -102,9 +103,12 @@ public class OptionsController{
                 int state = itemEvent.getStateChange();
                 if (state == ItemEvent.SELECTED) {
                     view.getMainViewImage().drawResources( true );
+                    optionsScreen.getShowResourceButton().setForeground( new Color(0, 175, 0, 255) );
+
                     optionsScreen.getShowResourceButton().setText("Resource display [ON]");
                 } else {
                     view.getMainViewImage().drawResources( false );
+                    optionsScreen.getShowResourceButton().setForeground( Color.red );
                     optionsScreen.getShowResourceButton().setText("Resource display [OFF]");
                 }
                 view.redrawView();
@@ -117,9 +121,11 @@ public class OptionsController{
                 int state = itemEvent.getStateChange();
                 if (state == ItemEvent.SELECTED) {
                     view.getMainViewImage().drawUnits( false );
+                    optionsScreen.getShowUnitsButton().setForeground( Color.red );
                     optionsScreen.getShowUnitsButton().setText("Unit display [OFF]");
                 } else {
                     view.getMainViewImage().drawUnits( true );
+                    optionsScreen.getShowUnitsButton().setForeground( new Color(0, 155, 0, 255) );
                     optionsScreen.getShowUnitsButton().setText("Unit display [ON]");
                 }
                 view.redrawView();

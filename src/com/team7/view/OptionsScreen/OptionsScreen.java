@@ -63,12 +63,12 @@ public class OptionsScreen extends JPanel{
 //        resetControlsButton.setBackground( new Color(0xff000000) );
 //        resetControlsButton.setOpaque(true);
 
-        changeControlButton.setForeground( new Color(0xFF0FAAF0));
+        changeControlButton.setForeground( new Color(0xff000000));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
 //        changeControlButton.setBackground( new Color(0xff000000) );
 //        changeControlButton.setOpaque(true);
 
-        label.setForeground( new Color(0xFF0FAAF0));
+        label.setForeground( new Color(0xffCABD80));
         label.setFont(new Font("Serif", Font.BOLD, 45));
 
         JPanel temp = new JPanel(new BorderLayout() );
@@ -129,17 +129,22 @@ public class OptionsScreen extends JPanel{
         JPanel temp2 = new JPanel();
         temp2.add(changeControlButton, BorderLayout.EAST);
         temp2.add(resetControlsButton, BorderLayout.WEST);
-        p1.setBackground( new Color(0xff75fff8) );
+        p1.setBackground( new Color(0xffCABD80) );
         p1.setOpaque(true);
 
-        p2.setBackground( new Color(0xff75fff8) );
+        p2.setBackground( new Color(0xffCABD80) );
         p2.setOpaque(true);
 
-        p3.setBackground( new Color(0xff75fff8) );
+        p3.setBackground( new Color(0xffCABD80) );
         p3.setOpaque(true);
 
         showResourceButton = new JToggleButton("Resource display [OFF]");
+        showResourceButton.setForeground( Color.red );
+        showResourceButton.setFont(new Font("Serif", Font.BOLD, 20));
+
         showUnitsButton = new JToggleButton("Unit display [ON]");
+        showUnitsButton.setForeground( new Color(0, 175, 0, 255) );
+        showUnitsButton.setFont(new Font("Serif", Font.BOLD, 20));
 
         JPanel btns = new JPanel( new GridLayout(0, 2) );
         btns.add( showUnitsButton );

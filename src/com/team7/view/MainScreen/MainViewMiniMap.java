@@ -40,7 +40,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
        // g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
-        g2dss.setColor(new Color(0xAAAA8888));
+        g2dss.setColor(new Color(0xffCABD80));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
@@ -94,7 +94,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
                 if(j == 0)
                     continue;
                 if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
-                    image.setRGB( i, j, 0xAAAA8888);
+                    image.setRGB( i, j, 0x5ACABD80);
                     continue;
                 }
 
