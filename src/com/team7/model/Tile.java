@@ -47,9 +47,6 @@ public class Tile {
     private int yCoordinate;
     private Structure structure;
 
-    public ArrayList<Unit> getUnits() {
-        return units;
-    }
 
     ArrayList<Unit> units;
     ArrayList<Army> armies;
@@ -86,7 +83,6 @@ public class Tile {
         realDraw.setTerrainType(terrain.getTerrainType());
 
         populateTileBasedOnTerrain(terrain);
-
 
         //copy real state to both players when Tile is initialized
         playerOneDraw = new DrawableTileState(realDraw);
@@ -332,6 +328,10 @@ public class Tile {
             }
         }
         return null;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return units;
     }
 
     public boolean getVisible(String name) {
