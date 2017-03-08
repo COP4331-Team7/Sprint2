@@ -128,12 +128,12 @@ public class PathSelectController {
                             e.printStackTrace();
                         }
 
+
                         if(i == pathTile.size() - 1)
                             mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
 
 
                     }
-                    view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
                 }
         }).start();
 
