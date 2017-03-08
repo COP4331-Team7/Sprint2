@@ -13,7 +13,7 @@ public class ScreenSelectButtons extends JPanel {
             mainScreenSelectButton      = new JButton("MAIN SCREEN");
             unitScreenSelectButton      = new JButton("UNIT OVERVIEW");
             structureScreenSelectButton = new JButton("STRUCTURE OVERVIEW");
-            optionsScreenSelectButton = new JButton("OPTIONS");
+            optionsScreenSelectButton = new JButton("CONTROLS");
 
             this.add( mainScreenSelectButton );
             this.add( unitScreenSelectButton );
@@ -28,5 +28,5 @@ public class ScreenSelectButtons extends JPanel {
        public JButton getStructureScreenButton() {
             return structureScreenSelectButton;
        }
-    public JButton getOptionsScreenSelectButton() {return optionsScreenSelectButton;}
+       public JButton getOptionsScreenSelectButton() {return optionsScreenSelectButton;}
 }
