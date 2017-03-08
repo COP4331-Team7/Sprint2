@@ -1,11 +1,7 @@
 package com.team7;
 
-import com.team7.controller.CommandSelectController;
-import com.team7.controller.HomeScreenController;
-import com.team7.controller.PathSelectController;
-import com.team7.controller.MainScreenController;
+import com.team7.controller.*;
 
-import com.team7.controller.OptionsController;
 import com.team7.view.OptionsScreen.OptionsScreen;
 
 import com.team7.model.Game;
@@ -28,6 +24,8 @@ public class Main {
         view.setMap( game.getMap() );
 
         HomeScreenController hsc = new HomeScreenController(game, view);
+        StructureOverviewController soc = new StructureOverviewController(game, view);
+        UnitOverviewController uoc = new UnitOverviewController(game, view);
         MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game.getMap(), view);

@@ -72,7 +72,14 @@ public class MainScreenController {
         view.getMainScreen().getOptionScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getOptionScreenButton())
+                    view.getOptionScreen().showScreenSelectBtns();
                     view.setCurrScreen("OPTIONS");
+            }
+        });
+        view.getMainScreen().getStructureScreenButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == view.getMainScreen().getStructureScreenButton())
+                view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
 

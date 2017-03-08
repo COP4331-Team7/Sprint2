@@ -83,6 +83,12 @@ public class OptionsController{
                     view.setCurrScreen("MAIN");
             }
         });
+        optionsScreen.getUnitScreenButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getUnitScreenButton() )
+                    view.setCurrScreen("UNIT_OVERVIEW");
+            }
+        });
         optionsScreen.getStructureScreen().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getStructureScreen() )
@@ -134,6 +140,12 @@ public class OptionsController{
         optionsScreen.getShowUnitsButton().addItemListener(itemListener2);
 
 
+        optionsScreen.getHomeScreenButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getHomeScreenButton() )
+                    view.setCurrScreen("HOME");
+            }
+        });
 
     }
 

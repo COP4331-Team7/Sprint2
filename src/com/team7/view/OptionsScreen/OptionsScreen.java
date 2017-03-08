@@ -54,6 +54,8 @@ public class OptionsScreen extends JPanel{
     private JSlider s3 = null;
     JToggleButton showResourceButton = null;
     JToggleButton showUnitsButton = null;
+    JButton homeButton;
+    JPanel btnpanel;
 
 
     public OptionsScreen() {
@@ -71,7 +73,12 @@ public class OptionsScreen extends JPanel{
         label.setForeground( new Color(0xffCABD80));
         label.setFont(new Font("Serif", Font.BOLD, 45));
 
-        JPanel temp = new JPanel(new BorderLayout() );
+
+        homeButton = new JButton("Return to Home Screen");
+        homeButton.setForeground( new Color(0xff000000));
+        homeButton.setFont(new Font("Comic Sans", Font.BOLD, 27));
+
+        btnpanel = new JPanel(new BorderLayout() );
         screenSelectBtns = new ScreenSelectButtons();
 
         controlsList.setModel(defaultListModel);
@@ -80,10 +87,12 @@ public class OptionsScreen extends JPanel{
         buttonPanel.add(resetControlsButton, BorderLayout.EAST);
         buttonPanel.add(changeControlButton, BorderLayout.WEST);
 
-        temp.add(screenSelectBtns, BorderLayout.NORTH);
-        temp.add(label, BorderLayout.SOUTH);
 
-        listPanel.add(temp, BorderLayout.NORTH);
+        showScreenSelectBtns();
+
+        btnpanel.add(label, BorderLayout.SOUTH);
+
+        listPanel.add(btnpanel, BorderLayout.NORTH);
 
         JPanel sliderHolder = new JPanel(new GridLayout(0,1));
         JPanel p1 = new JPanel();
@@ -219,6 +228,10 @@ public class OptionsScreen extends JPanel{
     public JButton getStructureScreen() {
         return screenSelectBtns.getStructureScreenButton();
     }
+    public JButton getHomeScreenButton() {
+        return homeButton;
+    }
+
     public void setSlidersToDefault() {
         s1.setValue(10);
         s2.setValue(10);
@@ -230,6 +243,17 @@ public class OptionsScreen extends JPanel{
     }
     public JToggleButton getShowUnitsButton() {
         return showUnitsButton;
+    }
+
+    public void showHomeScreenOnly() {
+        btnpanel.remove(screenSelectBtns);
+        btnpanel.add(homeButton);
+        repaint();
+    }
+    public void showScreenSelectBtns() {
+        btnpanel.remove(homeButton);
+        btnpanel.add(screenSelectBtns);
+        repaint();
     }
 
 

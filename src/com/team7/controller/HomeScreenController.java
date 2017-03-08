@@ -34,6 +34,7 @@ public class HomeScreenController {
         view.getHomeScreen().getOptionButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getHomeScreen().getOptionButton())
+                    view.getOptionScreen().showHomeScreenOnly();
                     view.setCurrScreen("OPTIONS");
             }
         });

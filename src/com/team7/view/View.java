@@ -1,11 +1,14 @@
 package com.team7.view;
 
 import com.team7.model.Map;
+import com.team7.model.entity.structure.Structure;
 import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.OptionsScreen.OptionsScreen;
+import com.team7.view.StructureScreen.StructureScreen;
+import com.team7.view.UnitScreen.UnitScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -52,6 +55,8 @@ public class View
     }
     public HomeScreen getHomeScreen() { return frame.getHomeScreen(); }
     public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
+    public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
+    public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
 
 
     public void setMap( Map map ) {
@@ -82,8 +87,8 @@ public class View
         private HomeScreen homeScreen = null;
         private MainScreen mainScreen = null;
         private OptionsScreen optionsScreen = null;
-        //private UnitScreen unitScreen = null;
-        //private StructureScreen structureScreen = null;
+        private UnitScreen unitScreen = null;
+        private StructureScreen structureScreen = null;
 
         public Screen( int width, int height)
         {
@@ -94,8 +99,8 @@ public class View
             homeScreen = new HomeScreen();
             mainScreen = new MainScreen();
             optionsScreen = new OptionsScreen();
-            // unitScreen = new UnitScreen();
-            // structureScreen = new StructureScreen();
+            unitScreen = new UnitScreen();
+            structureScreen = new StructureScreen();
 
             setCurrScreen("HOME");
 
@@ -105,7 +110,6 @@ public class View
         public MainViewImage getMainViewImage() {
             return mainScreen.getMainViewImage();
         }
-
         public HomeScreen getHomeScreen() {
             return homeScreen;
         }
@@ -113,12 +117,12 @@ public class View
             return mainScreen;
         }
         public OptionsScreen getOptionsScreen() { return  optionsScreen; }
-        //    public UnitScreen getUnitScreen() {
-        //            return unitScreen;
-        //    }
-        //    public StructureScreen getStructureScreen() {
-        //            return structureScreen;
-        //    }
+            public UnitScreen getUnitScreen() {
+                    return unitScreen;
+            }
+            public StructureScreen getStructureScreen() {
+                    return structureScreen;
+            }
 
         public void setCurrScreen(String selected_screen) {
 
@@ -157,12 +161,10 @@ public class View
         }
 
         private void displayUnitOverviewScreen() {
-            // this.getContentPane().add( unitScreen );
-            this.getContentPane().add( homeScreen );
+            this.getContentPane().add( unitScreen );
         }
         private void displayStructureOverviewScreen() {
-            //    this.getContentPane().add( structureScreen );
-            this.getContentPane().add( homeScreen );
+                this.getContentPane().add( structureScreen );
         }
 
         private void addMenu()

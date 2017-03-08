@@ -63,9 +63,8 @@ public class HomeScreen extends JPanel {
             // scale image to fill screen
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), 0, 0, image.getWidth(),
                     image.getHeight(), null);
-            System.out.println(this.getWidth());
-            System.out.println(this.getHeight());
-
+//            System.out.println(this.getWidth());
+//            System.out.println(this.getHeight());
         }
 
         public JButton getQuitButton() {
