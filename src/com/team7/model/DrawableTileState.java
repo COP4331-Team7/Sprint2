@@ -10,6 +10,10 @@ import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
+import com.team7.model.resource.Energy;
+import com.team7.model.resource.Food;
+import com.team7.model.resource.Ore;
+import com.team7.model.resource.Resource;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
@@ -34,10 +38,13 @@ public class DrawableTileState {
     private String areaEffectType;
     private String decal;
     private String itemType;
-    private String resourceType;
-    private String resourceQuantity;
     private String structureType;
     private boolean structureStatus;
+    private ArrayList<String> resources;
+    private ArrayList<String> resourceQuantities;
+    private int ore;
+    private int food;
+    private int energy;
     private ArrayList<String> units;
     private ArrayList<String> armies;
     private ArrayList<String> workers;
@@ -45,7 +52,10 @@ public class DrawableTileState {
     private int numUnits = 0;
 
     public DrawableTileState(){
-
+        resources = new ArrayList<String>();
+        resources.add("Energy");
+        resources.add("Ore");
+        resources.add("Food");
     }
 
     //copy constructor
@@ -55,8 +65,8 @@ public class DrawableTileState {
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
         this.itemType = stateToCopy.itemType;
-        this.resourceType = stateToCopy.resourceType;
-        this.resourceQuantity = stateToCopy.resourceQuantity;
+        this.resourceQuantities = stateToCopy.resourceQuantities;
+        this.resources = stateToCopy.resources;
         this.structureType = stateToCopy.structureType;
         this.structureStatus = stateToCopy.structureStatus;
     }
@@ -90,6 +100,19 @@ public class DrawableTileState {
             if((Entity)unit instanceof Worker)
                 workerUnit++;
         }
+
+        // set resources
+        energy = 0; ore = 0; food = 0;
+        for(Resource resource : tile.getResources()) {
+            if(resource instanceof Energy)
+                ++energy;
+            if(resource instanceof Food)
+                ++food;
+            if(resource instanceof Ore)
+                ++ore;
+        }
+
+
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
             areaEffectType = "Damage";
@@ -110,6 +133,10 @@ public class DrawableTileState {
         this.rangeUnit = state.rangeUnit;
         this.explorer = state.explorer;
         this.workerUnit = state.workerUnit;
+
+        this.ore = state.ore;
+        this.food = state.food;
+        this.energy = state.energy;
 
         this.areaEffectType = state.areaEffectType;
     }
@@ -142,22 +169,20 @@ public class DrawableTileState {
         this.itemType = itemType;
     }
 
-    public String getResourceType() {
-        return resourceType;
+    public String getFoodQuantity() {
+        String f = "Food: " + food;
+        return f;
     }
 
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
+    public String getOreQuantity() {
+        String o = "Ore: " + ore;
+        return o;
     }
 
-    public String getResourceQuantity() {
-        return resourceQuantity;
+    public String getEnergyQuantity() {
+        String e = "Energy: " + energy;
+        return e;
     }
-
-    public void setResourceQuantity(String resourceQuantity) {
-        this.resourceQuantity = resourceQuantity;
-    }
-
     public String getStructureType() {
         return structureType;
     }
