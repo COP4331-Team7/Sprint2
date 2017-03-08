@@ -65,8 +65,12 @@ public class DrawableTileState {
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
         this.itemType = stateToCopy.itemType;
+
+
         this.resourceQuantities = stateToCopy.resourceQuantities;
         this.resources = stateToCopy.resources;
+
+
         this.structureType = stateToCopy.structureType;
         this.structureStatus = stateToCopy.structureStatus;
     }

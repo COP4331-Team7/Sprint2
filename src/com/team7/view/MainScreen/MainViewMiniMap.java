@@ -18,7 +18,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     private final static int BORDER_WIDTH2 = 10;
     private final static int BORDER_WIDTH3 = 10;
 
-    double stretch = 1.6;
+    double stretch = 1.5;
 
 
     private MainViewImage mainViewImage;

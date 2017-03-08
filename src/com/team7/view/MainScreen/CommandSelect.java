@@ -111,20 +111,28 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         executeCommandButton = new JButton("ISSUE COMMAND");
         executeCommandButton.setFont(new Font("Serif", Font.BOLD, 15));
         executeCommandButton.setForeground(new Color(0xAAAA8888));
-        executeCommandButton.setBackground( new Color(0xFF0FAAF0) );
+        executeCommandButton.setBackground( new Color(0xAAAA8888) );
         executeCommandButton.setOpaque(true);
 
         endTurnButton = new JButton("END TURN");
         endTurnButton.setFont(new Font("Serif", Font.BOLD, 15));
-        endTurnButton.setBackground( new Color(0xFF0FAAF0) );
+        endTurnButton.setBackground( new Color(0xAAAA8888) );
         endTurnButton.setForeground(new Color(0xAAAA8888));
         endTurnButton.setOpaque(true);
 
-        commandSelectPanel.add( executeCommandButton );
-        commandSelectPanel.add( endTurnButton );
+        JPanel temp = new JPanel();
+        temp.add(executeCommandButton);
+        temp.add( endTurnButton );
+        commandSelectPanel.add( temp );
 
-        this.add( commandSelectPanel, BorderLayout.SOUTH );
+        //commandSelectPanel.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
+
+
+                this.add( commandSelectPanel, BorderLayout.SOUTH );
        // setPreferredSize(new Dimension(350, 200));
+
+       // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
+
 
         addKeyListener(this);
     }

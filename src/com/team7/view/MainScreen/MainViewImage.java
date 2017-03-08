@@ -112,6 +112,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             mainViewSelection.setMainViewImage( this );
             tempImg = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
             g2ds = (Graphics2D)tempImg.createGraphics();
+           // g2ds.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            //g2ds.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+           // g2ds.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
             addMouseListener( new MouseAdapter()
             {
