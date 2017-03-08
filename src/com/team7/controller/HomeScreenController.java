@@ -31,6 +31,12 @@ public class HomeScreenController {
                     view.setCurrScreen("MAIN");
             }
         });
+        view.getHomeScreen().getOptionButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == view.getHomeScreen().getOptionButton())
+                    view.setCurrScreen("OPTIONS");
+            }
+        });
     }
 
 
