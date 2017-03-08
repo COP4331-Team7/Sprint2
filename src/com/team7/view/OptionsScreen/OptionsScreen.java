@@ -55,9 +55,13 @@ public class OptionsScreen extends JPanel{
 
         resetControlsButton.setForeground( new Color(0xFFFF0000));
         resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
+        resetControlsButton.setBackground( new Color(0xff000000) );
+        resetControlsButton.setOpaque(true);
 
-        changeControlButton.setForeground( new Color(0xFF0FAAF0));
+        changeControlButton.setForeground( new Color(0xFF0000FF));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
+        changeControlButton.setBackground( new Color(0xff000000) );
+        changeControlButton.setOpaque(true);
 
         label.setForeground( new Color(0xFF0FAAF0));
         label.setFont(new Font("Serif", Font.BOLD, 45));
@@ -83,17 +87,17 @@ public class OptionsScreen extends JPanel{
         JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
         p1.add(l2, BorderLayout.EAST);
         s1 = new JSlider(0, 20, 10);
-        l2.setForeground(new Color(0xFF00AAFF));
+       // l2.setForeground(new Color(0xFF00AAFF));
         l2.setFont( new Font(  "Serif", Font.BOLD, 18));
         s1.setMinorTickSpacing(1);
         s1.setPaintTicks(true);
         //s1.setPaintLabels(true);
         s1.setSnapToTicks(true);
         s1.setMajorTickSpacing(5);
-        s1.setPreferredSize(new Dimension(400, 50));
+        s1.setPreferredSize(new Dimension(440, 50));
         p1.add(s1, BorderLayout.WEST);
         JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
-        l1.setForeground(new Color(0xFF00AAFF));
+    //    l1.setForeground(new Color(0xFF00AAFF));
         l1.setFont( new Font(  "Serif", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
         s2 = new JSlider(0, 20, 10);
@@ -102,10 +106,10 @@ public class OptionsScreen extends JPanel{
         s2.setSnapToTicks(true);
         //s2.setPaintLabels(true);
         s2.setMajorTickSpacing(5);
-        s2.setPreferredSize(new Dimension(400, 50));
+        s2.setPreferredSize(new Dimension(440, 50));
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
-        l3.setForeground(new Color(0xFF00AAFF));
+      //  l3.setForeground(new Color(0xFF00AAFF));
         l3.setFont( new Font(  "Serif", Font.BOLD, 18));
         s3 = new JSlider(0, 20, 15);
         s3.setMinorTickSpacing(1);
@@ -113,13 +117,22 @@ public class OptionsScreen extends JPanel{
         s3.setSnapToTicks(true);
         // s3.setPaintLabels(true);
         s3.setMajorTickSpacing(5);
-        s3.setPreferredSize(new Dimension(400, 50));
+        s3.setPreferredSize(new Dimension(440, 50));
         JPanel temp1 = new JPanel();
         p3.add(l3, BorderLayout.WEST);
         p3.add(s3, BorderLayout.EAST);
         JPanel temp2 = new JPanel();
         temp2.add(changeControlButton, BorderLayout.EAST);
         temp2.add(resetControlsButton, BorderLayout.WEST);
+        p1.setBackground( new Color(0xFF00FF00) );
+        p1.setOpaque(true);
+
+        p2.setBackground( new Color(0xFFAFFC00) );
+        p2.setOpaque(true);
+
+        p3.setBackground( new Color(0xff75fff8) );
+        p3.setOpaque(true);
+
         sliderHolder.add(p1);
         sliderHolder.add(p2);
         sliderHolder.add(p3);

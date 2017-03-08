@@ -10,13 +10,15 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public static BufferedImage image, fullMapImage, backgroundImg, backgroundImg2, backgroundImg3;
     private Graphics2D g2d, g2ds, g2dss, g2dsss;
     private final static int zoomRate = 45; // 1000 / 40 = 25 frames per second
-    private final static int SIZE = 200;
+    private final static int SIZE = 220;
     private int TILES_VISIBLE_X, TILES_VISIBLE_Y;
     private static int WIDTH, HEIGHT;
     private static int SUB_WIDTH, SUB_HEIGHT;
     private final static int BORDER_WIDTH = 30;
     private final static int BORDER_WIDTH2 = 10;
     private final static int BORDER_WIDTH3 = 10;
+
+    double stretch = 1.5;
 
 
     private MainViewImage mainViewImage;
@@ -26,15 +28,16 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     {
         fullMapImage = new BufferedImage(TILE_SIZE*MAP_TILE_WIDTH + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
         double ratio = fullMapImage.getWidth()/fullMapImage.getHeight();
+
         WIDTH =  (int)(SIZE *  ratio);
-        HEIGHT = (int)(SIZE /  ratio);
+        HEIGHT = (int)((SIZE /  ratio) * stretch);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         backgroundImg = new BufferedImage(WIDTH + BORDER_WIDTH/2, HEIGHT + BORDER_WIDTH/2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
-        backgroundImg3 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2 + BORDER_WIDTH3, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2 + BORDER_WIDTH3, BufferedImage.TYPE_INT_ARGB);
-        g2dsss = (Graphics2D)backgroundImg3.createGraphics();
-        g2dsss.setColor(new Color(0xFF777777));
-        g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
+       // backgroundImg3 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2 + BORDER_WIDTH3, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2 + BORDER_WIDTH3, BufferedImage.TYPE_INT_ARGB);
+       // g2dsss = (Graphics2D)backgroundImg3.createGraphics();
+       // g2dsss.setColor(new Color(0xFF777777));
+       // g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
         g2dss.setColor(new Color(0xAAAA8888));
@@ -47,7 +50,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2d = (Graphics2D)image.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        setPreferredSize(  new Dimension( backgroundImg3.getWidth(), backgroundImg3.getHeight()) );
+        setPreferredSize(  new Dimension( backgroundImg2.getWidth(), backgroundImg2.getHeight()) );
       // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
         drawMapArea();
         addMouseListener(this);
@@ -61,10 +64,10 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
-        g.drawImage( backgroundImg3, 0, 0, this );
-        g.drawImage( backgroundImg2, BORDER_WIDTH3/2, BORDER_WIDTH3/2, this );
-        g.drawImage( backgroundImg, BORDER_WIDTH2/2 + BORDER_WIDTH3/2, BORDER_WIDTH2/2 + BORDER_WIDTH3/2, this );
-        g.drawImage( image, BORDER_WIDTH/2 + BORDER_WIDTH3/2, BORDER_WIDTH/2 + BORDER_WIDTH3/2, this );
+       // g.drawImage( backgroundImg3, 0, 0, this );
+        g.drawImage( backgroundImg2, 0, 0, this );
+        g.drawImage( backgroundImg, BORDER_WIDTH2/2, BORDER_WIDTH2/2  , this );
+        g.drawImage( image, BORDER_WIDTH/2 , BORDER_WIDTH/2 , this );
     }
 
     public void drawMapArea() {
@@ -81,6 +84,8 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
+                if(j == 0)
+                    continue;
                 if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
                     image.setRGB( i, j, 0xAAAA8888);
                     continue;

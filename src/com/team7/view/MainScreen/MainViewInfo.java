@@ -49,101 +49,118 @@ public class MainViewInfo extends JPanel {
             t = new JPanel();
             t.setLayout(new GridLayout(0,2));
 
+            JLabel title = new JLabel("Unit Stats: ");
+            title.setFont(new Font("Serif", Font.BOLD, 20));
+            title.setForeground( new Color(0xFF0AAAFF) );
+            t.add(title);
+            t.add(new JLabel());
+
             offensiveDamageLabel = new JLabel("Offensive damage: ");
             offensiveDamageLabel_bar = new JLabel("     ");
-            offensiveDamageLabel_bar.setBackground( new Color(0xFF00FF00) );
-            offensiveDamageLabel_bar.setOpaque(true);
+            offensiveDamageLabel.setBackground( new Color(0xFF00FF00) );
+            offensiveDamageLabel.setOpaque(true);
 
-            offensiveDamageLabel.setFont(new Font("Serif", 0, 12));
+            offensiveDamageLabel.setFont(new Font("Serif", Font.BOLD, 15));
             t.add(offensiveDamageLabel);
-            t.add(offensiveDamageLabel_bar);
+//            t.add(offensiveDamageLabel_bar);
             defensiveDamageLabel = new JLabel("Defensive damage:");
-            defensiveDamageLabel.setFont(new Font("Serif", 0, 12));
+            defensiveDamageLabel.setFont(new Font("Serif", Font.BOLD, 15));
             defensiveDamageLabel_bar = new JLabel("     ");
-            defensiveDamageLabel_bar.setBackground( new Color(0xFFAFFC00) );
-            defensiveDamageLabel_bar.setOpaque(true);
+            defensiveDamageLabel.setBackground( new Color(0xFF00FF00) );
+            defensiveDamageLabel.setOpaque(true);
 
 
 
             t.add(defensiveDamageLabel);
-            t.add(defensiveDamageLabel_bar);
+//            t.add(defensiveDamageLabel_bar);
 
             armorLabel = new JLabel("Armor:");
-            armorLabel.setFont(new Font("Serif", 0, 12));
+            armorLabel.setFont(new Font("Serif", Font.BOLD, 15));
             armorLabel_bar = new JLabel("     ");
-            armorLabel_bar.setBackground( new Color(0xFF00FF00) );
-            armorLabel_bar.setOpaque(true);
+            armorLabel.setBackground( new Color(0xFF00FF00) );
+            armorLabel.setOpaque(true);
 
             t.add(armorLabel);
-            t.add(armorLabel_bar);
+//            t.add(armorLabel_bar);
 
             healthLabel = new JLabel("Health:");
-            healthLabel.setFont(new Font("Serif", 0, 12));
+            healthLabel.setFont(new Font("Serif", Font.BOLD, 15));
             healthLabel_bar = new JLabel("     ");
-            healthLabel_bar.setBackground( new Color(0xFFAFFC00) );
-            healthLabel_bar.setOpaque(true);
+            healthLabel.setBackground( new Color(0xFF00FF00) );
+            healthLabel.setOpaque(true);
 
             t.add(healthLabel);
-            t.add(healthLabel_bar);
+//            t.add(healthLabel_bar);
 
             upkeepLabel = new JLabel("Upkeep:");
-            upkeepLabel.setFont(new Font("Serif", 0, 12));
+            upkeepLabel.setFont(new Font("Serif", Font.BOLD, 15));
             upkeepLabel_bar = new JLabel("     ");
-            upkeepLabel_bar.setBackground( new Color(0xFF00FF00) );
-            upkeepLabel_bar.setOpaque(true);
+            upkeepLabel.setBackground( new Color(0xFF00FF00) );
+            upkeepLabel.setOpaque(true);
             t.add(upkeepLabel);
-            t.add(upkeepLabel_bar);
+//            t.add(upkeepLabel_bar);
 
             productionLabel = new JLabel("Production rates:");
             t.add(productionLabel);
             productionLabel_bar = new JLabel("     ");
-            productionLabel_bar.setBackground( new Color(0xFFAFFC00) );
-            productionLabel_bar.setOpaque(true);
-            t.add(productionLabel_bar);
+            productionLabel.setBackground( new Color(0xFF00FF00) );
+            productionLabel.setOpaque(true);
+//            t.add(productionLabel_bar);
 
             itemLabel = new JLabel("Items:");
-            productionLabel.setFont(new Font("Serif", 0, 12));
-            itemLabel.setFont(new Font("Serif", 0, 12));
+            productionLabel.setFont(new Font("Serif", Font.BOLD, 15));
+            itemLabel.setFont(new Font("Serif", Font.BOLD, 15));
             t.add(itemLabel);
+            itemLabel.setBackground( new Color(0xff75fff8) );
+            itemLabel.setOpaque(true);
             t.add(new JLabel());
+
+            t.add(new JLabel());    t.add(new JLabel());
+
+            JLabel title2 = new JLabel("Player Stats: ");
+            title2.setFont(new Font("Serif", Font.BOLD, 20));
+            title2.setForeground( new Color(0xFF0AAAFF) );
+            t.add(title2);
+            t.add(new JLabel());
+
 
             lifeLabel = new JLabel("Nutrients:");
             lifeLabel.setFont(new Font("Serif", Font.BOLD, 15));
             lifeLabel.setForeground(Color.blue);
             lifeLabel_bar = new JLabel("     ");
-            lifeLabel_bar.setBackground( new Color(0xFF00FF00) );
-            lifeLabel_bar.setOpaque(true);
+            lifeLabel.setBackground( new Color(0xFFAFFC00) );
+            lifeLabel.setOpaque(true);
             t.add(lifeLabel);
-            t.add(lifeLabel_bar);
+//            t.add(lifeLabel_bar);
 
             researchLabel = new JLabel("Research:");
             researchLabel.setFont(new Font("Serif", Font.BOLD, 15));
             researchLabel_bar = new JLabel("     ");
-            researchLabel_bar.setBackground( new Color(0xFFAFFC00) );
-            researchLabel_bar.setOpaque(true);
+            researchLabel.setBackground( new Color(0xFFAFFC00) );
+            researchLabel.setOpaque(true);
             researchLabel.setForeground(Color.blue);
             t.add(researchLabel);
-            t.add(researchLabel_bar);
+//            t.add(researchLabel_bar);
 
             constructionLabel = new JLabel("Metal:");
             constructionLabel.setFont(new Font("Serif", Font.BOLD, 15));
             constructionLabel_bar = new JLabel("     ");
-            constructionLabel_bar.setBackground( new Color(0xFF00FF00) );
-            constructionLabel_bar.setOpaque(true);
+            constructionLabel.setBackground( new Color(0xFFAFFC00) );
+            constructionLabel.setOpaque(true);
             researchLabel.setForeground(Color.blue);
             constructionLabel.setForeground(Color.blue);
             t.add(constructionLabel);
-            t.add(constructionLabel_bar);
+//            t.add(constructionLabel_bar);
 
             researchLabel.setForeground(Color.blue);
             powerLabel = new JLabel("Power: ");
             powerLabel.setForeground(Color.blue);
             powerLabel.setFont(new Font("Serif", Font.BOLD, 15));
             powerLabel_bar = new JLabel("     ");
-            powerLabel_bar.setBackground( new Color(0xFFAFFC00) );
-            powerLabel_bar.setOpaque(true);
+            powerLabel.setBackground( new Color(0xFFAFFC00) );
+            powerLabel.setOpaque(true);
             t.add(powerLabel);
-            t.add(powerLabel_bar);
+//            t.add(powerLabel_bar);
 
             this.add( t, BorderLayout.SOUTH );
 
@@ -202,10 +219,9 @@ public class MainViewInfo extends JPanel {
 
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
-
     }
 
-    public void updateStats( Unit unit ) {
+      public  void updateStats( Unit unit ) {
         UnitStats stats = unit.getUnitStats();
         setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
@@ -214,10 +230,9 @@ public class MainViewInfo extends JPanel {
         // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
         setProductionLabel( "N/A" );
         setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
+        // setItemLabel( );
     }
-
     }
-
 
     //    public void setUnit(Unit unit) {
 //        if(unit == null)
@@ -233,7 +248,17 @@ public class MainViewInfo extends JPanel {
 //            updateStats( structure );
 //    }
 
-
+//    public  void updateStats( Unit unit ) {
+//        UnitStats stats = unit.getUnitStats();
+//        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
+//        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
+//        setArmorLabel( Integer.toString( stats.getArmor() ) );
+//        setHealthLabel( Integer.toString( stats.getHealth() ) );
+//        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
+//        setProductionLabel( "N/A" );
+//        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
+//        // setItemLabel( );
+//    }
 
 //    public void updateStats(Player player) {
 //        currentPlayer = player;

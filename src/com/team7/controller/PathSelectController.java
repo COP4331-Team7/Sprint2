@@ -112,6 +112,8 @@ public class PathSelectController {
                         game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
                         Set<Tile> tiles = null;
                         view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 2, tiles));
+                        view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
+
 
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
