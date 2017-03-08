@@ -28,6 +28,8 @@ public class PathSelectController {
 
     ArrayList<Tile> pathTile = new ArrayList<Tile>();;
 
+    private int moveAnimationSpeed = 10 * 40;
+
     public PathSelectController(Game game, View view) {
         this.game = game;
         this.view = view;
@@ -91,6 +93,8 @@ public class PathSelectController {
 
     public void drawPath(Unit unit){
 
+        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 40;
+
         if(unit == null)
             return;
 
@@ -117,7 +121,7 @@ public class PathSelectController {
                         });
 
                         try {
-                            Thread.sleep(120);
+                            Thread.sleep(moveAnimationSpeed);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

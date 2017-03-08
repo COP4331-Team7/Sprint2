@@ -6,6 +6,8 @@ import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -79,6 +81,13 @@ public class OptionsController{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getStructureScreen() )
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
+            }
+        });
+
+        optionsScreen.getS1().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                view.getMainViewImage().setScrollSpeed( optionsScreen.getScrollSpeed() );
             }
         });
 

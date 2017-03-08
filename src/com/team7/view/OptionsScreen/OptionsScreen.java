@@ -34,6 +34,17 @@ public class OptionsScreen extends JPanel{
 
     private ScreenSelectButtons screenSelectBtns = null;
 
+    public JSlider getS1() {
+        return s1;
+    }
+
+    public JSlider getS2() {
+        return s2;
+    }
+
+    private JSlider s1 = null;
+    private JSlider s2 = null;
+
     public OptionsScreen() {
 
         JPanel temp = new JPanel(new BorderLayout() );
@@ -55,29 +66,29 @@ public class OptionsScreen extends JPanel{
         JPanel p2 = new JPanel();
         JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
         p1.add(l2, BorderLayout.EAST);
-        JSlider s1 = new JSlider(0, 30, 15);
+        s1 = new JSlider(0, 20, 10);
         l2.setForeground(new Color(0xFF00AAFF));
         l2.setFont( new Font(  "Serif", Font.BOLD, 18));
-        s1.setMinorTickSpacing(3);
+        s1.setMinorTickSpacing(1);
         s1.setPaintTicks(true);
+        s1.setPaintLabels(true);
         s1.setSnapToTicks(true);
-        s1.setMajorTickSpacing(6);
+        s1.setMajorTickSpacing(5);
         p1.add(s1, BorderLayout.WEST);
-        JLabel l1 = new JLabel("UNIT MOVEMENT SPEED         ");
+        JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
         l1.setForeground(new Color(0xFF00AAFF));
         l1.setFont( new Font(  "Serif", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
-        JSlider s2 = new JSlider(0, 30, 15);
-        s2.setMinorTickSpacing(3);
+        s2 = new JSlider(0, 20, 10);
+        s2.setMinorTickSpacing(1);
         s2.setPaintTicks(true);
         s2.setSnapToTicks(true);
-        s2.setMajorTickSpacing(6);
+        s2.setPaintLabels(true);
+        s2.setMajorTickSpacing(5);
         p2.add(s2, BorderLayout.WEST);
         sliderHolder.add(p1);
         sliderHolder.add(p2);
-
         listPanel.add(sliderHolder, BorderLayout.SOUTH);
-
         this.setLayout(new BorderLayout());
         this.add(listPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -96,6 +107,19 @@ public class OptionsScreen extends JPanel{
             defaultListModel.addElement(key + ": " + controls.get(key) );
         }
         this.repaint();
+    }
+
+    public int getUnitSpeed() {
+        if(s2.getValue() == s2.getMaximum())
+            return 1;
+        else
+            return Math.abs(s2.getMaximum() - s2.getValue());
+    }
+    public int getScrollSpeed() {
+        if(s1.getValue() == s1.getMaximum())
+            return 1;
+        else
+            return Math.abs(s1.getMaximum() - s1.getValue());
     }
 
 

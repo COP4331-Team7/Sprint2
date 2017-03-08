@@ -51,22 +51,19 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage skullImage;
         private BufferedImage baseImage;
         private BufferedImage highlightImage;
-         private BufferedImage invisible;
+        private BufferedImage invisible;
 
+        public int x_center, y_center;    // where the window is focused on
 
-    public int x_center, y_center;    // where the window is focused on
-        public int x_dest, y_dest;        // where the window should be focused on
+        private  BufferedImage ghostImage;
 
-         private  BufferedImage ghostImage;
-
-         BufferedImage tempImg ;
+        BufferedImage tempImg ;
         Graphics2D g2ds;
 
         private MainViewMiniMap mainViewSelection;
         private Tile[][] grid;
 
-    boolean wait = false;
-
+        private int scrollSpeed = 12 * 50;
 
     /****************************************************************/
         Player player = null;
@@ -117,8 +114,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             tempImg = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
             g2ds = (Graphics2D)tempImg.createGraphics();
 
-
-
             addMouseListener( new MouseAdapter()
             {
                 public void mousePressed( MouseEvent event )
@@ -151,64 +146,35 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 }
             } );
 
-
-            timer = new Timer(300, new ActionListener()
+            timer = new Timer(scrollSpeed, new ActionListener()
             {
                 public void actionPerformed( ActionEvent e)
                 {
                     timer.stop();
-
                     zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 30 );
-
                     timer.restart();
                 }
             } );
         }
 
-
-
     private void updateSelection( Point p )
     {
-        x_dir = ((int)p.getX() - 667)/60;
-        y_dir = ((int)p.getY() - 240)/40;
-        if(x_dir > 1 )
-            x_dir = 1;
-        else if (x_dir < -1)
-            x_dir = -1;
-        else
-            x_dir = 0;
-
-        if(y_dir > 1 )
-            y_dir = 1;
-        else if (y_dir < -1)
-            y_dir = -1;
-        else
-            y_dir = 0;
+        setScrollDir( p );
     }
 
     private void LMBisPressed( Point p )
     {
-        timer.start();                      // start zooming
-        x_dir = ((int)p.getX() - 667)/60;
-        y_dir = ((int)p.getY() - 240)/40;
-        if(x_dir > 1 )
-            x_dir = 1;
-        else if (x_dir < -1)
-            x_dir = -1;
-        else
-            x_dir = 0;
-
-        if(y_dir > 1 )
-            y_dir = 1;
-        else if (y_dir < -1)
-            y_dir = -1;
-        else
-            y_dir = 0;
+        setScrollDir( p );
+        timer.start();
     }
 
     private void RMBisPressed( Point p )
     {
-        timer.start();                      // start zooming
+        setScrollDir( p );
+        timer.start();
+    }
+
+    private void setScrollDir(Point p) {
         x_dir = ((int)p.getX() - 667)/60;
         y_dir = ((int)p.getY() - 240)/40;
         if(x_dir > 1 )
@@ -442,21 +408,21 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 //                    g2ds.setColor( new Color(220, 220, 220, 50)  ); // blue
 //                    g2ds.drawLine(center_pixel_x - 7, center_pixel_y, center_pixel_x + 7, center_pixel_y );
 //                    g2ds.drawLine(center_pixel_x, center_pixel_y - 7, center_pixel_x, center_pixel_y + 7 );
-
-
-                    if(drawOnTile) {
-                        g2ds.fillOval(x_coord + x_offset + s1_x, y_coord + s1_y, 18, 18);
-                        g2ds.setColor(new Color(255, 255, 100, 70));
-                        g2ds.setColor(new Color(255, 128, 100, 150));
-                        g2ds.fillOval(x_coord + x_offset + 5, y_coord + s1_y, 18, 18);
-
-                        g2ds.setColor(new Color(255, 255, 255, 255));
-
-                        String s = Integer.toString(xx);
-                        g2ds.drawString(s, x_coord + x_offset + s1_x + 3, y_coord + s1_y + 13);
-                        s = Integer.toString(yy);
-                        g2ds.drawString(s, x_coord + x_offset + s1_x + 22, y_coord + s1_y + 13);
-                    }
+//
+//
+//                    if(true) {
+//                        g2ds.fillOval(x_coord + x_offset + s1_x, y_coord + s1_y, 18, 18);
+//                        g2ds.setColor(new Color(255, 255, 100, 70));
+//                        g2ds.setColor(new Color(255, 128, 100, 150));
+//                        g2ds.fillOval(x_coord + x_offset + 5, y_coord + s1_y, 18, 18);
+//
+//                        g2ds.setColor(new Color(255, 255, 255, 255));
+//
+//                        String s = Integer.toString(xx);
+//                        g2ds.drawString(s, x_coord + x_offset + s1_x + 3, y_coord + s1_y + 13);
+//                        s = Integer.toString(yy);
+//                        g2ds.drawString(s, x_coord + x_offset + s1_x + 22, y_coord + s1_y + 13);
+//                    }
                 }
             }
 
@@ -577,5 +543,19 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 } ).start();
             }
         }
+
+    public void setScrollSpeed(int scrollSpeed) {
+        this.scrollSpeed = scrollSpeed * 50;
+       // timer.setDelay( this.scrollSpeed );
+        timer = new Timer(this.scrollSpeed, new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e)
+            {
+                timer.stop();
+                zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 30 );
+                timer.restart();
+            }
+        } );
+    }
 
 }
