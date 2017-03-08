@@ -28,5 +28,5 @@ public class ScreenSelectButtons extends JPanel {
        public JButton getStructureScreenButton() {
             return structureScreenSelectButton;
        }
-       public JButton getOptionsScreenSelectButton() {return optionsScreenSelectButton;}
+    public JButton getOptionsScreenSelectButton() {return optionsScreenSelectButton;}
 }
