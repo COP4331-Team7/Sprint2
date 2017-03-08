@@ -329,7 +329,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              * |     .             .                 .              |
                 --------------------------------------------------- */
 
-            g2ds.setFont(new Font("default", Font.BOLD, 11));
+            g2ds.setFont(new Font("default", Font.BOLD, 9));
             g2ds.setColor( new Color(238, 238, 238, 238) );
 
             g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
@@ -418,6 +418,28 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.drawImage(meleeImage, x_coord + x_offset+10, y_coord, null);
                         }
 
+                        //draw resource counts
+
+                        // ore
+                        if(tileState.getOreQuantity() > 0) {
+                            g2ds.setColor(new Color(0xFFDDAAAA));
+                            String s = Integer.toString(tileState.getOreQuantity());
+                            g2ds.drawString(s, x_coord + x_offset + 7, y_coord + 30);
+                        }
+                        // energy
+                        if(tileState.getEnergyQuantity() > 0) {
+                            g2ds.setColor(new Color(0xaf75fff8));
+                        String s = Integer.toString(tileState.getEnergyQuantity());
+                        g2ds.drawString(s, x_coord + x_offset+27, y_coord + 30);
+                        }
+                        //food
+                        // energy
+                        if(tileState.getFoodQuantity() > 0) {
+                            g2ds.setColor(new Color(0xAFAFFC00));
+                            String s = Integer.toString(tileState.getFoodQuantity());
+                            g2ds.drawString(s, x_coord + x_offset+47, y_coord + 30);
+                        }
+
                         // shroud tile
                         if(grid[xx][yy].getShrouded(player.getName())) {
                             g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
@@ -431,13 +453,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     int s1_x = -15;
                     int s1_y =  31;
 
-//                    int center_pixel_x = MAP_IMAGE_WIDTH_IN_PIXELS  / 2;
-//                    int center_pixel_y = MAP_IMAGE_HEIGHT_IN_PIXELS / 2;
-//
-//                    g2ds.setColor( new Color(220, 220, 220, 50)  ); // blue
-//                    g2ds.drawLine(center_pixel_x - 7, center_pixel_y, center_pixel_x + 7, center_pixel_y );
-//                    g2ds.drawLine(center_pixel_x, center_pixel_y - 7, center_pixel_x, center_pixel_y + 7 );
-//
+
+
+
 //
 //                    if(true) {
 //                        g2ds.fillOval(x_coord + x_offset + s1_x, y_coord + s1_y, 18, 18);

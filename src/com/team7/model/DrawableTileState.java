@@ -40,8 +40,6 @@ public class DrawableTileState {
     private String itemType;
     private String structureType;
     private boolean structureStatus;
-    private ArrayList<String> resources;
-    private ArrayList<String> resourceQuantities;
     private int ore;
     private int food;
     private int energy;
@@ -52,10 +50,9 @@ public class DrawableTileState {
     private int numUnits = 0;
 
     public DrawableTileState(){
-        resources = new ArrayList<String>();
-        resources.add("Energy");
-        resources.add("Ore");
-        resources.add("Food");
+        energy = 0;
+        ore = 0;
+        food = 0;
     }
 
     //copy constructor
@@ -65,14 +62,11 @@ public class DrawableTileState {
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
         this.itemType = stateToCopy.itemType;
-
-
-        this.resourceQuantities = stateToCopy.resourceQuantities;
-        this.resources = stateToCopy.resources;
-
-
         this.structureType = stateToCopy.structureType;
         this.structureStatus = stateToCopy.structureStatus;
+        this.ore = stateToCopy.ore;
+        this.food = stateToCopy.food;
+        this.energy = stateToCopy.energy;
     }
 
     public void refresh(Tile tile) {
@@ -109,12 +103,16 @@ public class DrawableTileState {
         energy = 0; ore = 0; food = 0;
         for(Resource resource : tile.getResources()) {
             if(resource instanceof Energy)
-                ++energy;
+                energy += resource.getStatInfluenceQuantity();
             if(resource instanceof Food)
-                ++food;
+                food += resource.getStatInfluenceQuantity();
             if(resource instanceof Ore)
-                ++ore;
+                ore += resource.getStatInfluenceQuantity();
         }
+
+       // System.out.println("ore count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : " + ore);
+        //System.out.println("food count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : "  + food);
+        //System.out.println("eer count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : "  + energy);
 
 
         // area affect
@@ -173,19 +171,16 @@ public class DrawableTileState {
         this.itemType = itemType;
     }
 
-    public String getFoodQuantity() {
-        String f = "Food: " + food;
-        return f;
+    public int getFoodQuantity() {
+        return food;
     }
 
-    public String getOreQuantity() {
-        String o = "Ore: " + ore;
-        return o;
+    public int getOreQuantity() {
+        return ore;
     }
 
-    public String getEnergyQuantity() {
-        String e = "Energy: " + energy;
-        return e;
+    public int getEnergyQuantity() {
+        return energy;
     }
     public String getStructureType() {
         return structureType;

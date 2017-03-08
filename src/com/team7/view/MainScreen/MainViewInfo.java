@@ -42,7 +42,7 @@ public class MainViewInfo extends JPanel {
     private JLabel powerLabel_bar;
 
     public void setTitle2(String s) {
-        title2.setText("Player " + s + "'s stats:");
+        title2.setText("Player " + s + ":");
     }
 
     JLabel title2;
