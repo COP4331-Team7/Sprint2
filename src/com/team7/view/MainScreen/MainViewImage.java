@@ -215,7 +215,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
              g2.setColor(new Color(0xFF000000));
              g2.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
-
+             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
              int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
              int x_offset, counter, step = 0;
              int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
