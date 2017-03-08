@@ -53,6 +53,7 @@ public class MainScreenController {
                     updatePlayerStatusInfo();
                     // BAD!!!!!!!!! TODO: fix
                     view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
+                    view.getMainScreen().getMainViewInfo().updateStats(game.getCurrentPlayer().getRandomUnit());
                     Set<Tile> tiles = null;
                     view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 2, tiles));
 

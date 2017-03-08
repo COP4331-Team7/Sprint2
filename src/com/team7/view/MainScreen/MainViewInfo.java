@@ -3,6 +3,7 @@ package com.team7.view.MainScreen;
 import com.team7.model.*;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.UnitStats;
 
 import javax.swing.*;
 import java.awt.*;
@@ -106,10 +107,6 @@ public class MainViewInfo extends JPanel {
             t.add(itemLabel);
             t.add(new JLabel());
 
-
-
-
-
             lifeLabel = new JLabel("Nutrients:");
             lifeLabel.setFont(new Font("Serif", Font.BOLD, 15));
             lifeLabel.setForeground(Color.blue);
@@ -205,8 +202,22 @@ public class MainViewInfo extends JPanel {
 
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
+
     }
+
+    public void updateStats( Unit unit ) {
+        UnitStats stats = unit.getUnitStats();
+        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
+        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
+        setArmorLabel( Integer.toString( stats.getArmor() ) );
+        setHealthLabel( Integer.toString( stats.getHealth() ) );
+        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
+        setProductionLabel( "N/A" );
+        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
     }
+
+    }
+
 
     //    public void setUnit(Unit unit) {
 //        if(unit == null)
@@ -222,17 +233,7 @@ public class MainViewInfo extends JPanel {
 //            updateStats( structure );
 //    }
 
-//    public  void updateStats( Unit unit ) {
-//        UnitStats stats = unit.getUnitStats();
-//        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
-//        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
-//        setArmorLabel( Integer.toString( stats.getArmor() ) );
-//        setHealthLabel( Integer.toString( stats.getHealth() ) );
-//        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
-//        setProductionLabel( "N/A" );
-//        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
-//        // setItemLabel( );
-//    }
+
 
 //    public void updateStats(Player player) {
 //        currentPlayer = player;
