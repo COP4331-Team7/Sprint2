@@ -51,7 +51,7 @@ public class MainViewInfo extends JPanel {
 
             JLabel title = new JLabel("Unit Stats: ");
             title.setFont(new Font("Serif", Font.BOLD, 20));
-            title.setForeground( new Color(0xFF0AAAFF) );
+            title.setForeground( new Color(0xAAAA8888) );
             t.add(title);
             t.add(new JLabel());
 
@@ -111,7 +111,7 @@ public class MainViewInfo extends JPanel {
             productionLabel.setFont(new Font("Serif", Font.BOLD, 15));
             itemLabel.setFont(new Font("Serif", Font.BOLD, 15));
             t.add(itemLabel);
-            itemLabel.setBackground( new Color(0xff75fff8) );
+            itemLabel.setBackground( new Color(0xFF00FF00) );
             itemLabel.setOpaque(true);
             t.add(new JLabel());
 
@@ -119,14 +119,14 @@ public class MainViewInfo extends JPanel {
 
             JLabel title2 = new JLabel("Player Stats: ");
             title2.setFont(new Font("Serif", Font.BOLD, 20));
-            title2.setForeground( new Color(0xFF0AAAFF) );
+            title2.setForeground( new Color(0xAAAA8888) );
             t.add(title2);
             t.add(new JLabel());
 
 
             lifeLabel = new JLabel("Nutrients:");
             lifeLabel.setFont(new Font("Serif", Font.BOLD, 15));
-            lifeLabel.setForeground(Color.blue);
+           // lifeLabel.setForeground(Color.blue);
             lifeLabel_bar = new JLabel("     ");
             lifeLabel.setBackground( new Color(0xFFAFFC00) );
             lifeLabel.setOpaque(true);
@@ -138,7 +138,7 @@ public class MainViewInfo extends JPanel {
             researchLabel_bar = new JLabel("     ");
             researchLabel.setBackground( new Color(0xFFAFFC00) );
             researchLabel.setOpaque(true);
-            researchLabel.setForeground(Color.blue);
+           // researchLabel.setForeground(Color.blue);
             t.add(researchLabel);
 //            t.add(researchLabel_bar);
 
@@ -147,14 +147,14 @@ public class MainViewInfo extends JPanel {
             constructionLabel_bar = new JLabel("     ");
             constructionLabel.setBackground( new Color(0xFFAFFC00) );
             constructionLabel.setOpaque(true);
-            researchLabel.setForeground(Color.blue);
-            constructionLabel.setForeground(Color.blue);
+            //researchLabel.setForeground(Color.blue);
+          //  constructionLabel.setForeground(Color.blue);
             t.add(constructionLabel);
 //            t.add(constructionLabel_bar);
 
-            researchLabel.setForeground(Color.blue);
+            //researchLabel.setForeground(Color.blue);
             powerLabel = new JLabel("Power: ");
-            powerLabel.setForeground(Color.blue);
+            //powerLabel.setForeground(Color.blue);
             powerLabel.setFont(new Font("Serif", Font.BOLD, 15));
             powerLabel_bar = new JLabel("     ");
             powerLabel.setBackground( new Color(0xFFAFFC00) );

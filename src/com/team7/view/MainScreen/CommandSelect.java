@@ -83,9 +83,21 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.setLayout(new GridLayout(0,1));
 
         modeLabel = new JLabel("MODE: "); //up / down arrow
+        //modeLabel.setBackground( new Color(0xFF00FF00) );
+        //modeLabel.setOpaque(true);
         typeLabel = new JLabel("TYPE: "); //left / right arrow
         typeInstanceLabel = new JLabel("TYPE INSTANCE: "); //left / right arrow
         commandLabel = new JLabel("COMMAND: "); //up / down arrow
+
+
+        modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        modeLabel.setForeground(new Color(0xAAAA8888));
+        typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeLabel.setForeground(new Color(0xAAAA8888));
+        typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeInstanceLabel.setForeground(new Color(0xAAAA8888));
+        commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        commandLabel.setForeground(new Color(0xAAAA8888));
 
         //JLabel my_static_label = new JLabel("CONSTRUCT COMMAND BELOW");
         //my_static_label.setFont(new Font("Serif", Font.BOLD, 22));
@@ -98,12 +110,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         executeCommandButton = new JButton("ISSUE COMMAND");
         executeCommandButton.setFont(new Font("Serif", Font.BOLD, 15));
+        executeCommandButton.setForeground(new Color(0xAAAA8888));
         executeCommandButton.setBackground( new Color(0xFF00FF00) );
         executeCommandButton.setOpaque(true);
 
         endTurnButton = new JButton("END TURN");
         endTurnButton.setFont(new Font("Serif", Font.BOLD, 15));
         endTurnButton.setBackground( new Color(0xFFAFFC00) );
+        endTurnButton.setForeground(new Color(0xAAAA8888));
         endTurnButton.setOpaque(true);
 
         commandSelectPanel.add( executeCommandButton );

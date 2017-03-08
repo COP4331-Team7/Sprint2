@@ -55,13 +55,13 @@ public class OptionsScreen extends JPanel{
 
         resetControlsButton.setForeground( new Color(0xFFFF0000));
         resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
-        resetControlsButton.setBackground( new Color(0xff000000) );
-        resetControlsButton.setOpaque(true);
+//        resetControlsButton.setBackground( new Color(0xff000000) );
+//        resetControlsButton.setOpaque(true);
 
         changeControlButton.setForeground( new Color(0xFF0000FF));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
-        changeControlButton.setBackground( new Color(0xff000000) );
-        changeControlButton.setOpaque(true);
+//        changeControlButton.setBackground( new Color(0xff000000) );
+//        changeControlButton.setOpaque(true);
 
         label.setForeground( new Color(0xFF0FAAF0));
         label.setFont(new Font("Serif", Font.BOLD, 45));
