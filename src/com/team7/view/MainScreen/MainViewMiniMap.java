@@ -48,7 +48,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         setPreferredSize(  new Dimension( backgroundImg3.getWidth(), backgroundImg3.getHeight()) );
-       this.setBorder(BorderFactory.createLineBorder(new Color(0xAAAA8888), 2));
+       this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
         drawMapArea();
         addMouseListener(this);
     }
