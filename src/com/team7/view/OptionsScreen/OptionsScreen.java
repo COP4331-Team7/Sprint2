@@ -60,7 +60,7 @@ public class OptionsScreen extends JPanel{
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
 
         label.setForeground( new Color(0xFF0FAAF0));
-        label.setFont(new Font("Serif", Font.BOLD, 30));
+        label.setFont(new Font("Serif", Font.BOLD, 45));
 
         JPanel temp = new JPanel(new BorderLayout() );
         screenSelectBtns = new ScreenSelectButtons();
@@ -131,7 +131,7 @@ public class OptionsScreen extends JPanel{
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.repaint();
-        controlsList.setFont(new Font("Serif", Font.BOLD, 50));
+        controlsList.setFont(new Font("Serif", Font.BOLD, 45));
     }
 
     //adds text to the defaultListModel
@@ -162,7 +162,7 @@ public class OptionsScreen extends JPanel{
         if(s3.getValue() == s3.getMaximum())
             return 1 * 10;
         else
-            return 10 * Math.abs(s3.getMaximum() - s3.getValue());
+            return 20 * Math.abs(s3.getMaximum() - s3.getValue());
     }
 
 

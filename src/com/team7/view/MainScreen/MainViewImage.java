@@ -281,20 +281,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                          g2.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                      }
 
-                     // draw units
-                     if (tileState.getExplorer() > 0) {
-                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
-                     }
-                     if (tileState.getColonist() > 0) {
-                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
-                     }
-                     if (tileState.getMeleeUnit() > 0) {
-                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
-                     }
-                     if (tileState.getRangeUnit() > 0) {
-                         g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
-                     }
-
                      // shroud tile
                      if(player != null)
                      if (grid[xx][yy].getShrouded(player.getName())) {

@@ -33,7 +33,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg3 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2 + BORDER_WIDTH3, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2 + BORDER_WIDTH3, BufferedImage.TYPE_INT_ARGB);
         g2dsss = (Graphics2D)backgroundImg3.createGraphics();
-        g2dsss.setColor(new Color(0xFFCCCCCC));
+        g2dsss.setColor(new Color(0xFF777777));
         g2dsss.fillRect(0, 0, backgroundImg3.getWidth(), backgroundImg3.getHeight() );
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
@@ -48,7 +48,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         setPreferredSize(  new Dimension( backgroundImg3.getWidth(), backgroundImg3.getHeight()) );
-       this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
+      // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
         drawMapArea();
         addMouseListener(this);
     }
@@ -77,7 +77,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     }
 
     public void shadeUnselectedArea() {
-        double shade_factor = .5;// shade factor, [0, 1]
+        double shade_factor = .3;// shade factor, [0, 1]
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
