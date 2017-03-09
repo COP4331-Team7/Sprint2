@@ -90,7 +90,6 @@ public class PathSelectController {
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
-        view.redrawView();
     }
 
     public Player getPlayer () {
@@ -135,6 +134,12 @@ public class PathSelectController {
                 }
         }).start();
 
+    }
+
+    public void zoomToCurrSelection( Tile tile ) {
+        if(tile == null)
+            return;
+        view.getMainViewImage().zoomToDestination(tile.getxCoordinate() - 11 / 2, tile.getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
     }
 
 }

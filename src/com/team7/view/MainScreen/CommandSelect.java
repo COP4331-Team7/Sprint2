@@ -179,16 +179,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
 
         if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
-            System.out.println("Record");       // TODO: bug
             pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation()  );
             isRecordingPath = true;
+            controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
         }
         else if( e.getKeyChar() == '5') {
             pathSelectController.drawPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
-
-        if( isRecordingPath ) { // if recording path, pass key to controller to update path
+        else if( isRecordingPath ) { // if recording path, pass key to controller to update path
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }
 
