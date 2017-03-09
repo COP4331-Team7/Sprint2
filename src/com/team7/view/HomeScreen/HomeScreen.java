@@ -109,7 +109,9 @@ public class HomeScreen extends JPanel {
             quitButton.setForeground(Color.black);
             quitButton.setOpaque(true);
 
-            panel.add( playButton );
+            panel.setLayout(new GridLayout(0, 3));
+
+            panel.add( playButton  );
             panel.add( options );
             panel.add( quitButton );
 

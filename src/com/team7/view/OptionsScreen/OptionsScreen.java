@@ -74,7 +74,7 @@ public class OptionsScreen extends JPanel{
         label.setFont(new Font("Serif", Font.BOLD, 45));
 
 
-        homeButton = new JButton("Return to Home Screen");
+        homeButton = new JButton("return to Home Screen");
         homeButton.setForeground( new Color(0xff000000));
         homeButton.setFont(new Font("Comic Sans", Font.BOLD, 27));
 
