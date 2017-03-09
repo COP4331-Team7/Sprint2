@@ -20,7 +20,7 @@ public class HomeScreen extends JPanel {
 
         this.add(homeBackground, BorderLayout.CENTER);
         this.add(homeButtons, BorderLayout.SOUTH);
-        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 1));
     }
 
     public JButton getQuitButton() {
