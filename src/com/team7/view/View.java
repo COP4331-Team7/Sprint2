@@ -6,6 +6,7 @@ import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
+import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.StructureScreen.StructureScreen;
 import com.team7.view.UnitScreen.UnitScreen;
@@ -76,6 +77,9 @@ public class View
     public MainViewImage getMainViewImage() {
         return frame.getMainViewImage();
     }
+    public MainViewInfo getMainViewInfo() {
+        return frame.getMainViewInfo();
+    }
 
 
 // ==================== INNER CLASS ==========================
@@ -106,6 +110,9 @@ public class View
 
         public MainViewImage getMainViewImage() {
             return mainScreen.getMainViewImage();
+        }
+        public MainViewInfo getMainViewInfo() {
+            return mainScreen.getMainViewInfo();
         }
         public HomeScreen getHomeScreen() {
             return homeScreen;

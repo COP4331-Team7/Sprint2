@@ -1,6 +1,8 @@
 package com.team7.model;
 
+import com.team7.controller.PathSelectController;
 import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
@@ -22,27 +24,21 @@ public class Game {
         currentPlayer = players[0];
     }
 
-
     public void startGame() {
 
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
         //TODO check if this violates TDA
-        players[0].addUnit(new Explorer(this.map.getGrid()[10][12], players[0]));
-        players[0].addUnit(new Explorer(this.map.getGrid()[20][12], players[0]));
-        players[0].addUnit(new Colonist(this.map.getGrid()[20][12], players[0]));
-        players[0].addUnit(new Colonist(this.map.getGrid()[20][12], players[0]));
-
-
+        players[0].addUnit(new Explorer(this.map.getGrid()[4][7], players[0]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[5][19], players[0]));
+        players[0].addUnit(new Colonist(this.map.getGrid()[1][14], players[0]));
 
         // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
         //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[27][24], players[1]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[15][24], players[1]));
-        players[1].addUnit(new Colonist(this.map.getGrid()[20][12], players[1]));
-        players[1].addUnit(new Colonist(this.map.getGrid()[20][12], players[1]));
-
+        players[1].addUnit(new Explorer(this.map.getGrid()[40-8][40-7], players[1]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[40-7][40-19], players[1]));
+        players[1].addUnit(new Colonist(this.map.getGrid()[40-5][40-10], players[1]));
 
 
         updateTileGameState();
@@ -54,38 +50,32 @@ public class Game {
     //2. use radius to collect a set of all visible tiles to current player
     //3. iterate through game map to mark tiles correctly
     public void updateTileGameState(){
-        // don't need to use this atm
-//        HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
-//        Set<Tile> visibleTiles = new HashSet<>();
-//
-//        //1
-//        for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
-//            visibleTiles.addAll(map.getTilesInRadius(tileKey, 2, null));
-//        }
-//
-//        //2
-//        //iterate through entire map and update each tile
-//        for (Tile[] tileArray : map.getGrid()) {
-//            for (Tile tile : tileArray) {
-//                //3
-//                if (visibleTiles.contains(tile)){
-//                    //the tile is marked as visible
-//                    tile.updateTileToVisible(currentPlayer.getName());
-//                } else{
-//                    //the tile is marked as nonvisible/shrouded
-//                    //tile method handles if it will turn shrouded or not
-//                    tile.updateTileToShrouded(currentPlayer.getName());
-//                }
-//            }
-//        }
+
+        HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
+        Set<Tile> visibleTiles = new HashSet<>();
+        //1
+        for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
+            visibleTiles.addAll(map.getTilesInRadius(tileKey, 2, null));
+        }
+        //2
+        //iterate through entire map and update each tile
+        for (Tile[] tileArray : map.getGrid()) {
+            for (Tile tile : tileArray) {
+                //3
+                if( visibleTiles.contains(tile ) ) {
+                    tile.markVisible(currentPlayer.getName());
+                }
+                else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) && PathSelectController.isRecording) {
+                   tile.markShrouded( currentPlayer.getName() );
+                }
+                tile.refreshDrawableState();
+            }
+        }
     }
 
     //Switches the turn to the next player
     public void nextTurn() {
-
         //executeQueues();
-        updateTileGameState();
-
 //        if(currentPlayer.isDefeated()){
 //            endGame();
 //        }
@@ -96,6 +86,8 @@ public class Game {
             currentPlayer = players[0];
 
         turn = ++turn % 2;
+
+        updateTileGameState();
     }
 
     //Get the current player

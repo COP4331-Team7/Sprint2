@@ -58,5 +58,12 @@ public class CommandSelectController {
         view.getMainScreen().getMainViewInfo().updateStats( getCurrentSelection(currMode, currType, id) );
     }
 
+    public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {
+        Unit unit = getCurrentSelection(  currMode, currType, currTypeInstance );
+        if(unit == null)
+            return;
+        view.getMainViewImage().zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.team7.controller;
 
 
+import com.team7.view.MainScreen.MainScreen;
+import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
 import com.team7.model.Player;
@@ -18,7 +20,8 @@ public class PathSelectController {
     private Game game = null;
     private View view = null;
     private MainViewImage mainViewImage = null;
-
+    private MainScreen mainScreen = null;
+    private MainViewMiniMap miniMap = null;
     private CommandSelect commandView = null;
 
     public static boolean isRecording = false;
@@ -34,7 +37,10 @@ public class PathSelectController {
         this.game = game;
         this.view = view;
         this.mainViewImage = view.getMainViewImage();
+        this.mainScreen = view.getMainScreen();
+        this.miniMap = view.getMainScreen().getMiniMap();
         this.commandView = view.getCommandSelect();
+
 
          configReader = new ConfigReader();
 
@@ -108,30 +114,22 @@ public class PathSelectController {
                         tile.isSelectedPath = false;
 
                     for (int i = 0; i < pathTile.size(); i++) {
-                        Tile tile = pathTile.get(i);
-                        game.getCurrentPlayer().moveUnit(unit, tile); //  move the unit
-                        Set<Tile> tiles = null;
-                        view.getMainViewImage().highlightRadius( game.getMap().getTilesInRadius(tile, 2, tiles));
-                        view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
-
-
+                        game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
+                        game.updateTileGameState();
+                        miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
                             public void run() {
                                 mainViewImage.reDrawMap();
                             }
                         });
-
                         try {
                             Thread.sleep(moveAnimationSpeed);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-
                         if(i == pathTile.size() - 1)
                             mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
-
 
                     }
                 }

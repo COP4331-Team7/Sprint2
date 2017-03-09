@@ -3,8 +3,13 @@ package com.team7.controller;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.view.MainScreen.MainScreen;
+import com.team7.view.MainScreen.MainViewImage;
+import com.team7.view.MainScreen.MainViewInfo;
+import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.View;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -12,11 +17,21 @@ import java.util.Set;
 public class MainScreenController {
     private Game game = null;
     private View view = null;
+    private MainViewImage mainViewImage = null;
+    private MainScreen mainScreen = null;
+    private MainViewMiniMap miniMap = null;
+    private MainViewInfo mainViewInfo = null;
 
     public MainScreenController(Game game, View view) {
         this.game = game;
         this.view = view;
+        this.mainViewImage = view.getMainViewImage();
+        this.mainScreen = view.getMainScreen();
+        this.miniMap = view.getMainScreen().getMiniMap();
+        this.mainViewInfo = view.getMainViewInfo();
+
         addActionListeners();
+        mainScreen.getEndTurnButton().doClick();
     }
 
     // ===============================================
@@ -25,59 +40,55 @@ public class MainScreenController {
     // update status info when turn changes
     public void updatePlayerStatusInfo() {
         Player currPlayer = game.getCurrentPlayer();
-        view.getMainScreen().getMainViewInfo().setLifeLabel( Integer.toString( currPlayer.getNutrients() ) );
-        view.getMainScreen().getMainViewInfo().setResearchLabel( Integer.toString( currPlayer.getResearch() ) );
-        view.getMainScreen().getMainViewInfo().setConstructionLabel( Integer.toString( currPlayer.getMetal() ) );
-        view.getMainScreen().getMainViewInfo().setPowerLabel( Integer.toString( currPlayer.getPower() ) );
+        mainViewInfo.setLifeLabel( Integer.toString( currPlayer.getNutrients() ) );
+        mainViewInfo.setResearchLabel( Integer.toString( currPlayer.getResearch() ) );
+        mainViewInfo.setConstructionLabel( Integer.toString( currPlayer.getMetal() ) );
+        mainViewInfo.setPowerLabel( Integer.toString( currPlayer.getPower() ) );
     }
 
     // add action listeners to Main Screen buttons
     public void addActionListeners() {
-        view.getMainScreen().getMainScreenButton().addActionListener(new ActionListener() {
+
+        mainScreen.getMainScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getMainScreen().getMainScreenButton())
+                if (e.getSource() == mainScreen.getMainScreenButton())
                     view.setCurrScreen("MAIN");
             }
         });
-        view.getMainScreen().getUnitScreenButton().addActionListener(new ActionListener() {
+        mainScreen.getUnitScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getUnitScreenButton())
                     view.setCurrScreen("UNIT_OVERVIEW");
             }
         });
-        view.getMainScreen().getEndTurnButton().addActionListener(new ActionListener() {
+        mainScreen.getEndTurnButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getEndTurnButton()) {
 
                     PathSelectController.isRecording = false;
                     game.nextTurn();
                     updatePlayerStatusInfo();
-                    // BAD!!!!!!!!! TODO: fix
-                    view.getMainScreen().getMainViewImage().setCurrPlayer(game.getCurrentPlayer());
-                    view.getMainScreen().getMainViewInfo().updateStats(game.getCurrentPlayer().getRandomUnit());
-                    view.getMainScreen().getMainViewInfo().setTitle2(game.getCurrentPlayer().getName());
-                    Set<Tile> tiles = null;
-                    view.getMainViewImage().highlightRadius(game.getMap().getTilesInRadius(game.getCurrentPlayer().getRandomUnit().getLocation(), 2, tiles));
-
-                    view.getMainScreen().getMainViewImage().getMiniMap().setMiniMapImage( view.getMainScreen().getMainViewImage().getFullMapImage() );
+                    mainViewImage.setCurrPlayer(game.getCurrentPlayer());
+                    mainViewInfo.setTitle2(game.getCurrentPlayer().getName());
 
                     // TODO: fix
-                    view.getMainScreen().getMainViewImage().zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
-                    view.getMainScreen().getCommandSelect().setFocusable(true);
-                    view.getMainScreen().getCommandSelect().requestFocus();
-                    OptionsController optionsController = new OptionsController(view,game);
-                    optionsController.reloadControls(game.getCurrentPlayer().getName());
+                    mainViewImage.zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+
+                    miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
+                    mainScreen.getCommandSelect().setFocusable(true);
+                    mainScreen.getCommandSelect().requestFocus();
+
                 }
             }
         });
-        view.getMainScreen().getOptionScreenButton().addActionListener(new ActionListener() {
+        mainScreen.getOptionScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getOptionScreenButton())
                     view.getOptionScreen().showScreenSelectBtns();
                     view.setCurrScreen("OPTIONS");
             }
         });
-        view.getMainScreen().getStructureScreenButton().addActionListener(new ActionListener() {
+        mainScreen.getStructureScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getStructureScreenButton())
                 view.setCurrScreen("STRUCTURE_OVERVIEW");
@@ -85,9 +96,9 @@ public class MainScreenController {
         });
 
 
-        view.getMainScreen().getExecuteCommandButton().addActionListener(new ActionListener() {
+        mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getMainScreen().getExecuteCommandButton())
+                if (e.getSource() == mainScreen.getExecuteCommandButton())
                     System.out.println("do command");
             }
         });

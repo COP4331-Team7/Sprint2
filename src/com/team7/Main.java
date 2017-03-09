@@ -29,7 +29,6 @@ public class Main {
         MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game, view);
-
         OptionsController optionsController = new OptionsController( view,game );
 
     }
