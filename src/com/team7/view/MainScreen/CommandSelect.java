@@ -88,12 +88,20 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
         modeLabel.setForeground(new Color(0xff000000));
+        modeLabel.setBackground(new Color(0xffF5F5DC));
+        modeLabel.setOpaque(true);
         typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
         typeLabel.setForeground(new Color(0xff000000));
+        typeLabel.setBackground(new Color(0xffF5F5DC));
+        typeLabel.setOpaque(true);
         typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
         typeInstanceLabel.setForeground(new Color(0xff000000));
+        typeInstanceLabel.setBackground(new Color(0xffF5F5DC));
+        typeInstanceLabel.setOpaque(true);
         commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
         commandLabel.setForeground(new Color(0xff000000));
+        commandLabel.setBackground(new Color(0xffF5F5DC));
+        commandLabel.setOpaque(true);
 
         commandSelectPanel.add(modeLabel);
         commandSelectPanel.add(typeLabel);
