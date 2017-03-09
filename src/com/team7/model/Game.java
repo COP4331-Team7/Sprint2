@@ -36,9 +36,9 @@ public class Game {
 
         // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
         //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[40-8][40-7], players[1]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[40-7][40-19], players[1]));
-        players[1].addUnit(new Colonist(this.map.getGrid()[40-5][40-10], players[1]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[40-8][40-5], players[1]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[40-7][40-25], players[1]));
+        players[1].addUnit(new Colonist(this.map.getGrid()[40-5][40-15], players[1]));
 
 
         updateTileGameState();
@@ -132,5 +132,6 @@ public class Game {
 
         System.exit(0);
     }
+
 
 }

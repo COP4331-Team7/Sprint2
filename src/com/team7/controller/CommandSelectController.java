@@ -37,20 +37,28 @@ public class CommandSelectController {
 
     public Unit getCurrentSelection(int currMode, int currType, int id) {
 
+        game.getCurrentPlayer().printUnitIds();
+
+
+        System.out.println("id going in: " + id);
+
+        Unit currSelection = null;
+
         if(currMode == 2 && currType == 0) {        // EXPLORER
-            return game.getCurrentPlayer().getExplorer( id );
+            currSelection = game.getCurrentPlayer().getExplorer( id );
+            System.out.println("get exploere");
         }
         else if(currMode == 2 && currType == 1) {        // COLONIST
-            return game.getCurrentPlayer().getColonist( id );
+            currSelection = game.getCurrentPlayer().getColonist( id );
         }
         else if(currMode == 2 && currType == 2) {        // RANGED UNIT
-            return game.getCurrentPlayer().getRanged( id );
+            currSelection = game.getCurrentPlayer().getRanged( id );
         }
         else if(currMode == 2 && currType == 3) {        // MELEE UNIT
-            return game.getCurrentPlayer().getMelee( id );
+            currSelection = game.getCurrentPlayer().getMelee( id );
         }
-        else
-            return null;
+
+        return currSelection;
 
     }
 

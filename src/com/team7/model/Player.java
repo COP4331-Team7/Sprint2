@@ -395,7 +395,7 @@ public class Player {
     public Unit getExplorer(int id) {
         int n = 0;
         for(int i = 0; i < units.size(); i++)
-            if(units.get(i) instanceof Explorer && units.get(0).getId() == id)
+            if(units.get(i) instanceof Explorer && units.get(i).getId() == id)
                 return units.get( i );
 
         return null;
@@ -404,7 +404,7 @@ public class Player {
     public Unit getMelee(int id) {
         int n = 0;
         for(int i = 0; i < units.size(); i++)
-            if(units.get(i) instanceof MeleeUnit && units.get(0).getId() == id)
+            if(units.get(i) instanceof MeleeUnit && units.get(i).getId() == id)
                 return units.get( i );
 
         return null;
@@ -413,7 +413,7 @@ public class Player {
     public Unit getRanged(int id) {
         int n = 0;
         for(int i = 0; i < units.size(); i++)
-            if(units.get(i) instanceof RangedUnit && units.get(0).getId() == id)
+            if(units.get(i) instanceof RangedUnit && units.get(i).getId() == id)
                 return units.get( i );
 
         return null;
@@ -422,9 +422,10 @@ public class Player {
     public Unit getColonist(int id) {
         int n = 0;
         for(int i = 0; i < units.size(); i++)
-            if(units.get(i) instanceof Colonist && units.get(0).getId() == id)
+            if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
 
+        System.out.println("NO!");
         return null;
     }
 
@@ -434,6 +435,18 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void printUnitIds() {
+
+
+        for(Unit u : units) {
+
+            System.out.println(u.getType() + " : " + u.getId() );
+
+        }
+
+
     }
 
 }

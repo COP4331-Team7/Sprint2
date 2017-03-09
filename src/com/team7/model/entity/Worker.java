@@ -13,9 +13,10 @@ public class Worker extends Entity {
     public Worker(Tile startTile, Player player) {
         setOwner(player);
         setLocation(startTile);
+
         generateID();
         setArmy(null);
-        setVisibilityRadius(3);
+        setVisibilityRadius(2);
         constructionRate = 10;
         setFed(true);   //worker has enough food when created
         setAssigned(false); //worker is not assigned until specified

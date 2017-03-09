@@ -13,6 +13,7 @@ import com.team7.view.UnitScreen.UnitScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -173,7 +174,13 @@ public class View
         private void addMenu()
         {                       	   // addMenu() method used to setup a frame's menu bar
             JMenu fileMenu = new JMenu( "File" );
+            fileMenu.setFont(new Font("plain", Font.BOLD, 12));
+
             JMenuItem exitItem = new JMenuItem( "Exit" );
+            exitItem.setFont(new Font("Arial", Font.BOLD, 15));
+            exitItem.setBackground(new Color(0xffF5F5DC));
+            exitItem.setOpaque(true);
+
             exitItem.addActionListener( new ActionListener() 	// define what happens when this menu item is selected
             {
                 public void actionPerformed( ActionEvent event )
@@ -181,8 +188,11 @@ public class View
                     System.exit( 0 );
                 }
             } );
-            fileMenu.add( exitItem );
             JMenuItem saveItem = new JMenuItem( "Save full size map image" );     // create a new menu item
+            saveItem.setFont(new Font("Arial", Font.BOLD, 15));
+            saveItem.setBackground(new Color(0xffF5F5DC));
+            saveItem.setOpaque(true);
+
             saveItem.addActionListener( new ActionListener()
             {
                 public void actionPerformed( ActionEvent event )
@@ -191,6 +201,8 @@ public class View
                 }                                                                      // given valid input, it will display an image
             } );
             fileMenu.add( saveItem );
+            fileMenu.add( exitItem );
+
             JMenuBar menuBar = new JMenuBar();                  // create a new menu bar
             menuBar.add( fileMenu );                           	// add the "File" menu to the menu bar
             this.setJMenuBar( menuBar );                        // attach the menu bar to this frame

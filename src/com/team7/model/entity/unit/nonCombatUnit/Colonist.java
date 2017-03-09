@@ -12,6 +12,8 @@ import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 
 public class Colonist extends NonCombatUnit {
 
+    private static int colonistIds = 0;
+
     public Colonist(Tile startTile, Player player) {
         setOwner(player);
         setLocation(startTile);
@@ -23,7 +25,7 @@ public class Colonist extends NonCombatUnit {
         setMovesFrozen(0);
         setArmy(null);
         setDirection(2);
-        setVisibilityRadius(3);
+        setVisibilityRadius(2);
     }
 
     public void buildCapital() {

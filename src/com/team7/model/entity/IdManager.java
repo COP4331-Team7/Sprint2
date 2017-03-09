@@ -15,6 +15,14 @@ public class IdManager {
 
     Player player;
 
+    static ArrayList<Integer> availableIDs = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+    static ArrayList<Integer> availableColonistIds_p1= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+    static ArrayList<Integer> availableColonistIds_p2= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+
+    static ArrayList<Integer> availableExplorerIds_p1 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+    static ArrayList<Integer> availableExplorerIds_p2 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+
+
     public IdManager(Player p) {
         this.player = p;
     }
@@ -30,20 +38,25 @@ public class IdManager {
                 return -1;
             }
 
-            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
             if(entity instanceof Explorer) {
-                for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Explorer){
-                        availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                    }
-                }
+                        if(player.getName().contains("One")){
+                            ID = availableExplorerIds_p1.get(0);
+                            availableExplorerIds_p1.remove( 0 );
+                        }
+                        else {
+                            ID = availableExplorerIds_p2.get(0);
+                            availableExplorerIds_p2.remove( 0 );
+                        }
             }
             else if(entity instanceof Colonist) {
-                for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Colonist){
-                        availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                    }
-                }
+                        if(player.getName().contains("One")){
+                            ID = availableColonistIds_p1.get(0);
+                            availableColonistIds_p1.remove( 0 );
+                        }
+                        else {
+                            ID = availableColonistIds_p2.get(0);
+                            availableColonistIds_p2.remove( 0 );
+                        }
             }
             else if(entity instanceof MeleeUnit) {
                 for(int i = 0; i < player.getUnits().size(); i++){
@@ -59,7 +72,7 @@ public class IdManager {
                     }
                 }
             }
-            ID = availableIDs.get(0);
+
         }
         else if(entity instanceof Worker) {
             if(player.getWorkers().size() >= 99){

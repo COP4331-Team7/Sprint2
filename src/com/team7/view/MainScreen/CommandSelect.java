@@ -161,7 +161,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): ");
         }
         else {
-            typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " + currTypeInstance);
+            typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() );
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
