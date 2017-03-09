@@ -17,7 +17,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     private final static int BORDER_WIDTH = 30;
     private final static int BORDER_WIDTH2 = 10;
 
-    double stretch = 1.5;
+    double stretch = 1.0;
 
 
     private MainViewImage mainViewImage;
@@ -82,10 +82,9 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         int newR, newG, newB, newColor;
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
-                if(j == 0)
-                    continue;
+
                 if (i == x_center || i == x_center + SUB_WIDTH || j == y_center || j == y_center + SUB_HEIGHT) {
-                    image.setRGB( i, j, 0x5ACABD80);
+                    image.setRGB( i, j, 0xAAF5F5DC);
                     continue;
                 }
                 if( !(i > x_center && i < x_center + SUB_WIDTH && j > y_center && j < y_center + SUB_HEIGHT) ) {

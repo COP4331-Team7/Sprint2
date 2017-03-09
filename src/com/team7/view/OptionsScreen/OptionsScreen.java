@@ -33,7 +33,8 @@ public class OptionsScreen extends JPanel{
     private JPanel bPanel;
 
     public OptionsScreen() {
-        resetControlsButton.setForeground( new Color(0xCD3700));
+      //  resetControlsButton.setForeground( new Color(0xCD3700));
+        resetControlsButton.setForeground( new Color(0xff000000));
         resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
 
         changeControlButton.setForeground( new Color(0xff000000));
