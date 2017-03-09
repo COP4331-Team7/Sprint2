@@ -144,7 +144,7 @@ public class Player {
         }
 
         // Physically add the unit to player and put it on the map
-        this.units.add(unit);
+        units.add(unit);
         unit.getLocation().addUnitToTile(unit);
 
         return unit;
