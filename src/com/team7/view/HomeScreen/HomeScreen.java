@@ -20,7 +20,7 @@ public class HomeScreen extends JPanel {
 
         this.add(homeBackground, BorderLayout.CENTER);
         this.add(homeButtons, BorderLayout.SOUTH);
-        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 1));
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
 
     public JButton getQuitButton() {
@@ -32,9 +32,6 @@ public class HomeScreen extends JPanel {
     public JButton getOptionButton() {
         return homeButtons.getOptionButton();
     }
-
-
-
 
     public HomeButtons getHomeButtons() {
             return homeButtons;
@@ -64,8 +61,6 @@ public class HomeScreen extends JPanel {
             // scale image to fill screen
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), 0, 0, image.getWidth(),
                     image.getHeight(), null);
-//            System.out.println(this.getWidth());
-//            System.out.println(this.getHeight());
         }
 
         public JButton getQuitButton() {
@@ -117,6 +112,7 @@ public class HomeScreen extends JPanel {
             panel.add( quitButton );
 
             this.add( panel, BorderLayout.CENTER );
+            this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
         }
 
         public JButton getQuitButton() {

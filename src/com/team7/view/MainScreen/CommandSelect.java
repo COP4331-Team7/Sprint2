@@ -13,11 +13,8 @@ import java.awt.event.KeyListener;
 
 public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
-    private  MainViewInfo statusInfo;
     private JButton executeCommandButton = null;
     private JButton endTurnButton = null;
-
-    int commandOrder = 0;
 
     JLabel modeLabel;
     JLabel typeLabel;
@@ -85,12 +82,9 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.setLayout(new GridLayout(0,1));
 
         modeLabel = new JLabel("MODE: "); //up / down arrow
-        //modeLabel.setBackground( new Color(0xFF00FF00) );
-        //modeLabel.setOpaque(true);
         typeLabel = new JLabel("TYPE: "); //left / right arrow
         typeInstanceLabel = new JLabel("TYPE INSTANCE: "); //left / right arrow
         commandLabel = new JLabel("COMMAND: "); //up / down arrow
-
 
         modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
         modeLabel.setForeground(new Color(0xff644D50));
@@ -101,10 +95,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
         commandLabel.setForeground(new Color(0xff644D50));
 
-        //JLabel my_static_label = new JLabel("CONSTRUCT COMMAND BELOW");
-        //my_static_label.setFont(new Font("Serif", Font.BOLD, 22));
-
-       // commandSelectPanel.add(my_static_label);
         commandSelectPanel.add(modeLabel);
         commandSelectPanel.add(typeLabel);
         commandSelectPanel.add(typeInstanceLabel);
@@ -127,21 +117,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         temp.add( endTurnButton );
         commandSelectPanel.add( temp );
 
-        //commandSelectPanel.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
+        this.add( commandSelectPanel, BorderLayout.SOUTH );
 
-
-                this.add( commandSelectPanel, BorderLayout.SOUTH );
-       // setPreferredSize(new Dimension(350, 200));
-
-       // this.setBorder(BorderFactory.createLineBorder(new Color(0xFF000000), 1));
         addKeyListener(this);
     }
 
     public void setController( PathSelectController msc ) {
         this.pathSelectController = msc;
-       // this.statusInfo = pathSelectController.getStatusInfo();
     }
-
 
     // update the text displaying the currently selected command
     private void updateCommand() {
@@ -292,10 +275,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         updateCommand();
     }
 
-//    public void setScreen(Screen screen) {
-//        this.screen = screen;
-//    }
-//
 //    public void setCurrentPlayer( Player player ) {
 //        this.currentPlayer = player;
 //    }

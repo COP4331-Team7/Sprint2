@@ -71,11 +71,9 @@ public class Game {
 
     //Switches the turn to the next player
     public void nextTurn() {
+
         //executeQueues();
-        //currentPlayer.takeTurn();
-
         updateTileGameState();
-
 
 //        if(currentPlayer.isDefeated()){
 //            endGame();
@@ -127,11 +125,9 @@ public class Game {
         System.out.println("GAME OVER!!!!" );
 
         /*   --TODO--
-        Display a game over splash screen and exit the program, gunna wait until the GUI is integrated
-        to be able to do this. */
+        Display game over splash screen */
 
         System.exit(0);
-
     }
 
 }
