@@ -29,10 +29,10 @@ public class Game {
         this.map = new Map();
 
         //TODO check if this violates TDA
-        players[0].addUnit(new Explorer(this.map.getGrid()[15][16], players[0]));
+        players[0].addUnit(new Explorer(this.map.getGrid()[10][12], players[0]));
        // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
         //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[17][14], players[1]));
+        players[1].addUnit(new Explorer(this.map.getGrid()[27][24], players[1]));
 
         updateTileGameState();
     }

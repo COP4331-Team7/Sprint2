@@ -21,7 +21,9 @@ public class ScreenSelectButtons extends JPanel {
             this.add( structureScreenSelectButton );
             this.add( optionsScreenSelectButton) ;
 
-            this.setForeground( new Color(0xAAffccf8) );
+           // this.setForeground( new Color(0xAAffccf8) );
+            this.setBackground(new Color(0xffCABD80));
+            this.setOpaque(true);
        }
 
        public JButton getMainScreenButton() { return mainScreenSelectButton; }

@@ -48,6 +48,7 @@ public class MainScreenController {
         view.getMainScreen().getEndTurnButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getMainScreen().getEndTurnButton()) {
+
                     PathSelectController.isRecording = false;
                     game.nextTurn();
                     updatePlayerStatusInfo();

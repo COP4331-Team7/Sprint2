@@ -87,13 +87,13 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandLabel = new JLabel("COMMAND: "); //up / down arrow
 
         modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        modeLabel.setForeground(new Color(0xff644D50));
+        modeLabel.setForeground(new Color(0xff000000));
         typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        typeLabel.setForeground(new Color(0xff644D50));
+        typeLabel.setForeground(new Color(0xff000000));
         typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        typeInstanceLabel.setForeground(new Color(0xff644D50));
+        typeInstanceLabel.setForeground(new Color(0xff000000));
         commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        commandLabel.setForeground(new Color(0xff644D50));
+        commandLabel.setForeground(new Color(0xff000000));
 
         commandSelectPanel.add(modeLabel);
         commandSelectPanel.add(typeLabel);
@@ -103,23 +103,28 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         executeCommandButton = new JButton("ISSUE COMMAND");
         executeCommandButton.setFont(new Font("Serif", Font.BOLD, 15));
         executeCommandButton.setForeground(Color.black);
-        executeCommandButton.setBackground( new Color(0xffCABD80) );
+        executeCommandButton.setBackground( new Color(0xffF5F5DC) );
         executeCommandButton.setOpaque(true);
 
         endTurnButton = new JButton("END TURN");
         endTurnButton.setFont(new Font("Serif", Font.BOLD, 15));
-        endTurnButton.setBackground( new Color(0xffCABD80) );
+        endTurnButton.setBackground( new Color(0xffF5F5DC) );
         endTurnButton.setForeground(Color.black);
         endTurnButton.setOpaque(true);
 
         JPanel temp = new JPanel();
         temp.add(executeCommandButton);
         temp.add( endTurnButton );
+        temp.setBackground(new Color(0xffF5F5DC));
+        temp.setOpaque(true);
+
         commandSelectPanel.add( temp );
 
         this.add( commandSelectPanel, BorderLayout.SOUTH );
 
         addKeyListener(this);
+
+        setMinimumSize(new Dimension(323, 200));
     }
 
     public void setController( PathSelectController msc ) {

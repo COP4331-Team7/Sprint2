@@ -33,11 +33,12 @@ public class MainScreen extends JPanel {
         temp.add( mainStatusInfo, BorderLayout.WEST );
         commandSelect = new CommandSelect();
         temp.add( commandSelect, BorderLayout.EAST);
-
         temp.add( mainViewSelection, BorderLayout.NORTH);
 
-        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+        temp.setBackground(new Color(0xffCABD80));
+        temp.setOpaque(true);
 
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
         this.add( temp, BorderLayout.SOUTH );
     }
 

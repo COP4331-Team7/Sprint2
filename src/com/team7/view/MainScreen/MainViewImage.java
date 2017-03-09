@@ -318,7 +318,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              */
 
             g2ds.setFont(new Font("Arial", 0, 9));
-            g2ds.setColor( new Color(238, 238, 238, 238) );
+            g2ds.setColor( new Color(0xffF5F5DC) );
             g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
@@ -446,6 +446,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         public void paintComponent( Graphics g )
         {
             super.paintComponent( g );
+            g.setColor(new Color(0xffF5F5DC));
+            g.fillRect(0, 0, this.getWidth(), this.getHeight());
             g.drawImage( image, (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()  * (1-mapScale_x)), 0, this );
         }
 
@@ -552,4 +554,5 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
     public MainViewMiniMap getMiniMap() {
             return  mainViewSelection;
     }
+
 }

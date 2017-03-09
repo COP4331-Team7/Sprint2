@@ -20,6 +20,8 @@ public class HomeScreen extends JPanel {
 
         this.add(homeBackground, BorderLayout.CENTER);
         this.add(homeButtons, BorderLayout.SOUTH);
+        this.setBackground( new Color(0xffCABD80) );
+        this.setOpaque(true);
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
 
@@ -112,6 +114,8 @@ public class HomeScreen extends JPanel {
             panel.add( quitButton );
 
             this.add( panel, BorderLayout.CENTER );
+            this.setBackground( new Color(0xffCABD80) );
+            this.setOpaque(true);
             this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
         }
 

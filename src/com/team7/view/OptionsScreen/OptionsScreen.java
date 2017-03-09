@@ -1,18 +1,9 @@
 package com.team7.view.OptionsScreen;
 
-import com.team7.view.MainScreen.MainViewImage;
-import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.ScreenSelectButtons;
-import javafx.scene.control.ToggleButton;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -21,33 +12,25 @@ import java.util.Set;
  */
 public class OptionsScreen extends JPanel{
 
-    private JButton resetControlsButton = new JButton("Reset controls to default");
-    private JButton changeControlButton = new JButton("Update selected control");
+    private JButton resetControlsButton = new JButton("Reset controls");
+    private JButton changeControlButton = new JButton("Update selected key");
 
     private JList<String> controlsList = new JList<>();
     private DefaultListModel<String> defaultListModel = new DefaultListModel<>();
     private JScrollPane jScrollPane = new JScrollPane(controlsList);
 
     private JPanel listPanel = new JPanel(new BorderLayout());
-
-
     private JPanel buttonPanel = new JPanel(new BorderLayout());
-
     private JLabel label = new JLabel("Key Bindings:");
-
     private ScreenSelectButtons screenSelectBtns = null;
-
-    public JSlider getS1() {
-        return s1;
-    }
 
     private JSlider s1 = null;
     private JSlider s2 = null;
     private JSlider s3 = null;
-    JToggleButton showResourceButton = null;
-    JToggleButton showUnitsButton = null;
-    JButton homeButton;
-    JPanel btnpanel;
+    private JToggleButton showResourceButton = null;
+    private JToggleButton showUnitsButton = null;
+    private JButton homeButton;
+    private JPanel bPanel;
 
     public OptionsScreen() {
         resetControlsButton.setForeground( new Color(0xCD3700));
@@ -56,26 +39,24 @@ public class OptionsScreen extends JPanel{
         changeControlButton.setForeground( new Color(0xff000000));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
 
-        label.setForeground( new Color(0xffCABD80));
-        label.setFont(new Font("Serif", Font.BOLD, 35));
+        label.setForeground( new Color(0xff000000));
+        label.setBackground( new Color(0xffF5F5DC) );
+        label.setOpaque(true);
+        label.setFont(new Font("Serif", Font.BOLD, 30));
 
-        homeButton = new JButton("return to Home Screen");
+        homeButton = new JButton("Home");
         homeButton.setForeground( new Color(0xff000000));
         homeButton.setFont(new Font("Comic Sans", Font.BOLD, 27));
 
-        btnpanel = new JPanel(new BorderLayout() );
+        bPanel = new JPanel(new BorderLayout() );
         screenSelectBtns = new ScreenSelectButtons();
 
         controlsList.setModel(defaultListModel);
         listPanel.add(jScrollPane);
-
         buttonPanel.add(resetControlsButton, BorderLayout.EAST);
-
         showScreenSelectBtns();
-
-        btnpanel.add(label, BorderLayout.SOUTH);
-
-        listPanel.add(btnpanel, BorderLayout.NORTH);
+        bPanel.add(label, BorderLayout.SOUTH);
+        listPanel.add(bPanel, BorderLayout.NORTH);
 
         JPanel sliderHolder = new JPanel(new GridLayout(0,1));
         JPanel p1 = new JPanel();
@@ -109,19 +90,20 @@ public class OptionsScreen extends JPanel{
         s3.setSnapToTicks(true);
         s3.setMajorTickSpacing(5);
         s3.setPreferredSize(new Dimension(440, 50));
-        JPanel temp1 = new JPanel();
         p3.add(l3, BorderLayout.WEST);
         p3.add(s3, BorderLayout.EAST);
         JPanel temp2 = new JPanel();
         temp2.add(changeControlButton, BorderLayout.EAST);
         temp2.add(resetControlsButton, BorderLayout.WEST);
-        p1.setBackground( new Color(0xffCABD80) );
+        temp2.setBackground( new Color(0xffCABD80) );
+        temp2.setOpaque(true);
+        p1.setBackground( new Color(0xffF5F5DC) );
         p1.setOpaque(true);
 
-        p2.setBackground( new Color(0xffCABD80) );
+        p2.setBackground( new Color(0xffF5F5DC) );
         p2.setOpaque(true);
 
-        p3.setBackground( new Color(0xffCABD80) );
+        p3.setBackground( new Color(0xffF5F5DC) );
         p3.setOpaque(true);
 
         showResourceButton = new JToggleButton("Resource display [OFF]");
@@ -134,10 +116,13 @@ public class OptionsScreen extends JPanel{
 
         JPanel btns = new JPanel( new GridLayout(0, 3) );
         btns.add(changeControlButton, BorderLayout.WEST);
-        changeControlButton.setForeground( new Color(0xffCABD80) );
+        changeControlButton.setForeground( new Color(0xff000000) );
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 20));
         btns.add( showUnitsButton );
         btns.add( showResourceButton );
+        btns.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+        btns.setBackground(new Color(0xffCABD80));
+        btns.setOpaque(true);
 
         sliderHolder.add( btns );
         sliderHolder.add(p1);
@@ -223,15 +208,18 @@ public class OptionsScreen extends JPanel{
     }
 
     public void showHomeScreenOnly() {
-        btnpanel.remove(screenSelectBtns);
-        btnpanel.add(homeButton);
+        bPanel.remove(screenSelectBtns);
+        bPanel.add(homeButton);
         repaint();
     }
     public void showScreenSelectBtns() {
-        btnpanel.remove(homeButton);
-        btnpanel.add(screenSelectBtns);
+        bPanel.remove(homeButton);
+        bPanel.add(screenSelectBtns);
         repaint();
     }
 
+    public JSlider getS1() {
+        return s1;
+    }
 
 }
