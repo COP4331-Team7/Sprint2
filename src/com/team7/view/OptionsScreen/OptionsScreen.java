@@ -60,7 +60,7 @@ public class OptionsScreen extends JPanel{
 
     public OptionsScreen() {
 
-        resetControlsButton.setForeground( new Color(0xFFFF0000));
+        resetControlsButton.setForeground( new Color(0xCD3700));
         resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
 //        resetControlsButton.setBackground( new Color(0xff000000) );
 //        resetControlsButton.setOpaque(true);
@@ -148,7 +148,7 @@ public class OptionsScreen extends JPanel{
         p3.setOpaque(true);
 
         showResourceButton = new JToggleButton("Resource display [OFF]");
-        showResourceButton.setForeground( Color.red );
+        showResourceButton.setForeground( new Color(0xCD3700) );
         showResourceButton.setFont(new Font("Serif", Font.BOLD, 20));
 
         showUnitsButton = new JToggleButton("Unit display [ON]");
