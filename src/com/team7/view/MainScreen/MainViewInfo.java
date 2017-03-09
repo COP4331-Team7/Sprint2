@@ -203,6 +203,8 @@ public class MainViewInfo extends JPanel {
     }
 
       public  void updateStats( Unit unit ) {
+        if(unit == null)
+            return;
         UnitStats stats = unit.getUnitStats();
         setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
@@ -227,18 +229,6 @@ public class MainViewInfo extends JPanel {
 //            clearStats();
 //        else
 //            updateStats( structure );
-//    }
-
-//    public  void updateStats( Unit unit ) {
-//        UnitStats stats = unit.getUnitStats();
-//        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
-//        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
-//        setArmorLabel( Integer.toString( stats.getArmor() ) );
-//        setHealthLabel( Integer.toString( stats.getHealth() ) );
-//        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
-//        setProductionLabel( "N/A" );
-//        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
-//        // setItemLabel( );
 //    }
 
 //    public void updateStats(Player player) {

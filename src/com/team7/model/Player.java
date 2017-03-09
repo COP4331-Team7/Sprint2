@@ -356,6 +356,77 @@ public class Player {
 
     }
 
+    public int getNumExplorers() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Explorer)
+                n++;
+
+        return n;
+    }
+
+    public int getNumColonist() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Colonist)
+                n++;
+
+        return n;
+    }
+
+    public int getNumMelee() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof MeleeUnit)
+                n++;
+
+        return n;
+    }
+
+    public int getNumRanged() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof RangedUnit)
+                n++;
+
+        return n;
+    }
+
+    public Unit getExplorer(int id) {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Explorer && units.get(0).getId() == id)
+                return units.get( i );
+
+        return null;
+    }
+
+    public Unit getMelee(int id) {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof MeleeUnit && units.get(0).getId() == id)
+                return units.get( i );
+
+        return null;
+    }
+
+    public Unit getRanged(int id) {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof RangedUnit && units.get(0).getId() == id)
+                return units.get( i );
+
+        return null;
+    }
+
+    public Unit getColonist(int id) {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Colonist && units.get(0).getId() == id)
+                return units.get( i );
+
+        return null;
+    }
 
     public ArrayList<ObservationTower> getObservationTowers() {
         return observationTowers;

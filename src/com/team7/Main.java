@@ -28,8 +28,7 @@ public class Main {
         UnitOverviewController uoc = new UnitOverviewController(game, view);
         MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
-        CommandSelectController csc = new CommandSelectController(game.getMap(), view);
-        csc.getRadius( player1.getUnits().get(0).getLocation(),2 );
+        CommandSelectController csc = new CommandSelectController(game, view);
 
         OptionsController optionsController = new OptionsController( view,game );
 

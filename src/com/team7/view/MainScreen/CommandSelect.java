@@ -1,5 +1,6 @@
 package com.team7.view.MainScreen;
 
+import com.team7.controller.CommandSelectController;
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.unit.Unit;
@@ -15,13 +16,12 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private JButton executeCommandButton = null;
     private JButton endTurnButton = null;
+    private CommandSelectController controller =null;
 
     JLabel modeLabel;
     JLabel typeLabel;
     JLabel typeInstanceLabel;
     JLabel commandLabel;
-
-    boolean isTrackingPath = false;
 
     private final static String[] armyCommands = {          "attack",
             "defend",
@@ -159,9 +159,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         if(currTypeInstance == -1) {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): ");
-           // statusInfo.clearStats();
+        }
+        else {
+            typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " + currTypeInstance);
+            controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
+
+        // statusInfo.clearStats();
     }
 
     public void keyTyped(KeyEvent e)    {}
@@ -231,14 +236,12 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             if( getNumInstances( currMode, currType ) != 0)
                 currTypeInstance = ++currTypeInstance % getNumInstances( currMode, currType );
 
-            isTrackingPath = false;
         }
         else if(e.getKeyCode() == LEFT_KEY_CODE) {
 
             if (currTypeInstance > 0) currTypeInstance--;
             else currTypeInstance = getNumInstances( currMode, currType ) - 1;
 
-            isTrackingPath = false;
         }
 
         updateCommand();
@@ -268,7 +271,20 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private int getNumInstances(int currMode, int currType) {      // get # instances of a given type
 
-        return 0;
+        if(currMode == 2 && currType == 0) {        // EXPLORER
+                return controller.getNumExplorers();
+        }
+        else if(currMode == 2 && currType == 1) {        // COLONIST
+                 return controller.getNumColonist();
+        }
+        else if(currMode == 2 && currType == 2) {        // RANGED UNIT
+                 return controller.getNumRanged();
+        }
+        else if(currMode == 2 && currType == 3) {        // MELEE UNIT
+                 return controller.getNumMelee();
+        }
+        else
+              return 0;
     }
 
     public void clearCommand() {
@@ -276,66 +292,23 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         currType = -1;
         currTypeInstance = -1;
         currCommand = -1;
-        isTrackingPath = false;
         updateCommand();
     }
+
+
+
 
 //    public void setCurrentPlayer( Player player ) {
 //        this.currentPlayer = player;
 //    }
 
+    public void setController(CommandSelectController controller) {
+        this.controller = controller;
+    }
     public JButton getEndTurnButton() {
         return endTurnButton;
     }
     public JButton getExecuteCommandButton() {
         return executeCommandButton;
     }
-
-    public Unit getCurrSelectedUnit() {
-
-//        Unit selection = null;
-//
-//        if(currMode == 2 && currType == 0) { // get list of player's Explorer instances
-//            ArrayList<Unit> units =  currentPlayer.getUnits();
-//            ArrayList<Explorer> explorers = new ArrayList<Explorer>();
-//            if( !units.isEmpty() ) {    // if there are units on this tile
-//                for(int n = 0; n < units.size(); n++) {
-//                    if( units.get(n) instanceof Explorer) {
-//                        explorers.add((Explorer) units.get(n));
-//                    }
-//                }
-//                selection = explorers.get( currTypeInstance );
-//            }
-//        }
-//        else if(currMode == 2 && currType == 1) { // get list of player's Colonist instances
-//            ArrayList<Unit> units = currentPlayer.getUnits();
-//            ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-//            if( !units.isEmpty() ) {    // if there are units on this tile
-//                for(int n = 0; n < units.size(); n++) {
-//                    if( units.get(n) instanceof Colonist) {
-//                        colonists.add((Colonist) units.get(n));
-//                    }
-//                }
-//                selection = colonists.get( currTypeInstance );
-//            }
-//        }
-
-        return null;
-    }
-
-    public Army getCurrSelectedArmy() {
-
-//        System.out.println("instance = " + currTypeInstance) ;
-//
-//        ArrayList<Army> armies = (ArrayList<Army>) currentPlayer.getArmies();
-//        if(armies.size() == 0) {
-//            return null;
-//        }
-//        Army selection =  armies.get(currTypeInstance);
-
-        return null;
-    }
-
-
-
 }
