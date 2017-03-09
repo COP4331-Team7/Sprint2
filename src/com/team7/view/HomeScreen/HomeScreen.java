@@ -63,6 +63,20 @@ public class HomeScreen extends JPanel {
             // scale image to fill screen
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), 0, 0, image.getWidth(),
                     image.getHeight(), null);
+
+            g.setFont(new Font("phosphate",Font.BOLD, 28));
+            g.setColor(new Color(0xffF5F5DC));
+            g.drawString("              space wars", 50, 50);
+            g.drawString("iteration 2: MAR - 15 - 2017", 50, 80);
+            g.drawString("               cop 4331", 50, 110);
+
+            g.setFont(new Font("phosphate",Font.BOLD, 26));
+            g.drawString("team7:   adam coverstone,", 50, 170);
+            g.drawString("               doug hewitt,", 70, 200);
+            g.drawString("               anip mehta,", 70, 230);
+            g.drawString("               or os,", 70, 260);
+            g.drawString("               thomas palmer,", 70, 290);
+            g.drawString("               jamie rodriguez", 70, 320);
         }
 
         public JButton getQuitButton() {
@@ -92,17 +106,17 @@ public class HomeScreen extends JPanel {
             quitButton = new JButton("QUIT");
             quitButton.setPreferredSize(new Dimension(300, 40));
 
-            options.setFont(new Font("Serif", Font.BOLD, 20));
+            options.setFont(new Font("plain", Font.BOLD, 20));
             options.setBackground( new Color(0xffCABD80) );
             options.setForeground(Color.black);
             options.setOpaque(true);
 
-            playButton.setFont(new Font("Serif", Font.BOLD, 20));
+            playButton.setFont(new Font("plain", Font.BOLD, 20));
             playButton.setBackground( new Color(0xffCABD80) );
             playButton.setForeground(Color.black);
             playButton.setOpaque(true);
 
-            quitButton.setFont(new Font("Serif", Font.BOLD, 20));
+            quitButton.setFont(new Font("plain", Font.BOLD, 20));
             quitButton.setBackground( new Color(0xffCABD80) );
             quitButton.setForeground(Color.black);
             quitButton.setOpaque(true);

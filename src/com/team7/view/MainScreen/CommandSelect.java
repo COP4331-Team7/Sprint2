@@ -101,13 +101,13 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         commandSelectPanel.add(commandLabel);
 
         executeCommandButton = new JButton("ISSUE COMMAND");
-        executeCommandButton.setFont(new Font("Serif", Font.BOLD, 15));
+        executeCommandButton.setFont(new Font("plain", Font.BOLD, 15));
         executeCommandButton.setForeground(Color.black);
         executeCommandButton.setBackground( new Color(0xffF5F5DC) );
         executeCommandButton.setOpaque(true);
 
         endTurnButton = new JButton("END TURN");
-        endTurnButton.setFont(new Font("Serif", Font.BOLD, 15));
+        endTurnButton.setFont(new Font("plain", Font.BOLD, 15));
         endTurnButton.setBackground( new Color(0xffF5F5DC) );
         endTurnButton.setForeground(Color.black);
         endTurnButton.setOpaque(true);

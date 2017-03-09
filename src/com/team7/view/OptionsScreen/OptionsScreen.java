@@ -35,15 +35,16 @@ public class OptionsScreen extends JPanel{
     public OptionsScreen() {
       //  resetControlsButton.setForeground( new Color(0xCD3700));
         resetControlsButton.setForeground( new Color(0xff000000));
-        resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
+        resetControlsButton.setFont(new Font("plain", Font.BOLD, 30));
+
 
         changeControlButton.setForeground( new Color(0xff000000));
-        changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
+        changeControlButton.setFont(new Font("plain", Font.BOLD, 30));
 
         label.setForeground( new Color(0xff000000));
         label.setBackground( new Color(0xffF5F5DC) );
         label.setOpaque(true);
-        label.setFont(new Font("Serif", Font.BOLD, 30));
+        label.setFont(new Font("plain", Font.BOLD, 30));
 
         homeButton = new JButton("Home");
         homeButton.setForeground( new Color(0xff000000));
@@ -63,10 +64,10 @@ public class OptionsScreen extends JPanel{
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
         JPanel p3 = new JPanel();
-        JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
+        JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED   ");
         p1.add(l2, BorderLayout.EAST);
         s1 = new JSlider(0, 20, 10);
-        l2.setFont( new Font(  "Serif", Font.BOLD, 18));
+        l2.setFont( new Font(  "plain", Font.BOLD, 18));
         s1.setMinorTickSpacing(1);
         s1.setPaintTicks(true);
         s1.setSnapToTicks(true);
@@ -74,7 +75,7 @@ public class OptionsScreen extends JPanel{
         s1.setPreferredSize(new Dimension(440, 50));
         p1.add(s1, BorderLayout.WEST);
         JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
-        l1.setFont( new Font(  "Serif", Font.BOLD, 18));
+        l1.setFont( new Font(  "plain", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
         s2 = new JSlider(0, 20, 10);
         s2.setMinorTickSpacing(1);
@@ -84,7 +85,7 @@ public class OptionsScreen extends JPanel{
         s2.setPreferredSize(new Dimension(440, 50));
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
-        l3.setFont( new Font(  "Serif", Font.BOLD, 18));
+        l3.setFont( new Font(  "plain", Font.BOLD, 18));
         s3 = new JSlider(0, 20, 15);
         s3.setMinorTickSpacing(1);
         s3.setPaintTicks(true);
@@ -109,16 +110,16 @@ public class OptionsScreen extends JPanel{
 
         showResourceButton = new JToggleButton("Resource display [OFF]");
         showResourceButton.setForeground( new Color(0xCD3700) );
-        showResourceButton.setFont(new Font("Serif", Font.BOLD, 20));
+        showResourceButton.setFont(new Font("plain", Font.BOLD, 20));
 
         showUnitsButton = new JToggleButton("Unit display [ON]");
         showUnitsButton.setForeground( new Color(0, 175, 0, 255) );
-        showUnitsButton.setFont(new Font("Serif", Font.BOLD, 20));
+        showUnitsButton.setFont(new Font("plain", Font.BOLD, 20));
 
         JPanel btns = new JPanel( new GridLayout(0, 3) );
         btns.add(changeControlButton, BorderLayout.WEST);
         changeControlButton.setForeground( new Color(0xff000000) );
-        changeControlButton.setFont(new Font("Serif", Font.BOLD, 20));
+        changeControlButton.setFont(new Font("plain", Font.BOLD, 20));
         btns.add( showUnitsButton );
         btns.add( showResourceButton );
         btns.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
@@ -137,7 +138,7 @@ public class OptionsScreen extends JPanel{
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.repaint();
-        controlsList.setFont(new Font("Serif", Font.BOLD, 45));
+        controlsList.setFont(new Font("plain", Font.BOLD, 45));
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
 
