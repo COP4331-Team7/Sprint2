@@ -1,12 +1,10 @@
 package com.team7.model;
 
-import com.team7.ProbabilityGenerator;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
-import java.awt.*;
 import java.util.*;
 
 import static java.lang.StrictMath.abs;

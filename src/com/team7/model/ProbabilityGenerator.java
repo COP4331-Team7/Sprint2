@@ -1,4 +1,4 @@
-package com.team7;
+package com.team7.model;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

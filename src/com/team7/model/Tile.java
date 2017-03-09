@@ -1,6 +1,5 @@
 package com.team7.model;
 
-import com.team7.ProbabilityGenerator;
 import com.team7.model.areaEffects.AreaEffect;
 import com.team7.model.decal.Decal;
 import com.team7.model.entity.Army;
@@ -16,7 +15,6 @@ import com.team7.model.resource.Ore;
 import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 

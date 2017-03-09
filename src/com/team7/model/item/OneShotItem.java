@@ -1,6 +1,6 @@
 package com.team7.model.item;
 
-import com.team7.ProbabilityGenerator;
+import com.team7.model.ProbabilityGenerator;
 
 /**
  * Activated and removed from map when touched

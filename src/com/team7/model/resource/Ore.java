@@ -1,6 +1,6 @@
 package com.team7.model.resource;
 
-import com.team7.ProbabilityGenerator;
+import com.team7.model.ProbabilityGenerator;
 
 /**
  * Ore adds to a Player's Metal stat

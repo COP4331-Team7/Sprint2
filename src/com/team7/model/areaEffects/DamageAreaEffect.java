@@ -1,6 +1,6 @@
 package com.team7.model.areaEffects;
 
-import com.team7.ProbabilityGenerator;
+import com.team7.model.ProbabilityGenerator;
 
 /**
  * Damages randomly
