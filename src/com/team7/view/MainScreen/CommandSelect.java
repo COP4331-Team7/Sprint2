@@ -51,7 +51,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private final static String[] structureTypes = { "BASE" };
 
-    private final static String[] unitTypes = { "EXPLORER", "COLONIST", "RANGED UNIT", "MELEE UNIT" };
+    private final static String[] unitTypes = { "EXPLORER", "COLONIST", "RANGED_UNIT", "MELEE_UNIT" };
 
 
     private final static String[] modes = {  "RALLY POINT",
@@ -173,21 +173,22 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void keyReleased(KeyEvent e) {}
     public void keyPressed(KeyEvent e)  {
 
-        if( e.getKeyChar() == 'f') {        // TODO: change current selection's location
+        if( e.getKeyChar() == 'f') {
             // focus
             controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
         }
 
-        if( e.getKeyChar() == '0') {        // TODO: change current selection's location
-            pathSelectController.startRecordingPath( pathSelectController.getPlayer().getUnits().get(0).getLocation()  );
+        if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
+            System.out.println("Record");       // TODO: bug
+            pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation()  );
             isRecordingPath = true;
         }
-        else if( e.getKeyChar() == '5') {        // TODO: change current selection's location
-            pathSelectController.drawPath( pathSelectController.getPlayer().getUnits().get(0) );
+        else if( e.getKeyChar() == '5') {
+            pathSelectController.drawPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
 
-        if( isRecordingPath ) {
+        if( isRecordingPath ) { // if recording path, pass key to controller to update path
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }
 
@@ -290,6 +291,40 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
         else
               return 0;
+    }
+
+    public String getCommand() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(((currMode != -1)?modes[currMode]:"") ); //up / down arrow
+        sb.append(" " );
+        // type based off of mode
+        if(currMode == 1)
+            sb.append(((currType != -1)?structureTypes[currType]:"")); //left / right arrow
+        else if (currMode == 2)
+            sb.append(((currType != -1)?unitTypes[currType]:"")); //left / right arrow
+        else if (currMode == 3)
+            sb.append(((currType != -1)?armySubTypes[currType]:"")); //left / right arrow
+        sb.append(" " ); //left / right arrow
+
+        if(currTypeInstance == -1) {
+            sb.append(" ");
+        }
+        else {
+            sb.append( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() + " " );
+            controller.updateStatusView( currMode, currType, currTypeInstance  );
+        }
+
+        if(currMode == 1)
+            sb.append(((currCommand != -1)?structureCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2)
+            sb.append(((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 3)
+            sb.append(((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 0 && currTypeInstance != -1)
+            sb.append("move");
+        sb.append(" ");
+
+        return sb.toString();
     }
 
     public void clearCommand() {

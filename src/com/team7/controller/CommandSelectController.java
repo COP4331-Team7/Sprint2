@@ -37,7 +37,7 @@ public class CommandSelectController {
 
     public Unit getCurrentSelection(int currMode, int currType, int id) {
 
-        game.getCurrentPlayer().printUnitIds();
+      //  game.getCurrentPlayer().printUnitIds();
 
         Unit currSelection = null;
 
@@ -55,7 +55,6 @@ public class CommandSelectController {
         }
 
         return currSelection;
-
     }
 
     public void updateStatusView(int currMode, int currType, int id) {
@@ -68,6 +67,5 @@ public class CommandSelectController {
             return;
         view.getMainViewImage().zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
     }
-
 
 }

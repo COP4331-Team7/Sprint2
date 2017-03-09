@@ -3,6 +3,8 @@ package com.team7.model;
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
@@ -29,19 +31,33 @@ public class Game {
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
+
         //TODO check if this violates TDA
-        players[0].addUnit(new Explorer(this.map.getGrid()[4][7], players[0]));
-        players[0].addUnit(new Explorer(this.map.getGrid()[5][19], players[0]));
-        players[0].addUnit(new Colonist(this.map.getGrid()[1][14], players[0]));
+        allocateUnitToPlayer( players[0], new Explorer(this.map.getGrid()[4][7], players[0]) );
+        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][19], players[0]) );
+        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
+        allocateUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
+        allocateUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
+
+
+        allocateUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-8][40-5],  players[1]) );
+        allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
+        allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
+        allocateUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
+        allocateUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
+
 
         // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
         //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[40-8][40-5], players[1]));
-        players[1].addUnit(new Explorer(this.map.getGrid()[40-7][40-25], players[1]));
-        players[1].addUnit(new Colonist(this.map.getGrid()[40-5][40-15], players[1]));
+
 
 
         updateTileGameState();
+    }
+
+    // create a unit, add to player, place on map at [x][y]
+    public void allocateUnitToPlayer(Player player, Unit unit) {
+        player.addUnit(unit);
     }
 
 

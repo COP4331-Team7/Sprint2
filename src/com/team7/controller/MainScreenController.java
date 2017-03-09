@@ -37,15 +37,6 @@ public class MainScreenController {
     // ===============================================
 
 
-    // update status info when turn changes
-    public void updatePlayerStatusInfo() {
-        Player currPlayer = game.getCurrentPlayer();
-        mainViewInfo.setLifeLabel( Integer.toString( currPlayer.getNutrients() ) );
-        mainViewInfo.setResearchLabel( Integer.toString( currPlayer.getResearch() ) );
-        mainViewInfo.setConstructionLabel( Integer.toString( currPlayer.getMetal() ) );
-        mainViewInfo.setPowerLabel( Integer.toString( currPlayer.getPower() ) );
-    }
-
     // add action listeners to Main Screen buttons
     public void addActionListeners() {
 
@@ -67,17 +58,13 @@ public class MainScreenController {
 
                     PathSelectController.isRecording = false;
                     game.nextTurn();
-                    updatePlayerStatusInfo();
-                    mainViewImage.setCurrPlayer(game.getCurrentPlayer());
-                    mainViewInfo.setTitle2(game.getCurrentPlayer().getName());
+
+                    endTurnViewRefresh();
 
                     // TODO: fix
                     mainViewImage.zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
 
-                    miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
-                    mainScreen.getCommandSelect().setFocusable(true);
-                    mainScreen.getCommandSelect().requestFocus();
-
+                    giveCommandViewFocus();
                 }
             }
         });
@@ -99,12 +86,39 @@ public class MainScreenController {
         mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getExecuteCommandButton())
-                    System.out.println("do command");
+
+                    System.out.println( mainScreen.getCommandSelect().getCommand() );   // print command
+                    clearCommandView();
+                    giveCommandViewFocus();
             }
         });
 
+    }
 
+    // update status info view when turn changes
+    public void updatePlayerStatusInfo() {
+        Player currPlayer = game.getCurrentPlayer();
+        mainViewInfo.setLifeLabel( Integer.toString( currPlayer.getNutrients() ) );
+        mainViewInfo.setResearchLabel( Integer.toString( currPlayer.getResearch() ) );
+        mainViewInfo.setConstructionLabel( Integer.toString( currPlayer.getMetal() ) );
+        mainViewInfo.setPowerLabel( Integer.toString( currPlayer.getPower() ) );
+    }
 
+    public void endTurnViewRefresh() {
+        updatePlayerStatusInfo();
+        clearCommandView();
+        mainViewImage.setCurrPlayer(game.getCurrentPlayer());
+        mainViewInfo.setTitle2(game.getCurrentPlayer().getName());
+        miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
+    }
+
+    public void clearCommandView() {
+        mainScreen.getCommandSelect().clearCommand();   // clear command view
+    }
+
+    public void giveCommandViewFocus() {
+        mainScreen.getCommandSelect().setFocusable(true);
+        mainScreen.getCommandSelect().requestFocus();
     }
 
 

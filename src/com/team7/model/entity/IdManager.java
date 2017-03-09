@@ -22,6 +22,13 @@ public class IdManager {
     static ArrayList<Integer> availableExplorerIds_p1 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
     static ArrayList<Integer> availableExplorerIds_p2 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
 
+    static ArrayList<Integer> availableMeleeIds_p1 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+    static ArrayList<Integer> availableMeleeIds_p2 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+
+    static ArrayList<Integer> availableRangeIds_p1 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+    static ArrayList<Integer> availableRangeIds_p2 = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+
+
     public IdManager(Player p) {
         this.player = p;
     }
@@ -58,17 +65,23 @@ public class IdManager {
                         }
             }
             else if(entity instanceof MeleeUnit) {
-                for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof MeleeUnit){
-                        availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                    }
+                if(player.getName().contains("One")){
+                    ID = availableMeleeIds_p1.get(0);
+                    availableMeleeIds_p1.remove( 0 );
+                }
+                else {
+                    ID = availableMeleeIds_p2.get(0);
+                    availableMeleeIds_p2.remove( 0 );
                 }
             }
             else if(entity instanceof RangedUnit) {
-                for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof RangedUnit){
-                        availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                    }
+                if(player.getName().contains("One")){
+                    ID = availableRangeIds_p1.get(0);
+                    availableRangeIds_p1.remove( 0 );
+                }
+                else {
+                    ID = availableRangeIds_p2.get(0);
+                    availableRangeIds_p2.remove( 0 );
                 }
             }
 

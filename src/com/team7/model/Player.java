@@ -425,7 +425,6 @@ public class Player {
             if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
 
-        System.out.println("NO!");
         return null;
     }
 
