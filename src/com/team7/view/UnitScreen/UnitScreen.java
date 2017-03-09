@@ -13,6 +13,10 @@ public class UnitScreen extends JPanel {
 
         screenSelectBtns = new ScreenSelectButtons();
         this.add(screenSelectBtns, BorderLayout.NORTH);
+
+
+
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
 
 

@@ -196,9 +196,7 @@ public class MainViewInfo extends JPanel {
 
             this.add( t, BorderLayout.SOUTH );
 
-            this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 2));
-
-
+            this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
             repaint();
         }
 

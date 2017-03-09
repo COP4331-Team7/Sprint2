@@ -176,6 +176,8 @@ public class OptionsScreen extends JPanel{
 
         this.repaint();
         controlsList.setFont(new Font("Serif", Font.BOLD, 45));
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+
     }
 
     //adds text to the defaultListModel
