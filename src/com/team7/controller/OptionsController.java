@@ -30,7 +30,6 @@ public class OptionsController{
         this.optionsScreen = view.getOptionScreen();
         reader = new ConfigReader();
         addActionListeners();
-
         reloadControls(game.getCurrentPlayer().getName());
     }
 
@@ -74,9 +73,6 @@ public class OptionsController{
             }
         });
 
-
-
-
        optionsScreen.getMainScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getMainScreenButton() )
@@ -102,7 +98,6 @@ public class OptionsController{
                 view.getMainViewImage().setScrollSpeed( optionsScreen.getScrollSpeed() );
             }
         });
-
 
         ItemListener itemListener = new ItemListener() {
             public void itemStateChanged(ItemEvent itemEvent) {
@@ -138,7 +133,6 @@ public class OptionsController{
             }
         };
         optionsScreen.getShowUnitsButton().addItemListener(itemListener2);
-
 
         optionsScreen.getHomeScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

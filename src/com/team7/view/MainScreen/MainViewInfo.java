@@ -22,24 +22,10 @@ public class MainViewInfo extends JPanel {
     private JLabel upkeepLabel;
     private JLabel productionLabel;
     private JLabel itemLabel;
-    private JLabel typeLabel;
     private JLabel lifeLabel;
     private JLabel researchLabel;
     private JLabel constructionLabel;
     private JLabel powerLabel;
-
-    private JLabel offensiveDamageLabel_bar;
-    private JLabel defensiveDamageLabel_bar;
-    private JLabel armorLabel_bar;
-    private JLabel healthLabel_bar;
-    private JLabel upkeepLabel_bar;
-    private JLabel productionLabel_bar;
-    private JLabel itemLabel_bar;
-    private JLabel typeLabel_bar;
-    private JLabel lifeLabel_bar;
-    private JLabel researchLabel_bar;
-    private JLabel constructionLabel_bar;
-    private JLabel powerLabel_bar;
 
     public void setTitle2(String s) {
         title2.setText("Player " + s + ":");
@@ -62,68 +48,49 @@ public class MainViewInfo extends JPanel {
             t.add(new JLabel());
 
             offensiveDamageLabel = new JLabel("Offensive damage: ");
-            offensiveDamageLabel_bar = new JLabel("     ");
             offensiveDamageLabel.setForeground(new Color(0xAACAECCF));
             offensiveDamageLabel.setBackground( new Color(0xffCABD80) );
             offensiveDamageLabel.setOpaque(true);
-
             offensiveDamageLabel.setFont(new Font("Serif", Font.BOLD, 18));
-
             t.add(offensiveDamageLabel);
-//            t.add(offensiveDamageLabel_bar);
             defensiveDamageLabel = new JLabel("Defensive damage:");
             defensiveDamageLabel.setForeground(new Color(0xAACAECCF));
 
             defensiveDamageLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            defensiveDamageLabel_bar = new JLabel("     ");
             defensiveDamageLabel.setBackground( new Color(0xffCABD80) );
             defensiveDamageLabel.setOpaque(true);
 
-
-
             t.add(defensiveDamageLabel);
-//            t.add(defensiveDamageLabel_bar);
 
             armorLabel = new JLabel("Armor:");
             armorLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            armorLabel_bar = new JLabel("     ");
             armorLabel.setBackground( new Color(0xffCABD80) );
             armorLabel.setOpaque(true);
             armorLabel.setForeground(new Color(0xAACAECCF));
 
-
             t.add(armorLabel);
-//            t.add(armorLabel_bar);
 
             healthLabel = new JLabel("Health:");
             healthLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            healthLabel_bar = new JLabel("     ");
             healthLabel.setBackground( new Color(0xffCABD80) );
             healthLabel.setOpaque(true);
             healthLabel.setForeground(new Color(0xAACAECCF));
 
-
             t.add(healthLabel);
-//            t.add(healthLabel_bar);
 
             upkeepLabel = new JLabel("Upkeep:");
             upkeepLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            upkeepLabel_bar = new JLabel("     ");
             upkeepLabel.setBackground( new Color(0xffCABD80) );
             upkeepLabel.setOpaque(true);
             upkeepLabel.setForeground(new Color(0xAACAECCF));
 
             t.add(upkeepLabel);
-//            t.add(upkeepLabel_bar);
 
             productionLabel = new JLabel("Production rates:");
             t.add(productionLabel);
-            productionLabel_bar = new JLabel("     ");
             productionLabel.setBackground( new Color(0xffCABD80) );
             productionLabel.setOpaque(true);
             productionLabel.setForeground(new Color(0xAACAECCF));
-
-//            t.add(productionLabel_bar);
 
             itemLabel = new JLabel("Items:");
             productionLabel.setFont(new Font("Serif", Font.BOLD, 18));
@@ -138,61 +105,43 @@ public class MainViewInfo extends JPanel {
             temps.setOpaque(true);
             t.add(temps);
 
-           // t.add(new JLabel());    t.add(new JLabel());
-
             title2 = new JLabel("Player Stats: ");
             title2.setFont(new Font("Serif", Font.BOLD, 22));
             title2.setForeground( new Color(0xff644D50) );
             t.add(title2);
             t.add(new JLabel());
 
-
             lifeLabel = new JLabel("Nutrients:");
             lifeLabel.setFont(new Font("Serif", Font.BOLD, 18));
             lifeLabel.setForeground(new Color(0xAACAECCF));
 
-            // lifeLabel.setForeground(Color.blue);
-            lifeLabel_bar = new JLabel("     ");
             lifeLabel.setBackground( new Color(0xffCABD80 ));
             lifeLabel.setOpaque(true);
             t.add(lifeLabel);
-//            t.add(lifeLabel_bar);
 
             researchLabel = new JLabel("Research:");
             researchLabel.setFont(new Font("Serif", Font.BOLD, 18));
             researchLabel.setForeground(new Color(0xAACAECCF));
 
-            researchLabel_bar = new JLabel("     ");
             researchLabel.setBackground( new Color(0xffCABD80) );
             researchLabel.setOpaque(true);
-           // researchLabel.setForeground(Color.blue);
-//            t.add(researchLabel_bar);
 
             constructionLabel = new JLabel("Metal:");
             constructionLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            constructionLabel_bar = new JLabel("     ");
             constructionLabel.setBackground( new Color(0xffCABD80) );
             constructionLabel.setForeground(new Color(0xAACAECCF));
 
             constructionLabel.setOpaque(true);
-            //researchLabel.setForeground(Color.blue);
-          //  constructionLabel.setForeground(Color.blue);
             t.add(constructionLabel);
-//            t.add(constructionLabel_bar);
 
-            //researchLabel.setForeground(Color.blue);
             powerLabel = new JLabel("Power: ");
-            //powerLabel.setForeground(Color.blue);
             powerLabel.setFont(new Font("Serif", Font.BOLD, 18));
-            powerLabel_bar = new JLabel("     ");
             powerLabel.setBackground( new Color(0xffCABD80) );
             powerLabel.setOpaque(true);
             powerLabel.setForeground(new Color(0xAACAECCF));
 
             t.add(powerLabel);
             t.add(researchLabel);
-
-//            t.add(powerLabel_bar);
 
             this.add( t, BorderLayout.SOUTH );
 
@@ -208,7 +157,6 @@ public class MainViewInfo extends JPanel {
         upkeepLabel.setText("Upkeep");
         productionLabel.setText("Production rates:");
         itemLabel.setText("Items");
-        typeLabel.setText("Unit/Structure: ");
     }
 
     public void clearPlayerStats() {
@@ -216,7 +164,6 @@ public class MainViewInfo extends JPanel {
         researchLabel.setText("Research:");
         constructionLabel.setText("Metal:");
         powerLabel.setText("Power:");
-
     }
 
     public void setOffensiveDamageLabel(String s) {

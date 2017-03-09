@@ -10,15 +10,10 @@ public class StructureScreen extends JPanel {
     private ScreenSelectButtons screenSelectBtns = null;
 
     public StructureScreen() {
-
         screenSelectBtns = new ScreenSelectButtons();
         this.add(screenSelectBtns, BorderLayout.NORTH);
-
-
-
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
-
 
     public JButton getMainScreenButton() {
         return screenSelectBtns.getMainScreenButton();

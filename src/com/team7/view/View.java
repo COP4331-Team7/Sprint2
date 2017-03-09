@@ -58,13 +58,11 @@ public class View
     public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
     public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
 
-
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
         frame.getMainScreen().drawMap();
         frame.getMainScreen().setFocusable( true );
         frame.getMainScreen().giveCommandSelectFocus();
-
     }
 
     public void setCurrScreen(String selected_screen) {
@@ -103,7 +101,6 @@ public class View
             structureScreen = new StructureScreen();
 
             setCurrScreen("HOME");
-
             this.setVisible( true );
         }
 
@@ -117,10 +114,10 @@ public class View
             return mainScreen;
         }
         public OptionsScreen getOptionsScreen() { return  optionsScreen; }
-            public UnitScreen getUnitScreen() {
+        public UnitScreen getUnitScreen() {
                     return unitScreen;
             }
-            public StructureScreen getStructureScreen() {
+        public StructureScreen getStructureScreen() {
                     return structureScreen;
             }
 
@@ -159,7 +156,6 @@ public class View
         private void displayOptionScreen() {
             this.getContentPane().add( optionsScreen );
         }
-
         private void displayUnitOverviewScreen() {
             this.getContentPane().add( unitScreen );
         }
@@ -179,15 +175,6 @@ public class View
                 }
             } );
             fileMenu.add( exitItem );
-            JMenuItem drawMapItem = new JMenuItem( "Re-draw map" );
-            drawMapItem.addActionListener( new ActionListener()    // define what happens when this menu item is selected
-            {
-                public void actionPerformed( ActionEvent event )
-                {
-                    mainScreen.drawMap();
-                }
-            } );
-            fileMenu.add( drawMapItem );
             JMenuItem saveItem = new JMenuItem( "Save full size map image" );     // create a new menu item
             saveItem.addActionListener( new ActionListener()
             {
@@ -228,7 +215,6 @@ public class View
             }
         }
     }
-
 
 }
 

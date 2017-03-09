@@ -35,18 +35,10 @@ public class OptionsScreen extends JPanel{
 
     private JLabel label = new JLabel("Key Bindings:");
 
-
     private ScreenSelectButtons screenSelectBtns = null;
 
     public JSlider getS1() {
         return s1;
-    }
-
-    public JSlider getS2() {
-        return s2;
-    }
-    public JSlider getS3() {
-        return s3;
     }
 
     private JSlider s1 = null;
@@ -57,22 +49,15 @@ public class OptionsScreen extends JPanel{
     JButton homeButton;
     JPanel btnpanel;
 
-
     public OptionsScreen() {
-
         resetControlsButton.setForeground( new Color(0xCD3700));
         resetControlsButton.setFont(new Font("Serif", Font.BOLD, 30));
-//        resetControlsButton.setBackground( new Color(0xff000000) );
-//        resetControlsButton.setOpaque(true);
 
         changeControlButton.setForeground( new Color(0xff000000));
         changeControlButton.setFont(new Font("Serif", Font.BOLD, 30));
-//        changeControlButton.setBackground( new Color(0xff000000) );
-//        changeControlButton.setOpaque(true);
 
         label.setForeground( new Color(0xffCABD80));
         label.setFont(new Font("Serif", Font.BOLD, 35));
-
 
         homeButton = new JButton("return to Home Screen");
         homeButton.setForeground( new Color(0xff000000));
@@ -85,8 +70,6 @@ public class OptionsScreen extends JPanel{
         listPanel.add(jScrollPane);
 
         buttonPanel.add(resetControlsButton, BorderLayout.EAST);
-       // buttonPanel.add(changeControlButton, BorderLayout.WEST);
-
 
         showScreenSelectBtns();
 
@@ -101,35 +84,29 @@ public class OptionsScreen extends JPanel{
         JLabel l2 = new JLabel("MAIN SCREEN SCROLL SPEED ");
         p1.add(l2, BorderLayout.EAST);
         s1 = new JSlider(0, 20, 10);
-       // l2.setForeground(new Color(0xFF00AAFF));
         l2.setFont( new Font(  "Serif", Font.BOLD, 18));
         s1.setMinorTickSpacing(1);
         s1.setPaintTicks(true);
-        //s1.setPaintLabels(true);
         s1.setSnapToTicks(true);
         s1.setMajorTickSpacing(5);
         s1.setPreferredSize(new Dimension(440, 50));
         p1.add(s1, BorderLayout.WEST);
         JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
-    //    l1.setForeground(new Color(0xFF00AAFF));
         l1.setFont( new Font(  "Serif", Font.BOLD, 18));
         p2.add(l1, BorderLayout.EAST);
         s2 = new JSlider(0, 20, 10);
         s2.setMinorTickSpacing(1);
         s2.setPaintTicks(true);
         s2.setSnapToTicks(true);
-        //s2.setPaintLabels(true);
         s2.setMajorTickSpacing(5);
         s2.setPreferredSize(new Dimension(440, 50));
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
-      //  l3.setForeground(new Color(0xFF00AAFF));
         l3.setFont( new Font(  "Serif", Font.BOLD, 18));
         s3 = new JSlider(0, 20, 15);
         s3.setMinorTickSpacing(1);
         s3.setPaintTicks(true);
         s3.setSnapToTicks(true);
-        // s3.setPaintLabels(true);
         s3.setMajorTickSpacing(5);
         s3.setPreferredSize(new Dimension(440, 50));
         JPanel temp1 = new JPanel();
@@ -163,7 +140,6 @@ public class OptionsScreen extends JPanel{
         btns.add( showResourceButton );
 
         sliderHolder.add( btns );
-
         sliderHolder.add(p1);
         sliderHolder.add(p2);
         sliderHolder.add(p3);
@@ -182,12 +158,10 @@ public class OptionsScreen extends JPanel{
     //adds text to the defaultListModel
     public void setModel(HashMap<String, String> controls){
         defaultListModel.clear();
-
         Set<String> allKeys = controls.keySet();
         for (String key : allKeys){
             defaultListModel.addElement(key + ": " + controls.get(key) );
         }
-
         this.repaint();
     }
 
@@ -209,7 +183,6 @@ public class OptionsScreen extends JPanel{
         else
             return 15 * Math.abs(s3.getMaximum() - s3.getValue());
     }
-
 
     public JButton getResetControlsButton() {
         return resetControlsButton;
