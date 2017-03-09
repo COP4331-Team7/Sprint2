@@ -389,16 +389,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if(drawUnits) {
                             // explorer
                             if (tileState.getExplorer() > 0)
-                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
                             // colonist
                             if (tileState.getColonist() > 0)
-                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
                             // melee
                             if (tileState.getMeleeUnit() > 0)
                                 g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
                             // ranged
                             if (tileState.getRangeUnit() > 0)
-                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
                         }
                         //draw resource counts
                         if(drawResources) {
