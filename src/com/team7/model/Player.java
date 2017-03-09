@@ -445,6 +445,7 @@ public class Player {
             System.out.println(u.getType() + " : " + u.getId() );
 
         }
+        System.out.println();
 
 
     }

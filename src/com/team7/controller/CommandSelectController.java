@@ -39,14 +39,10 @@ public class CommandSelectController {
 
         game.getCurrentPlayer().printUnitIds();
 
-
-        System.out.println("id going in: " + id);
-
         Unit currSelection = null;
 
         if(currMode == 2 && currType == 0) {        // EXPLORER
             currSelection = game.getCurrentPlayer().getExplorer( id );
-            System.out.println("get exploere");
         }
         else if(currMode == 2 && currType == 1) {        // COLONIST
             currSelection = game.getCurrentPlayer().getColonist( id );

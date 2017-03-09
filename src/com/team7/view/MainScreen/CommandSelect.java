@@ -176,7 +176,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if( e.getKeyChar() == 'f') {        // TODO: change current selection's location
             // focus
             controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
-            System.out.print("zoom to unit");
         }
 
         if( e.getKeyChar() == '0') {        // TODO: change current selection's location
