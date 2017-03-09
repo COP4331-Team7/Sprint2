@@ -1,6 +1,6 @@
 package com.team7.controller;
 
-import com.team7.ConfigurableControls.ConfigReader;
+import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;

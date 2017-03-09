@@ -1,4 +1,4 @@
-package com.team7.ConfigurableControls;
+package com.team7.view.OptionsScreen.ConfigurableControls;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,12 +13,12 @@ import java.util.Properties;
 */
 public class ConfigReader {
 
-  private final String playerOneFile = "src/com/team7/ConfigurableControls/configPlayerOne.properties";
-  private final String playerTwoFile = "src/com/team7/ConfigurableControls/configPlayerTwo.properties";
+  private final String playerOneFile = "src/com/team7/view/OptionsScreen/ConfigurableControls/configPlayerOne.properties";
+  private final String playerTwoFile = "src/com/team7/view/OptionsScreen/ConfigurableControls/configPlayerTwo.properties";
 
   private String currentFile;
 
-  private final String defaultFileName = "src/com/team7/ConfigurableControls/defaultConfig.properties"; //location of prop file with all default values
+  private final String defaultFileName = "src/com/team7/view/OptionsScreen/ConfigurableControls/defaultConfig.properties"; //location of prop file with all default values
 
  // public static void main(String[] args) {
  //   ConfigReader reader = new ConfigReader();

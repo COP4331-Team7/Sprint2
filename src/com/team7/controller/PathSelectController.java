@@ -1,7 +1,7 @@
 package com.team7.controller;
 
 
-import com.team7.ConfigurableControls.ConfigReader;
+import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
 import com.team7.model.Player;
 import com.team7.model.Tile;
