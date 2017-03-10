@@ -21,6 +21,7 @@ public class MainViewInfo extends JPanel {
     private JLabel powerLabel;
     private JLabel playerNameLabel;
     private JPanel jPanel;
+    private JLabel currSelectionName;
 
 
     public MainViewInfo()
@@ -28,11 +29,13 @@ public class MainViewInfo extends JPanel {
             jPanel = new JPanel();
             jPanel.setLayout(new GridLayout(0,2));
 
-            JLabel title = new JLabel("Unit Stats: ");
-            title.setFont(new Font("Serif", Font.BOLD, 22));
-            title.setForeground( new Color(0xff000000) );
-            title.setBackground(new Color(0xffF5F5DC));
-            title.setOpaque(true);
+            currSelectionName = new JLabel(" ");
+            currSelectionName.setFont(new Font("Serif", Font.BOLD, 22));
+            currSelectionName.setForeground( new Color(0xff000000) );
+            currSelectionName.setBackground(new Color(0xffF5F5DC));
+            currSelectionName.setOpaque(true);
+
+
 
             offensiveDamageLabel = new JLabel("Offense: ");
             offensiveDamageLabel.setForeground(new Color(0xff644D50));
@@ -111,7 +114,7 @@ public class MainViewInfo extends JPanel {
             powerLabel.setForeground(new Color(0xff644D50));
 
 
-            jPanel.add(title);
+            jPanel.add( currSelectionName );
             JLabel j = new JLabel();
             j.setBackground(   new Color(0xffF5F5DC) );
             j.setOpaque(true);
@@ -154,6 +157,7 @@ public class MainViewInfo extends JPanel {
         upkeepLabel.setText("Upkeep:");
         productionLabel.setText("Production rate:");
         itemLabel.setText("Items:");
+        currSelectionName.setText(" no selection ");
     }
 
     public void clearPlayerStats() {
@@ -198,8 +202,12 @@ public class MainViewInfo extends JPanel {
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
     }
+    public void setCurrSelectionName(String s) {
+        currSelectionName.setText(s);
+    }
 
-      public  void updateStats( Unit unit ) {
+
+    public  void updateStats( Unit unit ) {
         if(unit == null) {
             clearStats();
             return;
@@ -209,10 +217,11 @@ public class MainViewInfo extends JPanel {
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
         setArmorLabel( Integer.toString( stats.getArmor() ) );
         setHealthLabel( Integer.toString( stats.getHealth() ) );
-        // setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
+        setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
         setProductionLabel( "0" );
         setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
-        // setItemLabel( );
+        setCurrSelectionName(unit.getType() + " " + unit.getId());
+        setItemLabel( "none" );
     }
 }
 
