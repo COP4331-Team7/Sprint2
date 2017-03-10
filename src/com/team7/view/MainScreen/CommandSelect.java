@@ -16,14 +16,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private JButton executeCommandButton = null;
     private JButton endTurnButton = null;
-    private CommandSelectController controller =null;
+    private CommandSelectController controller = null;
 
     private JLabel modeLabel;
     private JLabel typeLabel;
     private JLabel typeInstanceLabel;
     private JLabel commandLabel;
 
-    private final static String[] armyCommands = {          "attack",
+    private final static String[] armyCommands = {
+            "attack",
             "defend",
             "move",
             "wait",
@@ -31,51 +32,77 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"};
-
-    private final static String[] structureCommands = {"attack",
+            "cancel queued orders"
+    };
+    private final static String[] structureCommands = {
+            "attack",
             "make",
             "defend",
             "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"};
-
-    private final static String[] unitCommands = {    "REINFORCE",
+            "cancel queued orders"
+    };
+    private final static String[] unitCommands = {
+            "REINFORCE",
             "DECOMMISSION",
             "POWER DOWN",
             "POWER UP",
             "MOVE",
-            "MAKE BASE"};
-
-    private final static String[] structureTypes = { "BASE" };
-
-    private final static String[] unitTypes = { "EXPLORER", "COLONIST", "RANGED_UNIT", "MELEE_UNIT" };
-
-
-    private final static String[] modes = {  "RALLY POINT",
+    };
+    private final static String[] structureTypes = {
+            "BASE"
+    };
+    private final static String[] unitTypes = {
+            "EXPLORER",
+            "COLONIST",
+            "RANGED_UNIT",
+            "MELEE_UNIT"
+    };
+    private final static String[] modes = {
+            "RALLY POINT",
             "STRUCTURE",
             "UNIT",
-            "ARMY"  };
-
-    private final static String[] armySubTypes = {"ENTIRE ARMY", "BATTLE GROUP", "REINFORCEMENTS"};
-
-    // unit specific commands
-    private final static String[] colonistCommands = {  "DECOMMISSION",
-                                                        "POWER UP",
-                                                        "POWER DOWN",
-                                                        "MOVE",
-                                                        "MAKE BASE"
-                                                     };
-    private final static String[] explorerCommands = {       "PROSPECT MODE ON",
-                                                             "PROSPECT MODE OFF",
-                                                             "DECOMMISSION",
-                                                             "POWER UP",
-                                                             "POWER DOWN",
-                                                             "MOVE"
-                                                     };
-
+            "ARMY"
+    };
+    private final static String[] armySubTypes = {
+            "ENTIRE ARMY",
+            "BATTLE GROUP",
+            "REINFORCEMENTS"
+    };
+    // unit specific command lists
+    private final static String[] meleeCommands = {
+            "REINFORCE",
+            "DECOMMISSION",
+            "POWER DOWN",
+            "POWER UP",
+            "MOVE",
+            "MELEE ATTACK",
+    };
+    private final static String[] rangedCommands = {
+            "REINFORCE",
+            "DECOMMISSION",
+            "POWER DOWN",
+            "POWER UP",
+            "MOVE",
+            "RANGE ATTACK",
+    };
+    private final static String[] colonistCommands = {
+            "DECOMMISSION",
+            "POWER UP",
+            "POWER DOWN",
+            "MOVE",
+            "MAKE BASE"
+    };
+    private final static String[] explorerCommands = {
+            "PROSPECT MODE ON",
+            "PROSPECT MODE OFF",
+            "DECOMMISSION",
+            "POWER UP",
+            "POWER DOWN",
+            "MOVE"
+    };
 
     private int currMode = -1;
     private int currType = -1;
@@ -92,68 +119,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private boolean isRecordingPath = false;
     private PathSelectController pathSelectController = null;
 
-    public CommandSelect() {
-
-        JPanel commandSelectPanel = new JPanel();
-        commandSelectPanel.setLayout(new GridLayout(0,1));
-
-        modeLabel = new JLabel("MODE: "); //up / down arrow
-        typeLabel = new JLabel("TYPE: "); //left / right arrow
-        typeInstanceLabel = new JLabel("TYPE INSTANCE: "); //left / right arrow
-        commandLabel = new JLabel("COMMAND: "); //up / down arrow
-
-        modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        modeLabel.setForeground(new Color(0xff000000));
-        modeLabel.setBackground(new Color(0xffF5F5DC));
-        modeLabel.setOpaque(true);
-        typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        typeLabel.setForeground(new Color(0xff000000));
-        typeLabel.setBackground(new Color(0xffF5F5DC));
-        typeLabel.setOpaque(true);
-        typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        typeInstanceLabel.setForeground(new Color(0xff000000));
-        typeInstanceLabel.setBackground(new Color(0xffF5F5DC));
-        typeInstanceLabel.setOpaque(true);
-        commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        commandLabel.setForeground(new Color(0xff000000));
-        commandLabel.setBackground(new Color(0xffF5F5DC));
-        commandLabel.setOpaque(true);
-
-        commandSelectPanel.add(modeLabel);
-        commandSelectPanel.add(typeLabel);
-        commandSelectPanel.add(typeInstanceLabel);
-        commandSelectPanel.add(commandLabel);
-
-        executeCommandButton = new JButton("ISSUE COMMAND");
-        executeCommandButton.setFont(new Font("plain", Font.BOLD, 15));
-        executeCommandButton.setForeground(Color.black);
-        executeCommandButton.setBackground( new Color(0xffF5F5DC) );
-        executeCommandButton.setOpaque(true);
-
-        endTurnButton = new JButton("END TURN");
-        endTurnButton.setFont(new Font("plain", Font.BOLD, 15));
-        endTurnButton.setBackground( new Color(0xffF5F5DC) );
-        endTurnButton.setForeground(Color.black);
-        endTurnButton.setOpaque(true);
-
-        JPanel temp = new JPanel();
-        temp.add(executeCommandButton);
-        temp.add( endTurnButton );
-        temp.setBackground(new Color(0xffF5F5DC));
-        temp.setOpaque(true);
-
-        commandSelectPanel.add( temp );
-
-        this.add( commandSelectPanel, BorderLayout.SOUTH );
-
-        addKeyListener(this);
-
-        setMinimumSize(new Dimension(323, 200));
-    }
-
-    public void setController( PathSelectController msc ) {
-        this.pathSelectController = msc;
-    }
+    /* CONSTRUCTOR AT BOTTOM OF FILE */
 
     // update the text displaying the currently selected command
     private void updateCommand() {
@@ -177,6 +143,11 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?explorerCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 2 && currType == 1)    //colonist
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?colonistCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 2)    //explorer
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?rangedCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 3)    //colonist
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?meleeCommands[currCommand]:"")); //up / down arrow
+
         else if (currMode == 2)    //explorer
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
 
@@ -264,14 +235,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
         else if(e.getKeyCode() == UP_KEY_CODE) {
 
-            if( getNumCommands( currMode ) != 0)
-                currCommand = ++currCommand % getNumCommands( currMode );
+            if( getNumCommands( currType, currMode ) != 0)
+                currCommand = ++currCommand % getNumCommands( currType, currMode );
 
         }
         else if(e.getKeyCode() == DOWN_KEY_CODE) {
 
             if (currCommand > 0) currCommand--;
-            else currCommand = getNumCommands( currMode ) - 1;
+            else currCommand = getNumCommands( currType, currMode ) - 1;
 
         }
         else if(e.getKeyCode() == RIGHT_KEY_CODE) {
@@ -301,13 +272,25 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         return size;
     }
 
-    private int getNumCommands(int currType) {      // get # of options the current TYPE has
+    private int getNumCommands(int currType, int currMode) {      // get # of options the current TYPE has
         int size = 0;
-        if(currType == 1)
+        if(currMode == 1)
             size = structureCommands.length;
-        else if (currType == 2)
-            size = unitCommands.length;
-        else if (currType == 3)
+
+        else if(currMode == 2 && currType == 0) {        // EXPLORER
+            return explorerCommands.length;
+        }
+        else if(currMode == 2 && currType == 1) {        // COLONIST
+            return colonistCommands.length;
+        }
+        else if(currMode == 2 && currType == 2) {        // RANGED UNIT
+            return rangedCommands.length;
+        }
+        else if(currMode == 2 && currType == 3) {        // MELEE UNIT
+            return meleeCommands.length;
+        }
+
+        else if (currMode == 3)
             size = armyCommands.length;
         return size;
     }
@@ -380,5 +363,71 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     }
     public JButton getExecuteCommandButton() {
         return executeCommandButton;
+    }
+
+
+
+
+    public CommandSelect() {
+
+        JPanel commandSelectPanel = new JPanel();
+        commandSelectPanel.setLayout(new GridLayout(0,1));
+
+        modeLabel = new JLabel("MODE: "); //up / down arrow
+        typeLabel = new JLabel("TYPE: "); //left / right arrow
+        typeInstanceLabel = new JLabel("TYPE INSTANCE: "); //left / right arrow
+        commandLabel = new JLabel("COMMAND: "); //up / down arrow
+
+        modeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        modeLabel.setForeground(new Color(0xff000000));
+        modeLabel.setBackground(new Color(0xffF5F5DC));
+        modeLabel.setOpaque(true);
+        typeLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeLabel.setForeground(new Color(0xff000000));
+        typeLabel.setBackground(new Color(0xffF5F5DC));
+        typeLabel.setOpaque(true);
+        typeInstanceLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        typeInstanceLabel.setForeground(new Color(0xff000000));
+        typeInstanceLabel.setBackground(new Color(0xffF5F5DC));
+        typeInstanceLabel.setOpaque(true);
+        commandLabel.setFont(new Font("Serif", Font.BOLD, 18));
+        commandLabel.setForeground(new Color(0xff000000));
+        commandLabel.setBackground(new Color(0xffF5F5DC));
+        commandLabel.setOpaque(true);
+
+        commandSelectPanel.add(modeLabel);
+        commandSelectPanel.add(typeLabel);
+        commandSelectPanel.add(typeInstanceLabel);
+        commandSelectPanel.add(commandLabel);
+
+        executeCommandButton = new JButton("ISSUE COMMAND");
+        executeCommandButton.setFont(new Font("plain", Font.BOLD, 15));
+        executeCommandButton.setForeground(Color.black);
+        executeCommandButton.setBackground( new Color(0xffF5F5DC) );
+        executeCommandButton.setOpaque(true);
+
+        endTurnButton = new JButton("END TURN");
+        endTurnButton.setFont(new Font("plain", Font.BOLD, 15));
+        endTurnButton.setBackground( new Color(0xffF5F5DC) );
+        endTurnButton.setForeground(Color.black);
+        endTurnButton.setOpaque(true);
+
+        JPanel temp = new JPanel();
+        temp.add(executeCommandButton);
+        temp.add( endTurnButton );
+        temp.setBackground(new Color(0xffF5F5DC));
+        temp.setOpaque(true);
+
+        commandSelectPanel.add( temp );
+
+        this.add( commandSelectPanel, BorderLayout.SOUTH );
+
+        addKeyListener(this);
+
+        setMinimumSize(new Dimension(323, 200));
+    }
+
+    public void setController( PathSelectController msc ) {
+        this.pathSelectController = msc;
     }
 }
