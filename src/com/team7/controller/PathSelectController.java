@@ -15,6 +15,7 @@ import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -116,10 +117,12 @@ public class PathSelectController {
                         game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
                         game.updateTileGameState();
                         miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
+
+                        final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
                         {
                             public void run() {
-                                mainViewImage.reDrawMap();
+                                mainViewImage.setImage(mapSubsection);
                             }
                         });
                         try {
@@ -127,6 +130,7 @@ public class PathSelectController {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+
                         if(i == pathTile.size() - 1)
                             mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
 

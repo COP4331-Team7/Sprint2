@@ -443,6 +443,146 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             return tempImg;
         }
 
+    public BufferedImage drawSubsectionOfMap() {
+
+            /*
+             *  --------------------------------------------------
+             * |   (x, y)      (x + 1, y)        (x + 2, y)    .. |
+             * | (x, y + 1)  (x + 1, y + 1)    (x + 2, y + 1)  .. |
+             * |     .             .                 .            |
+             * |     .             .                 .            |
+             *  --------------------------------------------------
+             */
+
+            int x = x_center;
+            int y = y_center;
+
+        g2ds.setFont(new Font("Arial", 0, 9));
+        g2ds.setColor( new Color(0xffF5F5DC) );
+        g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
+
+        int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
+        int x_offset, counter, step = 0;
+        int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
+
+        for(int j = 0; j < TILES_VISIBLE_X; j++) {          // tile index on sub-screen
+
+            x_offset = changePerStep;
+            if(step % 2 == 0) {
+                x_offset += changePerStep;
+            }
+            else {
+                x_offset -= changePerStep;
+                x_offset += 10;
+            }
+            step++;
+
+            for(int i = 0; i < TILES_VISIBLE_Y; i++) {
+
+                counter = 0;
+
+                int xx = x + i;                // tile index on whole map
+                int yy;
+
+                if(y%2==1)
+                    yy = y-1 + j;
+                else
+                    yy = y+j;
+                if(xx < 0)                     // adjust if out of bounds
+                    xx = 0;
+                else if (xx >= MAP_TILE_WIDTH)
+                    xx = MAP_TILE_WIDTH - 1;
+                if(yy < 0)
+                    yy = 0;
+                else if(yy >= MAP_TILE_HEIGHT)
+                    yy = MAP_TILE_HEIGHT - 1;
+
+                x_coord = i * TILE_SIZE;
+                y_coord = (int)(j * TILE_SIZE / 2.4);
+
+                x_offset += changePerStep * ++counter;
+
+                DrawableTileState tileState = null;
+
+                // get tile state based on current player
+                if( player != null) {
+                    if (grid[xx][yy].getDrawableStateByPlayer(player.getName()) != null) {
+                        tileState = grid[xx][yy].getDrawableStateByPlayer(player.getName());
+                    }
+                }
+                // if tile not visible
+                if(tileState == null)
+                    g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+
+                else {
+                    // draw terrain
+                    if( tileState.getTerrainType().equals("Mountains"))
+                        g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Crater"))
+                        g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Desert"))
+                        g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Flatland"))
+                        g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
+
+                    // draw units
+                    if(drawUnits) {
+                        // explorer
+                        if (tileState.getExplorer() > 0)
+                            g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                        // colonist
+                        if (tileState.getColonist() > 0)
+                            g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                        // melee
+                        if (tileState.getMeleeUnit() > 0)
+                            g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                        // ranged
+                        if (tileState.getRangeUnit() > 0)
+                            g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                    }
+                    //draw resource counts
+                    if(drawResources) {
+                        // ore
+                        if (tileState.getOreQuantity() > 0) {
+                            g2ds.setColor(new Color(0xFFDDAAAA));
+                            g2ds.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                        }
+                        // energy
+                        if (tileState.getEnergyQuantity() > 0) {
+                            g2ds.setColor(new Color(0xaf75fff8));
+                            g2ds.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                        }
+                        //food
+                        if (tileState.getFoodQuantity() > 0) {
+                            g2ds.setColor(new Color(0xAFAFFC00));
+                            g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                        }
+                    }
+
+                    // shroud tile
+                    if(grid[xx][yy].getShrouded(player.getName()))
+                        g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+
+                }
+
+                if( grid[xx][yy].isSelectedPath )
+                    g2ds.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
+
+                    /* draw bottom left circle, to be used later
+                      g2ds.setColor(new Color(255, 128, 100, 150));
+                      g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
+
+                      draw bottom right circle, to be used later
+                      g2ds.setColor(new Color(255, 128, 100, 150));
+                      g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
+                    */
+
+            }
+        }
+
+        return tempImg;
+    }
+
         public void paintComponent( Graphics g )
         {
             super.paintComponent( g );
@@ -538,6 +678,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 timer.restart();
             }
         } );
+    }
+
+    public void setImage(BufferedImage img) {
+            this.image = img;
+            repaint();
     }
 
     public void drawResources(boolean draw) {
