@@ -30,12 +30,10 @@ public class PathSelectController {
     private CommandSelect commandView = null;
 
     public static boolean isRecording = false;
-    Tile selectedTile = null;
-    Tile startTile = null;
-    ConfigReader configReader;
-
-    ArrayList<Tile> pathTile = new ArrayList<Tile>();;
-
+    private Tile selectedTile = null;
+    private Tile startTile = null;
+    private ConfigReader configReader;
+    private ArrayList<Tile> pathTile = new ArrayList<Tile>();;
     private int moveAnimationSpeed = 10 * 30;
 
     public PathSelectController(Game game, View view) {
