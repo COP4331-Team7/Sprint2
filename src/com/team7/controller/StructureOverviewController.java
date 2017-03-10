@@ -1,6 +1,8 @@
 package com.team7.controller;
 
 import com.team7.model.Game;
+import com.team7.view.OptionsScreen.OptionsScreen;
+import com.team7.view.StructureScreen.StructureScreen;
 import com.team7.view.View;
 
 import java.awt.event.ActionEvent;
@@ -11,31 +13,35 @@ public class StructureOverviewController {
 
     private Game game = null;
     private View view = null;
+    private StructureScreen structureScreen = null;
+    private OptionsScreen optionsScreen = null;
 
     public StructureOverviewController(Game game, View view) {
         this.game = game;
         this.view = view;
+        this.structureScreen = view.getStructureScreen();
+        this.optionsScreen = view.getOptionScreen();
         addActionListeners();
     }
 
     private void addActionListeners() {
 
-        view.getStructureScreen().getMainScreenButton().addActionListener(new ActionListener() {
+        structureScreen.getMainScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getStructureScreen().getMainScreenButton())
+                if (e.getSource() == structureScreen.getMainScreenButton())
                     view.setCurrScreen("MAIN");
             }
         });
-        view.getStructureScreen().getUnitScreenButton().addActionListener(new ActionListener() {
+        structureScreen.getUnitScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getStructureScreen().getUnitScreenButton())
+                if (e.getSource() == structureScreen.getUnitScreenButton())
                     view.setCurrScreen("UNIT_OVERVIEW");
             }
         });
-        view.getStructureScreen().getOptionScreenButton().addActionListener(new ActionListener() {
+        structureScreen.getOptionScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getStructureScreen().getOptionScreenButton())
-                    view.getOptionScreen().showScreenSelectBtns();
+                if (e.getSource() == structureScreen.getOptionScreenButton())
+                    optionsScreen.showScreenSelectBtns();
                 view.setCurrScreen("OPTIONS");
             }
         });

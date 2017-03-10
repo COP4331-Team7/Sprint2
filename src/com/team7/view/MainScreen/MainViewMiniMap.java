@@ -35,7 +35,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
-        g2dss.setColor(new Color(0xffCABD80));
+        g2dss.setColor(new Color(0xffF5F5DC));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
@@ -65,7 +65,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         super.paintComponent( g );
         g.drawImage( backgroundImg2, 0, 0, this );
         g.drawImage( backgroundImg, BORDER_WIDTH2/2, BORDER_WIDTH2/2  , this );
-        g.drawImage( image, BORDER_WIDTH/2 , BORDER_WIDTH/2 , this );
+        g.drawImage( image, BORDER_WIDTH/2, BORDER_WIDTH/2, this );
     }
 
     public void drawMapArea() {

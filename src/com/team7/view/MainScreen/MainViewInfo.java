@@ -1,19 +1,12 @@
 package com.team7.view.MainScreen;
 
-import com.team7.model.*;
-import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.UnitStats;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MainViewInfo extends JPanel {
-
-//    private Unit unit = null;
-//    private Structure structure = null;
-//    private Player currentPlayer = null;
 
     private JLabel offensiveDamageLabel;
     private JLabel defensiveDamageLabel;
@@ -26,20 +19,14 @@ public class MainViewInfo extends JPanel {
     private JLabel researchLabel;
     private JLabel constructionLabel;
     private JLabel powerLabel;
-
-    public void setTitle2(String s) {
-        title2.setText("Player " + s + ":");
-    }
-
-    JLabel title2;
-
-    JPanel t;
+    private JLabel playerNameLabel;
+    private JPanel jPanel;
 
 
     public MainViewInfo()
         {
-            t = new JPanel();
-            t.setLayout(new GridLayout(0,2));
+            jPanel = new JPanel();
+            jPanel.setLayout(new GridLayout(0,2));
 
             JLabel title = new JLabel("Unit Stats: ");
             title.setFont(new Font("Serif", Font.BOLD, 22));
@@ -93,11 +80,11 @@ public class MainViewInfo extends JPanel {
             temps.setBackground( new Color(0xffF5F5DC) );
             temps.setOpaque(true);
 
-            title2 = new JLabel("Player Stats: ");
-            title2.setFont(new Font("Serif", Font.BOLD, 22));
-            title2.setForeground( new Color(0xff000000) );
-            title2.setBackground(new Color(0xffF5F5DC));
-            title2.setOpaque(true);
+            playerNameLabel = new JLabel("Player Stats: ");
+            playerNameLabel.setFont(new Font("Serif", Font.BOLD, 22));
+            playerNameLabel.setForeground( new Color(0xff000000) );
+            playerNameLabel.setBackground(new Color(0xffF5F5DC));
+            playerNameLabel.setOpaque(true);
 
             lifeLabel = new JLabel("Nutrients:");
             lifeLabel.setFont(new Font("Serif", Font.BOLD, 18));
@@ -124,34 +111,34 @@ public class MainViewInfo extends JPanel {
             powerLabel.setForeground(new Color(0xff644D50));
 
 
-            t.add(title);
+            jPanel.add(title);
             JLabel j = new JLabel();
             j.setBackground(   new Color(0xffF5F5DC) );
             j.setOpaque(true);
-            t.add( j );
-            t.add(offensiveDamageLabel);
-            t.add(armorLabel);
-            t.add(defensiveDamageLabel);
-            t.add(healthLabel);
-            t.add(itemLabel);
-            t.add(upkeepLabel);
-            t.add(productionLabel);
+            jPanel.add( j );
+            jPanel.add(offensiveDamageLabel);
+            jPanel.add(armorLabel);
+            jPanel.add(defensiveDamageLabel);
+            jPanel.add(healthLabel);
+            jPanel.add(itemLabel);
+            jPanel.add(upkeepLabel);
+            jPanel.add(productionLabel);
             JLabel jj = new JLabel();
             jj.setBackground(   new Color(0xffF5F5DC) );
             jj.setOpaque(true);
-            t.add( jj );
-            t.add(title2);
+            jPanel.add( jj );
+            jPanel.add(playerNameLabel);
             JLabel jjj = new JLabel();
             jjj.setBackground(   new Color(0xffF5F5DC) );
             jjj.setOpaque(true);
-            t.add( jjj );
+            jPanel.add( jjj );
 
-            t.add(lifeLabel);
-            t.add(constructionLabel);
-            t.add(powerLabel);
-            t.add(researchLabel);
+            jPanel.add(lifeLabel);
+            jPanel.add(constructionLabel);
+            jPanel.add(powerLabel);
+            jPanel.add(researchLabel);
 
-            this.add( t, BorderLayout.SOUTH );
+            this.add(jPanel, BorderLayout.SOUTH );
 
             setMinimumSize(new Dimension(323, 200));
             //this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
@@ -203,10 +190,11 @@ public class MainViewInfo extends JPanel {
     public void setConstructionLabel(String s) {
         constructionLabel.setText("Metal:  " + s);
     }
-    public void setPowerLabel(String s) {
-        powerLabel.setText("Power:  " + s);
+    public void setPowerLabel(String s) { powerLabel.setText("Power:  " + s);
     }
-
+    public void setPlayerNameLabel(String s) {
+        playerNameLabel.setText("Player " + s + ":");
+    }
     public void setItemLabel(String s) {
         itemLabel.setText("Items: " + s);
     }
@@ -226,39 +214,8 @@ public class MainViewInfo extends JPanel {
         setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
         // setItemLabel( );
     }
-    }
+}
 
-    //    public void setUnit(Unit unit) {
-//        if(unit == null)
-//            clearStats();
-//        else
-//            updateStats( unit );
-//    }
-//
-//    public void setStructure(Structure structure) {
-//        if(structure == null)
-//            clearStats();
-//        else
-//            updateStats( structure );
-//    }
-
-//    public void updateStats(Player player) {
-//        currentPlayer = player;
-//        setLifeLabel( Integer.toString( player.getMoney() ) );
-//        setResearchLabel( Integer.toString( player.getResearch() ) );
-//        setConstructionLabel( Integer.toString( player.getConstruction() ) );
-//    }
-
-//
-//    public void updateStats() {
-//        currentPlayer = currentPlayer;
-//        setLifeLabel( Integer.toString( currentPlayer.getMoney() ) );
-//        setResearchLabel( Integer.toString( currentPlayer.getResearch() ) );
-//        setConstructionLabel( Integer.toString( currentPlayer.getConstruction() ) );
-//    }
-//    public void setCurrentPlayer( Player player ) {
-//          updateStatsteStats( player );
-//    }
 
 
 

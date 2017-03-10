@@ -86,7 +86,7 @@ public class OptionsScreen extends JPanel{
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
         l3.setFont( new Font(  "plain", Font.BOLD, 18));
-        s3 = new JSlider(0, 30, 15);
+        s3 = new JSlider(0, 30, 20);
         s3.setMinorTickSpacing(1);
         s3.setPaintTicks(true);
         s3.setSnapToTicks(true);

@@ -49,7 +49,6 @@ public class CommandSelectController {
     public Unit getCurrentSelection(int currMode, int currType, int id) {
 
         Player currentPlayer = game.getCurrentPlayer();
-        // currentPlayer.printUnitIds();
         Unit currSelection = null;
 
         if(currMode == 2 && currType == 0)           // EXPLORER
@@ -66,9 +65,6 @@ public class CommandSelectController {
 
     public void updateStatusView(int currMode, int currType, int id) {
         mainViewInfo.updateStats( getCurrentSelection(currMode, currType, id) );
-    }
-    public void clearStatusView() {
-        mainViewInfo.clearStats();
     }
 
     public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {

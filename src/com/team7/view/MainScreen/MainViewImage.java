@@ -484,8 +484,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             if( x_center != x_destination || y_center != y_destination) {
                 new Thread( new Runnable()
                 {
-
-
                     public void run()
                     {
                         int x_diff = (x_destination - x_center);
@@ -521,10 +519,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                     repaint();
                                 }
                             });
-
-                            try{
-                                Thread.sleep(delayInMs);
-                            }
+                            try{ Thread.sleep(delayInMs); }
                             catch(Exception e) {}
                         }
                     }
@@ -539,7 +534,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             public void actionPerformed( ActionEvent e)
             {
                 timer.stop();
-                zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 30 );
+                zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 15 );
                 timer.restart();
             }
         } );

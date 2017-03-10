@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 
+import com.team7.model.Map;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
@@ -10,6 +11,7 @@ import com.team7.model.Tile;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainViewImage;
+import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
 import javax.swing.*;
@@ -18,7 +20,9 @@ import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
+    private Map map = null;
     private View view = null;
+    private OptionsScreen optionsScreen = null;
     private MainViewImage mainViewImage = null;
     private MainScreen mainScreen = null;
     private MainViewMiniMap miniMap = null;
@@ -35,7 +39,9 @@ public class PathSelectController {
 
     public PathSelectController(Game game, View view) {
         this.game = game;
+        this.map = game.getMap();
         this.view = view;
+        this.optionsScreen = view.getOptionScreen();
         this.mainViewImage = view.getMainViewImage();
         this.mainScreen = view.getMainScreen();
         this.miniMap = view.getMainScreen().getMiniMap();
@@ -53,30 +59,27 @@ public class PathSelectController {
         selectedTile.isSelectedPath = false;
 
         if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 7);
+            selectedTile = map.moveUnit(selectedTile, 7);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 1);
+            selectedTile = map.moveUnit(selectedTile, 1);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "South"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 2);
+            selectedTile = map.moveUnit(selectedTile, 2);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "North"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 8);
+            selectedTile = map.moveUnit(selectedTile, 8);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 9);
+            selectedTile = map.moveUnit(selectedTile, 9);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
-            selectedTile = game.getMap().moveUnit(selectedTile, 3);
+            selectedTile = map.moveUnit(selectedTile, 3);
         }
-
-//        if ( selectedTile.getVisible(game.getCurrentPlayer().getName()) == false )
-//            return;
 
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
-        view.redrawView();
+        mainViewImage.reDrawMap();
     }
 
     public void startRecordingPath(Tile startTile) {
@@ -90,15 +93,12 @@ public class PathSelectController {
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
+        mainViewImage.reDrawMap();
     }
-
-    public Player getPlayer () {
-        return game.getCurrentPlayer();
-    } // TODO: remove this was for testing
 
     public void drawPath(Unit unit){
 
-        moveAnimationSpeed = view.getOptionScreen().getUnitSpeed() * 20;
+        moveAnimationSpeed = optionsScreen.getUnitSpeed() * 20;
 
         if(unit == null)
             return;
@@ -136,10 +136,10 @@ public class PathSelectController {
 
     }
 
-    public void zoomToCurrSelection( Tile tile ) {
+    public void zoomToTile( Tile tile ) {
         if(tile == null)
             return;
-        view.getMainViewImage().zoomToDestination(tile.getxCoordinate() - 11 / 2, tile.getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+        view.getMainViewImage().zoomToDestination(tile.getxCoordinate() - 11 / 2, tile.getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
     }
 
 }
