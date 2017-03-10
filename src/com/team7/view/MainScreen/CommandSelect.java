@@ -61,6 +61,22 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private final static String[] armySubTypes = {"ENTIRE ARMY", "BATTLE GROUP", "REINFORCEMENTS"};
 
+    // unit specific commands
+    private final static String[] colonistCommands = {  "DECOMMISSION",
+                                                        "POWER UP",
+                                                        "POWER DOWN",
+                                                        "MOVE",
+                                                        "MAKE BASE"
+                                                     };
+    private final static String[] explorerCommands = {       "PROSPECT MODE ON",
+                                                             "PROSPECT MODE OFF",
+                                                             "DECOMMISSION",
+                                                             "POWER UP",
+                                                             "POWER DOWN",
+                                                             "MOVE"
+                                                     };
+
+
     private int currMode = -1;
     private int currType = -1;
     private int currTypeInstance = -1;
@@ -156,8 +172,18 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         if(currMode == 1)
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?structureCommands[currCommand]:"")); //up / down arrow
-        else if (currMode == 2)
+
+        else if (currMode == 2 && currType == 0)    //explorer
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?explorerCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 1)    //colonist
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?colonistCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2)    //explorer
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
+
+
+
+
+
         else if (currMode == 3)
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 0 && currTypeInstance != -1)
