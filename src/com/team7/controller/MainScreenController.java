@@ -112,14 +112,20 @@ public class MainScreenController {
     public void endTurnViewRefresh() {
         updatePlayerStatusInfo();
         clearCommandView();
+        clearStatusInfoView();
         mainViewImage.setCurrPlayer(game.getCurrentPlayer());
         mainViewInfo.setPlayerNameLabel(game.getCurrentPlayer().getName());
         miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
     }
 
     public void clearCommandView() {
-        mainScreen.getCommandSelect().clearCommand();   // clear command view
+        mainScreen.getCommandSelect().clearCommand();
     }
+
+    public void clearStatusInfoView() {
+        mainViewInfo.clearStats();
+    }
+
 
     public void giveCommandViewFocus() {
         mainScreen.getCommandSelect().setFocusable(true);
