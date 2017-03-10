@@ -18,7 +18,7 @@ public class Colonist extends NonCombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(0, 0, 5, 5, 100, 3));
+        setUnitStats(new UnitStats(1, 1, 5, 5, 100, 3));
         setCommandQueue(new CommandQueue());
         setType("Colonist");
         setPowered(true);

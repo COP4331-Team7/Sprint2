@@ -13,7 +13,7 @@ public class Explorer extends NonCombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(0, 0, 10, 10, 100, 3));
+        setUnitStats(new UnitStats(1, 1, 10, 10, 100, 3));
         setCommandQueue(new CommandQueue());
         setType("Explorer");
         setPowered(true);

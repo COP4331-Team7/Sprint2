@@ -17,11 +17,11 @@ public class Main {
         Game game      = new Game(player1, player2);
         game.newGameState();
 
-        // view
+        // View
         View view = new View();
-
         waitForGUI( view );
 
+        // Controller
         HomeScreenController hsc = new HomeScreenController(game, view);
         StructureOverviewController soc = new StructureOverviewController(game, view);
         UnitOverviewController uoc = new UnitOverviewController(game, view);
@@ -29,18 +29,14 @@ public class Main {
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game, view);
         OptionsController optionsController = new OptionsController(view, game);
-
     }
-
-
 
     private static void waitForGUI(View view) {
         long startTime = System.nanoTime();
-        // waiting on view construction because:
         // in the main method new view() returns instantly because it schedules the GUI creation to be executed asynchronously on the EDT
         while( view.getScreen() == null ) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(300);
             }
             catch (Exception e) {}
         }
