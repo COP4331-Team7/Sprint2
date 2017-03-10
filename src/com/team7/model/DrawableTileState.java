@@ -22,9 +22,7 @@ import com.team7.model.terrain.Mountains;
 import java.util.ArrayList;
 
 /**
- * Describes the Tile in String format
- * Accessed by the controller
- * Allows Fog of War implementation without need of copying objects, Memento, or complete serialization
+ * Copy tile state
  */
 public class DrawableTileState {
 
@@ -34,7 +32,6 @@ public class DrawableTileState {
     private int meleeUnit;
     private int rangeUnit;
     private int workerUnit;
-
     private String areaEffectType;
     private String decal;
     private String itemType;
@@ -43,21 +40,11 @@ public class DrawableTileState {
     private int ore;
     private int food;
     private int energy;
-    private ArrayList<String> units;
-    private ArrayList<String> armies;
-    private ArrayList<String> workers;
 
-    private int numUnits = 0;
-
-    public DrawableTileState(){
-        energy = 0;
-        ore = 0;
-        food = 0;
-    }
+    public DrawableTileState(){}
 
     //copy constructor
     public DrawableTileState(DrawableTileState stateToCopy) {
-
         this.terrainType = stateToCopy.terrainType;
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
@@ -67,6 +54,18 @@ public class DrawableTileState {
         this.ore = stateToCopy.ore;
         this.food = stateToCopy.food;
         this.energy = stateToCopy.energy;
+    }
+
+    public void refresh(DrawableTileState state) {
+        this.terrainType = state.terrainType;
+        this.meleeUnit = state.meleeUnit;
+        this.rangeUnit = state.rangeUnit;
+        this.explorer = state.explorer;
+        this.workerUnit = state.workerUnit;
+        this.ore = state.ore;
+        this.food = state.food;
+        this.energy = state.energy;
+        this.areaEffectType = state.areaEffectType;
     }
 
     public void refresh(Tile tile) {
@@ -110,11 +109,6 @@ public class DrawableTileState {
                 ore += resource.getStatInfluenceQuantity();
         }
 
-       // System.out.println("ore count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : " + ore);
-        //System.out.println("food count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : "  + food);
-        //System.out.println("eer count: " + tile.getxCoordinate() + "," + tile.getyCoordinate() + " : "  + energy);
-
-
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
             areaEffectType = "Damage";
@@ -122,25 +116,6 @@ public class DrawableTileState {
             areaEffectType = "Heal";
         if(tile.getAreaEffect() instanceof InstantDeathAreaEffect)
             areaEffectType = "InstantDeath";
-
-
-    }
-
-
-    public void refresh(DrawableTileState state) {
-
-        this.terrainType = state.terrainType;
-
-        this.meleeUnit = state.meleeUnit;
-        this.rangeUnit = state.rangeUnit;
-        this.explorer = state.explorer;
-        this.workerUnit = state.workerUnit;
-
-        this.ore = state.ore;
-        this.food = state.food;
-        this.energy = state.energy;
-
-        this.areaEffectType = state.areaEffectType;
     }
 
     public String getTerrainType() {
@@ -221,5 +196,4 @@ public class DrawableTileState {
     public int getColonist() {
         return Colonist;
     }
-
 }

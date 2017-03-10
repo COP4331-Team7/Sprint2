@@ -15,13 +15,12 @@ public class Main {
         Player player1 = new Player("One");
         Player player2 = new Player("Two");
         Game game      = new Game(player1, player2);
-        game.startGame();
+        game.newGameState();
 
         // view
         View view = new View();
 
         waitForGUI( view );
-        view.setMap( game.getMap() );
 
         HomeScreenController hsc = new HomeScreenController(game, view);
         StructureOverviewController soc = new StructureOverviewController(game, view);
@@ -29,7 +28,7 @@ public class Main {
         MainScreenController ssc = new MainScreenController(game, view);
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game, view);
-        OptionsController optionsController = new OptionsController( view,game );
+        OptionsController optionsController = new OptionsController(view, game);
 
     }
 

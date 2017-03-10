@@ -21,7 +21,7 @@ public class Explorer extends NonCombatUnit {
         setArmy(null);
         setDirection(2);
         setProspecting(false);
-        setVisibilityRadius(5);
+        setVisibilityRadius(3);
     }
 
     public boolean isProspecting() {

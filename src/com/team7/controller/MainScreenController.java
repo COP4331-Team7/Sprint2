@@ -32,6 +32,7 @@ public class MainScreenController {
         this.optionScreen = view.getOptionScreen();
 
         addActionListeners();
+        view.setMap( game.getMap() );
         mainScreen.getEndTurnButton().doClick();
     }
 

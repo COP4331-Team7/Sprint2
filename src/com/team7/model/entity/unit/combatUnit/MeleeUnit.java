@@ -18,7 +18,7 @@ public class MeleeUnit extends CombatUnit {
         setMovesFrozen(0);
         setArmy(null);
         setDirection(2);
-        setVisibilityRadius(3);
+        setVisibilityRadius(2);
     }
 
 }

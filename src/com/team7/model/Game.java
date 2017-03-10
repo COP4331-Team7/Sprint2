@@ -26,34 +26,28 @@ public class Game {
         currentPlayer = players[0];
     }
 
-    public void startGame() {
+    public void newGameState() {
 
         // create map and populate with items/resources/area effects
         this.map = new Map();
 
-
-        //TODO check if this violates TDA
-        allocateUnitToPlayer( players[0], new Explorer(this.map.getGrid()[4][7], players[0]) );
-        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][19], players[0]) );
+        //TODO: fix
+        // create Player One starting units
+        allocateUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
+        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
         allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
         allocateUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
         allocateUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
-
-
-        allocateUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-8][40-5],  players[1]) );
+        // create Player Two starting units
+        allocateUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
         allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
         allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
         allocateUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         allocateUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-
-        // players[0].addObservationTower(new ObservationTower(this.map.getGrid()[20][20], players[0]));
-        //players[0].addObservationTower(new ObservationTower(this.map.getGrid()[35][5], players[0]));
-
-
-
         updateTileGameState();
     }
+
 
     // create a unit, add to player, place on map at [x][y]
     public void allocateUnitToPlayer(Player player, Unit unit) {
@@ -71,7 +65,7 @@ public class Game {
         Set<Tile> visibleTiles = new HashSet<>();
         //1
         for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
-            visibleTiles.addAll(map.getTilesInRadius(tileKey, 2, null));
+            visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
         }
         //2
         //iterate through entire map and update each tile
@@ -91,10 +85,6 @@ public class Game {
 
     //Switches the turn to the next player
     public void nextTurn() {
-        //executeQueues();
-//        if(currentPlayer.isDefeated()){
-//            endGame();
-//        }
 
         if(currentPlayer == players[0])
             currentPlayer = players[1];
@@ -130,21 +120,19 @@ public class Game {
         turn = num;
     }
 
-    public void setCurrentPlayer(int num) {
-        if (num > players.length-1) {
-            System.out.println("ERROR: Out of bounds request for setCurrentPlayer()");
-            return;
-        }
-        currentPlayer = players[num];
-    }
-
-
     public void endGame() {
 
-        System.out.println("GAME OVER!!!!" );
+        for(int i = 0; i < 10; i++)
+            System.out.println("GAME OVER!!!!" );
 
         /*   --TODO--
         Display game over splash screen */
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         System.exit(0);
     }
