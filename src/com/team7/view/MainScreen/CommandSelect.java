@@ -188,7 +188,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
             if(controller.getCurrentSelection(  currMode, currType, currTypeInstance ) == null)
                 return;
-
             pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation()  );
             isRecordingPath = true;
         }
@@ -346,13 +345,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         currCommand = -1;
         updateCommand();
     }
-
-
-
-
-//    public void setCurrentPlayer( Player player ) {
-//        this.currentPlayer = player;
-//    }
 
     public void setController(CommandSelectController controller) {
         this.controller = controller;

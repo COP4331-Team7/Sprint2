@@ -142,4 +142,8 @@ public class PathSelectController {
         view.getMainViewImage().zoomToDestination(tile.getxCoordinate() - 11 / 2, tile.getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
     }
 
+    public void reDraw() {
+        mainViewImage.reDrawMap();
+    }
+
 }
