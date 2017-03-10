@@ -93,14 +93,14 @@ public class PathSelectController {
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
-        mainViewImage.reDrawMap();
+        mainViewImage.zoomToDestination( startTile.getxCoordinate() - 11/2, startTile.getyCoordinate() - 16/2, 30);
     }
 
     public void drawPath(Unit unit){
 
         moveAnimationSpeed = optionsScreen.getUnitSpeed() * 20;
 
-        if(unit == null)
+        if(unit == null || pathTile.size() == 0)
             return;
 
         startTile.removeUnitFromTile(unit);
