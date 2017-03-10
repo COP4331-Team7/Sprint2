@@ -171,30 +171,32 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() );
             controller.updateStatusView( currMode, currType, currTypeInstance  );
+
         }
 
-
-        // statusInfo.clearStats();
     }
 
     public void keyTyped(KeyEvent e)    {}
     public void keyReleased(KeyEvent e) {}
     public void keyPressed(KeyEvent e)  {
 
+        // zoom to current selection
         if( e.getKeyChar() == 'f') {
-            // focus
             controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
         }
 
+        // start recording path
         if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
             pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation()  );
             isRecordingPath = true;
             controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
         }
+        // execute recorded path
         else if( e.getKeyChar() == '5') {
             pathSelectController.drawPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
+        // add key to recorded path
         else if( isRecordingPath ) { // if recording path, pass key to controller to update path
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }

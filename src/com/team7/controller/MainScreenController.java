@@ -17,10 +17,11 @@ import java.util.Set;
 public class MainScreenController {
     private Game game = null;
     private View view = null;
-    private MainViewImage mainViewImage = null;
     private MainScreen mainScreen = null;
     private MainViewMiniMap miniMap = null;
     private MainViewInfo mainViewInfo = null;
+    private MainViewImage mainViewImage = null;
+
 
     public MainScreenController(Game game, View view) {
         this.game = game;
@@ -86,6 +87,7 @@ public class MainScreenController {
         mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getExecuteCommandButton())
+
 
                     System.out.println( mainScreen.getCommandSelect().getCommand() );   // print command
                     clearCommandView();
