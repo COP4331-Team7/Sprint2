@@ -149,11 +149,11 @@ public class MainViewInfo extends JPanel {
     public void clearStats() {
         offensiveDamageLabel.setText("Offense:");
         defensiveDamageLabel.setText("Defense:");
-        healthLabel.setText("Health");
-        armorLabel.setText("Armor");
-        upkeepLabel.setText("Upkeep");
+        healthLabel.setText("Health:");
+        armorLabel.setText("Armor:");
+        upkeepLabel.setText("Upkeep:");
         productionLabel.setText("Production rate:");
-        itemLabel.setText("Items");
+        itemLabel.setText("Items:");
     }
 
     public void clearPlayerStats() {

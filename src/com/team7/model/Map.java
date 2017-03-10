@@ -6,6 +6,7 @@ import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.StrictMath.abs;
 
@@ -34,7 +35,7 @@ public class Map{
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
 
-                int n = ProbabilityGenerator.randomInteger(0, 3);
+                int n = ThreadLocalRandom.current().nextInt(0, 4);
                 switch (n) {
                     case 0:
                         grid[i][j] = new Tile(new Mountains(), i, j);

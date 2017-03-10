@@ -8,7 +8,6 @@ import com.team7.model.entity.Worker;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
-import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import com.team7.model.resource.Energy;
 import com.team7.model.resource.Food;
@@ -19,12 +18,10 @@ import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
-import java.util.ArrayList;
-
 /**
  * Copy tile state
  */
-public class DrawableTileState {
+public class TileState {
 
     private String terrainType;
     private int Colonist;
@@ -41,10 +38,10 @@ public class DrawableTileState {
     private int food;
     private int energy;
 
-    public DrawableTileState(){}
+    public TileState(){}
 
     //copy constructor
-    public DrawableTileState(DrawableTileState stateToCopy) {
+    public TileState(TileState stateToCopy) {
         this.terrainType = stateToCopy.terrainType;
         this.areaEffectType = stateToCopy.areaEffectType;
         this.decal = stateToCopy.decal;
@@ -56,7 +53,7 @@ public class DrawableTileState {
         this.energy = stateToCopy.energy;
     }
 
-    public void refresh(DrawableTileState state) {
+    public void refresh(TileState state) {
         this.terrainType = state.terrainType;
         this.meleeUnit = state.meleeUnit;
         this.rangeUnit = state.rangeUnit;

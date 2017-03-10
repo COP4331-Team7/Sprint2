@@ -16,6 +16,7 @@ import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -55,9 +56,9 @@ public class Tile {
     public boolean isSelectedPath = false;
 
 
-    private DrawableTileState playerOneDraw;
-    private DrawableTileState playerTwoDraw;
-    private DrawableTileState realDraw;
+    private TileState playerOneDraw;
+    private TileState playerTwoDraw;
+    private TileState realDraw;
 
     private enum VisibilityState {
         Visible, NonVisible, Shrouded
@@ -77,14 +78,14 @@ public class Tile {
         workers = new ArrayList<>();
 
 
-        realDraw = new DrawableTileState();
+        realDraw = new TileState();
         realDraw.setTerrainType(terrain.getTerrainType());
 
         populateTileBasedOnTerrain(terrain);
 
         //copy real state to both players when Tile is initialized
-        playerOneDraw = new DrawableTileState(realDraw);
-        playerTwoDraw = new DrawableTileState(realDraw);
+        playerOneDraw = new TileState(realDraw);
+        playerTwoDraw = new TileState(realDraw);
 
         //set Tile enum visibility
         playerOneVisibility = VisibilityState.NonVisible;
@@ -120,25 +121,23 @@ public class Tile {
 
     //Populate Resource for each tile
     public void populateResource(double probEnergy, double probOre, double probFood) {
-        if (ProbabilityGenerator.willOccur(probEnergy)) {
+        if (Math.random() < probEnergy) {
             energy = new Energy();
         }
 
-        if (ProbabilityGenerator.willOccur(probOre)) {
+        if (Math.random() < probOre) {
             ore = new Ore();
         }
 
-        if (ProbabilityGenerator.willOccur(probFood)) {
+        if (Math.random() < probFood) {
             food = new Food();
         }
-
-
     }
 
     //Populate Item for each tile
     public void populateItem(double prob) {
-        if (ProbabilityGenerator.willOccur(prob)) {
-            int rand = ProbabilityGenerator.randomInteger(0, 1);
+        if (Math.random() < prob) {
+            int rand = ThreadLocalRandom.current().nextInt(0, 2);
             if (rand == 0)
                 setItem(new OneShotItem());
 
@@ -150,8 +149,8 @@ public class Tile {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-        if (ProbabilityGenerator.willOccur(prob)) {
-            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
+        if (Math.random() < prob) {
+            int rand = ThreadLocalRandom.current().nextInt(0, terrain.getAreaEffects().size());
             setAreaEffect(terrain.getAreaEffects().get(rand));
         }
     }
@@ -215,11 +214,11 @@ public class Tile {
     public void updateTileToVisible(String playerToUpdate) {
         if (playerToUpdate.contains("One")) {
             playerOneVisibility = VisibilityState.Visible;
-            playerOneDraw = new DrawableTileState(realDraw);
+            playerOneDraw = new TileState(realDraw);
 
         } else {
             playerTwoVisibility = VisibilityState.Visible;
-            playerTwoDraw = new DrawableTileState(realDraw);
+            playerTwoDraw = new TileState(realDraw);
         }
     }
 
@@ -302,7 +301,7 @@ public class Tile {
     }
 
     //called by controller to determine which tile state to draw
-    public DrawableTileState getDrawableStateByPlayer(String playerName) {
+    public TileState getDrawableStateByPlayer(String playerName) {
         if(playerName.contains(("real"))) {
             return realDraw;
         }

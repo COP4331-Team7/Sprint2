@@ -2,14 +2,10 @@ package com.team7.view.MainScreen;
 
 import com.team7.Main;
 import com.team7.controller.PathSelectController;
-import com.team7.model.DrawableTileState;
+import com.team7.model.TileState;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
-import com.team7.model.terrain.Crater;
-import com.team7.model.terrain.Desert;
-import com.team7.model.terrain.Flatland;
-import com.team7.model.terrain.Mountains;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -247,7 +243,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                      x_offset += changePerStep * ++counter;
 
-                     DrawableTileState tileState = null;
+                     TileState tileState = null;
 
                      // get tile state based on current player
                      if (player != null) {
@@ -362,7 +358,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                     x_offset += changePerStep * ++counter;
 
-                    DrawableTileState tileState = null;
+                    TileState tileState = null;
 
                     // get tile state based on current player
                     if( player != null) {
@@ -502,7 +498,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                 x_offset += changePerStep * ++counter;
 
-                DrawableTileState tileState = null;
+                TileState tileState = null;
 
                 // get tile state based on current player
                 if( player != null) {
