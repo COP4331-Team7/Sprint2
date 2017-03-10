@@ -171,7 +171,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() );
             controller.updateStatusView( currMode, currType, currTypeInstance  );
-
         }
 
     }
@@ -197,7 +196,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             isRecordingPath = false;
         }
         // add key to recorded path
-        else if( isRecordingPath ) { // if recording path, pass key to controller to update path
+        else if( isRecordingPath ) {           // if recording path, pass key to controller to update path
             pathSelectController.moveCursor(String.valueOf( e.getKeyChar() ) );
         }
 
@@ -225,6 +224,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
             currCommand = -1;   // when the user changes TYPE, reset the currently selected COMMAND
             currTypeInstance = -1;
+            controller.updateStatusView(currMode, currType, currTypeInstance);
         }
         else if(e.getKeyCode() == RIGHT_KEY_CODE && e.getModifiers() == CONTROL_KEY_CODE ) {
 
@@ -233,6 +233,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
             currCommand = -1;   // when the user changes TYPE, reset the currently selected COMMAND
             currTypeInstance = -1;
+            controller.updateStatusView(currMode, currType, currTypeInstance);
         }
         else if(e.getKeyCode() == UP_KEY_CODE) {
 

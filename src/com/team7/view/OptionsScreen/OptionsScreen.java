@@ -86,7 +86,7 @@ public class OptionsScreen extends JPanel{
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
         l3.setFont( new Font(  "plain", Font.BOLD, 18));
-        s3 = new JSlider(0, 20, 15);
+        s3 = new JSlider(0, 30, 15);
         s3.setMinorTickSpacing(1);
         s3.setPaintTicks(true);
         s3.setSnapToTicks(true);
@@ -166,9 +166,9 @@ public class OptionsScreen extends JPanel{
     }
     public int getFocusSpeed() {
         if(s3.getValue() == s3.getMaximum())
-            return 1 * 10;
+            return 10;
         else
-            return 15 * Math.abs(s3.getMaximum() - s3.getValue());
+            return 7 * Math.abs(s3.getMaximum() - s3.getValue());
     }
 
     public JButton getResetControlsButton() {

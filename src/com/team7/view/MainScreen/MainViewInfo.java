@@ -212,8 +212,10 @@ public class MainViewInfo extends JPanel {
     }
 
       public  void updateStats( Unit unit ) {
-        if(unit == null)
+        if(unit == null) {
+            clearStats();
             return;
+        }
         UnitStats stats = unit.getUnitStats();
         setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );

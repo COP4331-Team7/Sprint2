@@ -17,20 +17,16 @@ import java.util.Set;
 
 public class CommandSelectController {
 
-    private Game game = null;
-    private View view = null;
-    private Player currentPlayer = null;
     private MainViewInfo mainViewInfo = null;
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionsScreen = null;
+    private Game game = null;
 
 
     public CommandSelectController(Game game, View view) {
         this.game = game;
-        this.view = view;
         this.mainViewImage = view.getMainViewImage();
         this.mainViewInfo = view.getMainViewInfo();
-        this.currentPlayer = game.getCurrentPlayer();
         this.optionsScreen = view.getOptionScreen();
         view.getMainScreen().getCommandSelect().setController( this );
     }
@@ -38,41 +34,41 @@ public class CommandSelectController {
     // ===============================================
 
     public int getNumExplorers() {
-        return currentPlayer.getNumExplorers();
+        return game.getCurrentPlayer().getNumExplorers();
     }
     public int getNumColonist() {
-        return currentPlayer.getNumColonist();
+        return game.getCurrentPlayer().getNumColonist();
     }
     public int getNumMelee() {
-        return currentPlayer.getNumMelee();
+        return game.getCurrentPlayer().getNumMelee();
     }
     public int getNumRanged() {
-        return currentPlayer.getNumRanged();
+        return game.getCurrentPlayer().getNumRanged();
     }
 
     public Unit getCurrentSelection(int currMode, int currType, int id) {
 
-        //  game.getCurrentPlayer().printUnitIds();
+        Player currentPlayer = game.getCurrentPlayer();
+        // currentPlayer.printUnitIds();
         Unit currSelection = null;
 
-        if(currMode == 2 && currType == 0) {        // EXPLORER
+        if(currMode == 2 && currType == 0)           // EXPLORER
             currSelection = currentPlayer.getExplorer( id );
-        }
-        else if(currMode == 2 && currType == 1) {        // COLONIST
+        else if(currMode == 2 && currType == 1)       // COLONIST
             currSelection = currentPlayer.getColonist( id );
-        }
-        else if(currMode == 2 && currType == 2) {        // RANGED UNIT
+        else if(currMode == 2 && currType == 2)         // RANGED UNIT
             currSelection = currentPlayer.getRanged( id );
-        }
-        else if(currMode == 2 && currType == 3) {        // MELEE UNIT
+        else if(currMode == 2 && currType == 3)        // MELEE UNIT
             currSelection = currentPlayer.getMelee( id );
-        }
 
         return currSelection;
     }
 
     public void updateStatusView(int currMode, int currType, int id) {
         mainViewInfo.updateStats( getCurrentSelection(currMode, currType, id) );
+    }
+    public void clearStatusView() {
+        mainViewInfo.clearStats();
     }
 
     public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {

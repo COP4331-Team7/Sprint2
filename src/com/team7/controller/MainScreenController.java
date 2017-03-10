@@ -64,7 +64,6 @@ public class MainScreenController {
 
                     // TODO: fix
                     mainViewImage.zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
-
                     giveCommandViewFocus();
                 }
             }
