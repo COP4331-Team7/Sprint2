@@ -18,10 +18,10 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private JButton endTurnButton = null;
     private CommandSelectController controller =null;
 
-    JLabel modeLabel;
-    JLabel typeLabel;
-    JLabel typeInstanceLabel;
-    JLabel commandLabel;
+    private JLabel modeLabel;
+    private JLabel typeLabel;
+    private JLabel typeInstanceLabel;
+    private JLabel commandLabel;
 
     private final static String[] armyCommands = {          "attack",
             "defend",
@@ -74,7 +74,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private char key_char = '1';
     private boolean isRecordingPath = false;
-    PathSelectController pathSelectController = null;
+    private PathSelectController pathSelectController = null;
 
     public CommandSelect() {
 
