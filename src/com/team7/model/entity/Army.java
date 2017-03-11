@@ -31,17 +31,4 @@ public class Army extends Entity {
         this.turnsFrozen = 0;
     }
 
-    public int takeId() {
-        for(int i = 0; i < 10; i++) {
-            if( ((army_Ids >> i) & 1) == 0 ) {
-                returnId(i);
-                return  i;
-            }
-        }
-        return  -1;
-    }
-    public void returnId(int id) {
-        army_Ids = (army_Ids ^ (1 << id) );
-    }
-
 }

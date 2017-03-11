@@ -2,6 +2,7 @@ package com.team7.model.entity.unit;
 
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 
@@ -86,5 +87,20 @@ public class Unit extends Entity {
 
     public void setCommandQueue(CommandQueue commandQueue) {
         this.commandQueue = commandQueue;
+    }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.println("                         " + commandQueue.get(i).getCommandString());
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.println("empty");
     }
 }

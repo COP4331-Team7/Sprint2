@@ -5,6 +5,7 @@ import com.team7.model.Game;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
@@ -13,6 +14,8 @@ import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Set;
 
 public class CommandSelectController {
@@ -20,6 +23,7 @@ public class CommandSelectController {
     private MainViewInfo mainViewInfo = null;
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionsScreen = null;
+    private MainScreen mainScreen = null;
     private Game game = null;
 
 
@@ -28,7 +32,9 @@ public class CommandSelectController {
         this.mainViewImage = view.getMainViewImage();
         this.mainViewInfo = view.getMainViewInfo();
         this.optionsScreen = view.getOptionScreen();
+        this.mainScreen = view.getMainScreen();
         view.getMainScreen().getCommandSelect().setController( this );
+        addActionListeners();
     }
 
     // ===============================================
@@ -72,6 +78,50 @@ public class CommandSelectController {
         if(unit == null)
             return;
         mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+    }
+
+    public void addActionListeners() {
+        // execute command
+        mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == mainScreen.getExecuteCommandButton())
+
+                    queueCommand();
+
+                clearCommandView();
+                giveCommandViewFocus();
+            }
+        });
+    }
+
+
+    public void queueCommand() {
+        if(getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
+            return;
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() );
+        Unit unit = getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        unit.queueCommand( command );
+        System.out.println("add " + command.getCommandString() + "command to " + unit.getType() + " " + unit.getId());
+
+        printCurrPlayersUnitsCommandQueues();
+    }
+
+    public void printCurrPlayersUnitsCommandQueues(){
+        System.out.println("\nPlayer " + game.getCurrentPlayer().getName() + "'s unit's command queues: ");
+        game.getCurrentPlayer().printUnitCommandQueues();
+    }
+
+    public void giveCommandViewFocus() {
+        mainScreen.getCommandSelect().setFocusable(true);
+        mainScreen.getCommandSelect().requestFocus();
+    }
+
+    public void clearCommandView() {
+        mainScreen.getCommandSelect().clearCommand();
+    }
+
+    public void clearStatusInfoView() {
+        mainViewInfo.clearStats();
     }
 
 }

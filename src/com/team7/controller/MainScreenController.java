@@ -59,18 +59,6 @@ public class MainScreenController {
             }
         });
 
-        // execute command
-        mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == mainScreen.getExecuteCommandButton())
-
-
-                    System.out.println( mainScreen.getCommandSelect().getCommand() );   // print command
-                clearCommandView();
-                giveCommandViewFocus();
-            }
-        });
-
         //screen select buttons
         mainScreen.getMainScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

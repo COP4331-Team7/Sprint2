@@ -315,29 +315,17 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     public String getCommand() {
         StringBuilder sb = new StringBuilder();
-        sb.append(((currMode != -1)?modes[currMode]:"") ); //up / down arrow
-        sb.append(" " );
-        // type based off of mode
-        if(currMode == 1)
-            sb.append(((currType != -1)?structureTypes[currType]:"")); //left / right arrow
-        else if (currMode == 2)
-            sb.append(((currType != -1)?unitTypes[currType]:"")); //left / right arrow
-        else if (currMode == 3)
-            sb.append(((currType != -1)?armySubTypes[currType]:"")); //left / right arrow
-        sb.append(" " ); //left / right arrow
-
-        if(currTypeInstance == -1) {
-            sb.append(" ");
-        }
-        else {
-            sb.append( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() + " " );
-            controller.updateStatusView( currMode, currType, currTypeInstance  );
-        }
 
         if(currMode == 1)
             sb.append(((currCommand != -1)?structureCommands[currCommand]:"")); //up / down arrow
-        else if (currMode == 2)
-            sb.append(((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 0)    //explorer command
+            sb.append(((currCommand != -1)?explorerCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 1)    //colonist
+            sb.append(((currCommand != -1)?colonistCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 2)    //explorer
+            sb.append(((currCommand != -1)?rangedCommands[currCommand]:"")); //up / down arrow
+        else if (currMode == 2 && currType == 3)    //colonist
+            sb.append(((currCommand != -1)?meleeCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 3)
             sb.append(((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 0 && currTypeInstance != -1)
@@ -430,4 +418,17 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void setController( PathSelectController msc ) {
         this.pathSelectController = msc;
     }
+    public int getCurrMode() {
+        return  currMode;
+    }
+    public int getCurrType() {
+        return  currType;
+    }
+    public int getCurrTypeInstance() {
+        return  currTypeInstance;
+    }
+    public int getCurrCommand() {
+        return  currCommand;
+    }
+
 }

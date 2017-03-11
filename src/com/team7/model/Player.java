@@ -437,16 +437,21 @@ public class Player {
     }
 
     public void printUnitIds() {
-
-
         for(Unit u : units) {
 
             System.out.println(u.getType() + " : " + u.getId() );
 
         }
         System.out.println();
-
-
     }
+    public void printUnitCommandQueues() {
+        for(Unit u : units) {
+           System.out.print("commands for " + u.getType() + " " + u.getId() + ":\n");
+            u.printCommandQueue();
+        }
+        System.out.println();
+    }
+
+
 
 }
