@@ -101,6 +101,6 @@ public class Unit extends Entity {
             System.out.println("                         " + commandQueue.get(i).getCommandString());
         }
         if(commandQueue.getSize() == 0)
-            System.out.println("empty");
+            System.out.println("                         empty");
     }
 }

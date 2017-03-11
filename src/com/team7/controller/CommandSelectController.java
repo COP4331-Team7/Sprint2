@@ -101,7 +101,6 @@ public class CommandSelectController {
         Command command = new Command( mainScreen.getCommandSelect().getCommand() );
         Unit unit = getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         unit.queueCommand( command );
-        System.out.println("add " + command.getCommandString() + "command to " + unit.getType() + " " + unit.getId());
 
         printCurrPlayersUnitsCommandQueues();
     }
