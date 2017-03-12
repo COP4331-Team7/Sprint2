@@ -114,7 +114,7 @@ public class PathSelectController {
                     for (int i = 0; i < pathTile.size(); i++) {
                         game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
                         game.updateTileGameState();
-                        miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
+                        miniMap.setMiniMapImage( mainViewImage.getFullMapImage(false) );
 
                         final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
                         SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display

@@ -230,7 +230,7 @@ public class View
 
         private void saveImage()    // prompt the user to specify the size of the n by n image
         {
-            BufferedImage temp_img = getMainScreen().getMainViewImage().getFullMapImage();
+            BufferedImage temp_img = getMainScreen().getMainViewImage().getFullMapImage(true);
             String inputString = JOptionPane.showInputDialog("ouput file?");
 
             if(inputString == null)

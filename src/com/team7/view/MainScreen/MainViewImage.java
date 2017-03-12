@@ -189,7 +189,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         public void setMap(Map map) {
             this.grid = map.getGrid();
-            mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
+            mainViewSelection.setMiniMapImage( getFullMapImage(false    ), TILES_VISIBLE_X, TILES_VISIBLE_Y );
             if(player == null)
                 return;
             zoomToDestination(player.getRandomUnit().getLocation().getxCoordinate() - 11/2, player.getRandomUnit().getLocation().getyCoordinate() - 16/2, 60);
@@ -199,7 +199,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
               player = p;
             }
 
-         public BufferedImage getFullMapImage() {
+         public BufferedImage getFullMapImage(boolean drawAll) {
 
              BufferedImage mapImage;
              mapImage = new BufferedImage(TILE_SIZE*(MAP_TILE_WIDTH+1) + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
@@ -265,6 +265,41 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                              g2.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
                          } else if (tileState.getTerrainType().equals("Flatland")) {
                              g2.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
+                         }
+                         if(drawAll) {
+                             // draw units
+                             if (drawUnits) {
+                                 // explorer
+                                 if (tileState.getExplorer() > 0)
+                                     g2.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                                 // colonist
+                                 if (tileState.getColonist() > 0)
+                                     g2.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                                 // melee
+                                 if (tileState.getMeleeUnit() > 0)
+                                     g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                 // ranged
+                                 if (tileState.getRangeUnit() > 0)
+                                     g2.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             //draw resource counts
+                             if (drawResources) {
+                                 // ore
+                                 if (tileState.getOreQuantity() > 0) {
+                                     g2.setColor(new Color(0xFFDDAAAA));
+                                     g2.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                                 }
+                                 // energy
+                                 if (tileState.getEnergyQuantity() > 0) {
+                                     g2.setColor(new Color(0xaf75fff8));
+                                     g2.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                                 }
+                                 //food
+                                 if (tileState.getFoodQuantity() > 0) {
+                                     g2.setColor(new Color(0xAFAFFC00));
+                                     g2.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                                 }
+                             }
                          }
 
                          // shroud tile

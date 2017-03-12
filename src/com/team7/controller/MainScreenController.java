@@ -91,7 +91,7 @@ public class MainScreenController {
         mainScreen.getScreenSelectButtons().getMapScreenSelectButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getScreenSelectButtons().getMapScreenSelectButton())
-                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage() );
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
                     view.setCurrScreen("MAP_SCREEN");
             }
         });
@@ -113,8 +113,8 @@ public class MainScreenController {
         clearStatusInfoView();
         mainViewImage.setCurrPlayer(game.getCurrentPlayer());
         mainViewInfo.setPlayerNameLabel(game.getCurrentPlayer().getName());
-        miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
-        mapScreen.setImage( mainViewImage.getFullMapImage() );
+        miniMap.setMiniMapImage( mainViewImage.getFullMapImage(false) );
+        mapScreen.setImage( mainViewImage.getFullMapImage(true) );
     }
 
     public void clearCommandView() {

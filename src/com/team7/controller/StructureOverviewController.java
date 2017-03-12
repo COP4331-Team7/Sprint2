@@ -48,7 +48,7 @@ public class StructureOverviewController {
         structureScreen.getMapScreenSelectButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == structureScreen.getMapScreenSelectButton())
-                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage() );
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
                 view.setCurrScreen("MAP_SCREEN");
             }
         });

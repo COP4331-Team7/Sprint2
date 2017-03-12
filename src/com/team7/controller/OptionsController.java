@@ -98,7 +98,7 @@ public class OptionsController{
         optionsScreen.getMapScreenSelectButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getMapScreenSelectButton())
-                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage() );
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
                 view.setCurrScreen("MAP_SCREEN");
             }
         });
