@@ -104,6 +104,7 @@ public class Game {
 
         System.out.println(" ");
         updateCurrPlayerTileStates();
+        currentPlayer.takeTurn();
         executeCommandQueues();
     }
 

@@ -24,6 +24,8 @@ public abstract class Structure extends Entity {
     private ArrayList<Worker> workerAssigned = new ArrayList<>();
 
 
+    public abstract void applyTechnology(String techInstance, String technologyStat, int level);
+
     protected boolean checkConstructionComplete(){       //called at end of every turn
         if(levelOfCompletion >= 100){
             levelOfCompletion = 100;
@@ -69,6 +71,14 @@ public abstract class Structure extends Entity {
         }
 
         return allocatedEnergy;
+    }
+
+    public void changeEnergyUpkeep(int delta){
+        energyUpkeep += delta;
+    }
+
+    public void changeOreUpkeep(int delta){
+        oreUpkeep += delta;
     }
 
     public void addStructureToCurrentTile(){

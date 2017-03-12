@@ -54,4 +54,16 @@ public class Fort extends StaffedStructure implements IUnitProducer {
     public void beginStructureFunction() {
 
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("Train")){
+            switch (technologyStat){
+                case "Worker":
+                    break;
+                case "Soldier":
+                    break;
+            }
+        }
+    }
 }

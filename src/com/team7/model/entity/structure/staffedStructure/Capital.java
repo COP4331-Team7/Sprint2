@@ -57,4 +57,49 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     public void beginStructureFunction() {
 
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("Produce")){
+            //production rate stuff
+            switch (technologyStat){
+                case "Explorer":
+                    break;
+                case "Worker":
+                    break;
+            }
+        }
+
+        if (techInstance.equals("Capital")){
+            //all structure specific stuff
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    break;
+                case "AttackStrength":
+                    break;
+                case "DefenseStrength":
+                    break;
+                case "ArmorStrength":
+                    break;
+                case "Health":
+                    break;
+                case "Efficiency":
+                    break;
+            }
+        }
+
+
+        if (techInstance.equals("Harvester")){
+            //harvest related
+            switch (technologyStat){
+                case "Ore":
+                    break;
+                case "Food":
+                    break;
+                case "Energy":
+                    break;
+            }
+
+        }
+    }
 }

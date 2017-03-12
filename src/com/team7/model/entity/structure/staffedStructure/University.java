@@ -125,4 +125,9 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     public void beginStructureFunction() {
 
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+
+    }
 }

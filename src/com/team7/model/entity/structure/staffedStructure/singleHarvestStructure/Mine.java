@@ -44,4 +44,9 @@ public class Mine extends StaffedStructure implements IHarvester {
     @Override
     public void beginStructureFunction() {
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+
+    }
 }

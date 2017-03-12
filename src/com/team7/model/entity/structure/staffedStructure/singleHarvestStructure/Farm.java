@@ -47,4 +47,8 @@ public class Farm extends StaffedStructure implements IHarvester {
     }
 
 
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+
+    }
 }

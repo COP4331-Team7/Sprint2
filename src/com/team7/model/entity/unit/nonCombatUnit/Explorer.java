@@ -21,7 +21,7 @@ public class Explorer extends NonCombatUnit {
         setArmy(null);
         setDirection(2);
         setProspecting(false);
-        setVisibilityRadius(3);
+        setVisibilityRadius(0); //start technology level 0
     }
 
     public boolean isProspecting() {
@@ -31,4 +31,37 @@ public class Explorer extends NonCombatUnit {
     public void setProspecting(boolean prospecting) {
         isProspecting = prospecting;
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level){
+        if(techInstance.equals("Explorer")){
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    break;
+                case "DefenseStrength":
+                    break;
+                case "ArmorStrength":
+                    break;
+                case "MovementRate":
+                    getUnitStats().changeMovement(level);
+                    break;
+                case "Health":
+                    break;
+            }
+        }
+
+    }
 }
+
+
+/*
+
+        technologies.add(new Technology("unit", "Explorer", "VisibilityRadius", 1));  //only one hex available
+                technologies.add(new Technology("unit" ,"Explorer",  "AttackStrength", 1));
+                technologies.add(new Technology("unit", "Explorer" , "DefenseStrength", 1));
+                technologies.add(new Technology("unit", "Explorer", "ArmorStrength", 1));
+                technologies.add(new Technology("unit", "Explorer", "MovementRate", 1));
+                technologies.add(new Technology("unit", "Explorer", "Health",1));*/

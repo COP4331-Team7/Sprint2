@@ -7,7 +7,7 @@ import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 
 
-public class Unit extends Entity {
+public abstract class Unit extends Entity {
     private CommandQueue commandQueue;
     private String type;
     private UnitStats unitStats;
@@ -126,4 +126,6 @@ public class Unit extends Entity {
 
 
     }
+
+    public abstract void applyTechnology(String techInstance, String technologyStat, int level);
 }

@@ -17,6 +17,10 @@ public class UnitStats {
         upkeep = u;
     }
 
+    public void changeMovement(int delta){
+        movement += delta;
+    }
+
     public int getOffensiveDamage() {
         return offensiveDamage;
     }

@@ -23,6 +23,8 @@ public class Player {
     private ArrayList<StaffedStructure> staffedStructures;
     private ArrayList<ObservationTower> observationTowers;
 
+    private Technologies technologies;
+
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
@@ -45,13 +47,15 @@ public class Player {
         nutrients = 200;
         metal = 200;
 
+        technologies = new Technologies();
+
+
     }
 
     //method to execute all internal model changes
     //called when a player ends his turn
     public void takeTurn(){
         initiateStructureEffects();
-
     }
 
 
@@ -436,6 +440,43 @@ public class Player {
             u.printCommandQueue();
         }
         System.out.println();
+    }
+
+
+
+    private void applyTechnology(Technology tech){
+        String techType = tech.getTechnologyType();
+        String techInstance = tech.getTechnologyInstance();
+        String techStat = tech.getTechnologyStat();
+        int currentLevel = tech.getLevel();
+
+        switch (techType){
+            case "unit":
+                for (Unit unit : units){
+                    unit.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+            case "structure":
+                for (StaffedStructure staffedStructure : staffedStructures){
+                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                for (ObservationTower observationTower : observationTowers){
+                    observationTower.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+            case "tile":
+                //TODO worker density
+                break;
+            case "productionRate":
+                //productionRate only applies to staffed structures
+                //harvest, produce, or train
+                for (StaffedStructure staffedStructure : staffedStructures){
+                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+        }
+
+
     }
 
 

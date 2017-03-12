@@ -47,5 +47,8 @@ public class Colonist extends NonCombatUnit {
     }
 
 
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
 
+    }
 }

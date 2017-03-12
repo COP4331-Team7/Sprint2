@@ -28,6 +28,11 @@ public class ObservationTower extends Structure {
         setLevelOfCompletion(95);
     }
 
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        
+    }
+
     public int advanceConstruction() {
         int foodUpkeepDuringConstruction = 0;
         if (!checkConstructionComplete()) {

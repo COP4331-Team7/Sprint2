@@ -45,4 +45,9 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
     public void beginStructureFunction() {
 
     }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+
+    }
 }

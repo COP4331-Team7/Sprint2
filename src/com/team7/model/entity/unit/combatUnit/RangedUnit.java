@@ -21,4 +21,9 @@ public class RangedUnit extends CombatUnit {
         setVisibilityRadius(2);
     }
 
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+
+    }
 }

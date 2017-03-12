@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class StaffedStructure extends Structure {
     private ArrayList<Worker> workerStaff = new ArrayList<>();
-    private final int foodUpkeepPerWorker = 2; //all staffedStructures requires Nutrient from Player
+    private final int foodUpkeepPerWorker = 5; //all staffedStructures requires Nutrient from Player
     private int allocatedFood;
     private boolean hasEnoughFood;
 
