@@ -102,9 +102,9 @@ public class Game {
 
         turn = ++turn % 2;
 
+        System.out.println(" ");
         updateCurrPlayerTileStates();
         executeCommandQueues();
-
     }
 
 

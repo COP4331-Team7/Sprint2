@@ -97,10 +97,12 @@ public class Unit extends Entity {
     }
 
     public void printCommandQueue(){
-        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:        ");
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:   ");
 
         for(int i = 0; i < commandQueue.getSize(); i++) {
-            System.out.print(commandQueue.get(i).getCommandString() + " , ");
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
         }
         if(commandQueue.getSize() == 0)
             System.out.print("empty");
