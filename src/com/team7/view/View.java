@@ -1,12 +1,12 @@
 package com.team7.view;
 
 import com.team7.model.Map;
-import com.team7.model.entity.structure.Structure;
 import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
+import com.team7.view.MapScreen.MapScreen;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.StructureScreen.StructureScreen;
 import com.team7.view.UnitScreen.UnitScreen;
@@ -81,6 +81,9 @@ public class View
     public MainViewInfo getMainViewInfo() {
         return frame.getMainViewInfo();
     }
+    public MapScreen getMapScreen() {
+        return frame.getMapScreen();
+    }
 
 
 // ==================== INNER CLASS ==========================
@@ -92,6 +95,7 @@ public class View
         private OptionsScreen optionsScreen = null;
         private UnitScreen unitScreen = null;
         private StructureScreen structureScreen = null;
+        private MapScreen mapScreen = null;
 
         public Screen( int width, int height)
         {
@@ -104,6 +108,7 @@ public class View
             optionsScreen = new OptionsScreen();
             unitScreen = new UnitScreen();
             structureScreen = new StructureScreen();
+            mapScreen = new MapScreen();
 
             setCurrScreen("HOME");
             this.setVisible( true );
@@ -128,6 +133,10 @@ public class View
         public StructureScreen getStructureScreen() {
                     return structureScreen;
             }
+        public MapScreen getMapScreen() {
+            return mapScreen;
+        }
+
 
         public void setCurrScreen(String selected_screen) {
 
@@ -150,6 +159,9 @@ public class View
             else if (selected_screen == "OPTIONS") {
                 displayOptionScreen();
             }
+            else if (selected_screen == "MAP_SCREEN") {
+                displayMapScreen();
+            }
 
             revalidate();
             repaint();
@@ -169,6 +181,10 @@ public class View
         }
         private void displayStructureOverviewScreen() {
                 this.getContentPane().add( structureScreen );
+        }
+
+        private void displayMapScreen() {
+            this.getContentPane().add( mapScreen );
         }
 
         private void addMenu()

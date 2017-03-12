@@ -95,7 +95,13 @@ public class OptionsController{
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
-
+        optionsScreen.getMapScreenSelectButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getMapScreenSelectButton())
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage() );
+                view.setCurrScreen("MAP_SCREEN");
+            }
+        });
         optionsScreen.getS1().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

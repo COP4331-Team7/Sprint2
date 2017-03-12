@@ -2,6 +2,7 @@ package com.team7.controller;
 
 import com.team7.model.Game;
 import com.team7.model.Player;
+import com.team7.view.MapScreen.MapScreen;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
@@ -20,6 +21,7 @@ public class MainScreenController {
     private MainViewInfo mainViewInfo = null;
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionScreen = null;
+    private MapScreen mapScreen = null;
 
 
     public MainScreenController(Game game, View view) {
@@ -30,6 +32,7 @@ public class MainScreenController {
         this.miniMap = view.getMainScreen().getMiniMap();
         this.mainViewInfo = view.getMainViewInfo();
         this.optionScreen = view.getOptionScreen();
+        this.mapScreen = view.getMapScreen();
 
         addActionListeners();
         view.setMap( game.getMap() );
@@ -85,6 +88,13 @@ public class MainScreenController {
                 view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
+        mainScreen.getScreenSelectButtons().getMapScreenSelectButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == mainScreen.getScreenSelectButtons().getMapScreenSelectButton())
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage() );
+                    view.setCurrScreen("MAP_SCREEN");
+            }
+        });
 
     }
 
@@ -104,6 +114,7 @@ public class MainScreenController {
         mainViewImage.setCurrPlayer(game.getCurrentPlayer());
         mainViewInfo.setPlayerNameLabel(game.getCurrentPlayer().getName());
         miniMap.setMiniMapImage( mainViewImage.getFullMapImage() );
+        mapScreen.setImage( mainViewImage.getFullMapImage() );
     }
 
     public void clearCommandView() {

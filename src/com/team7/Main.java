@@ -29,6 +29,8 @@ public class Main {
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game, view);
         OptionsController optionsController = new OptionsController(view, game);
+        MapScreenController mapScreenController = new MapScreenController(game, view);
+
     }
 
     private static void waitForGUI(View view) {

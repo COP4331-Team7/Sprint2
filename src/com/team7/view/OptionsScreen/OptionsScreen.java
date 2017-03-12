@@ -195,6 +195,9 @@ public class OptionsScreen extends JPanel{
     public JButton getHomeScreenButton() {
         return homeButton;
     }
+    public JButton getMapScreenSelectButton() {
+        return screenSelectBtns.getMapScreenSelectButton();
+    }
 
     public void setSlidersToDefault() {
         s1.setValue(10);

@@ -202,7 +202,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
          public BufferedImage getFullMapImage() {
 
              BufferedImage mapImage;
-             mapImage = new BufferedImage(TILE_SIZE*MAP_TILE_WIDTH + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
+             mapImage = new BufferedImage(TILE_SIZE*(MAP_TILE_WIDTH+1) + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
              Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
              g2.setColor(new Color(0xFF000000));
              g2.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
