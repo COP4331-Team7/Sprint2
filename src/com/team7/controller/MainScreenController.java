@@ -56,7 +56,7 @@ public class MainScreenController {
                     endTurnViewRefresh();
 
                     // TODO: fix
-                    mainViewImage.zoomToDestination(game.getCurrentPlayer().getRandomUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getRandomUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+                    mainViewImage.zoomToDestination(game.getCurrentPlayer().getFirstUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getFirstUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
                     giveCommandViewFocus();
                 }
             }

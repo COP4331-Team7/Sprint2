@@ -18,8 +18,7 @@ public class MapScreen extends JPanel  {
 
     public MapScreen()
     {
-
-        MAP_IMAGE_WIDTH_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()   );
+        MAP_IMAGE_WIDTH_IN_PIXELS = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() );
         screenSelectBtns = new ScreenSelectButtons();
         this.add(screenSelectBtns);
     }
@@ -43,13 +42,9 @@ public class MapScreen extends JPanel  {
         g.drawImage(image, 0, 100, (int)(MAP_IMAGE_WIDTH_IN_PIXELS), MAP_IMAGE_HEIGHT_IN_PIXELS, 0, 0, image.getWidth(),
                 image.getHeight(), null);
 
-
     }
-
-
 
     public ScreenSelectButtons getScreenSelectButtons() {
         return screenSelectBtns;
     }
-
 }

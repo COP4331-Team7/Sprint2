@@ -1,7 +1,6 @@
 package com.team7.model;
 
 import com.team7.controller.PathSelectController;
-import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -11,46 +10,55 @@ import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
-    private Player[] players = new Player[2];
+    private Player[] players = null;
     private Map map;
     private int turn;
     private Player currentPlayer;
 
-    public Game(Player p1, Player p2) {
-        players[0] = p1;
-        players[1] = p2;
+    public Game() {
         turn = 0;
-        currentPlayer = players[0];
     }
 
     public void newGameState() {
 
-        // create map and populate with items/resources/area effects
+        // create two players
+        this.players = new Player[]{
+                                     new Player("One"),
+                                     new Player("Two")
+                                    };
+
+        // choose who goes first
+        int first = ThreadLocalRandom.current().nextInt(0, 2);
+        currentPlayer = players[ first ];
+        turn = first;
+
+        // create map and populate it with items/resources/area effects
         this.map = new Map();
 
         //TODO: fix
-        // create Player One starting units
-        allocateUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
-        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
-        allocateUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
-        allocateUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
-        allocateUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
-        // create Player Two starting units
-        allocateUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
-        allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
-        allocateUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
-        allocateUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
-        allocateUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
+        // set Player One starting units
+        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
+        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
+        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
+        addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
+        addUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
+        // set Player Two starting units
+        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
+        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
+        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
+        addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
+        addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        updateTileGameState();
+        updateTileGameState();  // update tile states so view renders accordingly
     }
 
 
     // create a unit, add to player, place on map at [x][y]
-    public void allocateUnitToPlayer(Player player, Unit unit) {
+    public void addUnitToPlayer(Player player, Unit unit) {
         player.addUnit(unit);
     }
 

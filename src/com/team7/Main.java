@@ -12,9 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Model
-        Player player1 = new Player("One");
-        Player player2 = new Player("Two");
-        Game game      = new Game(player1, player2);
+        Game game = new Game();
         game.newGameState();
 
         // View

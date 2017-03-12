@@ -6,7 +6,6 @@ import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
-import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.CommandSelect;
@@ -17,7 +16,6 @@ import com.team7.view.View;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
@@ -58,22 +56,22 @@ public class PathSelectController {
         selectedTile.isSelectedPath = false;
 
         if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
-            selectedTile = map.moveUnit(selectedTile, 7);
+            selectedTile = map.getAdjacentTile(selectedTile, 7);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest"))) {
-            selectedTile = map.moveUnit(selectedTile, 1);
+            selectedTile = map.getAdjacentTile(selectedTile, 1);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "South"))) {
-            selectedTile = map.moveUnit(selectedTile, 2);
+            selectedTile = map.getAdjacentTile(selectedTile, 2);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "North"))) {
-            selectedTile = map.moveUnit(selectedTile, 8);
+            selectedTile = map.getAdjacentTile(selectedTile, 8);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast"))) {
-            selectedTile = map.moveUnit(selectedTile, 9);
+            selectedTile = map.getAdjacentTile(selectedTile, 9);
         }
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
-            selectedTile = map.moveUnit(selectedTile, 3);
+            selectedTile = map.getAdjacentTile(selectedTile, 3);
         }
 
         pathTile.add(selectedTile);

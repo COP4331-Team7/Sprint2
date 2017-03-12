@@ -24,7 +24,7 @@ import com.team7.model.terrain.Mountains;
 public class TileState {
 
     private String terrainType;
-    private int Colonist;
+    private int colonist;
     private int explorer;
     private int meleeUnit;
     private int rangeUnit;
@@ -81,7 +81,7 @@ public class TileState {
             terrainType = "Flatland";
         }
         // set units
-        meleeUnit = 0; rangeUnit = 0; explorer = 0; Colonist = 0; workerUnit = 0;
+        meleeUnit = 0; rangeUnit = 0; explorer = 0; colonist = 0; workerUnit = 0;
         for(Unit unit : tile.getUnits()) {
             if(unit instanceof MeleeUnit)
                 meleeUnit++;
@@ -90,7 +90,7 @@ public class TileState {
             if(unit instanceof Explorer)
                 explorer++;
             if(unit instanceof com.team7.model.entity.unit.nonCombatUnit.Colonist)
-                Colonist++;
+                colonist++;
             if((Entity)unit instanceof Worker)
                 workerUnit++;
         }
@@ -191,6 +191,6 @@ public class TileState {
     }
 
     public int getColonist() {
-        return Colonist;
+        return colonist;
     }
 }

@@ -1,7 +1,6 @@
 package com.team7.view.MainScreen;
 
 import com.team7.Main;
-import com.team7.controller.PathSelectController;
 import com.team7.model.TileState;
 import com.team7.model.Map;
 import com.team7.model.Player;
@@ -13,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Set;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -50,7 +48,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         int x_dir;
         int y_dir;
 
-        BufferedImage tempImg ;
+        BufferedImage mapImage;
         Graphics2D g2ds;
 
         private MainViewMiniMap mainViewSelection;
@@ -99,8 +97,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             catch (IOException e) {}
 
             mainViewSelection.setMainViewImage( this );
-            tempImg = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-            g2ds = (Graphics2D)tempImg.createGraphics();
+            mapImage = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
+            g2ds = (Graphics2D) mapImage.createGraphics();
             g2ds.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2ds.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 
@@ -192,7 +190,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             mainViewSelection.setMiniMapImage( getFullMapImage(false    ), TILES_VISIBLE_X, TILES_VISIBLE_Y );
             if(player == null)
                 return;
-            zoomToDestination(player.getRandomUnit().getLocation().getxCoordinate() - 11/2, player.getRandomUnit().getLocation().getyCoordinate() - 16/2, 60);
+            zoomToDestination(player.getFirstUnit().getLocation().getxCoordinate() - 11/2, player.getFirstUnit().getLocation().getyCoordinate() - 16/2, 60);
         }
 
          public void setCurrPlayer(Player p) {
@@ -319,24 +317,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              return mapImage;
          }
 
-        public void highlightRadius(Set<Tile> tiles) {
-
-            if(player == null)
-                return;
-
-            for (int i = 0; i < grid.length; i++) {
-                for (int j = 0; j < grid[i].length; j++) {
-                    if( tiles.contains( grid[i][j] ) ) {
-                        grid[i][j].markVisible(player.getName());
-                    }
-                    else if(grid[i][j].getVisible(player.getName()) && !tiles.contains( grid[i][j] ) && PathSelectController.isRecording) {
-                        grid[i][j].markShrouded( player.getName() );
-                    }
-                    grid[i][j].refreshDrawableState();
-                }
-            }
-        }
-
         private BufferedImage drawSubsectionOfMap(int x, int y) {
 
             /*
@@ -350,7 +330,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             g2ds.setFont(new Font("Arial", 0, 9));
             g2ds.setColor( new Color(0xffF5F5DC) );
-            g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
+            g2ds.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
             int x_offset, counter, step = 0;
@@ -471,7 +451,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 }
             }
 
-            return tempImg;
+            return mapImage;
         }
 
     public BufferedImage drawSubsectionOfMap() {
@@ -490,7 +470,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         g2ds.setFont(new Font("Arial", 0, 9));
         g2ds.setColor( new Color(0xffF5F5DC) );
-        g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
+        g2ds.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
 
         int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
         int x_offset, counter, step = 0;
@@ -611,7 +591,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             }
         }
 
-        return tempImg;
+        return mapImage;
     }
 
         public void paintComponent( Graphics g )

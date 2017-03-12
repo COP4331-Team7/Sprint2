@@ -348,12 +348,11 @@ public class Player {
         this.metal = metal;
     }
 
-    public Unit getRandomUnit() {
+    public Unit getFirstUnit() {
         if (units != null && units.size() > 0) {
             return units.get(0);
         }
         return null;
-
     }
 
     public int getNumExplorers() {
@@ -361,7 +360,6 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Explorer)
                 n++;
-
         return n;
     }
 
@@ -370,7 +368,6 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Colonist)
                 n++;
-
         return n;
     }
 
@@ -379,7 +376,6 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof MeleeUnit)
                 n++;
-
         return n;
     }
 
@@ -388,43 +384,34 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof RangedUnit)
                 n++;
-
         return n;
     }
 
     public Unit getExplorer(int id) {
-        int n = 0;
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Explorer && units.get(i).getId() == id)
                 return units.get( i );
-
         return null;
     }
 
     public Unit getMelee(int id) {
-        int n = 0;
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof MeleeUnit && units.get(i).getId() == id)
                 return units.get( i );
-
         return null;
     }
 
     public Unit getRanged(int id) {
-        int n = 0;
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof RangedUnit && units.get(i).getId() == id)
                 return units.get( i );
-
         return null;
     }
 
     public Unit getColonist(int id) {
-        int n = 0;
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
-
         return null;
     }
 
@@ -438,12 +425,11 @@ public class Player {
 
     public void printUnitIds() {
         for(Unit u : units) {
-
             System.out.println(u.getType() + " : " + u.getId() );
-
         }
         System.out.println();
     }
+
     public void printUnitCommandQueues() {
         for(Unit u : units) {
            System.out.print("commands for " + u.getType() + " " + u.getId() + ":\n");

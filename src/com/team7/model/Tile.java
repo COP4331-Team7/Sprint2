@@ -51,10 +51,7 @@ public class Tile {
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
 
-
-    public boolean isVisible = false;
     public boolean isSelectedPath = false;
-
 
     private TileState playerOneDraw;
     private TileState playerTwoDraw;
@@ -66,7 +63,6 @@ public class Tile {
 
     private VisibilityState playerOneVisibility;
     private VisibilityState playerTwoVisibility;
-
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate) {
