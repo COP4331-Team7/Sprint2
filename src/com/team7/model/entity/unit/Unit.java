@@ -97,10 +97,31 @@ public class Unit extends Entity {
     }
 
     public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:        ");
+
         for(int i = 0; i < commandQueue.getSize(); i++) {
-            System.out.println("                         " + commandQueue.get(i).getCommandString());
+            System.out.print(commandQueue.get(i).getCommandString() + " , ");
         }
         if(commandQueue.getSize() == 0)
-            System.out.println("                         empty");
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    private Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // so this could be abstract and implemented in the subclasses
+
+
     }
 }

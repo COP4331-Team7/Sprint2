@@ -7,6 +7,7 @@ import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +54,7 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        updateTileGameState();  // update tile states so view renders accordingly
+        updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }
 
 
@@ -67,7 +68,7 @@ public class Game {
     //1. find all tiles currently visited by current player, along with the radius
     //2. use radius to collect a set of all visible tiles to current player
     //3. iterate through game map to mark tiles correctly
-    public void updateTileGameState(){
+    public void updateCurrPlayerTileStates(){
 
         HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
         Set<Tile> visibleTiles = new HashSet<>();
@@ -101,8 +102,27 @@ public class Game {
 
         turn = ++turn % 2;
 
-        updateTileGameState();
+        updateCurrPlayerTileStates();
+        executeCommandQueues();
+
     }
+
+
+    public void executeCommandQueues() {
+
+        ArrayList<Unit> p1_units = players[0].getUnits();
+        ArrayList<Unit> p2_units = players[1].getUnits();
+        ArrayList<Unit> all_units = new ArrayList<>(p1_units);
+        all_units.addAll(p2_units);
+
+        // execute queues of all units in game
+        // some commands won't finish executing within 1 tick, they update & remain in queue
+        for(Unit u : all_units) {
+            u.printCommandQueue();
+            u.executeCommandQueue();
+        }
+    }
+
 
     //Get the current player
     public Player getCurrentPlayer() {

@@ -102,7 +102,7 @@ public class CommandSelectController {
         Unit unit = getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         unit.queueCommand( command );
 
-        printCurrPlayersUnitsCommandQueues();
+      //  printCurrPlayersUnitsCommandQueues();
     }
 
     public void printCurrPlayersUnitsCommandQueues(){

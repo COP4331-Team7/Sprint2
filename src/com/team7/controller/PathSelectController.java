@@ -111,7 +111,7 @@ public class PathSelectController {
 
                     for (int i = 0; i < pathTile.size(); i++) {
                         game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
-                        game.updateTileGameState();
+                        game.updateCurrPlayerTileStates();
                         miniMap.setMiniMapImage( mainViewImage.getFullMapImage(false) );
 
                         final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
