@@ -47,7 +47,7 @@ public class Player {
         nutrients = 200;
         metal = 200;
 
-        technologies = new Technologies();
+        technologies = new Technologies();  //init all player technologies
 
 
     }
@@ -151,6 +151,11 @@ public class Player {
         units.add(unit);
         unit.getLocation().addUnitToTile(unit);
 
+        //whenever a unit is added, alter its stats according to technology
+        for(Technology unitTechnology : technologies.getUnitTechnologies()){
+            applyTechnology(unitTechnology);
+        }
+
         return unit;
     }
 
@@ -222,6 +227,11 @@ public class Player {
         this.workers.add(worker);
         worker.getLocation().addWorkerToTile(worker);
 
+        //whenever a worker is added, alter its stats according to technology
+        for(Technology workerTechnology : technologies.getWorkerTechnologies()){
+            applyTechnology(workerTechnology);
+        }
+
         return worker;
     }
 
@@ -248,6 +258,11 @@ public class Player {
         observationTowers.add(observationTower);
         observationTower.addStructureToCurrentTile();
 
+        //whenever a structure is added, alter its stats according to technology
+        for(Technology structureTechnology : technologies.getStructureTechnologies()){
+            applyTechnology(structureTechnology);
+        }
+
         return observationTower;
     }
 
@@ -272,6 +287,12 @@ public class Player {
         // Physically add the structure and put it on the map
         staffedStructures.add(staffedStructure);
         staffedStructure.addStructureToCurrentTile();
+
+        //whenever a structure is added, alter its stats according to technology
+        for(Technology structureTechnology : technologies.getStructureTechnologies()){
+            applyTechnology(structureTechnology);
+        }
+
 
         return staffedStructure;
     }
@@ -465,7 +486,6 @@ public class Player {
                 }
                 break;
             case "worker":
-                //TODO worker density
                 for (Worker worker : workers){
                     worker.applyTechnology(techInstance, techStat, currentLevel);
                 }
@@ -478,10 +498,5 @@ public class Player {
                 }
                 break;
         }
-
-
     }
-
-
-
 }
