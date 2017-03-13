@@ -14,12 +14,14 @@ import java.util.HashMap;
  */
 public class Mine extends StaffedStructure implements IHarvester {
 
+    private final String harvestOre = "harvestOre";
+
     public Mine(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
-        productionRateMap.put("harvestOre", 2);   //can harvest 2 ore per turn per worker per resource
+        productionRateMap.put(harvestOre, 2);   //can harvest 2 ore per turn per worker per resource
         setStats(new StructureStats(
                 0,
                 100,
@@ -47,6 +49,38 @@ public class Mine extends StaffedStructure implements IHarvester {
 
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("Mine")){
+            //all structure specific stuff
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    getStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getStats().changeArmor((level*10));
+                    break;
+                case "Health":
+                    getStats().changeHealth((level*10));
+                    break;
+                case "Efficiency":
+                    changeEnergyUpkeep((0-level));
+                    changeOreUpkeep((0-level));
+                    break;
+            }
+        }
+
+
+        if (techInstance.equals("Harvester")){
+            //harvest related
+            if (technologyStat.equals("Ore")){
+                getStats().changeProduction(harvestOre, level);
+            }
+        }
 
     }
 }
