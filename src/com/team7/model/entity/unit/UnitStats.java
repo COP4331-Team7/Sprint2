@@ -14,11 +14,31 @@ public class UnitStats {
         armor = a;
         movement = m;
         health = h;
-        upkeep = u;
+        upkeep = u; 
+    }
+
+    public void changeOffensiveDamage(int delta){
+        offensiveDamage += delta;
+    }
+
+    public void changeDefensiveDamage(int delta){
+        defensiveDamage += delta;
+    }
+
+    public void changeArmor(int delta){
+        armor += delta;
     }
 
     public void changeMovement(int delta){
         movement += delta;
+    }
+
+    public void changeHealth(int delta){
+        health += delta;
+    }
+
+    public void changeUpkeep(int delta){
+        upkeep += delta;
     }
 
     public int getOffensiveDamage() {
