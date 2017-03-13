@@ -6,7 +6,12 @@ import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -492,6 +497,55 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
+        return null;
+    }
+
+    public Structure getCapital(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof Capital && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getFort(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof Fort && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getUniversity(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof University && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getObservationTower(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof ObservationTower && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getMine(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof Mine && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getFarm(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof Farm && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getPowerPlant(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(structures.get(i) instanceof PowerPlant && structures.get(i).getId() == id)
+                return structures.get( i );
         return null;
     }
 
