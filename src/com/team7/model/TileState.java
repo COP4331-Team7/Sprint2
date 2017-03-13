@@ -193,4 +193,8 @@ public class TileState {
     public int getColonist() {
         return colonist;
     }
+
+    public void decrementMeleeUnits() {
+        meleeUnit--;
+    }
 }

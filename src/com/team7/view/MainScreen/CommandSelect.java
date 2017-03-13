@@ -185,7 +185,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
             if(controller.getCurrentSelection(  currMode, currType, currTypeInstance ) == null)
                 return;
-            pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation()  );
+            pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation(), controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getUnitStats().getMovement()  );
             isRecordingPath = true;
         }
         // execute recorded path

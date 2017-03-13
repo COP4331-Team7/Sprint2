@@ -250,6 +250,8 @@ public class Tile {
     // Removes unit from Tile's ArrayList of Units
     public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
+                                            // TODO: fix
+        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decrementMeleeUnits();
     }
 
     // Adds army to Tile's ArrayList of Armies

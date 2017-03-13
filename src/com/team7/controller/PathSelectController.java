@@ -23,7 +23,6 @@ public class PathSelectController {
     private View view = null;
     private OptionsScreen optionsScreen = null;
     private MainViewImage mainViewImage = null;
-    private MainScreen mainScreen = null;
     private MainViewMiniMap miniMap = null;
     private CommandSelect commandView = null;
 
@@ -32,6 +31,7 @@ public class PathSelectController {
     private Tile startTile = null;
     private ConfigReader configReader;
     private ArrayList<Tile> pathTile = new ArrayList<Tile>();;
+    private int moveLimit;
     private int moveAnimationSpeed = 10 * 30;
 
     public PathSelectController(Game game, View view) {
@@ -40,7 +40,6 @@ public class PathSelectController {
         this.view = view;
         this.optionsScreen = view.getOptionScreen();
         this.mainViewImage = view.getMainViewImage();
-        this.mainScreen = view.getMainScreen();
         this.miniMap = view.getMainScreen().getMiniMap();
         this.commandView = view.getCommandSelect();
 
@@ -52,6 +51,9 @@ public class PathSelectController {
     // ===============================================
 
     public void moveCursor(String direction) {
+
+        if(pathTile.size() >= moveLimit)
+            return;
 
         selectedTile.isSelectedPath = false;
 
@@ -79,7 +81,9 @@ public class PathSelectController {
         mainViewImage.reDrawMap();
     }
 
-    public void startRecordingPath(Tile startTile) {
+    public void startRecordingPath(Tile startTile, int unitMovement) {
+
+        moveLimit = unitMovement;
 
         pathTile.clear();
         this.startTile = startTile;
