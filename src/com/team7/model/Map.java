@@ -252,4 +252,8 @@ public class Map{
         return tilesInRadius;
     }*/
 
+    public Tile getTile(int i, int j) {
+        return grid[i][j];
+    }
+
 }
