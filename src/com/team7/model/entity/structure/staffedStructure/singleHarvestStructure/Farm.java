@@ -24,12 +24,12 @@ public class Farm extends StaffedStructure implements IHarvester {
         productionRateMap.put(harvestFood, 2);   //can harvest 2 food per turn per resource per worker
         setStats(new StructureStats(
                 0,
-                100,
+                0,
                 10,
-                20,
+                10,
                 productionRateMap,
                 100,
-                200)
+                100)
         );
         setType("Farm");
         setPowered(false);
@@ -56,22 +56,33 @@ public class Farm extends StaffedStructure implements IHarvester {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if (techInstance.equals("Farm")){
+
+            setStats(new StructureStats(
+                    0,
+                    0,
+                    getStats().getArmor(),
+                    10,
+                    getStats().getProductionRates(),
+                    getStats().getHealth(),
+                    100)
+            );
+
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));

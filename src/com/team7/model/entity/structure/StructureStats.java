@@ -96,4 +96,13 @@ public class StructureStats {
     public void changeMaxArmor(int delta){
         maxArmor += delta;
     }
+
+
+    public int getMaxArmor() {
+        return maxArmor;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
 }

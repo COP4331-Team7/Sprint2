@@ -32,13 +32,13 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         productionRateMap.put(produceMelee, 8);   //can produce a melee unit after 5 ticks
         productionRateMap.put(produceRanged, 8);   //can produce a ranged unit after 5 ticks
         setStats(new StructureStats(
-                0,
-                100,
+                5,
+                5,
                 10,
-                20,
+                10,
                 productionRateMap,
                 100,
-                200)
+                100)
         );
         setType("Fort");
         setPowered(false);
@@ -81,22 +81,36 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         }
 
         if (techInstance.equals("Fort")){
+
+            //reset stats except armor and health
+            StructureStats defaultStats = new StructureStats(
+                    5,
+                    5,
+                    getStats().getArmor(),
+                    10,
+                    getStats().getProductionRates(),
+                    getStats().getHealth(),
+                    100);
+            setStats(defaultStats);
+
+
+
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level*5));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level*5));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));
