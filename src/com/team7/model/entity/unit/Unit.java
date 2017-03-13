@@ -5,6 +5,8 @@ import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
+import com.team7.model.entity.unit.combatUnit.CombatUnit;
+import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
 
 
 public abstract class Unit extends Entity {
@@ -12,7 +14,7 @@ public abstract class Unit extends Entity {
     private String type;
     private UnitStats unitStats;
     private boolean isPowered;
-    int movesFrozen;
+    int turnsFrozen;
     private Army army;
     private int direction;
 
@@ -35,8 +37,13 @@ public abstract class Unit extends Entity {
 
     // TODO: change this so it is not hardcoded
     public void powerUp() {
-        this.getUnitStats().setUpkeep(4);
-        this.setMovesFrozen(2);
+
+        if(this instanceof CombatUnit)
+            this.getUnitStats().setUpkeep(4);
+        if(this instanceof NonCombatUnit)
+            this.getUnitStats().setUpkeep(3);
+
+        this.setTurnsFrozen(2);
         isPowered = true;
     }
 
@@ -65,12 +72,17 @@ public abstract class Unit extends Entity {
         this.army = army;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
+    }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
     }
 
     public int getDirection() {

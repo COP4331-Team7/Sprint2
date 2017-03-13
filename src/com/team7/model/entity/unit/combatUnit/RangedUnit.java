@@ -15,7 +15,7 @@ public class RangedUnit extends CombatUnit {
         setCommandQueue(new CommandQueue());
         setType("Ranged");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(2);

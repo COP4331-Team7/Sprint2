@@ -22,7 +22,7 @@ public class Colonist extends NonCombatUnit {
         setCommandQueue(new CommandQueue());
         setType("Colonist");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(2);
@@ -31,7 +31,7 @@ public class Colonist extends NonCombatUnit {
     public void buildCapital() {
         // create capital, 5 workers and 2 melee units
         StaffedStructure capital = new Capital(this.getLocation(), this.getOwner());
-        this.getOwner().addStaffedStructure(capital);
+        this.getOwner().addStructure(capital);
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));

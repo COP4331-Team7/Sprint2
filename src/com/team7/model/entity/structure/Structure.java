@@ -14,7 +14,9 @@ public abstract class Structure extends Entity {
     private StructureStats stats;
     private String type;
     private boolean isPowered;
-    private int movesFrozen;
+
+    private int turnsFrozen;
+ 
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
     private int allocatedEnergy;
@@ -117,12 +119,12 @@ public abstract class Structure extends Entity {
         isPowered = powered;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
     }
 
     public int getEnergyUpkeep() {
@@ -184,4 +186,10 @@ public abstract class Structure extends Entity {
     public void setWorkerAssigned(ArrayList<Worker> workerAssigned) {
         this.workerAssigned = workerAssigned;
     }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
+    }
+
 }

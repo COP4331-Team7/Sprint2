@@ -32,10 +32,6 @@ public class Game {
                                      new Player("Two")
                                     };
 
-        // choose who goes first
-        int first = ThreadLocalRandom.current().nextInt(0, 2);
-        currentPlayer = players[ first ];
-        turn = first;
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();

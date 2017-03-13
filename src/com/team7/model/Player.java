@@ -18,16 +18,15 @@ import java.util.HashMap;
 public class Player {
     private ArrayList<Unit> units;
 
-    //need to separate because staffed has a function (command q), and food upkeep
-    //obsv only reduce from ore/energy
-    private ArrayList<StaffedStructure> staffedStructures;
-    private ArrayList<ObservationTower> observationTowers;
+    private ArrayList<Structure> structures;
 
     private Technologies technologies;
+
 
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
+    private boolean defeated;
     private int research;
     private int power;      //from harvested energy
     private int nutrients;  //from harvested food
@@ -38,8 +37,9 @@ public class Player {
     public Player(String name) {
         this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
-        staffedStructures = new ArrayList<>();                        // max size of staffed + observation should be 10
-        observationTowers = new ArrayList<>();
+
+        structures = new ArrayList<>();                              // max size should be 10
+
         armies = new ArrayList<Army>();                              // max size should be 10
         workers = new ArrayList<Worker>();
         research = 0;
@@ -56,8 +56,29 @@ public class Player {
     //called when a player ends his turn
     public void takeTurn(){
         initiateStructureEffects();
+
+        subtractMovesFrozen();
+        checkUnitArmyStructs();
+
     }
 
+    private void subtractMovesFrozen() {
+
+        // subtract one from moves frozen for all frozen units
+        for(int i = 0; i < this.units.size(); i++){
+            this.units.get(i).subtractFrozenTurn();
+        }
+
+        // subtract one from moves frozen for all frozen structures
+        for(int i = 0; i < this.structures.size(); i++){
+            this.structures.get(i).subtractFrozenTurn();
+        }
+
+        for(int i = 0; i < this.armies.size(); i++){
+            this.armies.get(i).subtractFrozenTurn();
+        }
+
+    }
 
    /* at every turn:
     *  1. build/check if structure is construction complete.
@@ -65,39 +86,69 @@ public class Player {
     *  3. do automatic structure functions (if applicable)
     *  4. execute structure Q
    */
+
+    // run this function at the end of each turn to see if there are any dead structures
+    // units or armies that need to be removed from the array lists
+    public void checkUnitArmyStructs(){
+
+        // check if any units are dead, if so remove from list
+        int unitSize = this.units.size();
+        for(int i = unitSize - 1; i >= 0; i--) {
+            if(this.units.get(i).getUnitStats().getHealth() <= 0) {
+                removeUnit(this.units.get(i));
+            }
+        }
+
+        int armySize = this.armies.size();
+        // check if any army units are dead, if so remove them
+        // then check if army is empty, if so, remove it
+        for(int i = armySize - 1; i >= 0; i--) {
+            int armyUnitSize = this.armies.get(i).getUnits().size();
+            for(int j = armyUnitSize - 1; j >= 0; j--){
+                // if any unit in the army is dead, remove it from the army
+                if(this.armies.get(i).getUnits().get(j).getUnitStats().getHealth() <= 0) {
+                    removeUnit(this.armies.get(i).getUnits().get(j));
+                    this.armies.get(i).removeUnitFromArmy(this.armies.get(i).getUnits().get(j));
+                }
+            }
+            if(this.armies.get(i).getUnits().size() == 0){
+                removeArmy(this.armies.get(i));
+            }
+        }
+
+        int structureSize = this.structures.size();
+        // check for any dead structures
+        for(int i = structureSize - 1; i >= 0; i--) {
+            if(this.structures.get(i).getStats().getHealth() <= 0) {
+                removeStructure(this.structures.get(i));
+            }
+        }
+
+    }
+
+
     private void initiateStructureEffects() {
         int energyLevelsOfStructures = 0;
         int foodLevelOfStructures = 0;
         int oreLevelOfStructures = 0;
 
-        int foodCostOfConstruction = 0;
 
-        //iterate through all staffed structures, which also have a function
-        for(StaffedStructure staffedStructure : staffedStructures){
-            foodCostOfConstruction += staffedStructure.advanceConstruction();    //builds a structure, does nothing if already complete
+        for(Structure structure : structures){
+            structure.advanceConstruction();    //builds a structure, does nothing if already complete
+            int foodCostOfConstruction = 0;
 
-            energyLevelsOfStructures += staffedStructure.computeEnergyUpkeep();
-            foodLevelOfStructures += staffedStructure.computeFoodUpkeep();
-            oreLevelOfStructures += staffedStructure.computeOreUpkeep();
 
-            staffedStructure.influenceStructureAccordingToSupply();
-            staffedStructure.influenceWorkersAccordingToFood();
+            energyLevelsOfStructures += structure.computeEnergyUpkeep();
+            if(structure instanceof StaffedStructure){
+                foodLevelOfStructures += ((StaffedStructure)structure).computeFoodUpkeep();
+            }
+            oreLevelOfStructures += structure.computeOreUpkeep();
 
-            staffedStructure.beginStructureFunction();
 
+            if(structure instanceof StaffedStructure){
+                ((StaffedStructure) structure).beginStructureFunction();
+            }
         }
-
-        //iterate through obsv towers to ensure they are build and supplied with energy/ore
-        for(ObservationTower observationTower : observationTowers){
-            foodCostOfConstruction += observationTower.advanceConstruction();
-
-            energyLevelsOfStructures += observationTower.computeEnergyUpkeep();
-            oreLevelOfStructures += observationTower.computeOreUpkeep();
-
-            observationTower.influenceStructureAccordingToSupply();
-        }
-
-        nutrients -= foodCostOfConstruction;
 
         power += energyLevelsOfStructures;
         nutrients += foodLevelOfStructures;
@@ -246,88 +297,75 @@ public class Player {
 
     // Structure helpers
 
-    public ObservationTower addObservationTower(ObservationTower observationTower){
 
-        // Ensures we are able to add a structure
+    public ArrayList<Structure> getStructures() {
+        return structures;
+    }
+
+    public Structure addStructure(StaffedStructure structure) {
+          // Ensures we are able to add a structure
         if(staffedStructures.size() + observationTowers.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
-
-        // Physically add the structure and put it on the map
-        observationTowers.add(observationTower);
-        observationTower.addStructureToCurrentTile();
-
-        //whenever a structure is added, alter its stats according to technology
+      
+         //whenever a structure is added, alter its stats according to technology
         for(Technology structureTechnology : technologies.getStructureTechnologies()){
             applyTechnology(structureTechnology);
         }
-
-        return observationTower;
     }
 
-    public ObservationTower removeObservationTower(ObservationTower observationTower) {
-        // Physically remove unit form player and tile
-        observationTowers.remove(observationTower);
-        observationTower.removeStructureFromCurrentTile();
+    
 
-        return observationTower;
-    }
+    
     public ArrayList<StaffedStructure> getStaffedStructures() {
         return staffedStructures;
     }
 
-    public StaffedStructure addStaffedStructure(StaffedStructure staffedStructure) {
-        // Ensures we are able to add a structure
-        if(staffedStructures.size() + observationTowers.size() == 10){
-            System.out.println("You have too many structures.");
-            return null;
-        }
 
-        // Physically add the structure and put it on the map
-        staffedStructures.add(staffedStructure);
-        staffedStructure.addStructureToCurrentTile();
-
-        //whenever a structure is added, alter its stats according to technology
-        for(Technology structureTechnology : technologies.getStructureTechnologies()){
-            applyTechnology(structureTechnology);
-        }
-
-
-        return staffedStructure;
-    }
 
     // Removes staffedStructure from Player's ArrayList of staffedStructures
-    public StaffedStructure removeStaffedStructure(StaffedStructure staffedStructure) {
+    public Structure removeStructure(Structure structure) {
 
         // Physically remove unit form player and tile
+
+        structures.remove(structure);
+        structure.getLocation().setStructure(null);
+
         staffedStructures.remove(staffedStructure);
         staffedStructure.removeStructureFromCurrentTile();
 
-        return staffedStructure;
+
+        return structure;
     }
 
+
+
+
     public boolean isDefeated() {
-        return !hasCapital();
+        hasCapital();
+        return defeated;
     }
 
 
     // check if the player has either capital or colonist
-    public boolean hasCapital() {
+    public void hasCapital() {
 
         for(int i = 0; i < this.units.size(); i++){
             if(this.units.get(i) instanceof Colonist){
-                return true;
+                defeated = false;
+                return;
             }
         }
 
-        for(int i = 0; i < staffedStructures.size(); i++){
-            if(staffedStructures.get(i) instanceof Capital){
-                return true;
+        for(int i = 0; i < structures.size(); i++){
+            if(structures.get(i) instanceof Capital){
+                defeated = false;
+                return;
             }
         }
 
-        return false;
+        defeated = true;
     }
     public void moveUnit(Unit unit, Tile destination){
         unit.getLocation().removeUnitFromTile(unit);
@@ -342,6 +380,33 @@ public class Player {
 
     public int getResearch() {
         return research;
+    }
+
+    // Adds army to Player's ArrayList of armies
+    public Army addArmy(Army army) {
+
+        // Ensures we are able to have a unit
+        if(this.armies.size() == 10){
+            System.out.println("You have too many units.");
+            return army;
+        }
+
+        // Physically add the unit and put it on the map
+        this.armies.add(army);
+        army.getLocation().addArmyToTile(army);
+
+        return army;
+    }
+
+
+    // Removes army to Player's ArrayList of armies
+    public Army removeArmy(Army army) {
+
+        // physically remove the army
+        this.armies.remove(army);
+        army.getLocation().removeArmyFromTile(army);
+
+        return army;
     }
 
     public void setResearch(int research) {
