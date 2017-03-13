@@ -128,6 +128,30 @@ public class University extends StaffedStructure implements ITechnologyProducer 
 
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("University")){
+            //all structure specific stuff
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    getStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getStats().changeArmor((level*10));
+                    break;
+                case "Health":
+                    getStats().changeHealth((level*10));
+                    break;
+                case "Efficiency":
+                    changeEnergyUpkeep((0-level));
+                    changeOreUpkeep((0-level));
+                    break;
+            }
+        }
 
     }
 }
