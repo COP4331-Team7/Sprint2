@@ -52,7 +52,7 @@ public class PlayerTests {
         assertEquals(testPlayer.isDefeated(), false);
 
         // remove capital and see if player lost
-        testPlayer.removeStaffedStructure(testPlayer.getStaffedStructures().get(0));
+        testPlayer.removeStructure(testPlayer.getStructures().get(0));
 
         assertEquals(testPlayer.isDefeated(), true);
 
@@ -104,5 +104,7 @@ public class PlayerTests {
 
     }
 
+
+    // TODO: add test for checkUnitArmyStructs
 
 }

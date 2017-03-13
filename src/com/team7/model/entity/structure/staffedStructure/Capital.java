@@ -28,7 +28,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         );
         setType("Capital");
         setPowered(false);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setInfluenceRadius(5);
         setEnergyUpkeep(5);
         setOreUpkeep(5);

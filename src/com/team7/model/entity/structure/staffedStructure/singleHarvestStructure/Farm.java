@@ -29,7 +29,7 @@ public class Farm extends StaffedStructure implements IHarvester {
         );
         setType("Farm");
         setPowered(false);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setInfluenceRadius(3);
         setEnergyUpkeep(5);
         setOreUpkeep(5);

@@ -16,8 +16,7 @@ import java.util.HashMap;
 
 public class Player {
     private ArrayList<Unit> units;
-    private ArrayList<StaffedStructure> staffedStructures;
-    //private ArrayList<ObservationTower> observationTowers;
+    private ArrayList<Structure> structures;
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
@@ -32,8 +31,7 @@ public class Player {
     public Player(String name) {
         this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
-        staffedStructures = new ArrayList<>();                        // max size of staffed + observation should be 10
-       // observationTowers = new ArrayList<>();
+        structures = new ArrayList<>();                              // max size should be 10
         armies = new ArrayList<Army>();                              // max size should be 10
         workers = new ArrayList<Worker>();
         research = 0;
@@ -59,10 +57,9 @@ public class Player {
         }
 
         // subtract one from moves frozen for all frozen structures
-        for(int i = 0; i < this.staffedStructures.size(); i++){
-            this.staffedStructures.get(i).subtractFrozenTurn();
+        for(int i = 0; i < this.structures.size(); i++){
+            this.structures.get(i).subtractFrozenTurn();
         }
-        // TODO: add for observation towers
 
         for(int i = 0; i < this.armies.size(); i++){
             this.armies.get(i).subtractFrozenTurn();
@@ -106,14 +103,13 @@ public class Player {
             }
         }
 
-        int staffedStructureSize = this.staffedStructures.size();
+        int structureSize = this.structures.size();
         // check for any dead structures
-        for(int i = staffedStructureSize - 1; i >= 0; i--) {
-            if(this.staffedStructures.get(i).getStats().getHealth() <= 0) {
-                removeStructure(this.staffedStructures.get(i));
+        for(int i = structureSize - 1; i >= 0; i--) {
+            if(this.structures.get(i).getStats().getHealth() <= 0) {
+                removeStructure(this.structures.get(i));
             }
         }
-        //TODO: add for observation towers
 
     }
 
@@ -122,19 +118,20 @@ public class Player {
         int foodLevelOfStructures = 0;
         int oreLevelOfStructures = 0;
 
-        for(StaffedStructure staffedStructure : staffedStructures){
-            staffedStructure.advanceConstruction();    //builds a structure, does nothing if already complete
+        for(Structure structure : structures){
+            structure.advanceConstruction();    //builds a structure, does nothing if already complete
 
-            energyLevelsOfStructures += staffedStructure.computeEnergyUpkeep();
-            foodLevelOfStructures += staffedStructure.computeFoodUpkeep();
-            oreLevelOfStructures += staffedStructure.computeOreUpkeep();
+            energyLevelsOfStructures += structure.computeEnergyUpkeep();
+            if(structure instanceof StaffedStructure)
+                foodLevelOfStructures += ((StaffedStructure)structure).computeFoodUpkeep();
+            oreLevelOfStructures += structure.computeOreUpkeep();
 
-            staffedStructure.beginStructureFunction();
+            if(structure instanceof StaffedStructure)
+                ((StaffedStructure) structure).beginStructureFunction();
 
             //staffedStructure.executeQ();
         }
 
-        //TODO iterate thru Observation Towers as well
         power += energyLevelsOfStructures;
         nutrients += foodLevelOfStructures;
         metal += oreLevelOfStructures;
@@ -253,61 +250,37 @@ public class Player {
     }
 
     // Structure helpers
-    //TODO add helper for obsv tower
-    public ArrayList<StaffedStructure> getStaffedStructures() {
-        return staffedStructures;
+
+    public ArrayList<Structure> getStructures() {
+        return structures;
     }
 
-    public StaffedStructure addStaffedStructure(StaffedStructure staffedStructure) {
+    public Structure addStructure(StaffedStructure structure) {
 
         // Ensures we are able to have a unit
-        if(staffedStructures.size() == 10){ //TODO add +obsvtower.size
+        if(structures.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
 
         // Physically add the structure and put it on the map
-        staffedStructures.add(staffedStructure);
-        staffedStructure.getLocation().setStructure(staffedStructure);
-
-        return staffedStructure;
-    }
-
-    // Removes staffedStructure from Player's ArrayList of staffedStructures
-    public StaffedStructure removeStaffedStructure(StaffedStructure staffedStructure) {
-
-        // Physically remove unit form player and tile
-        staffedStructures.remove(staffedStructure);
-        staffedStructure.getLocation().setStructure(null);
-
-        return staffedStructure;
-    }
-
-    // Adds structure to Player's ArrayList of Structures
-    public Structure addStaffedStructure(Structure structure) {
-
-        // Ensures we are able to have a unit
-        if(this.staffedStructures.size() == 10){
-            System.out.println("You have too many units.");
-            return structure;
-        }
-
-        // Physically add the unit and put it on the map
-        this.staffedStructures.add((StaffedStructure) structure);
+        structures.add(structure);
         structure.getLocation().setStructure(structure);
 
         return structure;
     }
 
-    // Removes unit from Player's ArrayList of Units
+    // Removes staffedStructure from Player's ArrayList of staffedStructures
     public Structure removeStructure(Structure structure) {
 
         // Physically remove unit form player and tile
-        this.staffedStructures.remove(structure);
+        structures.remove(structure);
         structure.getLocation().setStructure(null);
 
         return structure;
     }
+
+
 
 
     public boolean isDefeated() {
@@ -326,8 +299,8 @@ public class Player {
             }
         }
 
-        for(int i = 0; i < staffedStructures.size(); i++){
-            if(staffedStructures.get(i) instanceof Capital){
+        for(int i = 0; i < structures.size(); i++){
+            if(structures.get(i) instanceof Capital){
                 defeated = false;
                 return;
             }
