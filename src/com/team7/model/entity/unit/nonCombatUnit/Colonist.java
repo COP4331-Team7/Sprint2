@@ -50,19 +50,24 @@ public class Colonist extends NonCombatUnit {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if(techInstance.equals("Colonist")){
+
+            //reset stats except armor and health
+            UnitStats defaultStats = new UnitStats(1, 1, getUnitStats().getArmor(), 5, 10, getUnitStats().getHealth(), 100, 3 );
+            setUnitStats(defaultStats);
+
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
                     //will always stay at 0
-                    getUnitStats().changeOffensiveDamage((level*10));
+                    getUnitStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getUnitStats().changeDefensiveDamage((level*10));
+                    getUnitStats().changeDefensiveDamage((level));
                     break;
                 case "ArmorStrength":
-                    getUnitStats().changeArmor((level*10));
+                    getUnitStats().changeMaxArmor((2*level));
                     break;
                 case "MovementRate":
                     getUnitStats().changeMovement(level);
@@ -72,7 +77,7 @@ public class Colonist extends NonCombatUnit {
                     getUnitStats().changeUpkeep((0-level));
                     break;
                 case "Health":
-                    getUnitStats().changeHealth((level*10));
+                    getUnitStats().changeMaxHealth((level*20));
                     break;
             }
         }

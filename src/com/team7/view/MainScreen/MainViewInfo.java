@@ -215,8 +215,8 @@ public class MainViewInfo extends JPanel {
         UnitStats stats = unit.getUnitStats();
         setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
-        setArmorLabel( Integer.toString( stats.getArmor() ) );
-        setHealthLabel( Integer.toString( stats.getHealth() ) );
+        setArmorLabel( Integer.toString( stats.getArmor() ) + "/" + Integer.toString(stats.getMaxArmor()) );
+        setHealthLabel( Integer.toString( stats.getHealth()) + "/" + Integer.toString(stats.getMaxHealth()) );
         setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
         setProductionLabel( "0" );
         setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );

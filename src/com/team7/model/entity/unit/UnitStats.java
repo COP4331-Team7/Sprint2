@@ -36,6 +36,10 @@ public class UnitStats {
         }
     }
 
+    public void changeMaxArmor(int delta){
+        maxArmor += delta;
+    }
+
     public void changeMovement(int delta){
         movement += delta;
     }
@@ -46,6 +50,10 @@ public class UnitStats {
         if (health > maxHealth){
             health = maxHealth;
         }
+    }
+
+    public void changeMaxHealth(int delta){
+        maxHealth += delta;
     }
 
     public void changeUpkeep(int delta){
@@ -105,6 +113,14 @@ public class UnitStats {
 
     public void setUpkeep(int upkeep) {
         this.upkeep = upkeep;
+    }
+
+    public int getMaxArmor() {
+        return maxArmor;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }
 
