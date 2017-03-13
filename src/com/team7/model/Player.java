@@ -295,13 +295,16 @@ public class Player {
         return structures;
     }
 
-    public Structure addStructure(StaffedStructure structure) {
+    public Structure addStructure(Structure structure) {
           // Ensures we are able to add a structure
         if(structures.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
-      
+
+        this.structures.add(structure);
+        structure.getLocation().setStructure(structure);
+
          //whenever a structure is added, alter its stats according to technology
         for(Technology structureTechnology : technologies.getStructureTechnologies()){
             applyTechnology(structureTechnology);
@@ -319,7 +322,6 @@ public class Player {
 
         // Physically remove unit form player and tile
 
-        //todo fix tda violation
         structures.remove(structure);
         structure.getLocation().setStructure(null);
 

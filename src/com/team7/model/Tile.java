@@ -292,8 +292,10 @@ public class Tile {
 
     public void setStructure(Structure structure) {
         this.structure = structure;
-        realDraw.setStructureType(structure.getType());
-        realDraw.setStructureStatus(structure.isPowered());
+        if(structure != null) {
+            realDraw.setStructureType(structure.getType());
+            realDraw.setStructureStatus(structure.isPowered());
+        }
     }
 
     //called by controller to determine which tile state to draw
