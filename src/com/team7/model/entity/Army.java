@@ -94,5 +94,17 @@ public class Army extends Entity {
         isPowered = false;
     }
 
+    public int getTurnsFrozen() {
+        return turnsFrozen;
+    }
+
+    public void setTurnsFrozen(int turnsFrozen) {
+        this.turnsFrozen = turnsFrozen;
+    }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
+    }
 
 }

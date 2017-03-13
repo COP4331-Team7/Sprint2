@@ -20,7 +20,7 @@ public class Colonist extends NonCombatUnit {
         setCommandQueue(new CommandQueue());
         setType("Colonist");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(3);

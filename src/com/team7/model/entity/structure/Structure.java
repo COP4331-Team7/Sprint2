@@ -14,7 +14,7 @@ public abstract class Structure extends Entity {
     private StructureStats stats;
     private String type;
     private boolean isPowered;
-    private int movesFrozen;
+    private int turnsFrozen;
     private int influenceRadius;
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
@@ -48,12 +48,12 @@ public abstract class Structure extends Entity {
         isPowered = powered;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
     }
 
     public int getInfluenceRadius() {
@@ -166,6 +166,11 @@ public abstract class Structure extends Entity {
     public ArrayList<Tile> computeTilesInRadius() {
         //call method compute(location, radius)
         return null;
+    }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
     }
 
 }

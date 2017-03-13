@@ -13,7 +13,7 @@ public class Unit extends Entity {
     private String type;
     private UnitStats unitStats;
     private boolean isPowered;
-    int movesFrozen;
+    int turnsFrozen;
     private Army army;
     private int direction;
 
@@ -42,7 +42,7 @@ public class Unit extends Entity {
         if(this instanceof NonCombatUnit)
             this.getUnitStats().setUpkeep(3);
 
-        this.setMovesFrozen(2);
+        this.setTurnsFrozen(2);
         isPowered = true;
     }
 
@@ -71,12 +71,17 @@ public class Unit extends Entity {
         this.army = army;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
+    }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
     }
 
     public int getDirection() {

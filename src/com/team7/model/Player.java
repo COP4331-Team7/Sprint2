@@ -50,6 +50,24 @@ public class Player {
 
     }
 
+    private void subtractMovesFrozen() {
+
+        // subtract one from moves frozen for all frozen units
+        for(int i = 0; i < this.units.size(); i++){
+            this.units.get(i).subtractFrozenTurn();
+        }
+
+        // subtract one from moves frozen for all frozen structures
+        for(int i = 0; i < this.staffedStructures.size(); i++){
+            this.staffedStructures.get(i).subtractFrozenTurn();
+        }
+        // TODO: add for observation towers
+
+        for(int i = 0; i < this.armies.size(); i++){
+            this.armies.get(i).subtractFrozenTurn();
+        }
+
+    }
 
    /* at every turn:
     *  1. build/check if structure is construction complete.  if ready, isPowered should be true

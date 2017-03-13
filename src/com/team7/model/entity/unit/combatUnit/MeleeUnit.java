@@ -15,7 +15,7 @@ public class MeleeUnit extends CombatUnit {
         setCommandQueue(new CommandQueue());
         setType("Melee");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(3);

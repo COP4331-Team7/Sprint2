@@ -17,7 +17,7 @@ public class Explorer extends NonCombatUnit {
         setCommandQueue(new CommandQueue());
         setType("Explorer");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setProspecting(false);
