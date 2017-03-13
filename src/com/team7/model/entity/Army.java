@@ -107,4 +107,31 @@ public class Army extends Entity {
             this.turnsFrozen = this.turnsFrozen - 1;
     }
 
+    public CommandQueue getCommandQueue() {
+        return commandQueue;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
+
+    public int getSlowestSpeed() {
+        return slowestSpeed;
+    }
+
+    public int getGreatestVis() {
+        return greatestVis;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public boolean isPowered() {
+        return isPowered;
+    }
 }

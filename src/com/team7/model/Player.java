@@ -47,7 +47,8 @@ public class Player {
     //called when a player ends his turn
     public void takeTurn(){
         initiateStructureEffects();
-
+        subtractMovesFrozen();
+        checkUnitArmyStructs();
     }
 
     private void subtractMovesFrozen() {
@@ -76,7 +77,45 @@ public class Player {
     *  4. execute structure Q
    */
 
+    // run this function at the end of each turn to see if there are any dead structures
+    // units or armies that need to be removed from the array lists
+    public void checkUnitArmyStructs(){
 
+        // check if any units are dead, if so remove from list
+        int unitSize = this.units.size();
+        for(int i = unitSize - 1; i >= 0; i--) {
+            if(this.units.get(i).getUnitStats().getHealth() <= 0) {
+                removeUnit(this.units.get(i));
+            }
+        }
+
+        int armySize = this.armies.size();
+        // check if any army units are dead, if so remove them
+        // then check if army is empty, if so, remove it
+        for(int i = armySize - 1; i >= 0; i--) {
+            int armyUnitSize = this.armies.get(i).getUnits().size();
+            for(int j = armyUnitSize - 1; j >= 0; j--){
+                // if any unit in the army is dead, remove it from the army
+                if(this.armies.get(i).getUnits().get(j).getUnitStats().getHealth() <= 0) {
+                    removeUnit(this.armies.get(i).getUnits().get(j));
+                    this.armies.get(i).removeUnitFromArmy(this.armies.get(i).getUnits().get(j));
+                }
+            }
+            if(this.armies.get(i).getUnits().size() == 0){
+                removeArmy(this.armies.get(i));
+            }
+        }
+
+        int staffedStructureSize = this.staffedStructures.size();
+        // check for any dead structures
+        for(int i = staffedStructureSize - 1; i >= 0; i--) {
+            if(this.staffedStructures.get(i).getStats().getHealth() <= 0) {
+                removeStructure(this.staffedStructures.get(i));
+            }
+        }
+        //TODO: add for observation towers
+
+    }
 
     private void initiateStructureEffects() {
         int energyLevelsOfStructures = 0;
@@ -244,6 +283,33 @@ public class Player {
         return staffedStructure;
     }
 
+    // Adds structure to Player's ArrayList of Structures
+    public Structure addStaffedStructure(Structure structure) {
+
+        // Ensures we are able to have a unit
+        if(this.staffedStructures.size() == 10){
+            System.out.println("You have too many units.");
+            return structure;
+        }
+
+        // Physically add the unit and put it on the map
+        this.staffedStructures.add((StaffedStructure) structure);
+        structure.getLocation().setStructure(structure);
+
+        return structure;
+    }
+
+    // Removes unit from Player's ArrayList of Units
+    public Structure removeStructure(Structure structure) {
+
+        // Physically remove unit form player and tile
+        this.staffedStructures.remove(structure);
+        structure.getLocation().setStructure(null);
+
+        return structure;
+    }
+
+
     public boolean isDefeated() {
         hasCapital();
         return defeated;
@@ -278,6 +344,33 @@ public class Player {
 
     public int getResearch() {
         return research;
+    }
+
+    // Adds army to Player's ArrayList of armies
+    public Army addArmy(Army army) {
+
+        // Ensures we are able to have a unit
+        if(this.armies.size() == 10){
+            System.out.println("You have too many units.");
+            return army;
+        }
+
+        // Physically add the unit and put it on the map
+        this.armies.add(army);
+        army.getLocation().addArmyToTile(army);
+
+        return army;
+    }
+
+
+    // Removes army to Player's ArrayList of armies
+    public Army removeArmy(Army army) {
+
+        // physically remove the army
+        this.armies.remove(army);
+        army.getLocation().removeArmyFromTile(army);
+
+        return army;
     }
 
     public void setResearch(int research) {
