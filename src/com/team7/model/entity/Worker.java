@@ -9,6 +9,8 @@ public class Worker extends Entity {
     private int constructionRate;
     private boolean isFed;
     private boolean isAssigned;
+    private int harvestRadius;
+    private int foodUpkeep;
 
     public Worker(Tile startTile, Player player) {
         setOwner(player);
@@ -20,6 +22,10 @@ public class Worker extends Entity {
         constructionRate = 10;
         setFed(true);   //worker has enough food when created
         setAssigned(false); //worker is not assigned until specified
+
+        foodUpkeep = 5; //initially requires 5 food per turn
+
+        harvestRadius = 0; //a worker can only work on the same tile as a structure initially
     }
 
     public boolean isFed() {
@@ -54,5 +60,41 @@ public class Worker extends Entity {
 
     public void setArmy(Army army) {
         this.army = army;
+    }
+
+    public void applyTechnology(String techInstance, String technologyStat, int level){
+        if(techInstance.equals("Worker")){
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "Efficiency":
+                    changeFoodUpkeep(0-level);
+                    break;
+                case "HarvestRadius":
+                    changeHarvestRadius(level);
+                    break;
+            }
+        }
+
+        if (techInstance.equals("Tile")){
+            //TODO change tile density
+        }
+    }
+
+    private void changeHarvestRadius(int delta){
+        harvestRadius += delta;
+    }
+
+    public int getFoodUpkeep(){
+        return foodUpkeep;
+    }
+
+    public int getHarvestRadius(){
+        return harvestRadius;
+    }
+
+    private void changeFoodUpkeep(int delta){
+        foodUpkeep += delta;
     }
 }

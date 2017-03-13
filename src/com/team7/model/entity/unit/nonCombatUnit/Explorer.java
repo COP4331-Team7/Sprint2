@@ -48,6 +48,8 @@ public class Explorer extends NonCombatUnit {
                 case "MovementRate":
                     getUnitStats().changeMovement(level);
                     break;
+                case "Efficiency":
+                    break;
                 case "Health":
                     break;
             }
