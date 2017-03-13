@@ -37,7 +37,7 @@ public class Explorer extends NonCombatUnit {
 
         isProspecting = prospecting;
     }
-    
+
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level){
         if(techInstance.equals("Explorer")){
