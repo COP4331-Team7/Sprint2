@@ -29,6 +29,7 @@ public class Game {
 
 
         //TODO check if this violates TDA
+        // note on above: could give each player a populate starting units function
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 3][3], players[0]));
          players[0].addUnit(new Explorer(this.map.getGrid()[map.getGrid().length - 4][4], players[0]));
          players[0].addUnit(new Colonist(this.map.getGrid()[map.getGrid().length - 5][4], players[0]));

@@ -21,6 +21,7 @@ public class Player {
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
+    private boolean defeated;
     private int research;
     private int power;      //from harvested energy
     private int nutrients;  //from harvested food
@@ -56,6 +57,7 @@ public class Player {
     *  3. do automatic structure functions (if applicable)
     *  4. execute structure Q
    */
+
 
 
     private void initiateStructureEffects() {
@@ -225,26 +227,29 @@ public class Player {
     }
 
     public boolean isDefeated() {
-        return !hasCapital();
+        hasCapital();
+        return defeated;
     }
 
 
     // check if the player has either capital or colonist
-    public boolean hasCapital() {
+    public void hasCapital() {
 
         for(int i = 0; i < this.units.size(); i++){
             if(this.units.get(i) instanceof Colonist){
-                return true;
+                defeated = false;
+                return;
             }
         }
 
         for(int i = 0; i < staffedStructures.size(); i++){
             if(staffedStructures.get(i) instanceof Capital){
-                return true;
+                defeated = false;
+                return;
             }
         }
 
-        return false;
+        defeated = true;
     }
 
     // Army helpers

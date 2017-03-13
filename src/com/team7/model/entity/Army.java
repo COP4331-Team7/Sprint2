@@ -13,6 +13,7 @@ public class Army extends Entity {
     private int slowestSpeed;
     private int greatestVis;
     private int direction;
+    private boolean isPowered;
     private int turnsFrozen;
 
     public Army(Tile startTile, Player player) {
@@ -70,6 +71,27 @@ public class Army extends Entity {
                 this.greatestVis = units.get(i).getVisibilityRadius();
             }
         }
+    }
+
+    public void powerUp() {
+
+
+        for(int i = 0; i < units.size(); i++) {
+            this.units.get(i).powerUp();
+        }
+
+        turnsFrozen = 2;
+        isPowered = true;
+    }
+
+    public void powerDown() {
+
+        for(int i = 0; i < units.size(); i++) {
+            this.units.get(i).powerDown();
+        }
+
+        turnsFrozen = 0;
+        isPowered = false;
     }
 
 

@@ -4,6 +4,8 @@ package com.team7.model.entity.unit;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
+import com.team7.model.entity.unit.combatUnit.CombatUnit;
+import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
 
 
 public class Unit extends Entity {
@@ -34,7 +36,12 @@ public class Unit extends Entity {
 
     // TODO: change this so it is not hardcoded
     public void powerUp() {
-        this.getUnitStats().setUpkeep(4);
+
+        if(this instanceof CombatUnit)
+            this.getUnitStats().setUpkeep(4);
+        if(this instanceof NonCombatUnit)
+            this.getUnitStats().setUpkeep(3);
+
         this.setMovesFrozen(2);
         isPowered = true;
     }
