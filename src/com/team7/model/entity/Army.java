@@ -27,5 +27,50 @@ public class Army extends Entity {
         this.turnsFrozen = 0;
     }
 
+    // Adds unit to Army's ArrayList of Units
+    public void addUnitToArmy(Unit unit) {
+        // Physically add the unit
+        this.units.add(unit);
+        unit.setArmy(this);
+
+        // Check for new slowest speed
+        if(unit.getUnitStats().getMovement() < this.slowestSpeed){
+            this.slowestSpeed = unit.getUnitStats().getMovement();
+        }
+
+        // Check for new greatest vis
+        if(unit.getVisibilityRadius() > this.greatestVis){
+            this.greatestVis = unit.getVisibilityRadius();
+        }
+
+    }
+
+    // Removes unit from Army's ArrayList of Units
+    public void removeUnitFromArmy(Unit unit) {
+
+        this.units.remove(unit);
+        unit.setArmy(null);
+
+        resetLowestSpeedGreatestRadius();
+
+    }
+
+    private void resetLowestSpeedGreatestRadius(){
+        this.slowestSpeed = 100;
+        this.greatestVis = 1;
+
+        for(int i = 0; i < units.size(); i++) {
+            // Check for new slowest speed
+            if(units.get(i).getUnitStats().getMovement() < this.slowestSpeed){
+                this.slowestSpeed = units.get(i).getUnitStats().getMovement();
+            }
+
+            // Check for new greatest vis
+            if(units.get(i).getVisibilityRadius() > this.greatestVis){
+                this.greatestVis = units.get(i).getVisibilityRadius();
+            }
+        }
+    }
+
 
 }
