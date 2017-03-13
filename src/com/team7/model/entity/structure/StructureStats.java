@@ -7,16 +7,20 @@ public class StructureStats {
     private int offensiveDamage;
     private int defensiveDamage;
     private int armor;
+    private int maxArmor;
     private HashMap<String,Integer> productionRates; // No. of turns required to produce a specific unit
     private int health;
+    private int maxHealth;
     //upkeep stat is handled per structure class
 
-    public StructureStats(int offensiveDamage, int defensiveDamage, int armor, HashMap<String, Integer> productionRates, int health) {
+    public StructureStats(int offensiveDamage, int defensiveDamage, int armor, int maxArmor, HashMap<String, Integer> productionRates, int health, int maxHealth) {
         this.offensiveDamage = offensiveDamage;
         this.defensiveDamage = defensiveDamage;
         this.armor = armor;
+        this.maxArmor = maxArmor;
         this.productionRates = productionRates;
         this.health = health;
+        this.maxHealth = maxHealth;
     }
 
     public int getOffensiveDamage() {
@@ -50,6 +54,13 @@ public class StructureStats {
 
     public void changeHealth(int delta){
         health += delta;
+        if (health > maxHealth){
+            health = maxHealth;
+        }
+    }
+
+    public void changeMaxHealth(int delta){
+        maxHealth += delta;
     }
 
     public void changeOffensiveDamage(int delta){
@@ -62,5 +73,12 @@ public class StructureStats {
 
     public void changeArmor(int delta){
         armor += delta;
+        if (armor > maxArmor){
+            armor = maxArmor;
+        }
+    }
+
+    public void changeMaxArmor(int delta){
+        maxArmor += delta;
     }
 }

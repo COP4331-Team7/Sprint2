@@ -34,9 +34,11 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         setStats(new StructureStats(
                 0,
                 100,
-                100,
+                10,
+                20,
                 productionRateMap,
-                100)
+                100,
+                200)
         );
         setType("Fort");
         setPowered(false);

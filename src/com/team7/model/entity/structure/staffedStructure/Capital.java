@@ -35,9 +35,11 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         setStats(new StructureStats(
                 0,
                 100,
-                100,
+                10,
+                20,
                 productionRateMap,
-                100)
+                100,
+                200)
         );
         setType("Capital");
         setPowered(false);

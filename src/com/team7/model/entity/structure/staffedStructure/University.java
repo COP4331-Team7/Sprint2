@@ -112,9 +112,11 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         setStats(new StructureStats(
                 0,
                 100,
-                100,
+                10,
+                20,
                 productionRateMap,
-                100)
+                100,
+                200)
         );
         setType("University");
         setPowered(false);

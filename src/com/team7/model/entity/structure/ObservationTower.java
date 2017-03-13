@@ -15,9 +15,11 @@ public class ObservationTower extends Structure {
         setStats(new StructureStats(
                 0,
                 100,
-                100,
+                10,
+                20,
                 null,   //no production for Observation Tower
-                100)
+                100,
+                200)
         );
         setType("Observation Tower");
         setPowered(false);
