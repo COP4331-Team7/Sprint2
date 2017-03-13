@@ -14,7 +14,7 @@ public class UnitStats {
         armor = a;
         movement = m;
         health = h;
-        upkeep = u; 
+        upkeep = u;
     }
 
     public void changeOffensiveDamage(int delta){
