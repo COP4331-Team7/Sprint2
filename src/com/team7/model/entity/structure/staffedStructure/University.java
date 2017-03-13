@@ -20,9 +20,13 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         //key: TYPE INSTANCE TECHNOLOGY
         //value Integer = number of turns needed to increment research level
 
-
+        //Worker technology
+        productionRateMap.put("worker Worker VisibilityRadius", 2);
+        productionRateMap.put("worker Worker MovementRate",2);
+        productionRateMap.put("worker Worker Efficiency", 2); //reduces amount of food a worker needs per turn
+        productionRateMap.put("worker Worker HarvestRadius", 2); //aka work radius
         //Tile technology
-        productionRateMap.put("tile Worker Density", 1);
+        productionRateMap.put("worker Tile Density", 1);
 
         //Unit technology
         productionRateMap.put("unit Explorer VisibilityRadius", 2);
@@ -30,13 +34,23 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         productionRateMap.put("unit Explorer DefenseStrength",2);
         productionRateMap.put("unit Explorer ArmorStrength", 2);
         productionRateMap.put("unit Explorer MovementRate",2);
+        productionRateMap.put("unit Explorer Efficiency", 2); //reduces amount of food a unit needs per turn
         productionRateMap.put("unit Explorer Health",2);
+
+        productionRateMap.put("unit Colonist VisibilityRadius", 2);
+        productionRateMap.put("unit Colonist AttackStrength",2);
+        productionRateMap.put("unit Colonist DefenseStrength",2);
+        productionRateMap.put("unit Colonist ArmorStrength", 2);
+        productionRateMap.put("unit Colonist MovementRate",2);
+        productionRateMap.put("unit Colonist Efficiency", 2); //reduces amount of food a unit needs per turn
+        productionRateMap.put("unit Colonist Health",2);
 
         productionRateMap.put("unit Melee VisibilityRadius", 2);
         productionRateMap.put("unit Melee AttackStrength",2);
         productionRateMap.put("unit Melee DefenseStrength",2);
         productionRateMap.put("unit Melee ArmorStrength", 2);
         productionRateMap.put("unit Melee MovementRate",2);
+        productionRateMap.put("unit Melee Efficiency", 2); //reduces amount of food a unit needs per turn
         productionRateMap.put("unit Melee Health",2);
 
         productionRateMap.put("unit Ranged VisibilityRadius", 2);
@@ -44,12 +58,9 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         productionRateMap.put("unit Ranged DefenseStrength",2);
         productionRateMap.put("unit Ranged ArmorStrength", 2);
         productionRateMap.put("unit Ranged MovementRate",2);
+        productionRateMap.put("unit Ranged Efficiency", 2); //reduces amount of food a unit needs per turn
         productionRateMap.put("unit Ranged Health",2);
 
-        productionRateMap.put("unit Worker VisibilityRadius", 2);
-        productionRateMap.put("unit Worker MovementRate",2);
-        productionRateMap.put("unit Worker Efficiency", 2); //reduces amount of food a worker needs per turn
-        productionRateMap.put("unit Worker harvestRadius", 2);
 
         //Structure technology
         productionRateMap.put("structure Capital VisibilityRadius", 2);
@@ -59,7 +70,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         productionRateMap.put("structure Capital Health", 2);
         productionRateMap.put("structure Capital Efficiency", 2); //reduces amount of ore/energy needed per turn
 
-            //applies to Farm, Mine, PowerPlant. Researching one will automatically increase the other
+        //applies to Farm, Mine, PowerPlant. Researching one will automatically increase the other
         productionRateMap.put("structure Harvester VisibilityRadius", 2);
         productionRateMap.put("structure Harvester AttackStrength", 2);
         productionRateMap.put("structure Harvester DefenseStrength", 2);
