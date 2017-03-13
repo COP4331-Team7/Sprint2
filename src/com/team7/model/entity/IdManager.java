@@ -30,36 +30,43 @@ public class IdManager {
                 return -1;
             }
 
-            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
             if(entity instanceof Explorer) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(entity instanceof Explorer){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof Colonist) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(entity instanceof Colonist){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof MeleeUnit) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(entity instanceof MeleeUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof RangedUnit) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(entity instanceof RangedUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
-            ID = availableIDs.get(0);
+
         }
         else if(entity instanceof Worker) {
             if(player.getWorkers().size() >= 99){
