@@ -22,7 +22,6 @@ public class University extends StaffedStructure implements ITechnologyProducer 
 
         //Worker technology
         productionRateMap.put("worker Worker VisibilityRadius", 2);
-        productionRateMap.put("worker Worker MovementRate",2);
         productionRateMap.put("worker Worker Efficiency", 2); //reduces amount of food a worker needs per turn
         productionRateMap.put("worker Worker HarvestRadius", 2); //aka work radius
         //Tile technology
