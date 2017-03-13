@@ -14,7 +14,6 @@ public class Technologies {
 
         //Worker technology
         technologies.add(new Technology("worker", "Worker", "VisibilityRadius", 1, 5));
-        technologies.add(new Technology("worker", "Worker", "MovementRate", 0, 3));
         technologies.add(new Technology("worker", "Worker", "Efficiency",0, 3));
         technologies.add(new Technology("worker", "Worker", "HarvestRadius",0, 3));  //work harvest radius is initially just the structure's hex
         technologies.add(new Technology("worker", "Tile", "Density", 1,5));
