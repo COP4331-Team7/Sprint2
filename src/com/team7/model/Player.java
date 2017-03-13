@@ -464,8 +464,11 @@ public class Player {
                     observationTower.applyTechnology(techInstance, techStat, currentLevel);
                 }
                 break;
-            case "tile":
+            case "worker":
                 //TODO worker density
+                for (Worker worker : workers){
+                    worker.applyTechnology(techInstance, techStat, currentLevel);
+                }
                 break;
             case "productionRate":
                 //productionRate only applies to staffed structures
