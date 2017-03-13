@@ -36,6 +36,9 @@ public class Game {
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
+        currentPlayer = players[0];
+        turn = 0;
+
         //TODO: fix
         // set Player One starting units
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );

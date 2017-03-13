@@ -4,6 +4,7 @@ import com.team7.model.entity.Army;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
@@ -166,20 +167,12 @@ public class Player {
             }
         }
 
-        for (StaffedStructure structure : staffedStructures) {
+        for (Structure structure : structures){
             if (structure.isPowered()){
                 Tile tile = structure.getLocation();
                 int radius = structure.getVisibilityRadius();
                 tileRadiusMap.put(tile, radius);
             }
-        }
-
-        for (ObservationTower observationTower : observationTowers) {
-            //if (observationTower.isPowered()){    COMMENTED OUT FOR TESTING
-                Tile tile = observationTower.getLocation();
-                int radius = observationTower.getVisibilityRadius();
-                tileRadiusMap.put(tile, radius);
-          //  }
         }
 
         return tileRadiusMap;
@@ -304,7 +297,7 @@ public class Player {
 
     public Structure addStructure(StaffedStructure structure) {
           // Ensures we are able to add a structure
-        if(staffedStructures.size() + observationTowers.size() == 10){
+        if(structures.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
@@ -313,14 +306,11 @@ public class Player {
         for(Technology structureTechnology : technologies.getStructureTechnologies()){
             applyTechnology(structureTechnology);
         }
+
+        return structure;
     }
 
-    
 
-    
-    public ArrayList<StaffedStructure> getStaffedStructures() {
-        return staffedStructures;
-    }
 
 
 
@@ -329,11 +319,9 @@ public class Player {
 
         // Physically remove unit form player and tile
 
+        //todo fix tda violation
         structures.remove(structure);
         structure.getLocation().setStructure(null);
-
-        staffedStructures.remove(staffedStructure);
-        staffedStructure.removeStructureFromCurrentTile();
 
 
         return structure;
@@ -505,9 +493,6 @@ public class Player {
         return null;
     }
 
-    public ArrayList<ObservationTower> getObservationTowers() {
-        return observationTowers;
-    }
 
     public String getName() {
         return name;
@@ -543,11 +528,8 @@ public class Player {
                 }
                 break;
             case "structure":
-                for (StaffedStructure staffedStructure : staffedStructures){
-                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
-                }
-                for (ObservationTower observationTower : observationTowers){
-                    observationTower.applyTechnology(techInstance, techStat, currentLevel);
+                for (Structure structure : structures){
+                    structure.applyTechnology(techInstance, techStat, currentLevel);
                 }
                 break;
             case "worker":
@@ -558,8 +540,8 @@ public class Player {
             case "productionRate":
                 //productionRate only applies to staffed structures
                 //harvest, produce, or train
-                for (StaffedStructure staffedStructure : staffedStructures){
-                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
+                for (Structure structure : structures){
+                    structure.applyTechnology(techInstance, techStat, currentLevel);
                 }
                 break;
         }

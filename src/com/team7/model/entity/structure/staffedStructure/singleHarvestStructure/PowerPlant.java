@@ -31,7 +31,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
         );
         setType("PowerPlant");
         setPowered(false);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setVisibilityRadius(3);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
