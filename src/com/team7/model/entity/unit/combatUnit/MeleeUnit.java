@@ -24,18 +24,23 @@ public class MeleeUnit extends CombatUnit {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if(techInstance.equals("Melee")){
+
+            //reset stats except armor and health
+            UnitStats defaultStats = new UnitStats(20, 10, getUnitStats().getArmor(), 15, 8, getUnitStats().getHealth(), 100, 4 );
+            setUnitStats(defaultStats);
+
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getUnitStats().changeOffensiveDamage((level*10));
+                    getUnitStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getUnitStats().changeDefensiveDamage((level*10));
+                    getUnitStats().changeDefensiveDamage((level));
                     break;
                 case "ArmorStrength":
-                    getUnitStats().changeArmor((level*10));
+                    getUnitStats().changeMaxArmor((level*2));
                     break;
                 case "MovementRate":
                     getUnitStats().changeMovement(level);
@@ -45,7 +50,7 @@ public class MeleeUnit extends CombatUnit {
                     getUnitStats().changeUpkeep((0-level));
                     break;
                 case "Health":
-                    getUnitStats().changeHealth((level*10));
+                    getUnitStats().changeMaxHealth((level*20));
                     break;
             }
         }

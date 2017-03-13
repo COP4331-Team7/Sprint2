@@ -35,19 +35,24 @@ public class Explorer extends NonCombatUnit {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level){
         if(techInstance.equals("Explorer")){
+
+            //reset stats except armor and health
+            UnitStats defaultStats = new UnitStats(1, 1, getUnitStats().getArmor(), 10, 10, getUnitStats().getHealth(), 100, 3 );
+            setUnitStats(defaultStats);
+
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
                     //will always stay at 0
-                    getUnitStats().changeOffensiveDamage((level*10));
+                    getUnitStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getUnitStats().changeDefensiveDamage((level*10));
+                    getUnitStats().changeDefensiveDamage((level));
                     break;
                 case "ArmorStrength":
-                    getUnitStats().changeArmor((level*10));
+                    getUnitStats().changeMaxArmor((level*2));
                     break;
                 case "MovementRate":
                     getUnitStats().changeMovement(level);
@@ -57,7 +62,7 @@ public class Explorer extends NonCombatUnit {
                     getUnitStats().changeUpkeep((0-level));
                     break;
                 case "Health":
-                    getUnitStats().changeHealth((level*10));
+                    getUnitStats().changeMaxHealth((level*20));
                     break;
             }
         }
