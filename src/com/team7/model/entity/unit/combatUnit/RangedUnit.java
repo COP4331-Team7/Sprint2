@@ -11,7 +11,7 @@ public class RangedUnit extends CombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(12, 5, 10, 6, 100, 4));
+        setUnitStats(new UnitStats(12, 5, 10, 10,6, 100, 100,4));
         setCommandQueue(new CommandQueue());
         setType("Ranged");
         setPowered(true);

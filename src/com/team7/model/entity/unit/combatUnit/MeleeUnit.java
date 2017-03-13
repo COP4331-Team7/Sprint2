@@ -11,7 +11,7 @@ public class MeleeUnit extends CombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(20, 10, 15, 8, 100, 4));
+        setUnitStats(new UnitStats(20, 10, 15, 15,8, 100, 100,4));
         setCommandQueue(new CommandQueue());
         setType("Melee");
         setPowered(true);
