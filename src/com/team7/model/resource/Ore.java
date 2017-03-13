@@ -1,6 +1,6 @@
 package com.team7.model.resource;
 
-import com.team7.ProbabilityGenerator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Ore adds to a Player's Metal stat
@@ -8,7 +8,7 @@ import com.team7.ProbabilityGenerator;
 public class Ore extends Resource {
     public Ore(){
         setDiscovered(false);
-        setStatInfluenceQuantity(ProbabilityGenerator.randomInteger(50,80));
+        setStatInfluenceQuantity(ThreadLocalRandom.current().nextInt(30, 95));
         setType("Ore");
     }
 

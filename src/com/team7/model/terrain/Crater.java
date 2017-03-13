@@ -12,6 +12,7 @@ import java.util.Arrays;
  */
 public class Crater extends Terrain {
     public Crater() {
+        setTerrainType("Crater");
         setPassable(true);
         setMovementInfluence(-2);
         setAreaEffects(new ArrayList<>

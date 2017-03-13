@@ -35,7 +35,32 @@ public class StructureStats {
         return productionRates;
     }
 
+    //takes in an exact string from productionRate in structure initialization
+    public void changeProduction(String key, int delta){
+        if(productionRates.containsKey(key)){
+            productionRates.put(key, productionRates.get(key) + delta);
+            System.out.println("productionRate for " + key + " has been updated to: " + productionRates.get(key));
+        }
+
+    }
+
     public int getHealth() {
         return health;
+    }
+
+    public void changeHealth(int delta){
+        health += delta;
+    }
+
+    public void changeOffensiveDamage(int delta){
+        offensiveDamage += delta;
+    }
+
+    public void changeDefensiveDamage(int delta){
+        defensiveDamage += delta;
+    }
+
+    public void changeArmor(int delta){
+        armor += delta;
     }
 }

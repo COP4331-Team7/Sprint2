@@ -10,6 +10,7 @@ import java.util.Arrays;
  */
 public class Desert extends Terrain {
     public Desert() {
+        setTerrainType("Desert");
         setPassable(true);
         setMovementInfluence(-1);
         setAreaEffects(new ArrayList<>

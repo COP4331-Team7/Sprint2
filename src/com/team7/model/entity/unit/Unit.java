@@ -2,13 +2,14 @@ package com.team7.model.entity.unit;
 
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.unit.combatUnit.CombatUnit;
 import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
 
 
-public class Unit extends Entity {
+public abstract class Unit extends Entity {
     private CommandQueue commandQueue;
     private String type;
     private UnitStats unitStats;
@@ -99,4 +100,44 @@ public class Unit extends Entity {
     public void setCommandQueue(CommandQueue commandQueue) {
         this.commandQueue = commandQueue;
     }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:   ");
+
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    private Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // so this could be abstract and implemented in the subclasses
+
+
+    }
+
+    public abstract void applyTechnology(String techInstance, String technologyStat, int level);
 }

@@ -13,12 +13,25 @@ import java.util.HashMap;
  */
 public class Capital extends StaffedStructure implements IHarvester, IUnitProducer{
 
+    //Strings to be entered into production rate
+    private final String harvestOre = "harvestOre";
+    private final String harvestEnergy = "harvestEnergy";
+    private final String harvestFood = "harvestFood";
+    private final String heal = "heal";
+    private final String produceExplorer = "produceExplorer";
+    private final String produceWorker = "produceWorker";
+
     public Capital(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
-        productionRateMap.put("test", 1);       //TODO figure out how production is used
+        productionRateMap.put(harvestOre, 2);   //can harvest 2 ore per turn per worker per resource
+        productionRateMap.put(harvestEnergy, 2);   //can harvest 2 energy per turn per worker per resource
+        productionRateMap.put(harvestFood, 2);   //can harvest 2 food per turn per resource per worker
+        productionRateMap.put(heal, 20);      //can heal all units on tile by +20 per turn
+        productionRateMap.put(produceExplorer, 6); //takes 6 turns to produce an explorer
+        productionRateMap.put(produceWorker, 4);  //takes 4 turn to produce a worker
         setStats(new StructureStats(
                 0,
                 100,
@@ -28,12 +41,12 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         );
         setType("Capital");
         setPowered(false);
+
         setTurnsFrozen(0);
-        setInfluenceRadius(5);
+        setVisibilityRadius(4);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
-        setWorkerStaff(new ArrayList<>()); //TODO fill up with 5 workers
-        setFoodUpkeepPerWorker(2);       //amount of upkeep needed PER WORKER
+        setWorkerStaff(new ArrayList<>());
         setLevelOfCompletion(80);
 
     }
@@ -52,10 +65,62 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     @Override
     public void beginStructureFunction() {
 
-        //harvest
-        ArrayList<Tile> tilesInRadius = computeTilesInRadius();
-        for(Tile availableTile : tilesInRadius) {
-            harvestResource(availableTile);
+    }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("Produce")){
+            //production rate stuff
+            switch (technologyStat){
+                case "Explorer":
+                    getStats().changeProduction(produceExplorer, 0-level);
+                    break;
+                case "Worker":
+                    getStats().changeProduction(produceWorker, 0-level);
+                    break;
+            }
+        }
+
+        if (techInstance.equals("Capital")){
+            //all structure specific stuff
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    getStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getStats().changeArmor((level*10));
+                    break;
+                case "Health":
+                    getStats().changeHealth((level*10));
+                    break;
+                case "Efficiency":
+                    changeEnergyUpkeep((0-level));
+                    changeOreUpkeep((0-level));
+                    break;
+            }
+        }
+
+
+        if (techInstance.equals("Harvester")){
+            //harvest related
+            switch (technologyStat){
+                case "Ore":
+                    getStats().changeProduction(harvestOre, level);
+                    break;
+                case "Food":
+                    getStats().changeProduction(harvestFood, level);
+                    break;
+                case "Energy":
+                    getStats().changeProduction(harvestEnergy, level);
+                    break;
+            }
+
         }
     }
 }

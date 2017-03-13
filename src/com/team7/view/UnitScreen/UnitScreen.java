@@ -1,9 +1,35 @@
 package com.team7.view.UnitScreen;
 
-import javax.swing.*;
+import com.team7.view.ScreenSelectButtons;
 
-/**
- * Created by doug0_000 on 2/27/2017.
- */
+import javax.swing.*;
+import java.awt.*;
+
 public class UnitScreen extends JPanel {
+
+    private ScreenSelectButtons screenSelectBtns = null;
+
+    public UnitScreen() {
+
+        screenSelectBtns = new ScreenSelectButtons();
+        this.add(screenSelectBtns, BorderLayout.NORTH);
+
+
+
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+    }
+
+
+    public JButton getMainScreenButton() {
+        return screenSelectBtns.getMainScreenButton();
+    }
+    public JButton getOptionScreenButton() {
+        return screenSelectBtns.getOptionsScreenSelectButton();
+    }
+    public JButton getStructureScreenButton() {
+        return screenSelectBtns.getStructureScreenButton();
+    }
+    public JButton getMapScreenSelectButton() {
+        return screenSelectBtns.getMapScreenSelectButton();
+    }
 }

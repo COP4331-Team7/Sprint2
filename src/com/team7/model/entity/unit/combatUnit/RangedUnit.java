@@ -18,7 +18,37 @@ public class RangedUnit extends CombatUnit {
         setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
-        setVisibilityRadius(3);
+        setVisibilityRadius(2);
     }
 
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if(techInstance.equals("Ranged")){
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    getUnitStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getUnitStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getUnitStats().changeArmor((level*10));
+                    break;
+                case "MovementRate":
+                    getUnitStats().changeMovement(level);
+                    break;
+                case "Efficiency":
+                    //decrement upkeep -> better efficiency
+                    getUnitStats().changeUpkeep((0-level));
+                    break;
+                case "Health":
+                    getUnitStats().changeHealth((level*10));
+                    break;
+            }
+        }
+    }
 }

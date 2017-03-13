@@ -12,18 +12,20 @@ import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 
 public class Colonist extends NonCombatUnit {
 
+    private static int colonistIds = 0;
+
     public Colonist(Tile startTile, Player player) {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(0, 0, 5, 5, 100, 3));
+        setUnitStats(new UnitStats(1, 1, 5, 5, 100, 3));
         setCommandQueue(new CommandQueue());
         setType("Colonist");
         setPowered(true);
         setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
-        setVisibilityRadius(3);
+        setVisibilityRadius(2);
     }
 
     public void buildCapital() {
@@ -45,5 +47,34 @@ public class Colonist extends NonCombatUnit {
     }
 
 
-
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if(techInstance.equals("Colonist")){
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    //will always stay at 0
+                    getUnitStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getUnitStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getUnitStats().changeArmor((level*10));
+                    break;
+                case "MovementRate":
+                    getUnitStats().changeMovement(level);
+                    break;
+                case "Efficiency":
+                    //decrement upkeep -> better efficiency
+                    getUnitStats().changeUpkeep((0-level));
+                    break;
+                case "Health":
+                    getUnitStats().changeHealth((level*10));
+                    break;
+            }
+        }
+    }
 }

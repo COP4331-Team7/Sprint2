@@ -1,8 +1,9 @@
 package com.team7.model;
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
-import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
@@ -16,7 +17,12 @@ import java.util.HashMap;
 
 public class Player {
     private ArrayList<Unit> units;
+
     private ArrayList<Structure> structures;
+
+    private Technologies technologies;
+
+
     private ArrayList<Army> armies;
     private ArrayList<Worker> workers;
 
@@ -31,7 +37,9 @@ public class Player {
     public Player(String name) {
         this.name = name;
         units = new ArrayList<Unit>();                               // max size should be 25
+
         structures = new ArrayList<>();                              // max size should be 10
+
         armies = new ArrayList<Army>();                              // max size should be 10
         workers = new ArrayList<Worker>();
         research = 0;
@@ -39,14 +47,19 @@ public class Player {
         nutrients = 200;
         metal = 200;
 
+        technologies = new Technologies();  //init all player technologies
+
+
     }
 
     //method to execute all internal model changes
     //called when a player ends his turn
     public void takeTurn(){
         initiateStructureEffects();
+
         subtractMovesFrozen();
         checkUnitArmyStructs();
+
     }
 
     private void subtractMovesFrozen() {
@@ -68,7 +81,7 @@ public class Player {
     }
 
    /* at every turn:
-    *  1. build/check if structure is construction complete.  if ready, isPowered should be true
+    *  1. build/check if structure is construction complete.
     *  2. check sufficient upkeep, decrement Player's resources.
     *  3. do automatic structure functions (if applicable)
     *  4. execute structure Q
@@ -113,23 +126,28 @@ public class Player {
 
     }
 
+
     private void initiateStructureEffects() {
         int energyLevelsOfStructures = 0;
         int foodLevelOfStructures = 0;
         int oreLevelOfStructures = 0;
 
+
         for(Structure structure : structures){
             structure.advanceConstruction();    //builds a structure, does nothing if already complete
+            int foodCostOfConstruction = 0;
+
 
             energyLevelsOfStructures += structure.computeEnergyUpkeep();
-            if(structure instanceof StaffedStructure)
+            if(structure instanceof StaffedStructure){
                 foodLevelOfStructures += ((StaffedStructure)structure).computeFoodUpkeep();
+            }
             oreLevelOfStructures += structure.computeOreUpkeep();
 
-            if(structure instanceof StaffedStructure)
-                ((StaffedStructure) structure).beginStructureFunction();
 
-            //staffedStructure.executeQ();
+            if(structure instanceof StaffedStructure){
+                ((StaffedStructure) structure).beginStructureFunction();
+            }
         }
 
         power += energyLevelsOfStructures;
@@ -137,12 +155,31 @@ public class Player {
         metal += oreLevelOfStructures;
     }
 
+    //TODO simplify iterating via Entities
     public HashMap<Tile, Integer> getAllTileRadiusMap() {
         HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
         for (Unit unit : units) {
-            Tile tile = unit.getLocation();
-            int radius = unit.getVisibilityRadius();
-            tileRadiusMap.put(tile, radius);
+            if(unit.isPowered()){
+                Tile tile = unit.getLocation();
+                int radius = unit.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (StaffedStructure structure : staffedStructures) {
+            if (structure.isPowered()){
+                Tile tile = structure.getLocation();
+                int radius = structure.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        for (ObservationTower observationTower : observationTowers) {
+            //if (observationTower.isPowered()){    COMMENTED OUT FOR TESTING
+                Tile tile = observationTower.getLocation();
+                int radius = observationTower.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+          //  }
         }
 
         return tileRadiusMap;
@@ -162,15 +199,19 @@ public class Player {
         }
 
         // Physically add the unit to player and put it on the map
-        this.units.add(unit);
+        units.add(unit);
         unit.getLocation().addUnitToTile(unit);
+
+        //whenever a unit is added, alter its stats according to technology
+        for(Technology unitTechnology : technologies.getUnitTechnologies()){
+            applyTechnology(unitTechnology);
+        }
 
         return unit;
     }
 
     // Removes unit from Player's ArrayList of Units
     public Unit removeUnit(Unit unit) {
-
         this.units.remove(unit);
         unit.getLocation().removeUnitFromTile(unit);
 
@@ -237,6 +278,11 @@ public class Player {
         this.workers.add(worker);
         worker.getLocation().addWorkerToTile(worker);
 
+        //whenever a worker is added, alter its stats according to technology
+        for(Technology workerTechnology : technologies.getWorkerTechnologies()){
+            applyTechnology(workerTechnology);
+        }
+
         return worker;
     }
 
@@ -251,31 +297,44 @@ public class Player {
 
     // Structure helpers
 
+
     public ArrayList<Structure> getStructures() {
         return structures;
     }
 
     public Structure addStructure(StaffedStructure structure) {
-
-        // Ensures we are able to have a unit
-        if(structures.size() == 10){
+          // Ensures we are able to add a structure
+        if(staffedStructures.size() + observationTowers.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
-
-        // Physically add the structure and put it on the map
-        structures.add(structure);
-        structure.getLocation().setStructure(structure);
-
-        return structure;
+      
+         //whenever a structure is added, alter its stats according to technology
+        for(Technology structureTechnology : technologies.getStructureTechnologies()){
+            applyTechnology(structureTechnology);
+        }
     }
+
+    
+
+    
+    public ArrayList<StaffedStructure> getStaffedStructures() {
+        return staffedStructures;
+    }
+
+
 
     // Removes staffedStructure from Player's ArrayList of staffedStructures
     public Structure removeStructure(Structure structure) {
 
         // Physically remove unit form player and tile
+
         structures.remove(structure);
         structure.getLocation().setStructure(null);
+
+        staffedStructures.remove(staffedStructure);
+        staffedStructure.removeStructureFromCurrentTile();
+
 
         return structure;
     }
@@ -308,7 +367,11 @@ public class Player {
 
         defeated = true;
     }
-
+    public void moveUnit(Unit unit, Tile destination){
+        unit.getLocation().removeUnitFromTile(unit);
+        destination.addUnitToTile(unit);
+        unit.setLocation(destination);
+    }
     // Army helpers
 
     public ArrayList<Army> getArmies() {
@@ -375,7 +438,130 @@ public class Player {
         this.metal = metal;
     }
 
+    public Unit getFirstUnit() {
+        if (units != null && units.size() > 0) {
+            return units.get(0);
+        }
+        return null;
+    }
+
+    public int getNumExplorers() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Explorer)
+                n++;
+        return n;
+    }
+
+    public int getNumColonist() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Colonist)
+                n++;
+        return n;
+    }
+
+    public int getNumMelee() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof MeleeUnit)
+                n++;
+        return n;
+    }
+
+    public int getNumRanged() {
+        int n = 0;
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof RangedUnit)
+                n++;
+        return n;
+    }
+
+    public Unit getExplorer(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Explorer && units.get(i).getId() == id)
+                return units.get( i );
+        return null;
+    }
+
+    public Unit getMelee(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof MeleeUnit && units.get(i).getId() == id)
+                return units.get( i );
+        return null;
+    }
+
+    public Unit getRanged(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof RangedUnit && units.get(i).getId() == id)
+                return units.get( i );
+        return null;
+    }
+
+    public Unit getColonist(int id) {
+        for(int i = 0; i < units.size(); i++)
+            if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
+                return units.get( i );
+        return null;
+    }
+
+    public ArrayList<ObservationTower> getObservationTowers() {
+        return observationTowers;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void printUnitIds() {
+        for(Unit u : units) {
+            System.out.println(u.getType() + " : " + u.getId() );
+        }
+        System.out.println();
+    }
+
+    public void printUnitCommandQueues() {
+        for(Unit u : units) {
+           System.out.print("commands for " + u.getType() + " " + u.getId() + ":\n");
+            u.printCommandQueue();
+        }
+        System.out.println();
+    }
+
+
+
+    private void applyTechnology(Technology tech){
+        String techType = tech.getTechnologyType();
+        String techInstance = tech.getTechnologyInstance();
+        String techStat = tech.getTechnologyStat();
+        int currentLevel = tech.getLevel();
+
+        switch (techType){
+            case "unit":
+                for (Unit unit : units){
+                    unit.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+            case "structure":
+                for (StaffedStructure staffedStructure : staffedStructures){
+                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                for (ObservationTower observationTower : observationTowers){
+                    observationTower.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+            case "worker":
+                for (Worker worker : workers){
+                    worker.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+            case "productionRate":
+                //productionRate only applies to staffed structures
+                //harvest, produce, or train
+                for (StaffedStructure staffedStructure : staffedStructures){
+                    staffedStructure.applyTechnology(techInstance, techStat, currentLevel);
+                }
+                break;
+        }
     }
 }

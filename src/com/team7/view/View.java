@@ -2,10 +2,18 @@ package com.team7.view;
 
 import com.team7.model.Map;
 import com.team7.view.HomeScreen.HomeScreen;
+import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
+import com.team7.view.MainScreen.MainViewImage;
+import com.team7.view.MainScreen.MainViewInfo;
+import com.team7.view.MapScreen.MapScreen;
+import com.team7.view.OptionsScreen.OptionsScreen;
+import com.team7.view.StructureScreen.StructureScreen;
+import com.team7.view.UnitScreen.UnitScreen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -38,17 +46,45 @@ public class View
         frame.setVisible( true );                                  // make the frame visible
     }
 
+    public CommandSelect getCommandSelect() {
+        return frame.getMainScreen().getCommandSelect();
+    }
     public Screen getScreen() {
         return frame;
     }
     public MainScreen getMainScreen() {
         return frame.getMainScreen();
     }
+    public HomeScreen getHomeScreen() { return frame.getHomeScreen(); }
+    public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
+    public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
+    public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
         frame.getMainScreen().drawMap();
+        frame.getMainScreen().setFocusable( true );
+        frame.getMainScreen().giveCommandSelectFocus();
     }
+
+    public void setCurrScreen(String selected_screen) {
+        frame.setCurrScreen( selected_screen );
+    }
+
+    public void redrawView() {
+        frame.redrawView();
+    }
+
+    public MainViewImage getMainViewImage() {
+        return frame.getMainViewImage();
+    }
+    public MainViewInfo getMainViewInfo() {
+        return frame.getMainViewInfo();
+    }
+    public MapScreen getMapScreen() {
+        return frame.getMapScreen();
+    }
+
 
 // ==================== INNER CLASS ==========================
 
@@ -56,8 +92,10 @@ public class View
     {
         private HomeScreen homeScreen = null;
         private MainScreen mainScreen = null;
-        //private UnitScreen unitScreen = null;
-        //private StructureScreen structureScreen = null;
+        private OptionsScreen optionsScreen = null;
+        private UnitScreen unitScreen = null;
+        private StructureScreen structureScreen = null;
+        private MapScreen mapScreen = null;
 
         public Screen( int width, int height)
         {
@@ -67,25 +105,38 @@ public class View
 
             homeScreen = new HomeScreen();
             mainScreen = new MainScreen();
-            // unitScreen = new UnitScreen();
-            // structureScreen = new StructureScreen();
+            optionsScreen = new OptionsScreen();
+            unitScreen = new UnitScreen();
+            structureScreen = new StructureScreen();
+            mapScreen = new MapScreen();
 
-            setCurrScreen("MAIN");
+            setCurrScreen("HOME");
             this.setVisible( true );
         }
 
+        public MainViewImage getMainViewImage() {
+            return mainScreen.getMainViewImage();
+        }
+        public MainViewInfo getMainViewInfo() {
+            return mainScreen.getMainViewInfo();
+        }
         public HomeScreen getHomeScreen() {
             return homeScreen;
         }
         public MainScreen getMainScreen() {
             return mainScreen;
         }
-        //    public UnitScreen getUnitScreen() {
-        //            return unitScreen;
-        //    }
-        //    public StructureScreen getStructureScreen() {
-        //            return structureScreen;
-        //    }
+        public OptionsScreen getOptionsScreen() { return  optionsScreen; }
+        public UnitScreen getUnitScreen() {
+                    return unitScreen;
+            }
+        public StructureScreen getStructureScreen() {
+                    return structureScreen;
+            }
+        public MapScreen getMapScreen() {
+            return mapScreen;
+        }
+
 
         public void setCurrScreen(String selected_screen) {
 
@@ -96,12 +147,20 @@ public class View
             }
             else if (selected_screen == "MAIN") {
                 displayMainScreen();
+                mainScreen.getCommandSelect().setFocusable(true);
+                mainScreen.getCommandSelect().requestFocus();
             }
             else if (selected_screen == "UNIT_OVERVIEW") {
                 displayUnitOverviewScreen();
             }
             else if (selected_screen == "STRUCTURE_OVERVIEW") {
                 displayStructureOverviewScreen();
+            }
+            else if (selected_screen == "OPTIONS") {
+                displayOptionScreen();
+            }
+            else if (selected_screen == "MAP_SCREEN") {
+                displayMapScreen();
             }
 
             revalidate();
@@ -114,17 +173,30 @@ public class View
         private void displayMainScreen() {
             this.getContentPane().add( mainScreen );
         }
+        private void displayOptionScreen() {
+            this.getContentPane().add( optionsScreen );
+        }
         private void displayUnitOverviewScreen() {
-            // this.getContentPane().add( unitScreen );
+            this.getContentPane().add( unitScreen );
         }
         private void displayStructureOverviewScreen() {
-            //    this.getContentPane().add( structureScreen );
+                this.getContentPane().add( structureScreen );
+        }
+
+        private void displayMapScreen() {
+            this.getContentPane().add( mapScreen );
         }
 
         private void addMenu()
         {                       	   // addMenu() method used to setup a frame's menu bar
             JMenu fileMenu = new JMenu( "File" );
+            fileMenu.setFont(new Font("plain", Font.BOLD, 12));
+
             JMenuItem exitItem = new JMenuItem( "Exit" );
+            exitItem.setFont(new Font("Arial", Font.BOLD, 15));
+            exitItem.setBackground(new Color(0xffF5F5DC));
+            exitItem.setOpaque(true);
+
             exitItem.addActionListener( new ActionListener() 	// define what happens when this menu item is selected
             {
                 public void actionPerformed( ActionEvent event )
@@ -132,17 +204,11 @@ public class View
                     System.exit( 0 );
                 }
             } );
-            fileMenu.add( exitItem );
-            JMenuItem drawMapItem = new JMenuItem( "Re-draw map" );
-            drawMapItem.addActionListener( new ActionListener()    // define what happens when this menu item is selected
-            {
-                public void actionPerformed( ActionEvent event )
-                {
-                    mainScreen.drawMap();
-                }
-            } );
-            fileMenu.add( drawMapItem );
             JMenuItem saveItem = new JMenuItem( "Save full size map image" );     // create a new menu item
+            saveItem.setFont(new Font("Arial", Font.BOLD, 15));
+            saveItem.setBackground(new Color(0xffF5F5DC));
+            saveItem.setOpaque(true);
+
             saveItem.addActionListener( new ActionListener()
             {
                 public void actionPerformed( ActionEvent event )
@@ -151,14 +217,20 @@ public class View
                 }                                                                      // given valid input, it will display an image
             } );
             fileMenu.add( saveItem );
+            fileMenu.add( exitItem );
+
             JMenuBar menuBar = new JMenuBar();                  // create a new menu bar
             menuBar.add( fileMenu );                           	// add the "File" menu to the menu bar
             this.setJMenuBar( menuBar );                        // attach the menu bar to this frame
         }
 
+        public void redrawView() {
+            mainScreen.redraw();
+        }
+
         private void saveImage()    // prompt the user to specify the size of the n by n image
         {
-            BufferedImage temp_img = getMainScreen().getMainViewImage().getFullMapImage();
+            BufferedImage temp_img = getMainScreen().getMainViewImage().getFullMapImage(true);
             String inputString = JOptionPane.showInputDialog("ouput file?");
 
             if(inputString == null)
@@ -178,7 +250,6 @@ public class View
             }
         }
     }
-
 
 }
 

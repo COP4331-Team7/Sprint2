@@ -14,6 +14,16 @@ public abstract class Terrain {
     private boolean isPassable;
     private int movementInfluence;
     private ArrayList<AreaEffect> areaEffects;
+    private String terrainType;
+
+    public String getTerrainType() {
+        return terrainType;
+    }
+
+    public void setTerrainType(String terrainType) {
+        this.terrainType = terrainType;
+    }
+
     public boolean isPassable() {
         return isPassable;
     }

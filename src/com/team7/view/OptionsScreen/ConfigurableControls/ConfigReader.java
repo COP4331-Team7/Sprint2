@@ -1,4 +1,4 @@
-package com.team7.ConfigurableControls;
+package com.team7.view.OptionsScreen.ConfigurableControls;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,12 +13,12 @@ import java.util.Properties;
 */
 public class ConfigReader {
 
-  private final String playerOneFile = "src/com/team7/ConfigurableControls/configPlayerOne.properties";
-  private final String playerTwoFile = "src/com/team7/ConfigurableControls/configPlayerTwo.properties";
+  private final String playerOneFile = "src/com/team7/view/OptionsScreen/ConfigurableControls/configPlayerOne.properties";
+  private final String playerTwoFile = "src/com/team7/view/OptionsScreen/ConfigurableControls/configPlayerTwo.properties";
 
   private String currentFile;
 
-  private final String defaultFileName = "src/com/team7/ConfigurableControls/defaultConfig.properties"; //location of prop file with all default values
+  private final String defaultFileName = "src/com/team7/view/OptionsScreen/ConfigurableControls/defaultConfig.properties"; //location of prop file with all default values
 
  // public static void main(String[] args) {
  //   ConfigReader reader = new ConfigReader();
@@ -36,17 +36,19 @@ public class ConfigReader {
   }
 
   //prints value of key input
-  private void getValueByKey(String player, String key){
+  public String getValueByKey(String player, String key){
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
     Properties prop = new Properties();
     InputStream input = null;
+    String value = null;
 
     try {
 
       input = new FileInputStream(currentFile);
       prop.load(input);   // load a properties file
-      System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
+      value = prop.getProperty(key);
+//      System.out.println(key + ": " + prop.getProperty(key));   // get the property value and print it out
 
     } catch (IOException ex) {
       ex.printStackTrace();
@@ -59,11 +61,12 @@ public class ConfigReader {
         }
       }
     }
+    return value;
   }
 
   //changes value of key according to input
   public void changeValueByKey(String player, String key, String value){
-    System.out.println("changing controls of " + player + " key: " + key + " value: " + value);
+//    System.out.println("changing controls of " + player + " key: " + key + " value: " + value);
 
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
@@ -76,10 +79,17 @@ public class ConfigReader {
       prop.load(input);   // load a properties file
       input.close();      //close input stream
 
-      FileOutputStream out = new FileOutputStream(currentFile);  //create output to same file location
-      prop.setProperty(key, value); //change property values
-      prop.store(out, null);  //store output stream to 'overwrite' old file
-      out.close();  //close
+
+      if(!prop.contains(value)){
+        FileOutputStream out = new FileOutputStream(currentFile);  //create output to same file location
+        prop.setProperty(key, value); //change property values
+        prop.store(out, null);  //store output stream to 'overwrite' old file
+        out.close();  //close
+      } else{
+//        System.out.println(value + " already exists. Choose a different control.");
+      }
+
+
 
     } catch (IOException ex) {
       ex.printStackTrace();
@@ -130,7 +140,7 @@ public class ConfigReader {
 
   //resets properties file to default values by overwriting with a different file
   public void resetToDefault(String player){
-    System.out.println("resetting controls of " + player);
+//    System.out.println("resetting controls of " + player);
 
     currentFile = (player.contains("One")) ? playerOneFile : playerTwoFile;
 
