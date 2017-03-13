@@ -24,8 +24,8 @@ public class Technologies {
         technologies.add(new Technology("productionRate", "Harvest", "Ore", 1, 5)); //increases amount of Ore a structure can harvest per worker
         technologies.add(new Technology("productionRate", "Harvest", "Food", 1, 5));
         technologies.add(new Technology("productionRate", "Harvest", "Energy", 1, 5));
-        technologies.add(new Technology("productionRate", "Produce", "Explorer", 1, 2));//applies to Capital
-        technologies.add(new Technology("productionRate", "Produce", "Worker", 1, 2));//applies to Capital
+        technologies.add(new Technology("productionRate", "Produce", "Explorer", 1, 3));//applies to Capital
+        technologies.add(new Technology("productionRate", "Produce", "Worker", 1, 3));//applies to Capital
         technologies.add(new Technology("productionRate", "Train", "Worker",1 , 3));//applies to Fort. How quickly a worker can train a recruit
         technologies.add(new Technology("productionRate", "Train", "Soldier", 1, 3));//applies to Fort. How quickly a soldier can train a recruit
     }
