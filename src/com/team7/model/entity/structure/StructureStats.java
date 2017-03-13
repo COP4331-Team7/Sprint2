@@ -52,6 +52,14 @@ public class StructureStats {
         return health;
     }
 
+    public void setHealth(int h) {
+        if (h > maxHealth){
+            h = maxHealth;
+        }
+
+        this.health = h;
+    }
+
     public void changeHealth(int delta){
         health += delta;
         if (health > maxHealth){
@@ -76,6 +84,13 @@ public class StructureStats {
         if (armor > maxArmor){
             armor = maxArmor;
         }
+    }
+
+    public void setArmor(int a) {
+        if(a > maxArmor) {
+            a = maxArmor;
+        }
+        this.armor = a;
     }
 
     public void changeMaxArmor(int delta){
