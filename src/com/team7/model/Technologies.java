@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class Technologies {
 
+    //TODO bug:
+    //  having more than 1 instance of an entity results in a multiplied stat instead of the same stats
+
     private ArrayList<Technology> workerTechnologies;
     private ArrayList<Technology> unitTechnologies;
     private ArrayList<Technology> structureTechnologies;
