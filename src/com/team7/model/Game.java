@@ -104,7 +104,21 @@ public class Game {
 
         System.out.println(" ");
         updateCurrPlayerTileStates();
+        removeDeadUnits();
         executeCommandQueues();
+    }
+
+    public void removeDeadUnits() {
+
+        ArrayList<Unit> p1_units = players[0].getUnits();
+        ArrayList<Unit> p2_units = players[1].getUnits();
+        ArrayList<Unit> all_units = new ArrayList<>(p1_units);
+        all_units.addAll(p2_units);
+
+        for(Unit u : all_units)
+            if(!u.isAlive())
+                u.getOwner().removeUnit( u );
+
     }
 
 
@@ -120,6 +134,12 @@ public class Game {
         for(Unit u : all_units) {
             u.printCommandQueue();
             u.executeCommandQueue();
+        }
+    }
+
+    public void printCommandQueues() {
+        for(Unit u : currentPlayer.getUnits()) {
+            u.printCommandQueue();
         }
     }
 

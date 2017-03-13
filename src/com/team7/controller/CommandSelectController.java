@@ -87,6 +87,7 @@ public class CommandSelectController {
                 if (e.getSource() == mainScreen.getExecuteCommandButton())
 
                     queueCommand();
+                    game.printCommandQueues();
 
                 clearCommandView();
                 giveCommandViewFocus();

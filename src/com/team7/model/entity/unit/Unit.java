@@ -109,11 +109,18 @@ public class Unit extends Entity {
         System.out.println();
     }
 
-    private Command getCommandFromQueue() {
+    public Command getCommandFromQueue() {
         if(commandQueue.getSize() == 0)
             return null;
         else
             return commandQueue.get(0);
+    }
+
+    public void removeCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return;
+        else
+            commandQueue.removeCommand();
     }
 
     public void executeCommandQueue() {
@@ -123,7 +130,12 @@ public class Unit extends Entity {
         // do something with the command
         // each unit/structure receives specific list of commands
         // so this could be abstract and implemented in the subclasses
+        System.out.println("in unit");
 
 
+    }
+
+    public boolean isAlive() {
+        return unitStats.getHealth() > 0;
     }
 }

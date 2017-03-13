@@ -330,7 +330,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             sb.append(((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 0 && currTypeInstance != -1)
             sb.append("move");
-        sb.append(" ");
+
 
         return sb.toString();
     }
