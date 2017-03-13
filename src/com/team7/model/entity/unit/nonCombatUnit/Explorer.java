@@ -21,7 +21,7 @@ public class Explorer extends NonCombatUnit {
         setArmy(null);
         setDirection(2);
         setProspecting(false);
-        setVisibilityRadius(0); //start technology level 0
+        setVisibilityRadius(1); //start technology level 1
     }
 
     public boolean isProspecting() {
@@ -58,12 +58,3 @@ public class Explorer extends NonCombatUnit {
     }
 }
 
-
-/*
-
-        technologies.add(new Technology("unit", "Explorer", "VisibilityRadius", 1));  //only one hex available
-                technologies.add(new Technology("unit" ,"Explorer",  "AttackStrength", 1));
-                technologies.add(new Technology("unit", "Explorer" , "DefenseStrength", 1));
-                technologies.add(new Technology("unit", "Explorer", "ArmorStrength", 1));
-                technologies.add(new Technology("unit", "Explorer", "MovementRate", 1));
-                technologies.add(new Technology("unit", "Explorer", "Health",1));*/
