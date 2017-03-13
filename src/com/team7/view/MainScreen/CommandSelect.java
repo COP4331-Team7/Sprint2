@@ -48,7 +48,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "MOVE",
     };
     private final static String[] structureTypes = {
-            "Capital",
+            "CAPITAL",
             "FORT",
             "UNIVERSITY",
             "OBSERVATION_TOWER",
@@ -168,7 +168,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): ");
         }
         else {
-            typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getId() );
+            switch(currMode){
+                case 1: //structure
+                    typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentStructureSelection(  currMode, currType, currTypeInstance ).getId() );
+                    break;
+                case 2: //unit
+                    typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getId() );
+                    break;
+            }
+
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
@@ -311,6 +319,24 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else if(currMode == 2 && currType == 3) {        // MELEE UNIT
                  return controller.getNumMelee();
         }
+
+/*
+        if(currMode == 1 && currType == 0)           // CAPITAL
+
+        else if(currMode == 1 && currType == 1)       // FORT
+            currSelection = currentPlayer.getFort( id );
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            currSelection = currentPlayer.getUniversity( id );
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            currSelection = currentPlayer.getObservationTower( id );
+        else if(currMode == 1 && currType == 4)        // FARM
+            currSelection = currentPlayer.getFarm( id );
+        else if(currMode == 1 && currType == 5)        // MINE
+            currSelection = currentPlayer.getMine( id );
+        else if(currMode == 1 && currType == 6)        // POWERPLANT
+            currSelection = currentPlayer.getPowerPlant( id );
+
+        */
         else
               return 0;
     }

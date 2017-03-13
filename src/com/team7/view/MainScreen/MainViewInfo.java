@@ -1,5 +1,7 @@
 package com.team7.view.MainScreen;
 
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.UnitStats;
 
@@ -207,7 +209,7 @@ public class MainViewInfo extends JPanel {
     }
 
 
-    public  void updateStats( Unit unit ) {
+    public  void updateUnitStats(Unit unit ) {
         if(unit == null) {
             clearStats();
             return;
@@ -219,10 +221,27 @@ public class MainViewInfo extends JPanel {
         setHealthLabel( Integer.toString( stats.getHealth()) + "/" + Integer.toString(stats.getMaxHealth()) );
         setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
         setProductionLabel( "0" );
-        setUpkeepLabel(  Integer.toString( stats.getUpkeep() ) );
         setCurrSelectionName(unit.getType() + " " + unit.getId());
         setItemLabel( "none" );
     }
+
+    public void updateStructureStats(Structure structure ) {
+        if(structure == null) {
+            clearStats();
+            return;
+        }
+        StructureStats stats = structure.getStats();
+        setOffensiveDamageLabel( Integer.toString( stats.getOffensiveDamage() ) );
+        setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
+        setArmorLabel( Integer.toString( stats.getArmor() ) + "/" + Integer.toString(stats.getMaxArmor()) );
+        setHealthLabel( Integer.toString( stats.getHealth()) + "/" + Integer.toString(stats.getMaxHealth()) );
+        setUpkeepLabel( "0" );
+        setProductionLabel( "0" );
+        setCurrSelectionName(structure.getType() + " " + structure.getId());
+        setItemLabel( "none" );
+    }
+
+
 }
 
 
