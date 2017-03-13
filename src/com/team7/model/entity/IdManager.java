@@ -30,11 +30,14 @@ public class IdManager {
                 return -1;
             }
 
+
             if(entity instanceof Explorer) {
+                System.out.println("Shoe");
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Explorer){
+                    if(player.getUnits().get(i) instanceof Explorer){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
+                        System.out.println(availableIDs);
                     }
                 }
                 ID = availableIDs.get(0);
@@ -42,7 +45,7 @@ public class IdManager {
             else if(entity instanceof Colonist) {
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Colonist){
+                    if(player.getUnits().get(i) instanceof Colonist){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
@@ -51,7 +54,7 @@ public class IdManager {
             else if(entity instanceof MeleeUnit) {
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof MeleeUnit){
+                    if(player.getUnits().get(i) instanceof MeleeUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
@@ -60,7 +63,7 @@ public class IdManager {
             else if(entity instanceof RangedUnit) {
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof RangedUnit){
+                    if(player.getUnits().get(i) instanceof RangedUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
