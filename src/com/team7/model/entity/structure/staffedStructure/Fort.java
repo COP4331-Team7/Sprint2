@@ -14,37 +14,49 @@ import java.util.HashMap;
  *  if trained by workers: slower
  *  if trained by soldiers: faster
  * All enemies that come within influence radius are automatically attacked
- * All friendlies that come within influence radius recieve a defensive bonus
+ * All friendlies that come within influence radius receive a defensive bonus
  */
 public class Fort extends StaffedStructure implements IUnitProducer {
+
+    private final String produceMelee = "produceMelee";
+    private final String produceRanged = "produceRanged";
+
+    private int workerTrainTicks;
+    private int soldierTrainTicks;
 
     public Fort(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
-        productionRateMap.put("produceMelee", 4);   //can produce a melee unit after 4 ticks
-        productionRateMap.put("produceRanged", 4);   //can produce a ranged unit after 4 ticks
+        productionRateMap.put(produceMelee, 8);   //can produce a melee unit after 5 ticks
+        productionRateMap.put(produceRanged, 8);   //can produce a ranged unit after 5 ticks
         setStats(new StructureStats(
                 0,
                 100,
-                100,
+                10,
+                20,
                 productionRateMap,
-                100)
+                100,
+                200)
         );
         setType("Fort");
         setPowered(false);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setVisibilityRadius(3);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
         setWorkerStaff(new ArrayList<>());
         setLevelOfCompletion(80);
+
+        //produce soldier via 'training'
+        //worker trains 1 tick per turn
+        //soldier trains 2 ticks per turn
+        workerTrainTicks = 1;
+        soldierTrainTicks = 2;
     }
 
-    //produce soldier via 'training'
-    //worker trains 1 tick per turn
-    //soldier trains 2 ticks per turn
+
     @Override
     public Unit produceUnit(String unitType) {
         return null;
@@ -53,5 +65,52 @@ public class Fort extends StaffedStructure implements IUnitProducer {
     @Override
     public void beginStructureFunction() {
 
+    }
+
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if (techInstance.equals("Train")){
+            switch (technologyStat){
+                case "Worker":
+                    changeWorkerTrainTicks(level);
+                    break;
+                case "Soldier":
+                    changeWorkerTrainTicks(level);
+                    break;
+            }
+        }
+
+        if (techInstance.equals("Fort")){
+            //all structure specific stuff
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    getStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getStats().changeArmor((level*10));
+                    break;
+                case "Health":
+                    getStats().changeHealth((level*10));
+                    break;
+                case "Efficiency":
+                    changeEnergyUpkeep((0-level));
+                    changeOreUpkeep((0-level));
+                    break;
+            }
+        }
+    }
+
+    private void changeWorkerTrainTicks(int delta){
+        workerTrainTicks += delta;
+    }
+
+    private void changeSoldierTrainTicks(int delta){
+        soldierTrainTicks += delta;
     }
 }

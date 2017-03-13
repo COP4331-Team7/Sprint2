@@ -10,7 +10,6 @@ import java.util.ArrayList;
  */
 public abstract class StaffedStructure extends Structure {
     private ArrayList<Worker> workerStaff = new ArrayList<>();
-    private final int foodUpkeepPerWorker = 2; //all staffedStructures requires Nutrient from Player
     private int allocatedFood;
     private boolean hasEnoughFood;
 
@@ -22,9 +21,6 @@ public abstract class StaffedStructure extends Structure {
         this.workerStaff = workerStaff;
     }
 
-    public int getFoodUpkeepPerWorker() {
-        return foodUpkeepPerWorker;
-    }
 
     public int getAllocatedFood() {
         return allocatedFood;
@@ -47,7 +43,7 @@ public abstract class StaffedStructure extends Structure {
             //food upkeep only necessary once workers are actively staffing the structure
             return 0;
         }
-        int totalFoodUpkeep = workerStaff.size() * foodUpkeepPerWorker;
+        int totalFoodUpkeep = workerStaff.size() * workerStaff.get(0).getFoodUpkeep();
         changeAllocatedFood(0- totalFoodUpkeep);
         if (allocatedFood >= totalFoodUpkeep) {
             //workers are fed!

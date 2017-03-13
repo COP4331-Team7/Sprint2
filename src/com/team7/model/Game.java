@@ -32,23 +32,24 @@ public class Game {
                                      new Player("Two")
                                     };
 
-        // choose who goes first
-        int first = ThreadLocalRandom.current().nextInt(0, 2);
-        currentPlayer = players[ first ];
-        turn = first;
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
+        currentPlayer = players[0];
+        turn = 0;
+
         //TODO: fix
         // set Player One starting units
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
+        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][10], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
         addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
         addUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
         // set Player Two starting units
         addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
+        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-5],  players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
@@ -104,8 +105,9 @@ public class Game {
 
         System.out.println(" ");
         updateCurrPlayerTileStates();
-        removeDeadUnits();
+        currentPlayer.takeTurn();
         executeCommandQueues();
+        //TODO remove dead Units?
     }
 
     public void removeDeadUnits() {

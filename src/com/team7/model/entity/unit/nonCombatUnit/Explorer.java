@@ -14,15 +14,15 @@ public class Explorer extends NonCombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(1, 1, 10, 5, 100, 3));
+        setUnitStats(new UnitStats(1, 1, 10, 10, 10,100, 100,3));
         setCommandQueue(new CommandQueue());
         setType("Explorer");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setProspecting(false);
-        setVisibilityRadius(3);
+        setVisibilityRadius(1); //start technology level 1
     }
 
     public boolean isProspecting() {
@@ -37,54 +37,37 @@ public class Explorer extends NonCombatUnit {
 
         isProspecting = prospecting;
     }
-
+    
     @Override
-    public void executeCommandQueue() {
-
-        if(getCommandFromQueue() == null)
-            return;
-
-        Command commandToExecute = getCommandFromQueue();
-
-        String commandString = commandToExecute.getCommandString();
-
-        System.out.println( commandString );
-
-        switch ( commandString ) {
-            case "PROSPECT MODE ON":
-                setProspecting( true );
-                removeCommandFromQueue();
-                break;
-
-            case "PROSPECT MODE OFF":
-                setProspecting( false );
-                removeCommandFromQueue();
-                break;
-
-            case "DECOMMISSION":
-                decommission( );
-                removeCommandFromQueue();
-                break;
-
-            case "POWER UP":
-                powerUp( );
-                removeCommandFromQueue();
-                break;
-
-            case "POWER DOWN":
-                powerDown( );
-                removeCommandFromQueue();
-                break;
-
-            case "MOVE":
-                // move unit furthest allowable distance.
-                // if move doesn't complete in 1 turn, leave in queue
-                break;
-
-            default:
-                break;
+    public void applyTechnology(String techInstance, String technologyStat, int level){
+        if(techInstance.equals("Explorer")){
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    //will always stay at 0
+                    getUnitStats().changeOffensiveDamage((level*10));
+                    break;
+                case "DefenseStrength":
+                    getUnitStats().changeDefensiveDamage((level*10));
+                    break;
+                case "ArmorStrength":
+                    getUnitStats().changeArmor((level*10));
+                    break;
+                case "MovementRate":
+                    getUnitStats().changeMovement(level);
+                    break;
+                case "Efficiency":
+                    //decrement upkeep -> better efficiency
+                    getUnitStats().changeUpkeep((0-level));
+                    break;
+                case "Health":
+                    getUnitStats().changeHealth((level*10));
+                    break;
+            }
         }
 
     }
-
 }
+
