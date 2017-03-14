@@ -62,9 +62,9 @@ public class TileState {
         this.colonist = state.colonist;
         this.workerUnit = state.workerUnit;
 
-        this.ore = state.ore;
-        this.food = state.food;
-        this.energy = state.energy;
+//        this.ore = state.ore;
+//        this.food = state.food;
+//        this.energy = state.energy;
 
         this.areaEffectType = state.areaEffectType;
     }

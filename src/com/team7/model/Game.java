@@ -148,7 +148,7 @@ public class Game {
                 }
 
                 if( prospectedTiles.contains( tile )  ) {
-                    tile.refreshDrawableState_resources( );
+                    tile.refreshDrawableState_resources( currentPlayer.getName() );
                 }
 
                 if( visibleTiles.contains(tile ) ) {

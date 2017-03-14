@@ -235,8 +235,11 @@ public class Tile {
     }
 
 
-    public void refreshDrawableState_resources() {
-        realDraw.refreshResources( this);
+    public void refreshDrawableState_resources(String s) {
+        if(s.contains("One"))
+             playerOneDraw.refreshResources( this);
+        if(s.contains("Two"))
+             playerTwoDraw.refreshResources( this);
     }
 
     public void refreshDrawableState_harvestable(){
@@ -363,6 +366,7 @@ public class Tile {
         if(name.equals("One")) {
             playerOneVisibility = VisibilityState.Visible;
             playerOneDraw.refresh(realDraw);
+
         }
         else {
             playerTwoVisibility = VisibilityState.Visible;
