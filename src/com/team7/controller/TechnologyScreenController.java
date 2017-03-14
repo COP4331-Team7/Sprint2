@@ -143,6 +143,10 @@ public class TechnologyScreenController {
             public void mouseClicked(MouseEvent e) {
                 JList<String> list = (JList<String>)e.getSource();
                 if (e.getClickCount() == 2) {
+                    if(universities.isEmpty()){
+                        //dont show popup if player has no universities
+                        return;
+                    }
                     list.getSelectedValue();
                     String input = "-1";
                     input = JOptionPane.showInputDialog(technologyScreen.getParent(), "type a single number id of university to research at", null);

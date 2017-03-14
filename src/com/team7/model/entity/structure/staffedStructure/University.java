@@ -156,7 +156,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     //passes in the correct technology to begin researching
     @Override
     public void produceTechnology(Technology technology) {
-        if (!isInResearch){
+        if (!isInResearch && technology.getLevel() != technology.getMaxLevel()){
 
             System.out.println("now researching at: " + getId() + technology.getTechnologyInstance() + technology.getTechnologyStat());
 
