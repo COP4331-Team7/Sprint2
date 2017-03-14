@@ -14,12 +14,16 @@ import java.util.HashMap;
  */
 public class University extends StaffedStructure implements ITechnologyProducer {
 
+    private boolean isInResearch;
+
     public University(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
         generateID();
 
         setCommandQueue( new CommandQueue() );
+
+        setInResearch(false);
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         //key: TYPE INSTANCE TECHNOLOGY
@@ -217,4 +221,11 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     }
 
 
+    public boolean isInResearch() {
+        return isInResearch;
+    }
+
+    public void setInResearch(boolean inResearch) {
+        isInResearch = inResearch;
+    }
 }

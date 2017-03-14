@@ -13,6 +13,7 @@ import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -160,7 +161,6 @@ public class CommandSelectController {
         Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
 
-
         if(unit != null)
             unit.queueCommand( command );
         else if (structure != null)
@@ -187,13 +187,29 @@ public class CommandSelectController {
         mainViewInfo.clearStats();
     }
 
-    public void executeReinforeCommand(Character c, Unit u) {
+    public void executeReinforeCommand(Unit u) {
 
-        int armyID = Integer.valueOf( c - 48 );
+        String s = new String( "Enter army ID that " + u.getType() + " " + u.getId() + " will reinforce" );
 
-        // System.out.println(armyID);
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
-        queueCommand();
+        System.out.println("Option pane on display reinforce !");
+       // int id = Integer.parseInt(String.valueOf(idString));
+
+        //queueCommand();
+        clearCommandView();
+        giveCommandViewFocus();
+    }
+
+    public void executeAssignToCommand(Structure structure) {
+
+        String s = new String( "Enter # workers to assign to " + structure.getType() + " " + structure.getId() + " ." );
+
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
+
+        System.out.println("Option pane on display! assignment");
+
+        //queueCommand();
         clearCommandView();
         giveCommandViewFocus();
     }
