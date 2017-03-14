@@ -327,7 +327,7 @@ public class Army extends Entity {
         }
 
         // add worker to tile, advancement is handled at the end of each turn
-        this.getLocation().setStructure(structure);
+        this.getOwner().addStructure(structure);
 
 
     }
