@@ -51,6 +51,15 @@ public class MapScreenController {
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
+
+        mapScreen.getScreenSelectButtons().getTechnologyScreenSelectButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == mapScreen.getScreenSelectButtons().getTechnologyScreenSelectButton()){
+                    view.setCurrScreen("TECHNOLOGY");
+                }
+            }
+        });
     }
 
 
