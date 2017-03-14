@@ -2,6 +2,7 @@ package com.team7.model;
 
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
@@ -82,7 +83,7 @@ public class Game {
         Army army2 = new Army(map.getGrid()[1][31],  players[1]);
 
 
-        Unit melee1 = new MeleeUnit(this.map.getGrid()[1][30], players[0]);
+        Unit melee1 = new  MeleeUnit(this.map.getGrid()[1][30], players[0]);
         Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
         Unit melee3 = new  MeleeUnit(this.map.getGrid()[1][31], players[1]);
 
@@ -100,6 +101,7 @@ public class Game {
         players[1].addArmy( army1 );
         players[1].addArmy( army2 );
 
+        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }

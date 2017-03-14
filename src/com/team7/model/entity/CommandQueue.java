@@ -39,6 +39,12 @@ public class CommandQueue {
         return commands.size();
     }
 
+    public void cancelCommands() {
+        for(int i = 0; i < commands.size(); i++) {
+            this.commands.remove(i);
+        }
+    }
+
 
 }
 

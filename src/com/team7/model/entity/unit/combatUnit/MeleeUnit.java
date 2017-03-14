@@ -26,11 +26,6 @@ public class MeleeUnit extends CombatUnit {
     @Override
     public void executeCommandQueue() {
 
-        if(getTurnsFrozen() > 0) {
-            subtractFrozenTurn();
-            return;
-        }
-
         if(getCommandFromQueue() == null)
             return;
 

@@ -74,7 +74,7 @@ public class HomeScreen extends JPanel {
             g.drawString("team7:   adam coverstone,", 50, 200);
             g.drawString("               doug hewitt,", 70, 230);
             g.drawString("               anip mehta,", 70, 260);
-            g.drawString("               or os,", 70, 290);
+            g.drawString("               or oz,", 70, 290);
             g.drawString("               thomas palmer,", 70, 320);
             g.drawString("               jamie rodriguez", 70, 350);
         }

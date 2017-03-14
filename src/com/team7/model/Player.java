@@ -62,10 +62,23 @@ public class Player {
     //called when a player ends his turn
     public void takeTurn(){
         initiateStructureEffects();
-
+        moveUnitsTowardsArmy();
         subtractMovesFrozen();
         checkUnitArmyStructs();
 
+    }
+
+    // move each unit towards destination tile
+    private void moveUnitsTowardsArmy() {
+        for(int i = 0; i < units.size(); i++) {
+            if(units.get(i).getArmy() != null) {
+                if(!units.get(i).checkAtRallyPoint()) {
+                    // TODO: move unit towards rallyPoint
+                    System.out.println("Moving towards rallypoint");
+                }
+                // TODO: if unit is at rallypoint, remove exchange from reinforcements to battlegroup
+            }
+        }
     }
 
     private void subtractMovesFrozen() {
@@ -90,7 +103,7 @@ public class Player {
     *  1. build/check if structure is construction complete.
     *  2. check sufficient upkeep, decrement Player's resources.
     *  3. do automatic structure functions (if applicable)
-    *  4. execute structure Q
+    *  4. execute structure/army Q
    */
 
     // run this function at the end of each turn to see if there are any dead structures

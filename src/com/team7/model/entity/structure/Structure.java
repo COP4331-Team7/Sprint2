@@ -257,8 +257,6 @@ public abstract class Structure extends Entity {
             commandQueue.removeCommand();
     }
 
-
-
     public void executeCommandQueue() {
 
         Command commandToExecute = getCommandFromQueue();
