@@ -239,6 +239,11 @@ public class Tile {
         realDraw.refreshResources( this);
     }
 
+    public void refreshDrawableState_harvestable(){
+        realDraw.refreshHarvestable(this);
+    }
+
+
 
     // Adds unit to Tile's ArrayList of Units
     public Unit addUnitToTile(Unit unit) {

@@ -78,6 +78,9 @@ public class TileState {
             this.energy = state.getEnergy();
     }
 
+    public void refreshHarvestable(Tile tile) {
+    }
+
 
     public void refresh(Tile tile) {
 
@@ -219,5 +222,6 @@ public class TileState {
         if (unit.getType().contains("Range"))
             rangeUnit--;
     }
+
 
 }

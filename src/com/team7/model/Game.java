@@ -119,15 +119,20 @@ public class Game {
 
         HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
         HashMap<Tile, Integer> currentPlayerProspectedTiles = currentPlayer.getAllProspectedTile();
+        HashMap<Tile, Integer> currentPlayerHarvestableTiles = currentPlayer.getAllHarvestableTilesForUnassignedWorkers();
 
         Set<Tile> visibleTiles = new HashSet<>();
         Set<Tile> prospectedTiles = new HashSet<>();
+        Set<Tile> harvestableTiles = new HashSet<>();
         //1
         for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
             visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
         }
         for (Tile tileKey: currentPlayerProspectedTiles.keySet()){
             prospectedTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerProspectedTiles.get(tileKey), null));
+        }
+        for (Tile tileKey : currentPlayerHarvestableTiles.keySet()){
+            harvestableTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerHarvestableTiles.get(tileKey), null));
         }
 
         //2
@@ -137,6 +142,10 @@ public class Game {
                 //3
 
                 tile.refreshDrawableState();    // update realDraw
+
+                if (harvestableTiles.contains(tile)){
+                    tile.refre
+                }
 
                 if( prospectedTiles.contains( tile )  ) {
                     tile.refreshDrawableState_resources( );

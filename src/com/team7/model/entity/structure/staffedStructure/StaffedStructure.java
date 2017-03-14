@@ -1,10 +1,12 @@
 package com.team7.model.entity.structure.staffedStructure;
 
+import com.team7.model.Tile;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * All structures require a staff except Observation Tower
@@ -64,6 +66,19 @@ public abstract class StaffedStructure extends Structure {
                 worker.setFed(false);       //isFed is used when using workers for specific productions
             }
         }
+    }
+
+    //iterate through all workers and return their current tile mapped with their harvest radius
+    public HashMap<Tile, Integer> getHarvestableTilesByWorkers(){
+        HashMap<Tile, Integer> harvestableTiles = new HashMap<>();
+
+        for (Worker worker : workerStaff){
+            if(!worker.isAssigned()){
+                harvestableTiles.put(worker.getLocation(), worker.getHarvestRadius());
+            }
+        }
+
+        return harvestableTiles;
     }
 
     public abstract void beginStructureFunction();

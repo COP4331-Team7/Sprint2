@@ -197,6 +197,18 @@ public class Player {
         return tileRadiusMap;
     }
 
+    public HashMap<Tile, Integer> getAllHarvestableTilesForUnassignedWorkers(){
+        HashMap<Tile, Integer> harvestableTilesByWorkers = new HashMap<>();
+
+        for (Structure structure : structures){
+            if (structure instanceof StaffedStructure){
+               harvestableTilesByWorkers.putAll(((StaffedStructure)structure).getHarvestableTilesByWorkers());
+            }
+        }
+
+        return harvestableTilesByWorkers;
+    }
+
 
     // Unit and Army helper functions
     public ArrayList<Unit> getUnits() {
