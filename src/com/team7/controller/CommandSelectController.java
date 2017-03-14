@@ -70,6 +70,9 @@ public class CommandSelectController {
         Player currentPlayer = game.getCurrentPlayer();
         Structure currSelection = null;
 
+        System.out.println("id of current structure: " + id);
+
+
 
         if(currMode == 1 && currType == 0)           // CAPITAL
             currSelection = currentPlayer.getCapital( id );
@@ -90,7 +93,18 @@ public class CommandSelectController {
     }
 
     public void updateStatusView(int currMode, int currType, int id) {
-        mainViewInfo.updateStats( getCurrentUnitSelection(currMode, currType, id) );
+        if(id == -1){
+            return;
+        }
+        switch(currMode){
+            case 1: //structure
+                mainViewInfo.updateStructureStats( getCurrentStructureSelection(currMode, currType, id));
+                break;
+            case 2: //unit
+                mainViewInfo.updateUnitStats( getCurrentUnitSelection(currMode, currType, id) );
+                break;
+        }
+
     }
 
     public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {
