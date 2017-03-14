@@ -213,6 +213,12 @@ public abstract class Structure extends Entity {
             this.turnsFrozen = this.turnsFrozen - 1;
     }
 
+    public String printStats() {
+        return getStats().print() +
+                "\nVisibility Radius: " + getVisibilityRadius()
+                +"\nEnergy Upkeep: " + energyUpkeep
+                +"\nOre Upkeep: " + oreUpkeep;
+    }
     public void setCommandQueue(CommandQueue commandQueue) {
         this.commandQueue = commandQueue;
     }

@@ -109,5 +109,4 @@ public abstract class StaffedStructure extends Structure {
         }
 
     }
-
 }
