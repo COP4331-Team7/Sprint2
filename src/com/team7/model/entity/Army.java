@@ -68,6 +68,12 @@ public class Army extends Entity {
         this.units.remove(unit);
         unit.setArmy(null);
 
+        if(unit.getLocation() == this.getLocation()){
+            this.removeUnitFromBattlegroup(unit);
+        } else {
+            this.removeUnitFromReinforcements(unit);
+        }
+
         resetLowestSpeedGreatestRadius();
 
     }
