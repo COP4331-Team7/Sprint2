@@ -60,6 +60,9 @@ public class View
     public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
     public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
     public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
+    public TechnologyScreen getTechnologyScreen() {
+        return frame.getTechnologyScreen();
+    }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
@@ -85,6 +88,8 @@ public class View
     public MapScreen getMapScreen() {
         return frame.getMapScreen();
     }
+
+
 
 
 // ==================== INNER CLASS ==========================

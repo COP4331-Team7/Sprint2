@@ -8,6 +8,7 @@ import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.OptionsScreen;
+import com.team7.view.TechnologyScreen.TechnologyScreen;
 import com.team7.view.View;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ public class MainScreenController {
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionScreen = null;
     private MapScreen mapScreen = null;
+    private TechnologyScreen technologyScreen = null;
 
 
     public MainScreenController(Game game, View view) {
@@ -33,6 +35,7 @@ public class MainScreenController {
         this.mainViewInfo = view.getMainViewInfo();
         this.optionScreen = view.getOptionScreen();
         this.mapScreen = view.getMapScreen();
+        this.technologyScreen = view.getTechnologyScreen();
 
         addActionListeners();
         view.setMap( game.getMap() );
@@ -93,6 +96,15 @@ public class MainScreenController {
                 if (e.getSource() == mainScreen.getScreenSelectButtons().getMapScreenSelectButton())
                     view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
                     view.setCurrScreen("MAP_SCREEN");
+            }
+        });
+
+        mainScreen.getScreenSelectButtons().getTechnologyScreenSelectButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == mainScreen.getScreenSelectButtons().getTechnologyScreenSelectButton()){
+                    view.setCurrScreen("TECHNOLOGY");
+                }
             }
         });
 
