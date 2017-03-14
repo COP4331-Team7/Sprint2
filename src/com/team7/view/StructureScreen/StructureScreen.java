@@ -1,6 +1,7 @@
 package com.team7.view.StructureScreen;
 
 import com.team7.model.Player;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.Structure;
 import com.team7.view.ScreenSelectButtons;
@@ -10,6 +11,7 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StructureScreen extends JPanel {
@@ -20,8 +22,8 @@ public class StructureScreen extends JPanel {
     private JPanel spacer = new JPanel();
 
     //Lists
-    private JList structureList;
-    private JList structureQueueList;
+    private JList structureList = new JList();
+    private JList structureQueueList = new JList();
 
     //Models
     private DefaultListModel<String> strucListModel = new DefaultListModel<>();
@@ -30,31 +32,31 @@ public class StructureScreen extends JPanel {
     private SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0,0,100,1);
 
     //Buttons
-    private JButton cancelCommand;
-    private JButton moveOrderUp;
-    private JButton moveOrderDown;
-    private JButton assignment;
+    private JButton cancelCommand = new JButton("CANCEL COMMAND");
+    private JButton moveOrderUp = new JButton("⟰");
+    private JButton moveOrderDown = new JButton("⟱");
+    private JButton assignment = new JButton("Assign");
 
     //TextAreas
-    private JTextArea statsTextArea;
-    private JTextArea statusTextArea;
-    private JTextArea availibleRes;
+    private JTextArea statsTextArea = new JTextArea();
+    private JTextArea statusTextArea = new JTextArea();
+    private JTextArea availibleRes = new JTextArea();
 
     //Labels
-    private JLabel structureListLabel;
-    private JLabel queueLabel;
-    private JLabel statsLabel;
+    private JLabel structureListLabel = new JLabel("Structures");
+    private JLabel queueLabel = new JLabel("Command Queue");
+    private JLabel statsLabel = new JLabel("Stats");
 
-    private JScrollPane queueScrollList;
+    private JScrollPane queueScrollList = new JScrollPane(structureQueueList);
 
     //Borders
     private Border coloredLine;
 
     //ComboBoxes (Drop down menus)
-    private JComboBox dropDownBox;
+    private JComboBox dropDownBox = new JComboBox();
 
     //Spinners (Number input)
-    private JSpinner allocationInput;
+    private JSpinner allocationInput = new JSpinner(spinnerModel);
 
     //Fonts
     private Font titleFont = new Font("Serif", Font.BOLD, 30);
@@ -76,36 +78,25 @@ public class StructureScreen extends JPanel {
 
         //Add Structure info Pane
         JPanel structureInfoPane = new JPanel(new GridLayout(1, 3));
-
         JPanel strucListPanel = new JPanel(new BorderLayout());
-        structureListLabel = new JLabel("Structures");
         structureListLabel.setFont(titleFont);
         strucListPanel.add(structureListLabel, BorderLayout.NORTH);
-        structureList = new JList();
         JScrollPane strucScrollList = new JScrollPane(structureList);
         strucListPanel.add(strucScrollList, BorderLayout.CENTER);
 
         JPanel queueListPanel = new JPanel(new BorderLayout());
         JPanel queueButtonsPane = new JPanel(new GridLayout(1,3));
-        moveOrderUp = new JButton("⟰");
         queueButtonsPane.add(moveOrderUp);
-        cancelCommand = new JButton("CANCEL COMMAND");
         queueButtonsPane.add(cancelCommand);
-        moveOrderDown = new JButton("⟱");
         queueButtonsPane.add(moveOrderDown);
-        queueLabel = new JLabel("Command Queue");
         queueListPanel.add(queueLabel, BorderLayout.NORTH);
         queueLabel.setFont(titleFont);
-        structureQueueList = new JList();
-        queueScrollList = new JScrollPane(structureQueueList);
         queueListPanel.add(queueScrollList, BorderLayout.CENTER);
         queueListPanel.add(queueButtonsPane, BorderLayout.SOUTH);
 
         JPanel statsPanel = new JPanel(new BorderLayout());
-        statsLabel = new JLabel("Stats");
         statsPanel.add(statsLabel, BorderLayout.NORTH);
         statsLabel.setFont(titleFont);
-        statsTextArea = new JTextArea();
         statsPanel.add(statsTextArea, BorderLayout.CENTER);
 
         structureInfoPane.add(strucListPanel);
@@ -140,21 +131,21 @@ public class StructureScreen extends JPanel {
         JPanel top = new JPanel(new GridLayout(2,1));
         JPanel statusPanel = new JPanel(new BorderLayout());
         JPanel assignmentSelectPanel = new JPanel(new GridLayout());
-        statusTextArea = new JTextArea();
         statusTextArea.setBorder(BorderFactory.createTitledBorder(coloredLine, "Status"));
         statusPanel.add(statusTextArea, BorderLayout.CENTER);
-        dropDownBox = new JComboBox();
         assignmentSelectPanel.add(dropDownBox);
-        allocationInput = new JSpinner(spinnerModel);
         assignmentSelectPanel.add(allocationInput);
-        assignment = new JButton("Assign");
         assignmentSelectPanel.add(assignment);
         top.add(statusPanel, BorderLayout.CENTER);
         top.add(assignmentSelectPanel, BorderLayout.SOUTH);
 
+        statusTextArea.setEditable(false);
+        availibleRes.setEditable(false);
+        statsTextArea.setEditable(false);
+
+
         JPanel bottom = new JPanel(new BorderLayout());
-        availibleRes = new JTextArea();
-        availibleRes.setBorder(BorderFactory.createTitledBorder(coloredLine, "Availible Resources"));
+        availibleRes.setBorder(BorderFactory.createTitledBorder(coloredLine, "Available Resources"));
         bottom.add(availibleRes, BorderLayout.CENTER);
 
         assignmentsPane.add(top);
@@ -162,6 +153,7 @@ public class StructureScreen extends JPanel {
         structureOverview.add(assignmentsPane);
 
         this.add(structureOverview);
+        allocationInput.setModel(spinnerModel);
         repaint();
     }
 
@@ -177,6 +169,9 @@ public class StructureScreen extends JPanel {
     public JButton getMapScreenSelectButton() {
         return screenSelectBtns.getMapScreenSelectButton();
     }
+    public JButton getAssignmentButton() {
+        return assignment;
+    }
 
     public void addStructureListActionListener(ListSelectionListener l) {
         structureList.addListSelectionListener(l);
@@ -186,11 +181,25 @@ public class StructureScreen extends JPanel {
         moveOrderUp.addActionListener(e);
     }
 
+    public void addCommandDownActionListener(ActionListener e) {
+        moveOrderDown.addActionListener(e);
+    }
+
+    public void addCommandCancelActionListener(ActionListener e) {
+        cancelCommand.addActionListener(e);
+    }
+
+    public void addAssignmentActionListener(ActionListener e) {
+        assignment.addActionListener(e);
+    }
+
     public void setStructureModel(ArrayList<Structure> structures) {
         strucListModel.clear();
         for (Structure s : structures) {
             strucListModel.addElement(s.getType() + " " + s.getId());
         }
+        structureList.setModel(strucListModel);
+        repaint();
     }
 
     public JList getStructureList() {
@@ -199,56 +208,77 @@ public class StructureScreen extends JPanel {
 
     public void setStrucQueueListModel(Structure s) {
         strucQueueListModel.clear();
+        ArrayList<Command> commands = s.getCommandQueue().getCommandsList();
+        for (Command c: commands) {
+            strucQueueListModel.addElement(c.getCommandString());
+        }
+        structureQueueList.setModel(strucQueueListModel);
     }
 
     public void setStatsBox(Structure s) {
         statsTextArea.setText(s.printStats());
     }
 
-    public void updatedStructureSelection(ArrayList<Structure> structures) {
+    public void setAvailibleResources(int metal, int power, int nutrient) {
+        availibleRes.setText("Metal: " + metal +
+                            "\nPower: " + power +
+                            "\nNutrients: " + nutrient);
+    }
+
+    public void setStatusBox(Structure s) {
+        String isSupplied;
+        if(s.isSufficientlySupplied()) {
+            isSupplied = "Sufficient";
+        } else {
+            isSupplied = "Not sufficient";
+        }
+        String isFed;
+        if (s.getWorkerAssigned().size() != 0) {
+            if (s.getWorkerAssigned().get(0).isFed()) {
+                isFed = "Sufficient";
+            } else {
+                isFed = "Not sufficient";
+            }
+        } else {
+            isFed = "Sufficient";
+        }
+
+        statusTextArea.setText("Allocated metal and power: " + isSupplied
+                                + "\nAllocated nutrient: " + isFed);
+    }
+
+    public Structure updatedStructureSelection(ArrayList<Structure> structures) {
         String selectedValue = (String)structureList.getSelectedValue();
 
         for (Structure s: structures) {
             if (selectedValue.equals(s.getType() + " " + s.getId())) {
                 setStatsBox(s);
                 setComboBoxModel(s.getType());
-                //setStrucQueueListModel(s.getCommands());
-                //TODO -- Need a command queue in structures to continue
+                setStrucQueueListModel(s);
+                setStatusBox(s);
+                return s;
             }
         }
+        return null;
     }
 
     private void setComboBoxModel(String s) {
         dropDownModel.removeAllElements();
-        dropDownModel.addElement("Allocate Ore");
-        dropDownModel.addElement("Allocate Power");
+        dropDownModel.addElement("Allocate Metal (Percentage 0-100)");
+        dropDownModel.addElement("Allocate Power (Percentage 0-100)");
         switch(s) {
-            case "Capital":
-                dropDownModel.addElement("Assign Worker: Harvest Ore");
-                dropDownModel.addElement("Assign Worker: Harvest Energy");
-                dropDownModel.addElement("Assign Worker: Harvest Food");
-                dropDownModel.addElement("Assign Worker: Heal");
-                dropDownModel.addElement("Assign Worker: Produce Explorer");
-                break;
-            case "Fort":
-                dropDownModel.addElement("Assign Worker: Train Melee");
-                dropDownModel.addElement("Assign Worker: Train Ranged");
-                dropDownModel.addElement("Assign Soldier: Train Melee");
-                dropDownModel.addElement("Assign Soldier: Train Ranged");
-                break;
-            case "Farm":
-                dropDownModel.addElement("Assign Worker: Harvest Food");
-                break;
-            case "Mine":
-                dropDownModel.addElement("Assign Worker: Harvest Ore");
-                break;
-            case "PowerPlant":
-                dropDownModel.addElement("Assign Worker: Harvest Energy");
-                break;
             case "University":
-                dropDownModel.addElement("Assign Worker: Research Technology");
+            case "Capital":
+            case "Fort":
+            case "Farm":
+            case "Mine":
+            case "PowerPlant":
+                dropDownModel.addElement("Allocate Nutrient (Percentage 0-100)");
                 break;
+
         }
+        dropDownBox.setModel(dropDownModel);
+        repaint();
     }
 
     public JButton getMoveOrderUp() {
@@ -265,5 +295,13 @@ public class StructureScreen extends JPanel {
 
     public JList getStrucQueueList() {
         return structureQueueList;
+    }
+
+    public JComboBox getDropDownBar() {
+        return dropDownBox;
+    }
+
+    public JSpinner getAllocationInput() {
+        return allocationInput;
     }
 }

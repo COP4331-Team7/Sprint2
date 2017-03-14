@@ -21,8 +21,8 @@ public abstract class Structure extends Entity {
  
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
-    private int allocatedEnergy;
-    private int allocatedOre;
+    protected int allocatedEnergy;
+    protected int allocatedOre;
     private int levelOfCompletion;  //range 0 to 100, incremented at a rate of +1 per worker per turn
     private boolean isSufficientlySupplied;
     private ArrayList<Worker> workerAssigned = new ArrayList<>();
@@ -200,6 +200,17 @@ public abstract class Structure extends Entity {
         this.allocatedOre += quantity;
     }
 
+    public void setAllocatedResources(String resource, int value) {
+        switch(resource) {
+            case "Ore":
+                allocatedOre =value;
+                break;
+            case "Energy":
+                allocatedEnergy = value;
+                break;
+        }
+    }
+
     public ArrayList<Worker> getWorkerAssigned() {
         return workerAssigned;
     }
@@ -267,4 +278,26 @@ public abstract class Structure extends Entity {
 
     }
 
+    public void moveCommandUp(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.raiseCommand(selected_value);
+        }
+    }
+
+
+    public void moveCommandDown(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.lowerCommand(selected_value);
+        }
+    }
+
+    public void removeCommandByString(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.removeCommandByString(selected_value);
+        }
+    }
+
+    public CommandQueue getCommandQueue() {
+        return commandQueue;
+    }
 }

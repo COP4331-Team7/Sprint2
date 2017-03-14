@@ -701,4 +701,16 @@ public class Player {
     public Technologies getTechnologies() {
         return technologies;
     }
+
+    public void spendMetal(int amount) {
+        metal -= amount;
+    }
+
+    public void spendFood(int amount) {
+        nutrients -= amount;
+    }
+
+    public void spendPower(int amount) {
+        power -= amount;
+    }
 }

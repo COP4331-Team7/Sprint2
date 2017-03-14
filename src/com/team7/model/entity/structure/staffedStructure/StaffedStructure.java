@@ -83,6 +83,20 @@ public abstract class StaffedStructure extends Structure {
 
     public abstract void beginStructureFunction();
 
+    @Override
+    public void setAllocatedResources(String resource, int value) {
+        switch(resource) {
+            case "Ore":
+                allocatedOre =value;
+                break;
+            case "Energy":
+                allocatedEnergy = value;
+                break;
+            case "Nutrient":
+                allocatedFood = value;
+        }
+    }
+
 
     @Override
     public void executeCommandQueue() {
