@@ -134,5 +134,8 @@ public class TechnologyScreen extends JPanel {
     }
 
 
+    public void clearTechnologyStatListModel() {
+        defaultTechnologiesListModel.clear();
+    }
 }
 

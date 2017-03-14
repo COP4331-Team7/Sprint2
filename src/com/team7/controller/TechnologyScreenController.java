@@ -66,6 +66,7 @@ public class TechnologyScreenController {
                 if (e.getSource() == technologyScreen.getUnitButton()){
                     technologyScreen.setInstanceListModel(textListOfUnits);
                     currentMode = "Unit";
+                    technologyScreen.clearTechnologyStatListModel();
                 }
             }
         });
@@ -75,6 +76,7 @@ public class TechnologyScreenController {
                 if (e.getSource() == technologyScreen.getStructureButton()){
                     technologyScreen.setInstanceListModel(textListOfStructures);
                     currentMode = "Structure";
+                    technologyScreen.clearTechnologyStatListModel();
                 }
             }
         });
@@ -84,6 +86,7 @@ public class TechnologyScreenController {
                 if (e.getSource() == technologyScreen.getWorkerButton()){
                     technologyScreen.setInstanceListModel(textListOfWorkers);
                     currentMode = "Worker";
+                    technologyScreen.clearTechnologyStatListModel();
                 }
             }
         });
