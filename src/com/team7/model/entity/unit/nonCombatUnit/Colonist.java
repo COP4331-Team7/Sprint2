@@ -33,13 +33,26 @@ public class Colonist extends NonCombatUnit {
         // create capital, 5 workers and 2 melee units
         Structure capital = new Capital(this.getLocation(), this.getOwner());
         this.getOwner().addStructure(capital);
-//        this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
-//        this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
-//        this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
-//        this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
-//        this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
-//        this.getOwner().addUnit(new MeleeUnit(this.getLocation(), this.getOwner()));
-//        this.getOwner().addUnit(new MeleeUnit(this.getLocation(), this.getOwner()));
+
+        Worker worker1 = new Worker(this.getLocation(), this.getOwner());
+        Worker worker2 = new Worker(this.getLocation(), this.getOwner());
+        Worker worker3 = new Worker(this.getLocation(), this.getOwner());
+        Worker worker4 = new Worker(this.getLocation(), this.getOwner());
+        Worker worker5 = new Worker(this.getLocation(), this.getOwner());
+
+        this.getOwner().addWorker(worker1);
+        this.getOwner().addWorker(worker2);
+        this.getOwner().addWorker(worker3);
+        this.getOwner().addWorker(worker4);
+        this.getOwner().addWorker(worker5);
+        ((StaffedStructure) capital).addWorkerToStaff(worker1);
+        ((StaffedStructure) capital).addWorkerToStaff(worker2);
+        ((StaffedStructure) capital).addWorkerToStaff(worker3);
+        ((StaffedStructure) capital).addWorkerToStaff(worker4);
+        ((StaffedStructure) capital).addWorkerToStaff(worker5);
+
+        this.getOwner().addUnit(new MeleeUnit(this.getLocation(), this.getOwner()));
+        this.getOwner().addUnit(new MeleeUnit(this.getLocation(), this.getOwner()));
 
         // sacrifice colonist from tile and player
         this.getLocation().removeUnitFromTile(this);
