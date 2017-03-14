@@ -48,7 +48,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "MOVE",
     };
     private final static String[] structureTypes = {
-            "BASE",
             "CAPITAL",
             "FORT",
             "UNIVERSITY",
@@ -335,23 +334,22 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
                  return controller.getNumMelee();
         }
 
-/*
+
         if(currMode == 1 && currType == 0)           // CAPITAL
-
+            return controller.getNumCapital();
         else if(currMode == 1 && currType == 1)       // FORT
-            currSelection = currentPlayer.getFort( id );
+            return controller.getNumFort();
         else if(currMode == 1 && currType == 2)         // UNIVERSITY
-            currSelection = currentPlayer.getUniversity( id );
+            return controller.getNumUniversity();
         else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
-            currSelection = currentPlayer.getObservationTower( id );
+            return controller.getNumObsTower();
         else if(currMode == 1 && currType == 4)        // FARM
-            currSelection = currentPlayer.getFarm( id );
+            return controller.getNumFarm();
         else if(currMode == 1 && currType == 5)        // MINE
-            currSelection = currentPlayer.getMine( id );
+            return controller.getNumMine();
         else if(currMode == 1 && currType == 6)        // POWERPLANT
-            currSelection = currentPlayer.getPowerPlant( id );
+            return controller.getNumPowerPlant();
 
-        */
         else
               return 0;
     }

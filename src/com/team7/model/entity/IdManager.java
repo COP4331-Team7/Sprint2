@@ -95,17 +95,6 @@ public class IdManager {
             }
             ID = availableIDs.get(0);
         }
-//        else if(entity instanceof Structure) {
-//            if(player.getStructures().size() >= 10) {
-//                return -1;
-//            }
-//
-//            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
-//            for(int i = 0; i < player.getStructures().size(); i++){
-//                availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
-//            }
-//            ID = availableIDs.get(0);
-//        }
         else if(entity instanceof Army) {
             if(player.getArmies().size() >= 10) {
                 return -1;

@@ -487,6 +487,62 @@ public class Player {
         return n;
     }
 
+    public int getNumCapital() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Capital )
+                n++;
+        return n;
+    }
+
+    public int getNumFort() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Fort )
+                n++;
+        return n;
+    }
+
+    public int getNumUniversity() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof University )
+                n++;
+        return n;
+    }
+
+    public int getNumObservationTower() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof ObservationTower )
+                n++;
+        return n;
+    }
+
+    public int getNumMine() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Mine )
+                n++;
+        return n;
+    }
+
+    public int getNumFarm() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Farm )
+                n++;
+        return n;
+    }
+
+    public int getNumPowerPlant() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof PowerPlant )
+                n++;
+        return n;
+    }
+
     public Unit getExplorer(int id) {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Explorer && units.get(i).getId() == id)

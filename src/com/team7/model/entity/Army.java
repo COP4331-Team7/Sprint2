@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class Army extends Entity {
 
-    private static int army_Ids;
     private CommandQueue commandQueue;
     private ArrayList<Unit> units;
     private ArrayList<Worker> workers;

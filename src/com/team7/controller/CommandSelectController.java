@@ -169,4 +169,28 @@ public class CommandSelectController {
         giveCommandViewFocus();
     }
 
+    public int getNumCapital() {
+        return game.getCurrentPlayer().getNumCapital();
+    }
+    public int getNumFort() {
+        return game.getCurrentPlayer().getNumFort();
+    }
+    public int getNumFarm() {
+        return game.getCurrentPlayer().getNumFarm();
+    }
+    public int getNumMine() {
+        return game.getCurrentPlayer().getNumMine();
+    }
+    public int getNumObsTower() {
+        return game.getCurrentPlayer().getNumObservationTower();
+    }
+    public int getNumPowerPlant() {
+        return game.getCurrentPlayer().getNumPowerPlant();
+    }
+    public int getNumUniversity() {
+        return game.getCurrentPlayer().getNumUniversity();
+    }
+
+
+
 }
