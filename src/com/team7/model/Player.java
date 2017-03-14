@@ -572,49 +572,50 @@ public class Player {
     }
 
     public Structure getCapital(int id) {
-        for(int i = 0; i < units.size(); i++)
-            if(structures.get(i) instanceof Capital && structures.get(i).getId() == id)
-                return structures.get( i );
+        for(int i = 0; i < structures.size(); i++) {
+            if (structures.get(i) instanceof Capital && structures.get(i).getId() == id)
+                return structures.get(i);
+        }
         return null;
     }
 
     public Structure getFort(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof Fort && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;
     }
 
     public Structure getUniversity(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof University && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;
     }
 
     public Structure getObservationTower(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof ObservationTower && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;
     }
 
     public Structure getMine(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof Mine && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;
     }
 
     public Structure getFarm(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof Farm && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;
     }
 
     public Structure getPowerPlant(int id) {
-        for(int i = 0; i < units.size(); i++)
+        for(int i = 0; i < structures.size(); i++)
             if(structures.get(i) instanceof PowerPlant && structures.get(i).getId() == id)
                 return structures.get( i );
         return null;

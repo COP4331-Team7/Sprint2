@@ -70,10 +70,6 @@ public class CommandSelectController {
         Player currentPlayer = game.getCurrentPlayer();
         Structure currSelection = null;
 
-        System.out.println("id of current structure: " + id);
-
-
-
         if(currMode == 1 && currType == 0)           // CAPITAL
             currSelection = currentPlayer.getCapital( id );
         else if(currMode == 1 && currType == 1)       // FORT

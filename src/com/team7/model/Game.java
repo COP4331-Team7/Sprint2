@@ -66,8 +66,8 @@ public class Game {
 
         Capital c1 = new Capital(map.getGrid()[18][20],  players[0]);
         players[0].addStructure(c1);
-        Capital c2 = new Capital(map.getGrid()[22][20],  players[1]);
-        players[1].addStructure(c2);
+        Capital c2 = new Capital(map.getGrid()[22][20],  players[0]);
+        players[0].addStructure(c2);
 
         addUnitToPlayer( players[0], melee1 );
         addUnitToPlayer( players[1], melee2 );
