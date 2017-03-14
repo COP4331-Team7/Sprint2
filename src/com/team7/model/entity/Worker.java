@@ -72,7 +72,7 @@ public class Worker extends Entity {
                     changeFoodUpkeep(0-level);
                     break;
                 case "HarvestRadius":
-                    changeHarvestRadius(level);
+                    setHarvestRadius(level);
                     break;
             }
         }
@@ -96,5 +96,9 @@ public class Worker extends Entity {
 
     private void changeFoodUpkeep(int delta){
         foodUpkeep += delta;
+    }
+
+    public void setHarvestRadius(int harvestRadius) {
+        this.harvestRadius = harvestRadius;
     }
 }

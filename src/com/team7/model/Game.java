@@ -8,6 +8,7 @@ import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
 import com.team7.model.entity.unit.Unit;
@@ -83,7 +84,8 @@ public class Game {
 
         Worker w1 = new Worker(map.getGrid()[25][20], players[0]);
         addWorkerToPlayer(players[0], w1);
-    
+        ((StaffedStructure)c1).addWorkerToStaff(w1);
+
 
         Army army0 = new Army(map.getGrid()[1][30],  players[0]);
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);
@@ -247,19 +249,19 @@ public class Game {
         // some commands won't finish executing within 1 tick, they update & remain in queue
         System.out.println("\nUNITS:");
         for(Unit u : all_units) {
-            u.printCommandQueue();
+           // u.printCommandQueue();
             u.executeCommandQueue();
         }
 
         System.out.println("\nSTRUCTURES:");
         for(Structure s : all_structures) {
-            s.printCommandQueue();
+          //  s.printCommandQueue();
             s.executeCommandQueue();
         }
 
         System.out.println("\nARMIES:");
         for(Army a : all_armies) {
-            a.printCommandQueue();
+           // a.printCommandQueue();
             // s.executeCommandQueue();
         }
 
