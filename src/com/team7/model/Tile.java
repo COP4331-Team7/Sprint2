@@ -249,8 +249,15 @@ public class Tile {
         }
     }
 
-    public void refreshDrawableState_harvestable(){
-        realDraw.refreshHarvestable(this);
+    public void refreshDrawableState_harvestable(String name){
+        if(name.contains("One")){
+            realDraw.setWorkableByPlayer1(true);
+            playerOneDraw.setWorkableByPlayer1(true);
+        }
+        if(name.contains("Two")){
+            realDraw.setWorkableByPlayer2(true);
+            playerTwoDraw.setWorkableByPlayer2(true);
+        }
     }
 
 

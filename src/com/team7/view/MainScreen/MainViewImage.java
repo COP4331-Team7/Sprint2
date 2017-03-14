@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -42,6 +43,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage highlightImage;
         private BufferedImage invisible;
         private BufferedImage ghostImage;
+        private BufferedImage yellowHighlightImage;
 
         public int x_center, y_center;    // where the window is focused on
         private Timer timer = null;
@@ -93,6 +95,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/dark_image.png"));
                highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
                invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/invisible.png"));
+               yellowHighlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/yellowHighlight.png"));
             }
             catch (IOException e) {}
 
@@ -464,6 +467,21 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 }
                             }
 
+                        }
+
+                        //drawing workable tiles overlay
+                        if(player.getName().equals("One")){
+                            if(tileState.isWorkableByPlayer1()){
+                                //draw tile overlay
+                                g2ds.drawImage(yellowHighlightImage, x_coord + x_offset, y_coord, null);
+                            }
+                        }
+
+                        if(player.getName().equals("Two")){
+                            if(tileState.isWorkableByPlayer2()){
+                                //draw tile overlay
+                                g2ds.drawImage(yellowHighlightImage, x_coord + x_offset, y_coord, null);
+                            }
                         }
 
                         // shroud tile

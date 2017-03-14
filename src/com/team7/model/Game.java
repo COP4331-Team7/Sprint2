@@ -3,6 +3,7 @@ package com.team7.model;
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
@@ -64,7 +65,7 @@ public class Game {
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
 
-        //adding all types of structure to p0 for testing
+        //adding all types of structure to p1 for testing
         Structure c1 = new Capital(map.getGrid()[25][20],  players[0]);
         Structure university = new University(map.getGrid()[20][20], players[0]);
         Structure obsTower = new ObservationTower(map.getGrid()[20][15], players[0]);
@@ -79,6 +80,10 @@ public class Game {
         players[0].addStructure(farm);
         //players[0].addStructure(farm2);
 
+
+        Worker w1 = new Worker(map.getGrid()[25][20], players[0]);
+        addWorkerToPlayer(players[0], w1);
+    
 
         Army army0 = new Army(map.getGrid()[1][30],  players[0]);
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);
@@ -118,6 +123,10 @@ public class Game {
         player.addUnit(unit);
     }
 
+    public void addWorkerToPlayer(Player player, Worker worker){
+        player.addWorker(worker);
+    }
+
 
     //called at the end of each turn and everytime gamestate changes (namely movement)
     //1. find all tiles currently visited by current player, along with the radius
@@ -152,7 +161,7 @@ public class Game {
                 tile.refreshDrawableState();    // update realDraw
 
                 if (harvestableTiles.contains(tile)){
-                    tile.refreshDrawableState_harvestable();
+                    tile.refreshDrawableState_harvestable(currentPlayer.getName());
                 }
 
                 if( prospectedTiles.contains( tile )  ) {

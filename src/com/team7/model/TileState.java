@@ -42,6 +42,9 @@ public class TileState {
     private boolean prospectedByPlayer1;
     private boolean prospectedByPlayer2;
 
+    private boolean workableByPlayer1;
+    private boolean workableByPlayer2;
+
     public TileState(){}
 
     //copy constructor
@@ -230,5 +233,21 @@ public class TileState {
 
     public void setProspectedByPlayer2(boolean prospectedByPlayer2) {
         this.prospectedByPlayer2 = prospectedByPlayer2;
+    }
+
+    public boolean isWorkableByPlayer1() {
+        return workableByPlayer1;
+    }
+
+    public void setWorkableByPlayer1(boolean workableByPlayer1) {
+        this.workableByPlayer1 = workableByPlayer1;
+    }
+
+    public boolean isWorkableByPlayer2() {
+        return workableByPlayer2;
+    }
+
+    public void setWorkableByPlayer2(boolean workableByPlayer2) {
+        this.workableByPlayer2 = workableByPlayer2;
     }
 }
