@@ -122,6 +122,10 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private char key_char = '1';
     private boolean isRecordingPath = false;
     private PathSelectController pathSelectController = null;
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
     /* CONSTRUCTOR AT BOTTOM OF FILE */
 
@@ -185,6 +189,17 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void keyTyped(KeyEvent e)    {}
     public void keyReleased(KeyEvent e) {}
     public void keyPressed(KeyEvent e)  {
+
+        // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
+        if(currMode == 2 && (currType == 2 || currType ==3) && currCommand == 0 && (e.getKeyChar()-48 != 65487)) {
+            controller.executeReinforeCommand( e.getKeyChar(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
+        }
+
+
+
+
+
+        /////////
 
         // zoom to current selection
         if( e.getKeyChar() == 'f') {

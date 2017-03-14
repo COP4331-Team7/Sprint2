@@ -164,21 +164,30 @@ public class Game {
         ArrayList<Structure> all_structures = new ArrayList<>(p1_structures);
         all_structures.addAll( p2_structures );
 
+        ArrayList<Army> p1_armies = players[0].getArmies();
+        ArrayList<Army> p2_armies = players[1].getArmies();
+        ArrayList<Army> all_armies = new ArrayList<>(p1_armies);
+        all_armies.addAll( p2_armies );
+
         // execute queues of all units in game
         // some commands won't finish executing within 1 tick, they update & remain in queue
-        System.out.println();
-
+        System.out.println("\nUNITS:");
         for(Unit u : all_units) {
             u.printCommandQueue();
             u.executeCommandQueue();
         }
 
-
+        System.out.println("\nSTRUCTURES:");
         for(Structure s : all_structures) {
             s.printCommandQueue();
            // s.executeCommandQueue();
         }
 
+        System.out.println("\nARMIES:");
+        for(Army a : all_armies) {
+            a.printCommandQueue();
+            // s.executeCommandQueue();
+        }
 
 
     }

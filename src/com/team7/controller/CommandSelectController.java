@@ -158,4 +158,15 @@ public class CommandSelectController {
         mainViewInfo.clearStats();
     }
 
+    public void executeReinforeCommand(Character c, Unit u) {
+
+        int armyID = Integer.valueOf( c - 48 );
+
+        // System.out.println(armyID);
+
+        queueCommand();
+        clearCommandView();
+        giveCommandViewFocus();
+    }
+
 }
