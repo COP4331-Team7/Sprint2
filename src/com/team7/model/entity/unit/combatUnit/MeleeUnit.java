@@ -2,6 +2,7 @@ package com.team7.model.entity.unit.combatUnit;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.unit.UnitStats;
 
@@ -19,6 +20,58 @@ public class MeleeUnit extends CombatUnit {
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(2);
+    }
+
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+            case "DECOMMISSION":
+                decommission( );
+                removeCommandFromQueue();
+                break;
+
+            case "POWER UP":
+                powerUp( );
+                removeCommandFromQueue();
+                break;
+
+            case "POWER DOWN":
+                powerDown( );
+                removeCommandFromQueue();
+                break;
+
+            case "MOVE":
+                // move unit furthest allowable distance.
+                // if move doesn't complete in 1 turn, leave in queue
+                break;
+
+            case "REINFORCE":
+
+                break;
+
+
+            case "ATTACK":
+
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     @Override

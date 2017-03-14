@@ -53,8 +53,6 @@ public class Explorer extends NonCombatUnit {
 
         String commandString = commandToExecute.getCommandString();
 
-        System.out.println( commandString );
-
         switch ( commandString ) {
             case "PROSPECT MODE ON":
                 setProspecting( true );

@@ -62,8 +62,6 @@ public class Colonist extends NonCombatUnit {
 
         String commandString = commandToExecute.getCommandString();
 
-        System.out.println( commandString );
-
         switch ( commandString ) {
             case "DECOMMISSION":
                 decommission( );
