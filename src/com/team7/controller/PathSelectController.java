@@ -52,10 +52,10 @@ public class PathSelectController {
 
     public void moveCursor(String direction) {
 
-        if(pathTile.size() >= moveLimit)
-            return;
+//        if(pathTile.size() >= moveLimit)
+//            return;
 
-        selectedTile.isSelectedPath = false;
+//        selectedTile.isSelectedPath = false;
 
         if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 7);
