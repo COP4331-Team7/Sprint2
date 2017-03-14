@@ -123,4 +123,9 @@ public abstract class StaffedStructure extends Structure {
         }
 
     }
+
+    public void addWorkerToStaff(Worker worker){
+        this.workerStaff.add(worker);
+    }
+
 }

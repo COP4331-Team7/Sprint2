@@ -1,9 +1,11 @@
 package com.team7.view.TechnologyScreen;
 
 import com.team7.model.Technology;
+import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.view.ScreenSelectButtons;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +26,21 @@ public class TechnologyScreen extends JPanel {
     private JScrollPane instanceScrollPane = new JScrollPane(technologyInstanceList);
 
 
-
     private JList<String> technologiesList = new JList<>();
     private DefaultListModel<String> defaultTechnologiesListModel = new DefaultListModel<>();
     private JScrollPane technologyStatScrollPane = new JScrollPane(technologiesList);
 
+    private JList<String> universitiesList = new JList<>();
+    private DefaultListModel<String> defaultUniversitiesListModel = new DefaultListModel<>();
+    private JScrollPane universitiesScrollPane = new JScrollPane(universitiesList);
+
     private JPanel buttonPanel = new JPanel(new GridLayout(0, 3));
 
     private JPanel instanceAndStatPanesPanel = new JPanel(new GridLayout(0,2));
+
+    private JPanel universityPanel = new JPanel(new BorderLayout());
+
+    private JLabel universityLabel = new JLabel("All Universities");
 
 
     public TechnologyScreen() {
@@ -39,13 +48,17 @@ public class TechnologyScreen extends JPanel {
         this.add(screenSelectBtns, BorderLayout.NORTH);
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
 
-        //set models of two jlists
+        //set models of jlists
         technologyInstanceList.setModel(defaultInstanceListModel);
         technologiesList.setModel(defaultTechnologiesListModel);
+        universitiesList.setModel(defaultUniversitiesListModel);
+
 
         //add lists to the grid (0x2) panel
         instanceAndStatPanesPanel.add(instanceScrollPane);
         instanceAndStatPanesPanel.add(technologyStatScrollPane);
+
+        universityPanel.add(universitiesScrollPane);
 
         workerButton.setFont(new Font("Serif", Font.BOLD, 22));
         workerButton.setForeground( new Color(0xff000000) );
@@ -67,6 +80,10 @@ public class TechnologyScreen extends JPanel {
 
         technologyInstanceList.setFont(new Font("Serif", Font.BOLD, 25));
 
+        technologiesList.setFont(new Font("Serif", Font.BOLD, 22));
+
+        universitiesList.setFont(new Font("Serif", Font.BOLD, 30));
+
         instanceScrollPane.setBackground(new Color(0xffF5F5DC));
         instanceScrollPane.setOpaque(true);
 
@@ -77,6 +94,17 @@ public class TechnologyScreen extends JPanel {
         JPanel temp = new JPanel( new BorderLayout() );
         temp.add(buttonPanel, BorderLayout.NORTH );
         temp.add(instanceAndStatPanesPanel, BorderLayout.CENTER);
+
+        JPanel t = new JPanel( new BorderLayout() );
+
+        universityLabel.setFont(new Font("Serif", Font.BOLD, 35));
+        universityLabel.setBackground(new Color(0xffF5F5DC));
+        universityLabel.setOpaque(true);
+
+        t.add(universityLabel, BorderLayout.NORTH);
+        t.add(universityPanel, BorderLayout.CENTER);
+
+        temp.add(t, BorderLayout.SOUTH);
         this.add(temp, BorderLayout.SOUTH);
 
         temp.setPreferredSize( new Dimension( (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.8), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.75) ) );
@@ -112,6 +140,18 @@ public class TechnologyScreen extends JPanel {
         this.repaint();
     }
 
+    private void setUniversitiesListModel(ArrayList<University> universities){
+        defaultUniversitiesListModel.clear();
+
+        for (University university : universities){
+            defaultUniversitiesListModel.addElement("University id: " + university.getId() + " : in research? " + university.isInResearch());
+            if (university.isInResearch()){
+                defaultUniversitiesListModel.addElement("     " + university.getTechnologyInResearch().getTechnologyInstance() + " " + university.getTechnologyInResearch().getTechnologyStat());
+            }
+        }
+        this.repaint();
+    }
+
 
     public JButton getUnitButton() {
         return unitButton;
@@ -131,8 +171,16 @@ public class TechnologyScreen extends JPanel {
         return defaultInstanceListModel;
     }
 
+    public DefaultListModel<String> getDefaultTechnologiesListModel() {
+        return defaultTechnologiesListModel;
+    }
+
     public JList<String> getTechnologyInstanceList() {
         return technologyInstanceList;
+    }
+
+    public JList<String> getTechnologiesList() {
+        return technologiesList;
     }
 
     public JButton getMainScreenButton() {
@@ -157,6 +205,10 @@ public class TechnologyScreen extends JPanel {
 
     public void clearTechnologyStatListModel() {
         defaultTechnologiesListModel.clear();
+    }
+
+    public void populatePlayerUniversities(ArrayList<University> universities) {
+        setUniversitiesListModel(universities);
     }
 }
 

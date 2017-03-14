@@ -66,6 +66,13 @@ public class CommandQueue {
 
     public ArrayList<Command> getCommandsList() {
         return commands;
+
+    }
+
+    public void cancelCommands() {
+        for(int i = 0; i < commands.size(); i++) {
+            this.commands.remove(i);
+        }
     }
 
 

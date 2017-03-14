@@ -7,12 +7,14 @@ import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
+import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +23,7 @@ public class CommandSelectController {
     private MainViewInfo mainViewInfo = null;
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionsScreen = null;
+    private CommandSelect commandSelect = null;
     private MainScreen mainScreen = null;
     private Game game = null;
 
@@ -30,6 +33,7 @@ public class CommandSelectController {
         this.mainViewImage = view.getMainViewImage();
         this.mainViewInfo = view.getMainViewInfo();
         this.optionsScreen = view.getOptionScreen();
+        this.commandSelect = view.getCommandSelect();
         this.mainScreen = view.getMainScreen();
         view.getMainScreen().getCommandSelect().setController( this );
         addActionListeners();
@@ -139,6 +143,18 @@ public class CommandSelectController {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getExecuteCommandButton())
 
+                    // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
+                    if( commandSelect.getCurrMode() == 2 && (commandSelect.getCurrType() == 2 || commandSelect.getCurrType() == 3) && commandSelect.getCurrCommand() == 0 ) {
+                        executeReinforeCommand( getCurrentUnitSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        return;
+                    }
+                    // STRUCTURE POWERPLANT:ENERGY MINE:ORE FARM:FOOD CAPITAL: ALL3
+                    else if( commandSelect.getCurrMode() == 1 && (commandSelect.getCurrType() == 0 || commandSelect.getCurrType() == 4 || commandSelect.getCurrType() == 5  || commandSelect.getCurrType() == 6 ) && (commandSelect.getCurrCommand() == 4 || commandSelect.getCurrCommand() == 5  || commandSelect.getCurrCommand() == 6 || commandSelect.getCurrCommand() == 8 || commandSelect.getCurrCommand() == 9 || commandSelect.getCurrCommand() == 10) ) {
+                         executeAssignToCommand( getCurrentStructureSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        return;
+                    }
+                    else
+
                     queueCommand();
                     game.printCommandQueues();
 
@@ -159,7 +175,6 @@ public class CommandSelectController {
         Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-
 
         if(unit != null)
             unit.queueCommand( command );
@@ -187,13 +202,29 @@ public class CommandSelectController {
         mainViewInfo.clearStats();
     }
 
-    public void executeReinforeCommand(Character c, Unit u) {
+    public void executeReinforeCommand(Unit u) {
 
-        int armyID = Integer.valueOf( c - 48 );
+        String s = new String( "Enter army ID that " + u.getType() + " " + u.getId() + " will reinforce" );
 
-        // System.out.println(armyID);
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
-        queueCommand();
+        System.out.println("Option pane on display reinforce !");
+       // int id = Integer.parseInt(String.valueOf(idString));
+
+        //queueCommand();
+        clearCommandView();
+        giveCommandViewFocus();
+    }
+
+    public void executeAssignToCommand(Structure structure) {
+
+        String s = new String( "Enter # workers to assign to " + structure.getType() + " " + structure.getId() + " ." );
+
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
+
+        System.out.println("Option pane on display! assignment");
+
+        //queueCommand();
         clearCommandView();
         giveCommandViewFocus();
     }

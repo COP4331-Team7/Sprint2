@@ -42,10 +42,6 @@ public class Explorer extends NonCombatUnit {
     @Override
     public void executeCommandQueue() {
 
-        if(getTurnsFrozen() > 0) {
-            subtractFrozenTurn();
-            return;
-        }
 
         if(getCommandFromQueue() == null)
             return;
@@ -88,6 +84,7 @@ public class Explorer extends NonCombatUnit {
             default:
                 break;
         }
+
 
     }
 

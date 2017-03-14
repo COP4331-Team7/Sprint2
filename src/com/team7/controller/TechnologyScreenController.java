@@ -2,6 +2,8 @@ package com.team7.controller;
 
 import com.team7.model.Game;
 import com.team7.model.Technology;
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
@@ -29,7 +31,13 @@ public class TechnologyScreenController {
     private MapScreen mapScreen = null;
     private TechnologyScreen technologyScreen = null;
 
+    private Technology currentTechnology = null;
+    private ArrayList<Technology> currentTechnologyList = new ArrayList<>();
+    private ArrayList<University> universities = new ArrayList<>();
+
     private String currentMode = null;
+    private String currentInstance = null;
+    private String currentStat = null;
 
     private final String[] textListOfUnits = {"Explorer", "Colonist", "Melee", "Ranged"};
     private final String[] textListOfStructures = {"Capital", "Fort", "University", "ObservationTower", "Farm", "PowerPlant", "Mine", "Harvest", "Produce", "Train"};
@@ -55,6 +63,18 @@ public class TechnologyScreenController {
 
 
 
+    public void updateUniversities(){
+        //get all universities of current player and add to screen
+        universities = new ArrayList<>();
+        for(Structure structure: game.getCurrentPlayer().getStructures()){
+            if (structure instanceof University){
+                universities.add((University)structure);
+                System.out.println("adding uni with id: "+ structure.getId());
+            }
+        }
+
+        technologyScreen.populatePlayerUniversities(universities);
+    }
 
     // add action listeners to Main Screen buttons
     public void addActionListeners() {
@@ -67,6 +87,7 @@ public class TechnologyScreenController {
                     technologyScreen.setInstanceListModel(textListOfUnits);
                     currentMode = "Unit";
                     technologyScreen.clearTechnologyStatListModel();
+                    updateUniversities();
                 }
             }
         });
@@ -77,6 +98,7 @@ public class TechnologyScreenController {
                     technologyScreen.setInstanceListModel(textListOfStructures);
                     currentMode = "Structure";
                     technologyScreen.clearTechnologyStatListModel();
+                    updateUniversities();
                 }
             }
         });
@@ -87,29 +109,72 @@ public class TechnologyScreenController {
                     technologyScreen.setInstanceListModel(textListOfWorkers);
                     currentMode = "Worker";
                     technologyScreen.clearTechnologyStatListModel();
+                    updateUniversities();
                 }
             }
         });
 
 
+        //click listener for technology list
         technologyScreen.getTechnologyInstanceList().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList<String> list = (JList<String>)evt.getSource();
                 if (evt.getClickCount() == 2) {
-                    ArrayList<Technology> currentTechnology = new ArrayList<>();
                     switch (currentMode){
                         case "Unit":
-                            currentTechnology = game.getCurrentPlayer().getTechnologies().getUnitTechnologies();
+                            currentTechnologyList = game.getCurrentPlayer().getTechnologies().getUnitTechnologies();
                             break;
                         case "Worker":
-                            currentTechnology = game.getCurrentPlayer().getTechnologies().getWorkerTechnologies();
+                            currentTechnologyList = game.getCurrentPlayer().getTechnologies().getWorkerTechnologies();
                             break;
                         case "Structure":
-                            currentTechnology = game.getCurrentPlayer().getTechnologies().getStructureTechnologies();
+                            currentTechnologyList = game.getCurrentPlayer().getTechnologies().getStructureTechnologies();
                             break;
 
                     }
-                    technologyScreen.setTechnologiesListModel(currentTechnology, list.getSelectedValue());
+                    currentInstance =  list.getSelectedValue();
+                    technologyScreen.setTechnologiesListModel(currentTechnologyList, list.getSelectedValue());
+                }
+            }
+        });
+
+        //click listener for stat list which allows you to choose a university to assign
+        technologyScreen.getTechnologiesList().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                JList<String> list = (JList<String>)e.getSource();
+                if (e.getClickCount() == 2) {
+                    if(universities.isEmpty()){
+                        //dont show popup if player has no universities
+                        return;
+                    }
+                    list.getSelectedValue();
+                    String input = "-1";
+                    input = JOptionPane.showInputDialog(technologyScreen.getParent(), "type a single number id of university to research at", null);
+                    //call figure out which university was called
+                    //begin research at that university
+
+                    currentStat = list.getSelectedValue(); //parse string into just the stat
+                    int index = currentStat.indexOf(':');
+                    currentStat = currentStat.substring(0, index);
+
+                    //determine which technology object the university will research
+                    for (Technology technology : currentTechnologyList){
+                        if(technology.getTechnologyStat().equals(currentStat) && technology.getTechnologyInstance().equals(currentInstance)){
+                            currentTechnology = technology;
+                        }
+                    }
+
+                    //find which university was referenced by id
+                    //begin research
+                    for (University uni : universities){
+                        if (uni.getId() == Integer.parseInt(input)){
+                            uni.produceTechnology(currentTechnology);
+                        }
+                    }
+
+                    //update scree
+                    updateUniversities();
+
                 }
             }
         });
