@@ -2,10 +2,14 @@ package com.team7.tests;
 
 import com.team7.model.Map;
 import com.team7.model.Player;
+import com.team7.model.entity.Army;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
+import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class PlayerTests {
@@ -49,6 +53,7 @@ public class PlayerTests {
         assertEquals(testPlayer.getWorkers().size(), 5);
         testPlayer.removeWorker(testPlayer.getWorkers().remove(0));
         assertEquals(testPlayer.getWorkers().size(), 4);
+        assertEquals(testPlayer.getStructures().size(), 1);
         assertEquals(testPlayer.isDefeated(), false);
 
         // remove capital and see if player lost
@@ -64,47 +69,61 @@ public class PlayerTests {
 
         // create map and player
         Map map = new Map();
-        Player testPlayer = new Player("playerOne");
+        Player testPlayer1 = new Player("playerOne");
+        Player testPlayer2 = new Player("playerTwo");
 
         // create colonists
-        Unit colonist1 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist1);
-        Unit colonist2 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist2);
-        Unit colonist3 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist3);
-        Unit colonist4 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist4);
-        Unit colonist5 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist5);
+        Unit colonist0 = new Colonist(map.getGrid()[0][0], testPlayer1);
+        testPlayer1.addUnit(colonist0);
+        Unit colonist1 = new Colonist(map.getGrid()[0][0], testPlayer1);
+        testPlayer1.addUnit(colonist1);
+        Unit explorer0 = new Explorer(map.getGrid()[0][0], testPlayer1);
+        testPlayer1.addUnit(explorer0);
 
+        assertEquals(testPlayer1.getUnits().get(0).getId(), 0);
+        assertEquals(testPlayer1.getUnits().get(1).getId(), 1);
+        assertEquals(testPlayer1.getUnits().get(2).getId(), 0);
 
-
-        assertEquals(testPlayer.getUnits().get(0).getId(), 0);
-        assertEquals(testPlayer.getUnits().get(1).getId(), 1);
-        assertEquals(testPlayer.getUnits().get(2).getId(), 2);
-        assertEquals(testPlayer.getUnits().get(3).getId(), 3);
-        assertEquals(testPlayer.getUnits().get(4).getId(), 4);
-
-        testPlayer.removeUnit(testPlayer.getUnits().get(1));
-        assertEquals(testPlayer.getUnits().get(0).getId(), 0);
-        assertEquals(testPlayer.getUnits().get(1).getId(), 2);
-        assertEquals(testPlayer.getUnits().get(2).getId(), 3);
-        assertEquals(testPlayer.getUnits().get(3).getId(), 4);
-
-        testPlayer.removeUnit(testPlayer.getUnits().get(1));
-        testPlayer.removeUnit(testPlayer.getUnits().get(1));
-        testPlayer.removeUnit(testPlayer.getUnits().get(1));
-        assertEquals(testPlayer.getUnits().size(), 1);
-
-        Unit colonist6 = new Colonist(map.getGrid()[0][0], testPlayer);
-        testPlayer.addUnit(colonist6);
-
-        assertEquals(testPlayer.getUnits().get(1).getId(), 1);
 
     }
 
 
-    // TODO: add test for checkUnitArmyStructs
+    @Test
+    // Tests that if a unit's health is 0 that it is deleted from army and player array and from Tile
+    // function checkUnitArmyStructs does a sweep to remove all dead things
+    public void testCheckUnitArmyStructs() throws Exception {
+
+        // create map, player, unit, army structure
+        Map map = new Map();
+        Player testPLayer = new Player("playerOne");
+        Unit melee = new MeleeUnit(map.getGrid()[0][0], testPLayer);
+        Unit colonist = new Colonist(map.getGrid()[1][0], testPLayer);
+        Army army = new Army(map.getGrid()[0][0],  testPLayer);
+
+
+        // add units and armies
+        testPLayer.addUnit(melee);
+        testPLayer.addUnit(colonist);
+        testPLayer.addArmy(army);
+        army.addUnitToArmy(melee);
+
+        // kill unit and make sure it is out of Player array and tile array
+        melee.getUnitStats().setHealth(0);
+        testPLayer.checkUnitArmyStructs();
+        assertTrue(testPLayer.getUnits().size() == 1);          // melee should be dead, colonist should be alive
+        assertTrue(testPLayer.getArmies().size() == 0);         // army should be empty
+        assertTrue(map.getGrid()[0][0].getUnits().size() == 0); // 00 tile should be empty
+
+
+        //destroy structure
+        ((Colonist) colonist).buildCapital();
+        testPLayer.getStructures().get(0).getStats().setHealth(0);
+        testPLayer.checkUnitArmyStructs();
+
+
+        // check that the player lost
+        assertEquals(testPLayer.isDefeated(), true);
+
+    }
 
 }

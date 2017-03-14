@@ -2,6 +2,8 @@ package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
 
@@ -24,6 +26,8 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     public Capital(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        setCommandQueue( new CommandQueue() );
+        generateID();
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         productionRateMap.put(harvestOre, 2);   //can harvest 2 ore per turn per worker per resource
@@ -34,12 +38,12 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         productionRateMap.put(produceWorker, 4);  //takes 4 turn to produce a worker
         setStats(new StructureStats(
                 0,
-                100,
+                5,
                 10,
-                20,
+                10,
                 productionRateMap,
                 100,
-                200)
+                100)
         );
         setType("Capital");
         setPowered(false);
@@ -84,22 +88,33 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         }
 
         if (techInstance.equals("Capital")){
+
+            setStats(new StructureStats(
+                    0,
+                    5,
+                    getStats().getArmor(),
+                    10,
+                    getStats().getProductionRates(),
+                    getStats().getHealth(),
+                    100)
+            );
+
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));
@@ -124,5 +139,31 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
             }
 
         }
+    }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.team7.model.entity;
 
+import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.unit.Unit;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 
 public class Army extends Entity {
 
-    private static int army_Ids;
     private CommandQueue commandQueue;
     private ArrayList<Unit> units;
     private ArrayList<Worker> workers;
@@ -21,7 +21,6 @@ public class Army extends Entity {
     public Army(Tile startTile, Player player) {
         setOwner(player);
         setLocation(startTile);
-
         generateID();
 
         this.commandQueue = new CommandQueue();
@@ -138,6 +137,72 @@ public class Army extends Entity {
 
     public boolean isPowered() {
         return isPowered;
+    }
+
+    public void attack(Map map, int direction) {
+        Attacker attacker = new Attacker(map, this.units, direction);
+        attacker.attack();
+    }
+
+    public void setCommandQueue(CommandQueue commandQueue) {
+        this.commandQueue = commandQueue;
+    }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + "ARMY" + " " + getId() + " command queue:   ");
+
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    public Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void removeCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return;
+        else
+            commandQueue.removeCommand();
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // this could be abstract and implemented in the subclasses
+
+    }
+
+    public void decommission() {
+        for(int i = 0; i < this.units.size(); i++){
+            this.units.get(i).decommission();
+        }
+    }
+
+    public void disband() {
+        for(int i = 0; i < this.units.size(); i++){
+            removeUnitFromArmy(this.units.get(i));
+        }
+        this.getOwner().removeArmy(this);
     }
 
 }

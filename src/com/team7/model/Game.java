@@ -1,6 +1,13 @@
 package com.team7.model;
 
 import com.team7.controller.PathSelectController;
+import com.team7.model.entity.Army;
+import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -42,18 +49,57 @@ public class Game {
         //TODO: fix
         // set Player One starting units
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
-        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][10], players[0]) );
+        //addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][10], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
         addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
         addUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
         // set Player Two starting units
         addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
-        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-5],  players[1]) );
+       // addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-5],  players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
+
+
+        //adding all types of structure to p0 for testing
+        Structure c1 = new Capital(map.getGrid()[25][20],  players[0]);
+        Structure university = new University(map.getGrid()[20][20], players[0]);
+        Structure obsTower = new ObservationTower(map.getGrid()[20][15], players[0]);
+        Structure fort = new Fort(map.getGrid()[20][25], players[0]);
+        Structure farm = new Farm(map.getGrid()[15][20], players[0]);
+
+        players[0].addStructure(c1);
+        players[0].addStructure(university);
+        players[0].addStructure(obsTower);
+        players[0].addStructure(fort);
+        players[0].addStructure(farm);
+
+
+        Army army0 = new Army(map.getGrid()[1][30],  players[0]);
+        Army army1 = new Army(map.getGrid()[1][29],  players[1]);
+        Army army2 = new Army(map.getGrid()[1][31],  players[1]);
+
+
+        Unit melee1 = new MeleeUnit(this.map.getGrid()[1][30], players[0]);
+        Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
+        Unit melee3 = new  MeleeUnit(this.map.getGrid()[1][31], players[1]);
+
+
+        addUnitToPlayer( players[0], melee1 );
+        addUnitToPlayer( players[1], melee2 );
+        addUnitToPlayer( players[1], melee3 );
+
+
+        army0.addUnitToArmy(melee1);
+        army1.addUnitToArmy(melee2);
+        army2.addUnitToArmy(melee3);
+
+        players[0].addArmy( army0 );
+        players[1].addArmy( army1 );
+        players[1].addArmy( army2 );
+
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }
@@ -72,23 +118,48 @@ public class Game {
     public void updateCurrPlayerTileStates(){
 
         HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
+        HashMap<Tile, Integer> currentPlayerProspectedTiles = currentPlayer.getAllProspectedTile();
+        HashMap<Tile, Integer> currentPlayerHarvestableTiles = currentPlayer.getAllHarvestableTilesForUnassignedWorkers();
+
         Set<Tile> visibleTiles = new HashSet<>();
+        Set<Tile> prospectedTiles = new HashSet<>();
+        Set<Tile> harvestableTiles = new HashSet<>();
         //1
         for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
             visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
         }
+        for (Tile tileKey: currentPlayerProspectedTiles.keySet()){
+            prospectedTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerProspectedTiles.get(tileKey), null));
+        }
+        for (Tile tileKey : currentPlayerHarvestableTiles.keySet()){
+            harvestableTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerHarvestableTiles.get(tileKey), null));
+        }
+
         //2
         //iterate through entire map and update each tile
         for (Tile[] tileArray : map.getGrid()) {
             for (Tile tile : tileArray) {
                 //3
+
+                tile.refreshDrawableState();    // update realDraw
+
+                if (harvestableTiles.contains(tile)){
+                    tile.refreshDrawableState_harvestable();
+                }
+
+                if( prospectedTiles.contains( tile )  ) {
+                    tile.refreshDrawableState_resources( );
+                }
+
                 if( visibleTiles.contains(tile ) ) {
+
                     tile.markVisible(currentPlayer.getName());
+
                 }
                 else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) && PathSelectController.isRecording) {
-                   tile.markShrouded( currentPlayer.getName() );
+                    tile.markShrouded( currentPlayer.getName() );
                 }
-                tile.refreshDrawableState();
+
             }
         }
     }
@@ -104,10 +175,10 @@ public class Game {
         turn = ++turn % 2;
 
         System.out.println(" ");
-        updateCurrPlayerTileStates();
         currentPlayer.takeTurn();
         executeCommandQueues();
-        //TODO remove dead Units?
+        removeDeadUnits();
+        updateCurrPlayerTileStates();
     }
 
     public void removeDeadUnits() {
@@ -129,14 +200,39 @@ public class Game {
         ArrayList<Unit> p1_units = players[0].getUnits();
         ArrayList<Unit> p2_units = players[1].getUnits();
         ArrayList<Unit> all_units = new ArrayList<>(p1_units);
-        all_units.addAll(p2_units);
+        all_units.addAll( p2_units );
+
+        ArrayList<Structure> p1_structures = players[0].getStructures();
+        ArrayList<Structure> p2_structures = players[1].getStructures();
+        ArrayList<Structure> all_structures = new ArrayList<>(p1_structures);
+        all_structures.addAll( p2_structures );
+
+        ArrayList<Army> p1_armies = players[0].getArmies();
+        ArrayList<Army> p2_armies = players[1].getArmies();
+        ArrayList<Army> all_armies = new ArrayList<>(p1_armies);
+        all_armies.addAll( p2_armies );
 
         // execute queues of all units in game
         // some commands won't finish executing within 1 tick, they update & remain in queue
+        System.out.println("\nUNITS:");
         for(Unit u : all_units) {
             u.printCommandQueue();
             u.executeCommandQueue();
         }
+
+        System.out.println("\nSTRUCTURES:");
+        for(Structure s : all_structures) {
+            s.printCommandQueue();
+           // s.executeCommandQueue();
+        }
+
+        System.out.println("\nARMIES:");
+        for(Army a : all_armies) {
+            a.printCommandQueue();
+            // s.executeCommandQueue();
+        }
+
+
     }
 
     public void printCommandQueues() {

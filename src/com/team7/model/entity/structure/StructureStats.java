@@ -43,13 +43,21 @@ public class StructureStats {
     public void changeProduction(String key, int delta){
         if(productionRates.containsKey(key)){
             productionRates.put(key, productionRates.get(key) + delta);
-            System.out.println("productionRate for " + key + " has been updated to: " + productionRates.get(key));
+            //System.out.println("productionRate for " + key + " has been updated to: " + productionRates.get(key));
         }
 
     }
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int h) {
+        if (h > maxHealth){
+            h = maxHealth;
+        }
+
+        this.health = h;
     }
 
     public void changeHealth(int delta){
@@ -78,6 +86,13 @@ public class StructureStats {
         }
     }
 
+    public void setArmor(int a) {
+        if(a > maxArmor) {
+            a = maxArmor;
+        }
+        this.armor = a;
+    }
+
     public void changeMaxArmor(int delta){
         maxArmor += delta;
     }
@@ -87,5 +102,13 @@ public class StructureStats {
                 + "\nDefensive Damage: " + defensiveDamage
                 + "\nArmor: " + armor
                 + "\nHealth: " + health;
+    }
+
+    public int getMaxArmor() {
+        return maxArmor;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }

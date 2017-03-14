@@ -2,9 +2,11 @@ package com.team7.model.entity.structure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
@@ -36,7 +38,26 @@ public abstract class Structure extends Entity {
         return false;
     }
 
-    public abstract int advanceConstruction(); //returns how much food was necessary that turn
+
+    public int advanceConstruction() {    //returns how much food was necessary that turn
+
+        int foodUpkeepDuringConstruction = 0;
+        if (!checkConstructionComplete()) {
+            //construction not complete
+            for(Worker worker : getWorkerAssigned()){
+                foodUpkeepDuringConstruction += 2;
+                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
+            }
+            if(checkConstructionComplete()){
+                if (this instanceof StaffedStructure){
+                    ((StaffedStructure)this).setWorkerStaff(getWorkerAssigned());  //move workers from building to staff
+                }
+                setPowered(true);   //construction has finished at this turn
+            }
+        }
+        return foodUpkeepDuringConstruction;
+    }
+
     public void influenceStructureAccordingToSupply(){
         if (!isSufficientlySupplied){
             degradeStructurePerformance();
@@ -198,4 +219,52 @@ public abstract class Structure extends Entity {
                 +"\nEnergy Upkeep: " + energyUpkeep
                 +"\nOre Upkeep: " + oreUpkeep;
     }
+    public void setCommandQueue(CommandQueue commandQueue) {
+        this.commandQueue = commandQueue;
+    }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:   ");
+
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    public Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void removeCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return;
+        else
+            commandQueue.removeCommand();
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // this could be abstract and implemented in the subclasses
+
+    }
+
 }

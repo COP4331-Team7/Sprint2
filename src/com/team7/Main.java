@@ -29,6 +29,7 @@ public class Main {
         MapScreenController mapScreenController = new MapScreenController(game, view);
         ResearchScreenController roc = new ResearchScreenController();
         MainScreenController ssc = new MainScreenController(game, view, soc, uoc);
+        TechnologyScreenController technologyScreenController = new TechnologyScreenController(game, view);
 
     }
 

@@ -10,6 +10,7 @@ import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.MapScreen.MapScreen;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.StructureScreen.StructureScreen;
+import com.team7.view.TechnologyScreen.TechnologyScreen;
 import com.team7.view.UnitScreen.UnitScreen;
 
 import javax.imageio.ImageIO;
@@ -60,6 +61,9 @@ public class View
     public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
     public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
     public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
+    public TechnologyScreen getTechnologyScreen() {
+        return frame.getTechnologyScreen();
+    }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
@@ -88,6 +92,8 @@ public class View
     }
 
 
+
+
 // ==================== INNER CLASS ==========================
 
     class Screen extends JFrame
@@ -98,6 +104,7 @@ public class View
         private UnitScreen unitScreen = null;
         private StructureScreen structureScreen = null;
         private MapScreen mapScreen = null;
+        private TechnologyScreen technologyScreen = null;
 
         public Screen( int width, int height)
         {
@@ -111,6 +118,7 @@ public class View
             unitScreen = new UnitScreen();
             structureScreen = new StructureScreen();
             mapScreen = new MapScreen();
+            technologyScreen = new TechnologyScreen();
 
             setCurrScreen("HOME");
             this.setVisible( true );
@@ -139,6 +147,9 @@ public class View
             return mapScreen;
         }
 
+        public TechnologyScreen getTechnologyScreen() {
+            return technologyScreen;
+        }
 
         public void setCurrScreen(String selected_screen) {
 
@@ -165,8 +176,10 @@ public class View
                 case "MAP_SCREEN":
                     displayMapScreen();
                     break;
+                case "TECHNOLOGY":
+                    displayTechnologyScreen();
+                    break;
             }
-
             revalidate();
             repaint();
         }
@@ -193,6 +206,9 @@ public class View
         }
         private void displayStructureOverviewScreen() {
                 this.getContentPane().add( structureScreen );
+        }
+        private void displayTechnologyScreen(){
+            this.getContentPane().add(technologyScreen);
         }
 
         private void displayMapScreen() {

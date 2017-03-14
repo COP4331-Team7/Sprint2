@@ -2,6 +2,8 @@ package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     public University(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
+
+        setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         //key: TYPE INSTANCE TECHNOLOGY
@@ -69,13 +74,26 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         productionRateMap.put("structure Capital Health", 2);
         productionRateMap.put("structure Capital Efficiency", 2); //reduces amount of ore/energy needed per turn
 
-        //applies to Farm, Mine, PowerPlant. Researching one will automatically increase the other
-        productionRateMap.put("structure Harvester VisibilityRadius", 2);
-        productionRateMap.put("structure Harvester AttackStrength", 2);
-        productionRateMap.put("structure Harvester DefenseStrength", 2);
-        productionRateMap.put("structure Harvester ArmorStrength", 2);
-        productionRateMap.put("structure Harvester Health", 2);
-        productionRateMap.put("structure Harvester Efficiency", 2); //reduces amount of ore/energy needed per turn
+        productionRateMap.put("structure Farm VisibilityRadius", 2);
+        productionRateMap.put("structure Farm AttackStrength", 2);
+        productionRateMap.put("structure Farm DefenseStrength", 2);
+        productionRateMap.put("structure Farm ArmorStrength", 2);
+        productionRateMap.put("structure Farm Health", 2);
+        productionRateMap.put("structure Farm Efficiency", 2); //reduces amount of ore/energy needed per turn
+
+        productionRateMap.put("structure Mine VisibilityRadius", 2);
+        productionRateMap.put("structure Mine AttackStrength", 2);
+        productionRateMap.put("structure Mine DefenseStrength", 2);
+        productionRateMap.put("structure Mine ArmorStrength", 2);
+        productionRateMap.put("structure Mine Health", 2);
+        productionRateMap.put("structure Mine Efficiency", 2); //reduces amount of ore/energy needed per turn
+
+        productionRateMap.put("structure PowerPlant VisibilityRadius", 2);
+        productionRateMap.put("structure PowerPlant AttackStrength", 2);
+        productionRateMap.put("structure PowerPlant DefenseStrength", 2);
+        productionRateMap.put("structure PowerPlant ArmorStrength", 2);
+        productionRateMap.put("structure PowerPlant Health", 2);
+        productionRateMap.put("structure PowerPlant Efficiency", 2); //reduces amount of ore/energy needed per turn
 
         productionRateMap.put("structure Fort VisibilityRadius", 2);
         productionRateMap.put("structure Fort AttackStrength", 2);
@@ -111,12 +129,12 @@ public class University extends StaffedStructure implements ITechnologyProducer 
 
         setStats(new StructureStats(
                 0,
-                100,
+                3,
                 10,
-                20,
+                10,
                 productionRateMap,
                 100,
-                200)
+                100)
         );
         setType("University");
         setPowered(false);
@@ -141,22 +159,27 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if (techInstance.equals("University")){
+
+            //reset stats except armor and health
+            StructureStats defaultStats = new StructureStats(0,3,getStats().getArmor(),10, getStats().getProductionRates(), getStats().getHealth(), 100);
+            setStats(defaultStats);
+
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));
@@ -166,4 +189,32 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         }
 
     }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
 }

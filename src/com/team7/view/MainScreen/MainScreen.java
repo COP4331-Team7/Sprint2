@@ -61,7 +61,9 @@ public class MainScreen extends JPanel {
     public JButton getOptionScreenButton() {
         return screenSelectBtns.getOptionsScreenSelectButton();
     }
-
+    public JButton getTechnologyScreenButton() {
+        return screenSelectBtns.getTechnologyScreenSelectButton();
+    }
 
     public ScreenSelectButtons getScreenSelectButtons() {
             return screenSelectBtns;

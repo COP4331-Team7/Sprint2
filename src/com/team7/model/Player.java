@@ -6,7 +6,12 @@ import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -168,15 +173,42 @@ public class Player {
         }
 
         for (Structure structure : structures){
-            if (structure.isPowered()){
+       //     if (structure.isPowered()){
                 Tile tile = structure.getLocation();
                 int radius = structure.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+          //  }
+        }
+
+        return tileRadiusMap;
+    }
+
+    public HashMap<Tile, Integer> getAllProspectedTile() {
+        HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
+
+        for (Unit unit : units) {
+            if(unit.getType().contains("Explorer") && ((Explorer)(unit)).isProspecting() ) {
+                Tile tile = unit.getLocation();
+                int radius = unit.getVisibilityRadius();
                 tileRadiusMap.put(tile, radius);
             }
         }
 
         return tileRadiusMap;
     }
+
+    public HashMap<Tile, Integer> getAllHarvestableTilesForUnassignedWorkers(){
+        HashMap<Tile, Integer> harvestableTilesByWorkers = new HashMap<>();
+
+        for (Structure structure : structures){
+            if (structure instanceof StaffedStructure){
+               harvestableTilesByWorkers.putAll(((StaffedStructure)structure).getHarvestableTilesByWorkers());
+            }
+        }
+
+        return harvestableTilesByWorkers;
+    }
+
 
     // Unit and Army helper functions
     public ArrayList<Unit> getUnits() {
@@ -295,13 +327,16 @@ public class Player {
         return structures;
     }
 
-    public Structure addStructure(StaffedStructure structure) {
+    public Structure addStructure(Structure structure) {
           // Ensures we are able to add a structure
         if(structures.size() == 10){
             System.out.println("You have too many structures.");
             return null;
         }
-      
+
+        this.structures.add(structure);
+        structure.getLocation().setStructure(structure);
+
          //whenever a structure is added, alter its stats according to technology
         for(Technology structureTechnology : technologies.getStructureTechnologies()){
             applyTechnology(structureTechnology);
@@ -319,7 +354,6 @@ public class Player {
 
         // Physically remove unit form player and tile
 
-        //todo fix tda violation
         structures.remove(structure);
         structure.getLocation().setStructure(null);
 
@@ -465,6 +499,66 @@ public class Player {
         return n;
     }
 
+    public int getNumCapital() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Capital )
+                n++;
+        return n;
+    }
+
+    public int getNumFort() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Fort )
+                n++;
+        return n;
+    }
+
+    public int getNumUniversity() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof University )
+                n++;
+        return n;
+    }
+
+    public int getNumObservationTower() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof ObservationTower )
+                n++;
+        return n;
+    }
+
+    public int getNumMine() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Mine )
+                n++;
+        return n;
+    }
+
+    public int getNumFarm() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Farm )
+                n++;
+        return n;
+    }
+
+    public int getNumPowerPlant() {
+        int n = 0;
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof PowerPlant )
+                n++;
+        return n;
+    }
+
+    public int getNumArmy() {
+        return armies.size();
+    }
+
     public Unit getExplorer(int id) {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Explorer && units.get(i).getId() == id)
@@ -490,6 +584,63 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
+        return null;
+    }
+
+    public Army getArmy(int id) {
+        for(int i = 0; i < armies.size(); i++)
+            if(armies.get(i).getId() == id)
+                return armies.get( i );
+        return null;
+    }
+
+    public Structure getCapital(int id) {
+        for(int i = 0; i < structures.size(); i++) {
+            if (structures.get(i) instanceof Capital && structures.get(i).getId() == id)
+                return structures.get(i);
+        }
+        return null;
+    }
+
+    public Structure getFort(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Fort && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getUniversity(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof University && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getObservationTower(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof ObservationTower && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getMine(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Mine && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getFarm(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof Farm && structures.get(i).getId() == id)
+                return structures.get( i );
+        return null;
+    }
+
+    public Structure getPowerPlant(int id) {
+        for(int i = 0; i < structures.size(); i++)
+            if(structures.get(i) instanceof PowerPlant && structures.get(i).getId() == id)
+                return structures.get( i );
         return null;
     }
 
@@ -545,5 +696,9 @@ public class Player {
                 }
                 break;
         }
+    }
+
+    public Technologies getTechnologies() {
+        return technologies;
     }
 }

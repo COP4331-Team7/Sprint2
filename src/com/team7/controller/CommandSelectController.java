@@ -2,21 +2,19 @@ package com.team7.controller;
 
 
 import com.team7.model.Game;
-import com.team7.model.Map;
 import com.team7.model.Player;
-import com.team7.model.Tile;
+import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
-import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
 
 public class CommandSelectController {
 
@@ -52,7 +50,7 @@ public class CommandSelectController {
         return game.getCurrentPlayer().getNumRanged();
     }
 
-    public Unit getCurrentSelection(int currMode, int currType, int id) {
+    public Unit getCurrentUnitSelection(int currMode, int currType, int id) {
 
         Player currentPlayer = game.getCurrentPlayer();
         Unit currSelection = null;
@@ -69,15 +67,70 @@ public class CommandSelectController {
         return currSelection;
     }
 
+    public Structure getCurrentStructureSelection(int currMode, int currType, int id) {
+        Player currentPlayer = game.getCurrentPlayer();
+        Structure currSelection = null;
+
+        if(currMode == 1 && currType == 0)           // CAPITAL
+            currSelection = currentPlayer.getCapital( id );
+        else if(currMode == 1 && currType == 1)       // FORT
+            currSelection = currentPlayer.getFort( id );
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            currSelection = currentPlayer.getUniversity( id );
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            currSelection = currentPlayer.getObservationTower( id );
+        else if(currMode == 1 && currType == 4)        // FARM
+            currSelection = currentPlayer.getFarm( id );
+        else if(currMode == 1 && currType == 5)        // MINE
+            currSelection = currentPlayer.getMine( id );
+        else if(currMode == 1 && currType == 6)        // POWERPLANT
+            currSelection = currentPlayer.getPowerPlant( id );
+
+        return currSelection;
+    }
+
+    public Army getCurrentArmySelection(int currType, int id) {
+
+        Player currentPlayer = game.getCurrentPlayer();
+        Army currSelection = null;
+
+        if(currType == 0)           // entire
+            currSelection = currentPlayer.getArmy( id );
+        else if(currType == 1)       // battle group
+            currSelection = currentPlayer.getArmy( id );
+        else if(currType == 2)         // reinforcements
+            currSelection = currentPlayer.getArmy( id );
+
+        return currSelection;
+    }
+
     public void updateStatusView(int currMode, int currType, int id) {
-        mainViewInfo.updateStats( getCurrentSelection(currMode, currType, id) );
+        if(id == -1){
+            return;
+        }
+        switch(currMode){
+            case 1: //structure
+                mainViewInfo.updateStructureStats( getCurrentStructureSelection(currMode, currType, id));
+                break;
+            case 2: //unit
+                mainViewInfo.updateUnitStats( getCurrentUnitSelection(currMode, currType, id) );
+                break;
+        }
+
     }
 
     public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {
-        Unit unit = getCurrentSelection(  currMode, currType, currTypeInstance );
-        if(unit == null)
-            return;
-        mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        Unit unit = getCurrentUnitSelection(  currMode, currType, currTypeInstance );
+        Structure structure = getCurrentStructureSelection(  currMode, currType, currTypeInstance );
+        Army army = getCurrentArmySelection(currType, currTypeInstance);
+
+        if(unit != null)
+            mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        else if( structure != null)
+            mainViewImage.zoomToDestination(structure.getLocation().getxCoordinate() - 11 / 2, structure.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        else if( army != null)
+            mainViewImage.zoomToDestination(army.getLocation().getxCoordinate() - 11 / 2, army.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+
     }
 
     public void addActionListeners() {
@@ -97,13 +150,23 @@ public class CommandSelectController {
 
 
     public void queueCommand() {
-        if(getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
+        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
+                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
             return;
-        Command command = new Command( mainScreen.getCommandSelect().getCommand() );
-        Unit unit = getCurrentSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-        unit.queueCommand( command );
 
-      //  printCurrPlayersUnitsCommandQueues();
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() );
+
+        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+
+
+        if(unit != null)
+            unit.queueCommand( command );
+        else if (structure != null)
+            structure.queueCommand( command );
+        else if (army != null)
+            army.queueCommand( command );
     }
 
     public void printCurrPlayersUnitsCommandQueues(){
@@ -123,5 +186,42 @@ public class CommandSelectController {
     public void clearStatusInfoView() {
         mainViewInfo.clearStats();
     }
+
+    public void executeReinforeCommand(Character c, Unit u) {
+
+        int armyID = Integer.valueOf( c - 48 );
+
+        // System.out.println(armyID);
+
+        queueCommand();
+        clearCommandView();
+        giveCommandViewFocus();
+    }
+
+    public int getNumCapital() {
+        return game.getCurrentPlayer().getNumCapital();
+    }
+    public int getNumFort() {
+        return game.getCurrentPlayer().getNumFort();
+    }
+    public int getNumFarm() {
+        return game.getCurrentPlayer().getNumFarm();
+    }
+    public int getNumMine() {
+        return game.getCurrentPlayer().getNumMine();
+    }
+    public int getNumObsTower() {
+        return game.getCurrentPlayer().getNumObservationTower();
+    }
+    public int getNumPowerPlant() {
+        return game.getCurrentPlayer().getNumPowerPlant();
+    }
+    public int getNumUniversity() {
+        return game.getCurrentPlayer().getNumUniversity();
+    }
+    public int getNumArmy() {
+        return game.getCurrentPlayer().getNumArmy();
+    }
+
 
 }

@@ -2,6 +2,8 @@ package com.team7.model.entity.structure.staffedStructure.singleHarvestStructure
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.structure.staffedStructure.IHarvester;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
@@ -19,17 +21,18 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
     public PowerPlant(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         productionRateMap.put(harvestEnergy, 2);   //can harvest 2 energy per turn per worker per resource
         setStats(new StructureStats(
                 0,
-                100,
+                3,
                 10,
-                20,
+                10,
                 productionRateMap,
                 100,
-                200)
+                100)
         );
         setType("PowerPlant");
         setPowered(false);
@@ -54,22 +57,33 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if (techInstance.equals("PowerPlant")){
+
+            setStats(new StructureStats(
+                    0,
+                    3,
+                    getStats().getArmor(),
+                    10,
+                    getStats().getProductionRates(),
+                    getStats().getHealth(),
+                    100)
+            );
+
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));
@@ -86,4 +100,33 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
             }
         }
     }
+
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
 }

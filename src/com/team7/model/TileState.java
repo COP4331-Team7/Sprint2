@@ -8,6 +8,7 @@ import com.team7.model.entity.Worker;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import com.team7.model.resource.Energy;
 import com.team7.model.resource.Food;
@@ -58,12 +59,28 @@ public class TileState {
         this.meleeUnit = state.meleeUnit;
         this.rangeUnit = state.rangeUnit;
         this.explorer = state.explorer;
+        this.colonist = state.colonist;
         this.workerUnit = state.workerUnit;
+
         this.ore = state.ore;
         this.food = state.food;
         this.energy = state.energy;
+
         this.areaEffectType = state.areaEffectType;
     }
+
+    public void refreshResources(Tile state) {
+        if( state.getResources().size() > 0 )
+            this.ore = state.getOre();
+        if( state.getResources().size() > 1 )
+            this.food = state.getFood();
+        if( state.getResources().size() > 2 )
+            this.energy = state.getEnergy();
+    }
+
+    public void refreshHarvestable(Tile tile) {
+    }
+
 
     public void refresh(Tile tile) {
 
@@ -80,6 +97,7 @@ public class TileState {
         else if (tile.getTerrain() instanceof Flatland) {
             terrainType = "Flatland";
         }
+
         // set units
         meleeUnit = 0; rangeUnit = 0; explorer = 0; colonist = 0; workerUnit = 0;
         for(Unit unit : tile.getUnits()) {
@@ -89,22 +107,22 @@ public class TileState {
                 rangeUnit++;
             if(unit instanceof Explorer)
                 explorer++;
-            if(unit instanceof com.team7.model.entity.unit.nonCombatUnit.Colonist)
+            if(unit instanceof Colonist)
                 colonist++;
             if((Entity)unit instanceof Worker)
                 workerUnit++;
         }
 
-        // set resources
-        energy = 0; ore = 0; food = 0;
-        for(Resource resource : tile.getResources()) {
-            if(resource instanceof Energy)
-                energy += resource.getStatInfluenceQuantity();
-            if(resource instanceof Food)
-                food += resource.getStatInfluenceQuantity();
-            if(resource instanceof Ore)
-                ore += resource.getStatInfluenceQuantity();
-        }
+//        // set resources
+//        energy = 0; ore = 0; food = 0;
+//        for(Resource resource : tile.getResources()) {
+//            if(resource instanceof Energy)
+//                energy += resource.getStatInfluenceQuantity();
+//            if(resource instanceof Food)
+//                food += resource.getStatInfluenceQuantity();
+//            if(resource instanceof Ore)
+//                ore += resource.getStatInfluenceQuantity();
+//        }
 
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
@@ -194,7 +212,16 @@ public class TileState {
         return colonist;
     }
 
-    public void decrementMeleeUnits() {
-        meleeUnit--;
+    public void decremenUnits(Unit unit) {
+        if (unit.getType().contains("Explorer"))
+            explorer--;
+        if (unit.getType().contains("Colonist"))
+            colonist--;
+        if (unit.getType().contains("Melee"))
+            meleeUnit--;
+        if (unit.getType().contains("Range"))
+            rangeUnit--;
     }
+
+
 }

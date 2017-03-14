@@ -29,6 +29,7 @@ public class Explorer extends NonCombatUnit {
         return isProspecting;
     }
 
+    //TODO fix TDA by having getUnitStats.setMovementToProspecting and getUnitStats.setMovementToNotProspecting() methods
     public void setProspecting(boolean prospecting) {
         if(prospecting)
             getUnitStats().setMovement( getUnitStats().getMovement() / 2 );
@@ -39,21 +40,77 @@ public class Explorer extends NonCombatUnit {
     }
 
     @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+            case "PROSPECT MODE ON":
+                setProspecting( true );
+                removeCommandFromQueue();
+                break;
+
+            case "PROSPECT MODE OFF":
+                setProspecting( false );
+                removeCommandFromQueue();
+                break;
+
+            case "DECOMMISSION":
+                decommission( );
+                removeCommandFromQueue();
+                break;
+
+            case "POWER UP":
+                powerUp( );
+                removeCommandFromQueue();
+                break;
+
+            case "POWER DOWN":
+                powerDown( );
+                removeCommandFromQueue();
+                break;
+
+            case "MOVE":
+                // move unit furthest allowable distance.
+                // if move doesn't complete in 1 turn, leave in queue
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     public void applyTechnology(String techInstance, String technologyStat, int level){
         if(techInstance.equals("Explorer")){
+
+            //reset stats except armor and health
+            UnitStats defaultStats = new UnitStats(1, 1, getUnitStats().getArmor(), 10, 10, getUnitStats().getHealth(), 100, 3 );
+            setUnitStats(defaultStats);
+
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
                     //will always stay at 0
-                    getUnitStats().changeOffensiveDamage((level*10));
+                    getUnitStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getUnitStats().changeDefensiveDamage((level*10));
+                    getUnitStats().changeDefensiveDamage((level));
                     break;
                 case "ArmorStrength":
-                    getUnitStats().changeArmor((level*10));
+                    getUnitStats().changeMaxArmor((level*2));
                     break;
                 case "MovementRate":
                     getUnitStats().changeMovement(level);
@@ -63,7 +120,7 @@ public class Explorer extends NonCombatUnit {
                     getUnitStats().changeUpkeep((0-level));
                     break;
                 case "Health":
-                    getUnitStats().changeHealth((level*10));
+                    getUnitStats().changeMaxHealth((level*20));
                     break;
             }
         }

@@ -102,6 +102,16 @@ public class OptionsController{
                 view.setCurrScreen("MAP_SCREEN");
             }
         });
+
+        optionsScreen.getTechnologyScreenButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getTechnologyScreenButton()){
+                    view.setCurrScreen("TECHNOLOGY");
+                }
+            }
+        });
+
         optionsScreen.getS1().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -150,6 +160,8 @@ public class OptionsController{
                     view.setCurrScreen("HOME");
             }
         });
+
+
 
     }
 
