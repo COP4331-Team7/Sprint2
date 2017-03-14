@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import com.team7.model.Map;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
@@ -16,6 +17,7 @@ import com.team7.view.View;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
@@ -29,6 +31,8 @@ public class PathSelectController {
     public static boolean isRecording = false;
     private Tile selectedTile = null;
     private Tile startTile = null;
+    private Tile destinationTile = null;
+
     private ConfigReader configReader;
     private ArrayList<Tile> pathTile = new ArrayList<Tile>();;
     private int moveLimit;
@@ -57,6 +61,7 @@ public class PathSelectController {
 
         selectedTile.isSelectedPath = false;
 
+
         if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 7);
         }
@@ -76,9 +81,25 @@ public class PathSelectController {
             selectedTile = map.getAdjacentTile(selectedTile, 3);
         }
 
-        pathTile.add(selectedTile);
-        selectedTile.isSelectedPath = true;
+
+        ArrayList<Tile> tiles = null;
+        Set<Tile> openList = null;
+        Set<Tile> closedList = null;
+
+        // Tile endTile = pathTile.get(pathTile.size() - 1);
+
+        tiles  = map.findMinPath( startTile, selectedTile, openList, closedList);
+        for(Tile t : tiles) {
+            t.isSelectedPath = true;
+        }
+        pathTile = tiles;
+
+        // end of path
+        selectedTile.isSelectedPath = false;
+
         mainViewImage.reDrawMap();
+        map.clearPath();
+        map.clearSelectedTiles();
     }
 
     public void startRecordingPath(Tile startTile, int unitMovement) {

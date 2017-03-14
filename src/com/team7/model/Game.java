@@ -67,16 +67,13 @@ public class Game {
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);
         Army army2 = new Army(map.getGrid()[1][31],  players[1]);
 
-
         Unit melee1 = new MeleeUnit(this.map.getGrid()[1][30], players[0]);
         Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
         Unit melee3 = new  MeleeUnit(this.map.getGrid()[1][31], players[1]);
 
-
         addUnitToPlayer( players[0], melee1 );
         addUnitToPlayer( players[1], melee2 );
         addUnitToPlayer( players[1], melee3 );
-
 
         army0.addUnitToArmy(melee1);
         army1.addUnitToArmy(melee2);
@@ -136,6 +133,8 @@ public class Game {
                 else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) && PathSelectController.isRecording) {
                     tile.markShrouded( currentPlayer.getName() );
                 }
+
+                tile.isSelectedPath = false;
 
             }
         }

@@ -379,4 +379,23 @@ public class Map{
         return grid[i][j];
     }
 
+    public void clearPath() {
+        index = 0;
+        path.clear();
+    }
+
+    public void clearSelectedTiles(){
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+
+                grid[i][j].isSelectedPath = false;
+
+            }
+        }
+    }
+
+
+
+
 }
