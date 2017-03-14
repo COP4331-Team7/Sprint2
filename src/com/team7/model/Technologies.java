@@ -69,13 +69,26 @@ public class Technologies {
         structureTechnologies.add(new Technology("structure", "Capital", "Health", 0, 3));
         structureTechnologies.add(new Technology("structure", "Capital", "Efficiency", 0, 4)); //reduces amount of ore/energy needed per turn
 
-        //applies to Farm, Mine, PowerPlant, Capital. Researching one will automatically increase the other
-        structureTechnologies.add(new Technology("structure", "Harvester", "VisibilityRadius", 1,5));
-        structureTechnologies.add(new Technology("structure", "Harvester", "AttackStrength", 0, 0));
-        structureTechnologies.add(new Technology("structure", "Harvester", "DefenseStrength", 0, 0));
-        structureTechnologies.add(new Technology("structure", "Harvester", "ArmorStrength", 0, 3));
-        structureTechnologies.add(new Technology("structure", "Harvester", "Health", 0, 3));
-        structureTechnologies.add(new Technology("structure", "Harvester", "Efficiency", 0, 4)); //reduces amount of ore/energy needed per turn
+        structureTechnologies.add(new Technology("structure", "Mine", "VisibilityRadius", 1,5));
+        structureTechnologies.add(new Technology("structure", "Mine", "AttackStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "Mine", "DefenseStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "Mine", "ArmorStrength", 0, 3));
+        structureTechnologies.add(new Technology("structure", "Mine", "Health", 0, 3));
+        structureTechnologies.add(new Technology("structure", "Mine", "Efficiency", 0, 4)); //reduces amount of ore/energy needed per turn
+
+        structureTechnologies.add(new Technology("structure", "Farm", "VisibilityRadius", 1,5));
+        structureTechnologies.add(new Technology("structure", "Farm", "AttackStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "Farm", "DefenseStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "Farm", "ArmorStrength", 0, 3));
+        structureTechnologies.add(new Technology("structure", "Farm", "Health", 0, 3));
+        structureTechnologies.add(new Technology("structure", "Farm", "Efficiency", 0, 4)); //reduces amount of ore/energy needed per turn
+
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "VisibilityRadius", 1,5));
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "AttackStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "DefenseStrength", 0, 0));
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "ArmorStrength", 0, 3));
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "Health", 0, 3));
+        structureTechnologies.add(new Technology("structure", "PowerPlant", "Efficiency", 0, 4)); //reduces amount of ore/energy needed per turn
 
         structureTechnologies.add(new Technology("structure", "Fort", "VisibilityRadius", 1,5));
         structureTechnologies.add(new Technology("structure", "Fort", "AttackStrength", 0, 4));

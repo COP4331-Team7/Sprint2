@@ -193,4 +193,17 @@ public class Army extends Entity {
 
     }
 
+    public void decommission() {
+        for(int i = 0; i < this.units.size(); i++){
+            this.units.get(i).decommission();
+        }
+    }
+
+    public void disband() {
+        for(int i = 0; i < this.units.size(); i++){
+            removeUnitFromArmy(this.units.get(i));
+        }
+        this.getOwner().removeArmy(this);
+    }
+
 }

@@ -41,6 +41,10 @@ public class Technology {
         return level;
     }
 
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
     public void incrementTechnologyLevel(){
         if(level < maxLevel){
             level += 1;

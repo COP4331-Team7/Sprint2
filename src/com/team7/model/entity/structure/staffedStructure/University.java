@@ -69,13 +69,26 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         productionRateMap.put("structure Capital Health", 2);
         productionRateMap.put("structure Capital Efficiency", 2); //reduces amount of ore/energy needed per turn
 
-        //applies to Farm, Mine, PowerPlant. Researching one will automatically increase the other
-        productionRateMap.put("structure Harvester VisibilityRadius", 2);
-        productionRateMap.put("structure Harvester AttackStrength", 2);
-        productionRateMap.put("structure Harvester DefenseStrength", 2);
-        productionRateMap.put("structure Harvester ArmorStrength", 2);
-        productionRateMap.put("structure Harvester Health", 2);
-        productionRateMap.put("structure Harvester Efficiency", 2); //reduces amount of ore/energy needed per turn
+        productionRateMap.put("structure Farm VisibilityRadius", 2);
+        productionRateMap.put("structure Farm AttackStrength", 2);
+        productionRateMap.put("structure Farm DefenseStrength", 2);
+        productionRateMap.put("structure Farm ArmorStrength", 2);
+        productionRateMap.put("structure Farm Health", 2);
+        productionRateMap.put("structure Farm Efficiency", 2); //reduces amount of ore/energy needed per turn
+
+        productionRateMap.put("structure Mine VisibilityRadius", 2);
+        productionRateMap.put("structure Mine AttackStrength", 2);
+        productionRateMap.put("structure Mine DefenseStrength", 2);
+        productionRateMap.put("structure Mine ArmorStrength", 2);
+        productionRateMap.put("structure Mine Health", 2);
+        productionRateMap.put("structure Mine Efficiency", 2); //reduces amount of ore/energy needed per turn
+
+        productionRateMap.put("structure PowerPlant VisibilityRadius", 2);
+        productionRateMap.put("structure PowerPlant AttackStrength", 2);
+        productionRateMap.put("structure PowerPlant DefenseStrength", 2);
+        productionRateMap.put("structure PowerPlant ArmorStrength", 2);
+        productionRateMap.put("structure PowerPlant Health", 2);
+        productionRateMap.put("structure PowerPlant Efficiency", 2); //reduces amount of ore/energy needed per turn
 
         productionRateMap.put("structure Fort VisibilityRadius", 2);
         productionRateMap.put("structure Fort AttackStrength", 2);

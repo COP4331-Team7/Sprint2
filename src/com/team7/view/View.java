@@ -9,6 +9,7 @@ import com.team7.view.MainScreen.MainViewInfo;
 import com.team7.view.MapScreen.MapScreen;
 import com.team7.view.OptionsScreen.OptionsScreen;
 import com.team7.view.StructureScreen.StructureScreen;
+import com.team7.view.TechnologyScreen.TechnologyScreen;
 import com.team7.view.UnitScreen.UnitScreen;
 
 import javax.imageio.ImageIO;
@@ -59,6 +60,9 @@ public class View
     public OptionsScreen getOptionScreen() { return frame.getOptionsScreen(); }
     public StructureScreen getStructureScreen() { return frame.getStructureScreen(); }
     public UnitScreen getUnitScreen() { return frame.getUnitScreen(); }
+    public TechnologyScreen getTechnologyScreen() {
+        return frame.getTechnologyScreen();
+    }
 
     public void setMap( Map map ) {
         frame.getMainScreen().getMainViewImage().setMap( map );
@@ -86,6 +90,8 @@ public class View
     }
 
 
+
+
 // ==================== INNER CLASS ==========================
 
     class Screen extends JFrame
@@ -96,6 +102,7 @@ public class View
         private UnitScreen unitScreen = null;
         private StructureScreen structureScreen = null;
         private MapScreen mapScreen = null;
+        private TechnologyScreen technologyScreen = null;
 
         public Screen( int width, int height)
         {
@@ -109,6 +116,7 @@ public class View
             unitScreen = new UnitScreen();
             structureScreen = new StructureScreen();
             mapScreen = new MapScreen();
+            technologyScreen = new TechnologyScreen();
 
             setCurrScreen("HOME");
             this.setVisible( true );
@@ -137,30 +145,36 @@ public class View
             return mapScreen;
         }
 
+        public TechnologyScreen getTechnologyScreen() {
+            return technologyScreen;
+        }
 
         public void setCurrScreen(String selected_screen) {
 
             getContentPane().removeAll();   // clear screen
 
-            if(selected_screen == "HOME") {
+            if(selected_screen.equals("HOME")) {
                 displayHomeScreen();
             }
-            else if (selected_screen == "MAIN") {
+            else if (selected_screen.equals("MAIN")) {
                 displayMainScreen();
                 mainScreen.getCommandSelect().setFocusable(true);
                 mainScreen.getCommandSelect().requestFocus();
             }
-            else if (selected_screen == "UNIT_OVERVIEW") {
+            else if (selected_screen.equals("UNIT_OVERVIEW")) {
                 displayUnitOverviewScreen();
             }
-            else if (selected_screen == "STRUCTURE_OVERVIEW") {
+            else if (selected_screen.equals("STRUCTURE_OVERVIEW")) {
                 displayStructureOverviewScreen();
             }
-            else if (selected_screen == "OPTIONS") {
+            else if (selected_screen.equals("OPTIONS")) {
                 displayOptionScreen();
             }
-            else if (selected_screen == "MAP_SCREEN") {
+            else if (selected_screen.equals("MAP_SCREEN")) {
                 displayMapScreen();
+            }
+            else if (selected_screen.equals("TECHNOLOGY")){
+                displayTechnologyScreen();
             }
 
             revalidate();
@@ -181,6 +195,9 @@ public class View
         }
         private void displayStructureOverviewScreen() {
                 this.getContentPane().add( structureScreen );
+        }
+        private void displayTechnologyScreen(){
+            this.getContentPane().add(technologyScreen);
         }
 
         private void displayMapScreen() {

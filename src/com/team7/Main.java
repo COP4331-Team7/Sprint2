@@ -28,6 +28,7 @@ public class Main {
         CommandSelectController csc = new CommandSelectController(game, view);
         OptionsController optionsController = new OptionsController(view, game);
         MapScreenController mapScreenController = new MapScreenController(game, view);
+        TechnologyScreenController technologyScreenController = new TechnologyScreenController(game, view);
 
     }
 

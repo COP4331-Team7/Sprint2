@@ -58,16 +58,16 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        Army army0 = new Army(map.getGrid()[10][30],  players[0]);
-        Army army1 = new Army(map.getGrid()[10][29],  players[1]);
-
-        Unit melee1 = new MeleeUnit(this.map.getGrid()[10][30], players[0]);
-        Unit melee2 = new  MeleeUnit(this.map.getGrid()[10][29], players[1]);
-
         Capital c1 = new Capital(map.getGrid()[18][20],  players[0]);
         players[0].addStructure(c1);
         Capital c2 = new Capital(map.getGrid()[22][20],  players[0]);
         players[0].addStructure(c2);
+
+        Army army0 = new Army(map.getGrid()[1][30],  players[0]);
+        Army army1 = new Army(map.getGrid()[1][29],  players[1]);
+
+        Unit melee1 = new MeleeUnit(this.map.getGrid()[1][30], players[0]);
+        Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
 
         addUnitToPlayer( players[0], melee1 );
         addUnitToPlayer( players[1], melee2 );
@@ -77,10 +77,6 @@ public class Game {
 
         players[0].addArmy( army0 );
         players[1].addArmy( army1 );
-
-
-
-
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }

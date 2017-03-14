@@ -29,6 +29,7 @@ public class Explorer extends NonCombatUnit {
         return isProspecting;
     }
 
+    //TODO fix TDA by having getUnitStats.setMovementToProspecting and getUnitStats.setMovementToNotProspecting() methods
     public void setProspecting(boolean prospecting) {
         if(prospecting)
             getUnitStats().setMovement( getUnitStats().getMovement() / 2 );
