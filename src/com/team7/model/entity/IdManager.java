@@ -32,12 +32,10 @@ public class IdManager {
 
 
             if(entity instanceof Explorer) {
-                System.out.println("Shoe");
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(player.getUnits().get(i) instanceof Explorer){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                        System.out.println(availableIDs);
                     }
                 }
                 ID = availableIDs.get(0);

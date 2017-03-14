@@ -56,10 +56,10 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        Army army0 = new Army(map.getGrid()[10][30],  players[0]);
-        Army army1 = new Army(map.getGrid()[10][29],  players[1]);
-        Unit melee1 = new MeleeUnit(this.map.getGrid()[10][30], players[0]);
-        Unit melee2 = new  MeleeUnit(this.map.getGrid()[10][29], players[1]);
+        Army army0 = new Army(map.getGrid()[1][30],  players[0]);
+        Army army1 = new Army(map.getGrid()[1][29],  players[1]);
+        Unit melee1 = new MeleeUnit(this.map.getGrid()[1][30], players[0]);
+        Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
         addUnitToPlayer( players[0], melee1 );
         addUnitToPlayer( players[1], melee2 );
         army0.addUnitToArmy(melee1);
