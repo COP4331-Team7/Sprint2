@@ -617,4 +617,8 @@ public class Player {
                 break;
         }
     }
+
+    public Technologies getTechnologies() {
+        return technologies;
+    }
 }
