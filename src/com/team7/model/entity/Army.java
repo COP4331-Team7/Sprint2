@@ -3,6 +3,15 @@ package com.team7.model.entity;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
@@ -11,6 +20,8 @@ public class Army extends Entity {
 
     private CommandQueue commandQueue;
     private ArrayList<Unit> units;
+    private ArrayList<Unit> battleGroup;
+    private ArrayList<Unit> reinforcements;
     private ArrayList<Worker> workers;
     private int slowestSpeed;
     private int greatestVis;
@@ -25,10 +36,13 @@ public class Army extends Entity {
 
         this.commandQueue = new CommandQueue();
         this.units = new ArrayList<Unit>();
+        this.reinforcements = new ArrayList<Unit>();
+        this.battleGroup = new ArrayList<Unit>();
         this.workers = new ArrayList<Worker>();
         this.slowestSpeed = 100;
         this.greatestVis = 1;
         this.turnsFrozen = 0;
+        this.direction = 1;
     }
 
 
@@ -37,6 +51,12 @@ public class Army extends Entity {
         // Physically add the unit
         this.units.add(unit);
         unit.setArmy(this);
+
+        if(unit.getLocation() == this.getLocation()){
+            this.addUnitToBattlegroup(unit);
+        } else {
+            this.addUnitToReinforcements(unit);
+        }
 
         // Check for new slowest speed
         if(unit.getUnitStats().getMovement() < this.slowestSpeed){
@@ -55,6 +75,12 @@ public class Army extends Entity {
 
         this.units.remove(unit);
         unit.setArmy(null);
+
+        if(unit.getLocation() == this.getLocation()){
+            this.removeUnitFromBattlegroup(unit);
+        } else {
+            this.removeUnitFromReinforcements(unit);
+        }
 
         resetLowestSpeedGreatestRadius();
 
@@ -182,13 +208,45 @@ public class Army extends Entity {
             commandQueue.removeCommand();
     }
 
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
+
+        if(getCommandFromQueue() == null)
+            return;
 
         Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
 
-        // do something with the command
-        // each unit/structure receives specific list of commands
-        // this could be abstract and implemented in the subclasses
+        if(commandString.contains("attack")) {
+            int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            attack(map, dir);
+        }
+        else if(commandString.contains("defend")) {
+            int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            this.setDirection(dir);
+        }
+        else if(commandString.contains("move")) {
+           // TODO: handle movement
+
+        }
+        else if(commandString.contains("wait")) {
+            System.out.println("WAIT :)");
+        }
+        else if(commandString.contains("disband")) {
+            this.disband();
+        }
+        else if(commandString.contains("decommission")) {
+            this.decommission();
+        }
+        else if(commandString.contains("down")) {
+            this.powerDown();
+        }
+        else if(commandString.contains("up")) {
+            this.powerUp();
+        }
+        else if(commandString.contains("cancel")) {
+            //this.commandQueue.getCommands().clear();
+        }
+
 
     }
 
@@ -196,6 +254,7 @@ public class Army extends Entity {
         for(int i = 0; i < this.units.size(); i++){
             this.units.get(i).decommission();
         }
+        this.getOwner().removeArmy(this);
     }
 
     public void disband() {
@@ -205,4 +264,108 @@ public class Army extends Entity {
         this.getOwner().removeArmy(this);
     }
 
+
+    // Worker helpers
+    // Adds unit to Army's ArrayList of Units
+    public void addWorkerToArmy(Worker worker) {
+        // Physically add the unit
+        this.workers.add(worker);
+        worker.setArmy(this);
+
+
+        // Check for new greatest vis
+        if(worker.getVisibilityRadius() > this.greatestVis){
+            this.greatestVis = worker.getVisibilityRadius();
+        }
+
+    }
+
+    // Adds unit to Army's ArrayList of Units
+    public void removeWorkerFromArmy(Worker worker) {
+
+        this.units.remove(worker);
+        worker.setArmy(null);
+
+    }
+
+    public void addUnitToBattlegroup(Unit unit){
+        if(unit.getLocation() == this.getLocation()){
+            this.battleGroup.add(unit);
+        }
+    }
+
+    public void addUnitToReinforcements(Unit unit){
+        if(unit.getLocation() != this.getLocation()){
+            this.reinforcements.add(unit);
+        }
+    }
+
+    public void removeUnitFromBattlegroup(Unit unit){
+            this.battleGroup.remove(unit);
+    }
+
+    public void removeUnitFromReinforcements(Unit unit){
+        this.reinforcements.remove(unit);
+    }
+
+    // releases all workers at structure if they are on a structure
+    public void dropWorkersAtStructure() {
+
+        if(this.getLocation().getStructure() != null) {
+            if(this.getLocation().getStructure() instanceof StaffedStructure){
+                for(int i = 0; i < workers.size(); i++){
+                    ((StaffedStructure) this.getLocation().getStructure()).addWorkerToStaff(workers.get(i));
+                    this.removeWorkerFromArmy(workers.get(i));
+                }
+            }
+        } else {
+            System.out.println("You need a structure to drop your workers at.");
+        }
+
+    }
+
+    //TODO
+    public void buildStructure(String buildingType) {
+        // create structure
+        Structure structure;
+        if(buildingType == "Observation Tower") {
+            structure = new ObservationTower(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Capital") {
+            structure = new Capital(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Fort") {
+            structure = new Fort(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "University") {
+            structure = new University(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Farm") {
+            structure = new Farm(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Mine") {
+            structure = new Mine(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Power Plant") {
+            structure = new PowerPlant(this.getLocation(), this.getOwner());
+        }
+        else {
+            System.out.println("Not a correct building type");
+            return;
+        }
+
+        // add workers to construction
+        for(int i = 0; i < workers.size(); i++) {
+            structure.addWorkerToConstruction(workers.get(i));
+        }
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getOwner().addStructure(structure);
+
+    }
+
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 }
