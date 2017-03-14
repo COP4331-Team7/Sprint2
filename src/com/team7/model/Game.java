@@ -2,6 +2,7 @@ package com.team7.model;
 
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
@@ -100,6 +101,7 @@ public class Game {
         players[1].addArmy( army1 );
         players[1].addArmy( army2 );
 
+        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }

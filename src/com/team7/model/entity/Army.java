@@ -219,10 +219,12 @@ public class Army extends Entity {
         if(commandString.contains("attack")) {
             int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
             attack(map, dir);
+            removeCommandFromQueue();
         }
         else if(commandString.contains("defend")) {
             int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
             this.setDirection(dir);
+            removeCommandFromQueue();
         }
         else if(commandString.contains("move")) {
            // TODO: handle movement
@@ -230,21 +232,26 @@ public class Army extends Entity {
         }
         else if(commandString.contains("wait")) {
             System.out.println("WAIT :)");
+            removeCommandFromQueue();
         }
         else if(commandString.contains("disband")) {
             this.disband();
+            removeCommandFromQueue();
         }
         else if(commandString.contains("decommission")) {
             this.decommission();
+            removeCommandFromQueue();
         }
         else if(commandString.contains("down")) {
             this.powerDown();
+            removeCommandFromQueue();
         }
         else if(commandString.contains("up")) {
             this.powerUp();
+            removeCommandFromQueue();
         }
         else if(commandString.contains("cancel")) {
-            //this.commandQueue.getCommands().clear();
+            this.commandQueue.cancelCommands();
         }
 
 
