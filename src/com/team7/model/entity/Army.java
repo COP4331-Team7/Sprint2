@@ -1,5 +1,6 @@
 package com.team7.model.entity;
 
+import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.unit.Unit;
@@ -138,6 +139,11 @@ public class Army extends Entity {
 
     public boolean isPowered() {
         return isPowered;
+    }
+
+    public void attack(Map map, int direction) {
+        Attacker attacker = new Attacker(map, this.units, direction);
+        attacker.attack();
     }
 
 }

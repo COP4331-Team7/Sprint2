@@ -41,6 +41,338 @@ public class Attacker {
         this.targetTiles = calcTargetTiles();
     }
 
+
+    public void attack() {
+
+        int totalDamage = totalMeleeDamage + totalRangedDamage;
+
+        // Iterate through all tiles in line of fire
+        for(int i = 0; i < targetTiles.size(); i++){
+            Tile tile = targetTiles.get(i);
+
+            // On the first tile, melee damage is included
+            if(i == 0){
+
+                // cycle through all units in the army and subtract damage and armor
+                int armySize = tile.getArmies().size();
+                for(int j = armySize - 1; j >= 0; j--) {
+                    int armyUnitSize = tile.getArmies().get(j).getUnits().size();
+                    for(int k = armyUnitSize - 1; k >= 0; k--){
+
+                        // end function if there is no more damage
+                        if (totalDamage == 0)
+                            return;
+
+                        // ensure the unit is not on your team
+                        if(this.selectedUnits.get(0).getOwner() == tile.getArmies().get(j).getUnits().get(k).getOwner()){
+                            break;
+                        }
+
+                        // get health and armor, check if unit should die or just lose health
+                        int health = tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth();
+                        int armor = tile.getArmies().get(j).getUnits().get(k).getUnitStats().getArmor();
+
+                        // if total damage is greater than health and armor, destroy both and subtract
+                        if(totalDamage >= health + armor) {
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(0);
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setHealth(0);
+                            totalDamage -= health;
+                            totalDamage -= armor;
+                        }
+                        // if total damage is just less than armor, destroy armor and subtract
+                        else if(totalDamage < armor){
+
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(armor - totalDamage);
+                            totalDamage = 0;
+
+                        }
+                        // if total damage is greater than armor and less than health, handle
+                        else {
+                            totalDamage -= armor;
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(0);
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setHealth(health - totalDamage);
+                            totalDamage = 0;
+                        }
+
+                        // if defender is alive,
+//                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
+//                            defend(getRandomAttackingUnit(), tile.getArmies().get(j).getUnits().get(k));
+//                        }
+
+
+                    }
+                }
+
+
+                // handle all units the same way
+                int unitSize = tile.getUnits().size();
+                for(int j = unitSize - 1; j >= 0; j--) {
+
+                    // end function if there is no more damage
+                    if (totalDamage == 0)
+                        return;
+
+                    // ensure the unit is not on your team
+                    if(this.selectedUnits.get(0).getOwner() == tile.getUnits().get(j).getOwner()){
+                        break;
+                    }
+
+                    // get health and armor, check if unit should die or just lose health
+                    int health = tile.getUnits().get(j).getUnitStats().getHealth();
+                    int armor = tile.getUnits().get(j).getUnitStats().getArmor();
+
+                    // if total damage is greater than health and armor, destroy both and subtract
+                    if(totalDamage >= health + armor) {
+                        tile.getUnits().get(j).getUnitStats().setArmor(0);
+                        tile.getUnits().get(j).getUnitStats().setHealth(0);
+                        totalDamage -= health;
+                        totalDamage -= armor;
+                    }
+                    // if total damage is just less than armor, destroy armor and subtract
+                    else if(totalDamage < armor){
+
+                        tile.getUnits().get(j).getUnitStats().setArmor(armor - totalDamage);
+                        totalDamage = 0;
+
+                    }
+                    // if total damage is greater than armor and less than health, handle
+                    else {
+                        totalDamage -= armor;
+                        tile.getUnits().get(j).getUnitStats().setArmor(0);
+                        tile.getUnits().get(j).getUnitStats().setHealth(health - totalDamage);
+                        totalDamage = 0;
+                    }
+
+                    // if defender is alive,
+//                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
+//                        defend(getRandomAttackingUnit(), tile.getUnits().get(j));
+//                    }
+
+                }
+
+
+
+
+                // Handle structures
+                if (totalDamage == 0)
+                    return;
+
+                // ensure the unit is not on your team
+                if(tile.getStructure() != null) {
+                    if (this.selectedUnits.get(0).getOwner() == tile.getStructure().getOwner()) {
+                        break;
+                    }
+
+
+                    int health = tile.getStructure().getStats().getHealth();
+                    int armor = tile.getStructure().getStats().getArmor();
+
+                    if (totalDamage >= health + armor) {
+                        tile.getStructure().getStats().setHealth(0);
+                        tile.getStructure().getStats().setArmor(0);
+                        totalDamage -= health;
+                        totalDamage -= health;
+                    }
+                    else if(totalDamage < armor) {
+                        tile.getStructure().getStats().setArmor(armor - totalDamage);
+                        totalDamage = 0;
+                    }
+                    else {
+                        totalDamage -= armor;
+                        tile.getStructure().getStats().setArmor(0);
+                        tile.getStructure().getStats().setHealth(health - totalDamage);
+                        totalDamage = 0;
+                    }
+
+                    // if defender is alive,
+//                    if(tile.getStructure().getStats().getHealth() > 0){
+//                        defend(getRandomAttackingUnit(), tile.getStructure());
+//                    }
+
+                }
+
+                // if some ranged damage is used, account for it
+                if(totalDamage < totalRangedDamage){
+                    totalRangedDamage = totalDamage;
+                }
+
+            }
+            else {
+
+                // cycle through all units in the army and subtract damage and armor
+                int armySize = tile.getArmies().size();
+                for(int j = armySize - 1; j >= 0; j--) {
+                    int armyUnitSize = tile.getArmies().get(j).getUnits().size();
+                    for(int k = armyUnitSize - 1; k >= 0; k--){
+
+                        // end function if there is no more damage
+                        if (totalRangedDamage == 0)
+                            return;
+
+                        // ensure the unit is not on your team
+                        if(this.selectedUnits.get(0).getOwner() == tile.getArmies().get(j).getUnits().get(k).getOwner()){
+                            break;
+                        }
+
+                        // get health and armor, check if unit should die or just lose health
+                        int health = tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth();
+                        int armor = tile.getArmies().get(j).getUnits().get(k).getUnitStats().getArmor();
+
+                        // if total damage is greater than health and armor, destroy both and subtract
+                        if(totalRangedDamage >= health + armor) {
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(0);
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setHealth(0);
+                            totalRangedDamage -= health;
+                            totalRangedDamage -= armor;
+                        }
+                        // if total damage is just less than armor, destroy armor and subtract
+                        else if(totalRangedDamage < armor){
+
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(armor - totalRangedDamage);
+                            totalRangedDamage = 0;
+
+                        }
+                        // if total damage is greater than armor and less than health, handle
+                        else {
+                            totalRangedDamage -= armor;
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setArmor(0);
+                            tile.getArmies().get(j).getUnits().get(k).getUnitStats().setHealth(health - totalRangedDamage);
+                            totalRangedDamage = 0;
+                        }
+
+                        // if defender is alive,
+//                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
+//                            defend(getRandomAttackingUnit(), tile.getArmies().get(j).getUnits().get(k));
+//                        }
+
+                    }
+                }
+
+
+                // handle all units the same way
+                int unitSize = tile.getUnits().size();
+                for(int j = unitSize - 1; j >= 0; j--) {
+
+                    // end function if there is no more damage
+                    if (totalRangedDamage == 0)
+                        return;
+
+                    // ensure the unit is not on your team
+                    if(this.selectedUnits.get(0).getOwner() == tile.getUnits().get(j).getOwner()){
+                        break;
+                    }
+
+                    // get health and armor, check if unit should die or just lose health
+                    int health = tile.getUnits().get(j).getUnitStats().getHealth();
+                    int armor = tile.getUnits().get(j).getUnitStats().getArmor();
+
+                    // if total damage is greater than health and armor, destroy both and subtract
+                    if(totalRangedDamage >= health + armor) {
+                        tile.getUnits().get(j).getUnitStats().setArmor(0);
+                        tile.getUnits().get(j).getUnitStats().setHealth(0);
+                        totalRangedDamage -= health;
+                        totalRangedDamage -= armor;
+                    }
+                    // if total damage is just less than armor, destroy armor and subtract
+                    else if(totalRangedDamage < armor){
+
+                        tile.getUnits().get(j).getUnitStats().setArmor(armor - totalRangedDamage);
+                        totalRangedDamage = 0;
+
+                    }
+                    // if total damage is greater than armor and less than health, handle
+                    else {
+                        totalRangedDamage -= armor;
+                        tile.getUnits().get(j).getUnitStats().setArmor(0);
+                        tile.getUnits().get(j).getUnitStats().setHealth(health - totalRangedDamage);
+                        totalRangedDamage = 0;
+                    }
+
+                    // if defender is alive,
+//                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
+//                        defend(tile.getUnits().get(j), getRandomAttackingUnit());
+//                    }
+
+                }
+
+
+                // Handle structures
+                if (totalRangedDamage == 0)
+                    return;
+
+                // ensure the unit is not on your team
+                if(tile.getStructure() != null) {
+                    if (this.selectedUnits.get(0).getOwner() == tile.getStructure().getOwner()) {
+                        break;
+                    }
+
+                    int health = tile.getStructure().getStats().getHealth();
+                    int armor = tile.getStructure().getStats().getArmor();
+
+                    if (totalDamage >= health + armor) {
+                        tile.getStructure().getStats().setHealth(0);
+                        tile.getStructure().getStats().setArmor(0);
+                        totalDamage -= health;
+                        totalDamage -= health;
+                    }
+                    else if(totalDamage < armor) {
+                        tile.getStructure().getStats().setArmor(armor - totalDamage);
+                        totalDamage = 0;
+                    }
+                    else {
+                        totalDamage -= armor;
+                        tile.getStructure().getStats().setArmor(0);
+                        tile.getStructure().getStats().setHealth(health - totalDamage);
+                        totalDamage = 0;
+                    }
+
+                    // if defender is alive,
+//                    if(tile.getStructure().getStats().getHealth() > 0){
+//                        defend(getRandomAttackingUnit(), tile.getStructure());
+//                    }
+
+
+                }
+
+
+            }
+
+        }
+
+    }
+
+
+    public void defend(Unit attacker, Unit defender) {
+
+
+        int defendDirection = defender.getDirection();
+        int defendDamage = defender.getUnitStats().getDefensiveDamage();
+
+        // conditional statement to check directions
+        if((attackDirection == 1 && defendDirection == 9) || (attackDirection == 2 && defendDirection == 8) || (attackDirection == 3 && defendDirection == 7) || (attackDirection == 7 && defendDirection == 3) || (attackDirection == 8 && defendDirection == 2) || (attackDirection == 9 && defendDirection == 1)){
+
+            int health = attacker.getUnitStats().getHealth();
+            int armor = attacker.getUnitStats().getArmor();
+
+            if (defendDamage >= health + armor) {
+                attacker.getUnitStats().setHealth(0);
+                attacker.getUnitStats().setArmor(0);
+            }
+            else if(defendDamage < armor) {
+                attacker.getUnitStats().setArmor(armor - defendDamage);
+            }
+            else {
+                defendDamage -= armor;
+                attacker.getUnitStats().setArmor(0);
+                attacker.getUnitStats().setHealth(health - defendDamage);
+            }
+
+        }
+
+
+    }
+
+
     // calculate total melee damage from this tile
     private int calcTotalMeleeDamage() {
         int sum = 0;

@@ -376,4 +376,8 @@ public class Tile {
         else
             playerTwoVisibility = VisibilityState.NonVisible;
     }
+
+    public ArrayList<Army> getArmies() {
+        return armies;
+    }
 }
