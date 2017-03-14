@@ -1,6 +1,7 @@
 package com.team7.model.entity;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CommandQueue {
@@ -30,6 +31,30 @@ public class CommandQueue {
         }
     }
 
+    public void raiseCommand(String commandString) {
+        for (int i=0; i < commands.size(); i++) {
+            if (commandString.equals(commands.get(i).getCommandString())) {
+                if (i!=0) {
+                    Command temp = commands.get(i);
+                    commands.set(i, commands.get(i-1));
+                    commands.set(i-1, temp);
+                }
+            }
+        }
+    }
+
+    public void lowerCommand(String commandString) {
+        for (int i=0; i < commands.size(); i++) {
+            if (commandString.equals(commands.get(i).getCommandString())) {
+                if (i!=commands.size()-1) {
+                    Command temp = commands.get(i);
+                    commands.set(i, commands.get(i+1));
+                    commands.set(i+1, temp);
+                }
+            }
+        }
+    }
+
 
     public Command get(int index) {
         return commands.get(index);
@@ -37,6 +62,17 @@ public class CommandQueue {
 
     public int getSize() {
         return commands.size();
+    }
+
+    public ArrayList<Command> getCommandsList() {
+        return commands;
+
+    }
+
+    public void cancelCommands() {
+        for(int i = 0; i < commands.size(); i++) {
+            this.commands.remove(i);
+        }
     }
 
 

@@ -65,7 +65,7 @@ public class Player {
         moveUnitsTowardsArmy();
         subtractMovesFrozen();
         checkUnitArmyStructs();
-
+        subtractUnitUpkeep();
     }
 
     // move each unit towards destination tile
@@ -142,6 +142,18 @@ public class Player {
                 removeStructure(this.structures.get(i));
             }
         }
+
+    }
+
+    private void subtractUnitUpkeep() {
+        int sum = 0;
+
+        // add all unit stats
+        for(int i = 0; i < this.units.size(); i++){
+            sum += this.units.get(i).getUnitStats().getUpkeep();
+        }
+
+        nutrients = nutrients - sum;
 
     }
 
@@ -713,5 +725,29 @@ public class Player {
 
     public Technologies getTechnologies() {
         return technologies;
+    }
+
+    public void spendMetal(int amount) {
+        metal -= amount;
+    }
+
+    public void spendFood(int amount) {
+        nutrients -= amount;
+    }
+
+    public void spendPower(int amount) {
+        power -= amount;
+    }
+
+    public void applyAllTechnologies() {
+        for(Technology unitTechnology : technologies.getUnitTechnologies()){
+            applyTechnology(unitTechnology);
+        }
+        for(Technology workerTechnology : technologies.getWorkerTechnologies()){
+            applyTechnology(workerTechnology);
+        }
+        for(Technology structureTechnology : technologies.getStructureTechnologies()){
+            applyTechnology(structureTechnology);
+        }
     }
 }

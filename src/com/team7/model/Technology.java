@@ -48,6 +48,7 @@ public class Technology {
     public void incrementTechnologyLevel(){
         if(level < maxLevel){
             level += 1;
+            System.out.println("incremented technology: " + technologyStat + " level to: " + level);
         }
 
     }

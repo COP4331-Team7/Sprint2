@@ -59,7 +59,7 @@ public class Technologies {
 
 //////////
         //Structure technology
-        structureTechnologies.add(new Technology("structure", "Capital", "VisibilityRadius", 1,5));
+        structureTechnologies.add(new Technology("structure", "Capital", "VisibilityRadius", 3,5));
         structureTechnologies.add(new Technology("structure", "Capital", "AttackStrength", 0, 0));
         structureTechnologies.add(new Technology("structure", "Capital", "DefenseStrength", 0, 3));
         structureTechnologies.add(new Technology("structure", "Capital", "ArmorStrength", 0, 3));

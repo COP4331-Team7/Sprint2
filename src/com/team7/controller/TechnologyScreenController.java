@@ -32,7 +32,8 @@ public class TechnologyScreenController {
     private TechnologyScreen technologyScreen = null;
 
     private Technology currentTechnology = null;
-    ArrayList<Technology> currentTechnologyList = new ArrayList<>();
+    private ArrayList<Technology> currentTechnologyList = new ArrayList<>();
+    private ArrayList<University> universities = new ArrayList<>();
 
     private String currentMode = null;
     private String currentInstance = null;
@@ -64,7 +65,7 @@ public class TechnologyScreenController {
 
     public void updateUniversities(){
         //get all universities of current player and add to screen
-        ArrayList<University> universities = new ArrayList<>();
+        universities = new ArrayList<>();
         for(Structure structure: game.getCurrentPlayer().getStructures()){
             if (structure instanceof University){
                 universities.add((University)structure);
@@ -142,8 +143,13 @@ public class TechnologyScreenController {
             public void mouseClicked(MouseEvent e) {
                 JList<String> list = (JList<String>)e.getSource();
                 if (e.getClickCount() == 2) {
+                    if(universities.isEmpty()){
+                        //dont show popup if player has no universities
+                        return;
+                    }
                     list.getSelectedValue();
-                    String input = JOptionPane.showInputDialog(technologyScreen.getParent(), "type a single number id of university to research at", null);
+                    String input = "-1";
+                    input = JOptionPane.showInputDialog(technologyScreen.getParent(), "type a single number id of university to research at", null);
                     //call figure out which university was called
                     //begin research at that university
 
@@ -153,12 +159,21 @@ public class TechnologyScreenController {
 
                     //determine which technology object the university will research
                     for (Technology technology : currentTechnologyList){
-                        if(technology.getTechnologyStat().equals(currentStat)){
+                        if(technology.getTechnologyStat().equals(currentStat) && technology.getTechnologyInstance().equals(currentInstance)){
                             currentTechnology = technology;
                         }
                     }
 
-                    //begin research at university
+                    //find which university was referenced by id
+                    //begin research
+                    for (University uni : universities){
+                        if (uni.getId() == Integer.parseInt(input)){
+                            uni.produceTechnology(currentTechnology);
+                        }
+                    }
+
+                    //update scree
+                    updateUniversities();
 
                 }
             }

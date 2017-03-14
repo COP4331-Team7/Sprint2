@@ -157,14 +157,14 @@ public class MainViewInfo extends JPanel {
         healthLabel.setText("Health:");
         armorLabel.setText("Armor:");
         upkeepLabel.setText("Upkeep:");
-        productionLabel.setText("Production rate:");
-        itemLabel.setText("Items:");
+        productionLabel.setText("");
+        itemLabel.setText("");
         currSelectionName.setText(" no selection ");
     }
 
     public void clearPlayerStats() {
         lifeLabel.setText("Nutrients:");
-        researchLabel.setText("Research:");
+        researchLabel.setText("");
         constructionLabel.setText("Metal:");
         powerLabel.setText("Power:");
     }
@@ -184,14 +184,11 @@ public class MainViewInfo extends JPanel {
     public void setUpkeepLabel(String s) {
         upkeepLabel.setText("Upkeep: " + s);
     }
-    public void setProductionLabel(String s) {
-        productionLabel.setText("Production rate: " + s);
-    }
     public void setLifeLabel(String s) {
         lifeLabel.setText("Nutrients: " + s);
     }
     public void setResearchLabel(String s) {
-        researchLabel.setText("Research: " + s);
+        researchLabel.setText("");
     }
     public void setConstructionLabel(String s) {
         constructionLabel.setText("Metal:  " + s);
@@ -202,7 +199,7 @@ public class MainViewInfo extends JPanel {
         playerNameLabel.setText("Player " + s + ":");
     }
     public void setItemLabel(String s) {
-        itemLabel.setText("Items: " + s);
+        itemLabel.setText("");
     }
     public void setCurrSelectionName(String s) {
         currSelectionName.setText(s);
@@ -219,10 +216,9 @@ public class MainViewInfo extends JPanel {
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
         setArmorLabel( Integer.toString( stats.getArmor() ) + "/" + Integer.toString(stats.getMaxArmor()) );
         setHealthLabel( Integer.toString( stats.getHealth()) + "/" + Integer.toString(stats.getMaxHealth()) );
-        setUpkeepLabel( Integer.toString( stats.getUpkeep() ) );
-        setProductionLabel( "0" );
+        setUpkeepLabel( "F: " + Integer.toString( stats.getUpkeep() ) );
         setCurrSelectionName(unit.getType() + " " + unit.getId());
-        setItemLabel( "none" );
+        setItemLabel( "" );
     }
 
     public void updateStructureStats(Structure structure ) {
@@ -235,10 +231,9 @@ public class MainViewInfo extends JPanel {
         setDefensiveDamageLabel( Integer.toString( stats.getDefensiveDamage() ) );
         setArmorLabel( Integer.toString( stats.getArmor() ) + "/" + Integer.toString(stats.getMaxArmor()) );
         setHealthLabel( Integer.toString( stats.getHealth()) + "/" + Integer.toString(stats.getMaxHealth()) );
-        setUpkeepLabel( "0" );
-        setProductionLabel( "0" );
+        setUpkeepLabel( "E: " + structure.getEnergyUpkeep() + " / " + "O: " + structure.getOreUpkeep() );
         setCurrSelectionName(structure.getType() + " " + structure.getId());
-        setItemLabel( "none" );
+        setItemLabel( "" );
     }
 
 

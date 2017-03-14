@@ -2,6 +2,7 @@ package com.team7.model;
 
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
@@ -69,17 +70,23 @@ public class Game {
         Structure obsTower = new ObservationTower(map.getGrid()[20][15], players[0]);
         Structure fort = new Fort(map.getGrid()[20][25], players[0]);
         Structure farm = new Farm(map.getGrid()[15][20], players[0]);
+       // Structure farm2 = new Farm(map.getGrid()[16][20], players[0]);
 
         players[0].addStructure(c1);
         players[0].addStructure(university);
         players[0].addStructure(obsTower);
         players[0].addStructure(fort);
         players[0].addStructure(farm);
+        //players[0].addStructure(farm2);
 
 
         Army army0 = new Army(map.getGrid()[1][30],  players[0]);
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);
         Army army2 = new Army(map.getGrid()[1][31],  players[1]);
+
+        players[0].addArmy(army0);
+        players[1].addArmy(army1);
+        players[1].addArmy(army2);
 
 
         Unit melee1 = new  MeleeUnit(this.map.getGrid()[1][30], players[0]);
@@ -100,6 +107,7 @@ public class Game {
         players[1].addArmy( army1 );
         players[1].addArmy( army2 );
 
+        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }
@@ -177,8 +185,15 @@ public class Game {
         System.out.println(" ");
         currentPlayer.takeTurn();
         executeCommandQueues();
+        applyAllTechnologies();
         removeDeadUnits();
         updateCurrPlayerTileStates();
+    }
+
+    private void applyAllTechnologies() {
+        for(Player p : players){
+            p.applyAllTechnologies();
+        }
     }
 
     public void removeDeadUnits() {
@@ -223,7 +238,7 @@ public class Game {
         System.out.println("\nSTRUCTURES:");
         for(Structure s : all_structures) {
             s.printCommandQueue();
-           // s.executeCommandQueue();
+            s.executeCommandQueue();
         }
 
         System.out.println("\nARMIES:");
