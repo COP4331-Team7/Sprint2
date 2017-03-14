@@ -543,6 +543,10 @@ public class Player {
         return n;
     }
 
+    public int getNumArmy() {
+        return armies.size();
+    }
+
     public Unit getExplorer(int id) {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Explorer && units.get(i).getId() == id)
@@ -568,6 +572,13 @@ public class Player {
         for(int i = 0; i < units.size(); i++)
             if(units.get(i) instanceof Colonist && units.get(i).getId() == id)
                 return units.get( i );
+        return null;
+    }
+
+    public Army getArmy(int id) {
+        for(int i = 0; i < armies.size(); i++)
+            if(armies.get(i).getId() == id)
+                return armies.get( i );
         return null;
     }
 

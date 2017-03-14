@@ -31,8 +31,6 @@ public class TechnologyScreen extends JPanel {
 
     private JPanel buttonPanel = new JPanel(new GridLayout(0, 3));
 
-//    private JPanel buttonTechTypePanel = new JPanel( new GridLayout(0, 3) );
-
     private JPanel instanceAndStatPanesPanel = new JPanel(new GridLayout(0,2));
 
 
@@ -72,17 +70,9 @@ public class TechnologyScreen extends JPanel {
         instanceScrollPane.setBackground(new Color(0xffF5F5DC));
         instanceScrollPane.setOpaque(true);
 
-//        buttonTechTypePanel.add(unitButton);
-//        buttonTechTypePanel.add(workerButton);
-//        buttonTechTypePanel.add(structureButton);
-
         buttonPanel.add(unitButton, BorderLayout.SOUTH);
         buttonPanel.add(workerButton, BorderLayout.WEST);
         buttonPanel.add(structureButton, BorderLayout.EAST);
-
-//        this.add(buttonPanel, BorderLayout.CENTER);
-//        this.add(buttonTechTypePanel, BorderLayout.SOUTH);
-//        this.add(instanceAndStatPanesPanel, BorderLayout.EAST);
 
         JPanel temp = new JPanel( new BorderLayout() );
         temp.add(buttonPanel, BorderLayout.NORTH );

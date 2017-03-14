@@ -2,6 +2,7 @@ package com.team7.model.entity.structure.staffedStructure.singleHarvestStructure
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.structure.staffedStructure.IHarvester;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
@@ -97,4 +98,33 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
             }
         }
     }
+
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
 }

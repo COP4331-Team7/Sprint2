@@ -30,16 +30,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "power up",
             "cancel queued orders"
     };
-    private final static String[] structureCommands = {
-            "attack",
-            "make",
-            "defend",
-            "heal/repair unit",
-            "decommission",
-            "power down",
-            "power up",
-            "cancel queued orders"
-    };
     private final static String[] unitCommands = {
             "REINFORCE",
             "DECOMMISSION",
@@ -105,6 +95,91 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "POWER UP",
             "POWER DOWN",
             "MOVE"
+    };
+
+    private final static String[] powerPlantCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+    };
+    private final static String[] mineCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+    };
+    private final static String[] farmCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+    };
+    private final static String[] observationCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+    };
+    private final static String[] universityCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+
+    };
+    private final static String[] capitalCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+
+    };
+    private final static String[] fortCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
+
+    };
+
+    private final static String[] structureCommands = {
+            "attack",
+            "make",
+            "defend",
+            "heal/repair unit",
+            "decommission",
+            "power down",
+            "power up",
+            "cancel queued orders"
     };
 
     private int currMode = -1;
@@ -178,6 +253,9 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
                 case 2: //unit
                     typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getId() );
                     break;
+                case 3: //army
+                    typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentArmySelection( currType, currTypeInstance ).getId() );
+                    break;
             }
 
             controller.updateStatusView( currMode, currType, currTypeInstance  );
@@ -193,10 +271,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         if(currMode == 2 && (currType == 2 || currType ==3) && currCommand == 0 && (e.getKeyChar()-48 != 65487)) {
             controller.executeReinforeCommand( e.getKeyChar(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
         }
-
-
-
-
 
         /////////
 
@@ -298,8 +372,21 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     private int getNumCommands(int currType, int currMode) {      // get # of options the current TYPE has
         int size = 0;
-        if(currMode == 1)
-            size = structureCommands.length;
+
+        if(currMode == 1 && currType == 0)           // CAPITAL
+            return capitalCommands.length;
+        else if(currMode == 1 && currType == 1)       // FORT
+            return fortCommands.length;
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            return unitCommands.length;
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            return observationCommands.length;
+        else if(currMode == 1 && currType == 4)        // FARM
+            return farmCommands.length;
+        else if(currMode == 1 && currType == 5)        // MINE
+            return mineCommands.length;
+        else if(currMode == 1 && currType == 6)        // POWER PLANT
+            return powerPlantCommands.length;
 
         else if(currMode == 2 && currType == 0) {        // EXPLORER
             return explorerCommands.length;
@@ -347,8 +434,12 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             return controller.getNumFarm();
         else if(currMode == 1 && currType == 5)        // MINE
             return controller.getNumMine();
-        else if(currMode == 1 && currType == 6)        // POWERPLANT
+        else if(currMode == 1 && currType == 6)        // POWER PLANT
             return controller.getNumPowerPlant();
+
+        if(currMode == 3 && currType == 0)        // ARMY : ENTIRE ARMY
+            return controller.getNumArmy();
+
 
         else
               return 0;
@@ -357,8 +448,22 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public String getCommand() {
         StringBuilder sb = new StringBuilder();
 
-        if(currMode == 1)
-            sb.append(((currCommand != -1)?structureCommands[currCommand]:"")); //up / down arrow
+        if(currMode == 1 && currType == 0)           // CAPITAL
+            sb.append(((currCommand != -1)?capitalCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 1)       // FORT
+            sb.append(((currCommand != -1)?fortCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            sb.append(((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            sb.append(((currCommand != -1)?observationCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 4)        // FARM
+            sb.append(((currCommand != -1)?farmCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 5)        // MINE
+            sb.append(((currCommand != -1)?mineCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 6)        // POWER PLANT
+            sb.append(((currCommand != -1)?powerPlantCommands[currCommand]:"")); //up / down arrow
+
+
         else if (currMode == 2 && currType == 0)    //explorer command
             sb.append(((currCommand != -1)?explorerCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 2 && currType == 1)    //colonist
@@ -367,6 +472,9 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             sb.append(((currCommand != -1)?rangedCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 2 && currType == 3)    //colonist
             sb.append(((currCommand != -1)?meleeCommands[currCommand]:"")); //up / down arrow
+
+
+
         else if (currMode == 3)
             sb.append(((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 0 && currTypeInstance != -1)

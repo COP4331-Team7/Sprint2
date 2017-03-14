@@ -21,7 +21,6 @@ public class Army extends Entity {
     public Army(Tile startTile, Player player) {
         setOwner(player);
         setLocation(startTile);
-
         generateID();
 
         this.commandQueue = new CommandQueue();

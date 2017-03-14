@@ -2,6 +2,7 @@ package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.StructureStats;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     public University(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         //key: TYPE INSTANCE TECHNOLOGY
@@ -184,4 +186,32 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         }
 
     }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
 }

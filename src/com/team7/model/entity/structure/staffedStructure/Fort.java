@@ -2,6 +2,7 @@ package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
 
@@ -27,6 +28,7 @@ public class Fort extends StaffedStructure implements IUnitProducer {
     public Fort(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         productionRateMap.put(produceMelee, 8);   //can produce a melee unit after 5 ticks
@@ -126,5 +128,31 @@ public class Fort extends StaffedStructure implements IUnitProducer {
 
     private void changeSoldierTrainTicks(int delta){
         soldierTrainTicks += delta;
+    }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

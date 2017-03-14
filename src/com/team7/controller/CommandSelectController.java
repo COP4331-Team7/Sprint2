@@ -3,6 +3,7 @@ package com.team7.controller;
 
 import com.team7.model.Game;
 import com.team7.model.Player;
+import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
@@ -88,6 +89,21 @@ public class CommandSelectController {
         return currSelection;
     }
 
+    public Army getCurrentArmySelection(int currType, int id) {
+
+        Player currentPlayer = game.getCurrentPlayer();
+        Army currSelection = null;
+
+        if(currType == 0)           // entire
+            currSelection = currentPlayer.getArmy( id );
+        else if(currType == 1)       // battle group
+            currSelection = currentPlayer.getArmy( id );
+        else if(currType == 2)         // reinforcements
+            currSelection = currentPlayer.getArmy( id );
+
+        return currSelection;
+    }
+
     public void updateStatusView(int currMode, int currType, int id) {
         if(id == -1){
             return;
@@ -105,9 +121,16 @@ public class CommandSelectController {
 
     public void zoomToCurrSelection( int currMode, int currType, int currTypeInstance ) {
         Unit unit = getCurrentUnitSelection(  currMode, currType, currTypeInstance );
-        if(unit == null)
-            return;
-        mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        Structure structure = getCurrentStructureSelection(  currMode, currType, currTypeInstance );
+        Army army = getCurrentArmySelection(currType, currTypeInstance);
+
+        if(unit != null)
+            mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        else if( structure != null)
+            mainViewImage.zoomToDestination(structure.getLocation().getxCoordinate() - 11 / 2, structure.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+        else if( army != null)
+            mainViewImage.zoomToDestination(army.getLocation().getxCoordinate() - 11 / 2, army.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+
     }
 
     public void addActionListeners() {
@@ -127,13 +150,23 @@ public class CommandSelectController {
 
 
     public void queueCommand() {
-        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
+        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
+                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
             return;
-        Command command = new Command( mainScreen.getCommandSelect().getCommand() );
-        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-        unit.queueCommand( command );
 
-      //  printCurrPlayersUnitsCommandQueues();
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() );
+
+        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+
+
+        if(unit != null)
+            unit.queueCommand( command );
+        else if (structure != null)
+            structure.queueCommand( command );
+        else if (army != null)
+            army.queueCommand( command );
     }
 
     public void printCurrPlayersUnitsCommandQueues(){
@@ -186,7 +219,9 @@ public class CommandSelectController {
     public int getNumUniversity() {
         return game.getCurrentPlayer().getNumUniversity();
     }
-
+    public int getNumArmy() {
+        return game.getCurrentPlayer().getNumArmy();
+    }
 
 
 }

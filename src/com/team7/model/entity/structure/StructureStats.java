@@ -43,7 +43,7 @@ public class StructureStats {
     public void changeProduction(String key, int delta){
         if(productionRates.containsKey(key)){
             productionRates.put(key, productionRates.get(key) + delta);
-            System.out.println("productionRate for " + key + " has been updated to: " + productionRates.get(key));
+            //System.out.println("productionRate for " + key + " has been updated to: " + productionRates.get(key));
         }
 
     }

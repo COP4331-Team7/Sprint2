@@ -218,8 +218,6 @@ public class TileState {
             meleeUnit--;
         if (unit.getType().contains("Range"))
             rangeUnit--;
-
-        System.out.println(unit.getType() + "decremented");
     }
 
 }

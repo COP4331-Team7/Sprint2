@@ -10,7 +10,6 @@ import javax.swing.*;
 public class MapScreen extends JPanel  {
 
     public static BufferedImage image;
-    private Graphics2D g2d;
     private static int MAP_IMAGE_WIDTH_IN_PIXELS;
     private static int MAP_IMAGE_HEIGHT_IN_PIXELS;
     private ScreenSelectButtons screenSelectBtns = null;

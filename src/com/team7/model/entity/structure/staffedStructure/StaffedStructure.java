@@ -1,5 +1,6 @@
 package com.team7.model.entity.structure.staffedStructure;
 
+import com.team7.model.entity.Command;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 
@@ -81,6 +82,32 @@ public abstract class StaffedStructure extends Structure {
             }
         }
         return foodUpkeepDuringConstruction;
+    }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
     }
 
 }
