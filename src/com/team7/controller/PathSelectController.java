@@ -56,8 +56,8 @@ public class PathSelectController {
 
     public void moveCursor(String direction) {
 
-        if(pathTile.size() >= moveLimit)
-            return;
+//        if(pathTile.size() >= moveLimit)
+//            return;
 
         selectedTile.isSelectedPath = false;
 
@@ -86,16 +86,11 @@ public class PathSelectController {
         Set<Tile> openList = null;
         Set<Tile> closedList = null;
 
-        // Tile endTile = pathTile.get(pathTile.size() - 1);
-
         tiles  = map.findMinPath( startTile, selectedTile, openList, closedList);
         for(Tile t : tiles) {
             t.isSelectedPath = true;
         }
-        pathTile = tiles;
-
-        // end of path
-        selectedTile.isSelectedPath = false;
+        // pathTile = tiles;
 
         mainViewImage.reDrawMap();
         map.clearPath();
