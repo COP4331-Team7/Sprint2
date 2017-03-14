@@ -127,6 +127,13 @@ public class Game {
         player.addWorker(worker);
     }
 
+    public void addStructureToPlayer(Player player, Structure structure){
+        player.addStructure(structure);
+    }
+
+    public void addArmyToPlayer(Player player, Army army){
+        player.addArmy(army);
+    }
 
     //called at the end of each turn and everytime gamestate changes (namely movement)
     //1. find all tiles currently visited by current player, along with the radius
