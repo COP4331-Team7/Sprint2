@@ -299,8 +299,10 @@ public class Tile {
 
     public void setStructure(Structure structure) {
         this.structure = structure;
-        realDraw.setStructureType(structure.getType());
-        realDraw.setStructureStatus(structure.isPowered());
+        if(structure != null) {
+            realDraw.setStructureType(structure.getType());
+            realDraw.setStructureStatus(structure.isPowered());
+        }
     }
 
     //called by controller to determine which tile state to draw
@@ -398,6 +400,10 @@ public class Tile {
         if(energy == null) return 0;
 
         return energy.getStatInfluenceQuantity();
+    }
+
+    public ArrayList<Army> getArmies() {
+        return armies;
     }
 
 }

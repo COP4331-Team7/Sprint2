@@ -2,13 +2,9 @@ package com.team7.view.MainScreen;
 
 import com.team7.controller.CommandSelectController;
 import com.team7.controller.PathSelectController;
-import com.team7.model.entity.Army;
-import com.team7.model.entity.unit.Unit;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -53,6 +49,13 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     };
     private final static String[] structureTypes = {
             "BASE",
+            "CAPITAL",
+            "FORT",
+            "UNIVERSITY",
+            "OBSERVATION_TOWER",
+            "FARM",
+            "MINE",
+            "POWERPLANT"
     };
     private final static String[] unitTypes = {
             "EXPLORER",
@@ -165,7 +168,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): ");
         }
         else {
-            typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getId() );
+            switch(currMode){
+                case 1: //structure
+                    typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentStructureSelection(  currMode, currType, currTypeInstance ).getId() );
+                    break;
+                case 2: //unit
+                    typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getId() );
+                    break;
+            }
+
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
@@ -182,14 +193,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         // start recording path
         if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
-            if(controller.getCurrentSelection(  currMode, currType, currTypeInstance ) == null)
+            if(controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) == null)
                 return;
-            pathSelectController.startRecordingPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getLocation(), controller.getCurrentSelection(  currMode, currType, currTypeInstance ).getUnitStats().getMovement()  );
+            pathSelectController.startRecordingPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getLocation(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getUnitStats().getMovement()   );
             isRecordingPath = true;
         }
         // execute recorded path
         else if( e.getKeyChar() == '5') {
-            pathSelectController.drawPath( controller.getCurrentSelection(  currMode, currType, currTypeInstance ) );
+            pathSelectController.drawPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
         // add key to recorded path
@@ -308,6 +319,24 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else if(currMode == 2 && currType == 3) {        // MELEE UNIT
                  return controller.getNumMelee();
         }
+
+/*
+        if(currMode == 1 && currType == 0)           // CAPITAL
+
+        else if(currMode == 1 && currType == 1)       // FORT
+            currSelection = currentPlayer.getFort( id );
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            currSelection = currentPlayer.getUniversity( id );
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            currSelection = currentPlayer.getObservationTower( id );
+        else if(currMode == 1 && currType == 4)        // FARM
+            currSelection = currentPlayer.getFarm( id );
+        else if(currMode == 1 && currType == 5)        // MINE
+            currSelection = currentPlayer.getMine( id );
+        else if(currMode == 1 && currType == 6)        // POWERPLANT
+            currSelection = currentPlayer.getPowerPlant( id );
+
+        */
         else
               return 0;
     }

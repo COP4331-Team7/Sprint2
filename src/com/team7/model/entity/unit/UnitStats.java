@@ -4,17 +4,60 @@ public class UnitStats {
     private int offensiveDamage;
     private int defensiveDamage;
     private int armor;
+    private int maxArmor;
     private int movement;
     private int health;
+    private int maxHealth;
     private int upkeep;
 
-    public UnitStats(int od, int dd, int a, int m, int h, int u) {
+    public UnitStats(int od, int dd, int a, int ma, int m, int h, int mh, int u) {
         offensiveDamage = od;
         defensiveDamage = dd;
         armor = a;
+        maxArmor = ma;
         movement = m;
         health = h;
+        maxHealth = mh;
         upkeep = u;
+    }
+
+    public void changeOffensiveDamage(int delta){
+        offensiveDamage += delta;
+    }
+
+    public void changeDefensiveDamage(int delta){
+        defensiveDamage += delta;
+    }
+
+    public void changeArmor(int delta){
+        armor += delta;
+        if(armor > maxArmor) {
+            armor = maxArmor;
+        }
+    }
+
+    public void changeMaxArmor(int delta){
+        maxArmor += delta;
+    }
+
+    public void changeMovement(int delta){
+        movement += delta;
+    }
+
+    public void changeHealth(int delta){
+        health += delta;
+
+        if (health > maxHealth){
+            health = maxHealth;
+        }
+    }
+
+    public void changeMaxHealth(int delta){
+        maxHealth += delta;
+    }
+
+    public void changeUpkeep(int delta){
+        upkeep += delta;
     }
 
     public int getOffensiveDamage() {
@@ -37,8 +80,11 @@ public class UnitStats {
         return armor;
     }
 
-    public void setArmor(int armor) {
-        this.armor = armor;
+    public void setArmor(int a) {
+        if(a > maxArmor) {
+            a = maxArmor;
+        }
+        this.armor = a;
     }
 
     public int getMovement() {
@@ -53,11 +99,12 @@ public class UnitStats {
         return health;
     }
 
-    public void setHealth(int health) {
-        if (health > 100){
-            health = 100;
+    public void setHealth(int h) {
+        if (h > maxHealth){
+            h = maxHealth;
         }
-        this.health = health;
+
+        this.health = h;
     }
 
     public int getUpkeep() {
@@ -66,6 +113,14 @@ public class UnitStats {
 
     public void setUpkeep(int upkeep) {
         this.upkeep = upkeep;
+    }
+
+    public int getMaxArmor() {
+        return maxArmor;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }
 

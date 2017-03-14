@@ -29,13 +29,12 @@ public class IdManager {
                 return -1;
             }
 
+
             if(entity instanceof Explorer) {
-                System.out.println("Shoe");
                 ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
                     if(player.getUnits().get(i) instanceof Explorer){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
-                        System.out.println(availableIDs);
                     }
                 }
                 ID = availableIDs.get(0);
@@ -81,6 +80,18 @@ public class IdManager {
 
             for(int i = 0; i < player.getWorkers().size(); i++){
                 availableIDs.remove(Integer.valueOf(player.getWorkers().get(i).getId()));
+            }
+            ID = availableIDs.get(0);
+        }
+        else if(entity instanceof Structure) {
+            if(player.getStructures().size() >= 10) {
+                return -1;
+            }
+
+            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+            for(int i = 0; i < player.getStructures().size(); i++){
+                availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+
             }
             ID = availableIDs.get(0);
         }

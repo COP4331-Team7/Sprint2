@@ -18,11 +18,11 @@ public class Colonist extends NonCombatUnit {
         setOwner(player);
         setLocation(startTile);
         generateID();
-        setUnitStats(new UnitStats(1, 1, 5, 5, 100, 3));
+        setUnitStats(new UnitStats(1, 1, 5, 5,5 ,100, 100,3));
         setCommandQueue(new CommandQueue());
         setType("Colonist");
         setPowered(true);
-        setMovesFrozen(0);
+        setTurnsFrozen(0);
         setArmy(null);
         setDirection(2);
         setVisibilityRadius(2);
@@ -30,8 +30,8 @@ public class Colonist extends NonCombatUnit {
 
     public void buildCapital() {
         // create capital, 5 workers and 2 melee units
-        StaffedStructure capital = new Capital(this.getLocation(), this.getOwner());
-        this.getOwner().addStaffedStructure(capital);
+        Structure capital = new Capital(this.getLocation(), this.getOwner());
+        this.getOwner().addStructure(capital);
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
         this.getOwner().addWorker(new Worker(this.getLocation(), this.getOwner()));
@@ -47,5 +47,39 @@ public class Colonist extends NonCombatUnit {
     }
 
 
+    @Override
+    public void applyTechnology(String techInstance, String technologyStat, int level) {
+        if(techInstance.equals("Colonist")){
 
+            //reset stats except armor and health
+            UnitStats defaultStats = new UnitStats(1, 1, getUnitStats().getArmor(), 5, 10, getUnitStats().getHealth(), 100, 3 );
+            setUnitStats(defaultStats);
+
+            switch (technologyStat){
+                case "VisibilityRadius":
+                    setVisibilityRadius(level);
+                    break;
+                case "AttackStrength":
+                    //will always stay at 0
+                    getUnitStats().changeOffensiveDamage((level));
+                    break;
+                case "DefenseStrength":
+                    getUnitStats().changeDefensiveDamage((level));
+                    break;
+                case "ArmorStrength":
+                    getUnitStats().changeMaxArmor((2*level));
+                    break;
+                case "MovementRate":
+                    getUnitStats().changeMovement(level);
+                    break;
+                case "Efficiency":
+                    //decrement upkeep -> better efficiency
+                    getUnitStats().changeUpkeep((0-level));
+                    break;
+                case "Health":
+                    getUnitStats().changeMaxHealth((level*20));
+                    break;
+            }
+        }
+    }
 }
