@@ -57,6 +57,18 @@ public abstract class Unit extends Entity {
         isPowered = false;
     }
 
+    // see if this unit is at the rally point or not
+    public boolean checkAtRallyPoint() {
+        if(this.getArmy() != null) {
+            if(this.getArmy().getLocation() == this.getLocation()){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
+    }
 
     public void decommission() {
         this.getUnitStats().setHealth(0);
