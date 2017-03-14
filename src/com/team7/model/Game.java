@@ -82,6 +82,10 @@ public class Game {
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);
         Army army2 = new Army(map.getGrid()[1][31],  players[1]);
 
+        players[0].addArmy(army0);
+        players[1].addArmy(army1);
+        players[2].addArmy(army2);
+
 
         Unit melee1 = new  MeleeUnit(this.map.getGrid()[1][30], players[0]);
         Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);

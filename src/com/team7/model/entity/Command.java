@@ -13,6 +13,7 @@ public class Command {
 
     public Command(String string) {
         commandString = string;
+        wait = 0;
 
         if(commandString.contains("MAKE BASE")){
             wait += 5;
@@ -33,6 +34,10 @@ public class Command {
     public void setCommandString(String commandString) {
         this.commandString = commandString;
 
+    }
+
+    public void setWait(int wait) {
+        this.wait = wait;
     }
 
     public int getWait() {

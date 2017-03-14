@@ -99,7 +99,6 @@ public class IdManager {
             if(player.getArmies().size() >= 10) {
                 return -1;
             }
-
             ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
             for(int i = 0; i < player.getArmies().size(); i++){
                 availableIDs.remove(Integer.valueOf(player.getArmies().get(i).getId()));
