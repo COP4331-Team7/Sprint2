@@ -67,6 +67,11 @@ public class TechnologyScreen extends JPanel {
         structureButton.setOpaque(true);
         structureButton.setPreferredSize( new Dimension(200, 50  ) );
 
+        technologyInstanceList.setFont(new Font("Serif", Font.BOLD, 25));
+
+        instanceScrollPane.setBackground(new Color(0xffF5F5DC));
+        instanceScrollPane.setOpaque(true);
+
 //        buttonTechTypePanel.add(unitButton);
 //        buttonTechTypePanel.add(workerButton);
 //        buttonTechTypePanel.add(structureButton);
@@ -108,6 +113,7 @@ public class TechnologyScreen extends JPanel {
     //adds text to the defaultTechnologiesListModel
     public void setTechnologiesListModel(ArrayList<Technology> technologies, String selectedInstance){
         defaultTechnologiesListModel.clear();
+
         for (Technology technology : technologies){
             if (selectedInstance.equals(technology.getTechnologyInstance())){
                 defaultTechnologiesListModel.addElement(technology.getTechnologyStat() + ": Level " + Integer.valueOf(technology.getLevel()) + "/" + Integer.valueOf(technology.getMaxLevel()));
