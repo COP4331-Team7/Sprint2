@@ -145,6 +145,9 @@ public class TechnologyScreen extends JPanel {
 
         for (University university : universities){
             defaultUniversitiesListModel.addElement("University id: " + university.getId() + " : in research? " + university.isInResearch());
+            if (university.isInResearch()){
+                defaultUniversitiesListModel.addElement("     " + university.getTechnologyInResearch().getTechnologyInstance() + " " + university.getTechnologyInResearch().getTechnologyStat());
+            }
         }
         this.repaint();
     }

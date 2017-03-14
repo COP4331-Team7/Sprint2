@@ -701,4 +701,16 @@ public class Player {
     public Technologies getTechnologies() {
         return technologies;
     }
+
+    public void applyAllTechnologies() {
+        for(Technology unitTechnology : technologies.getUnitTechnologies()){
+            applyTechnology(unitTechnology);
+        }
+        for(Technology workerTechnology : technologies.getWorkerTechnologies()){
+            applyTechnology(workerTechnology);
+        }
+        for(Technology structureTechnology : technologies.getStructureTechnologies()){
+            applyTechnology(structureTechnology);
+        }
+    }
 }

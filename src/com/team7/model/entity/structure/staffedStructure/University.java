@@ -1,6 +1,7 @@
 package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
+import com.team7.model.Technology;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 public class University extends StaffedStructure implements ITechnologyProducer {
 
     private boolean isInResearch;
+    private Technology technologyInResearch = null;
 
     public University(Tile location, Player player) {
         setOwner(player);
@@ -150,9 +152,25 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         setLevelOfCompletion(80);
     }
 
+    //called by technology tree controller
+    //passes in the correct technology to begin researching
     @Override
-    public void produceTechnology() {
-        
+    public void produceTechnology(Technology technology) {
+        if (!isInResearch){
+
+            System.out.println("now researching at: " + getId() + technology.getTechnologyInstance() + technology.getTechnologyStat());
+
+            String commandString = technology.getTechnologyType() + " " + technology.getTechnologyInstance() + " " + technology.getTechnologyStat();
+            int wait = getStats().searchProductionForValueByKey(commandString);
+
+            if(wait != -1){
+                //correct string was found in productionRateMap
+                queueCommand(new Command(commandString, wait));
+                setInResearch(true);
+                technologyInResearch = technology;
+            }
+        }
+
     }
 
     @Override
@@ -206,16 +224,16 @@ public class University extends StaffedStructure implements ITechnologyProducer 
             return;
 
         Command commandToExecute = getCommandFromQueue();
-        String commandString = commandToExecute.getCommandString();
 
-        switch ( commandString ) {
-
-            case "DO_SOMETHING":
-                // do something
-                break;
-
-            default:
-                break;
+        if(commandToExecute.getWait() == 0) {
+            //increment technology object
+            technologyInResearch.incrementTechnologyLevel();
+            removeCommandFromQueue();
+            setInResearch(false);
+            technologyInResearch = null;
+        }
+        else {
+            commandToExecute.decrementWait();
         }
 
     }
@@ -227,5 +245,10 @@ public class University extends StaffedStructure implements ITechnologyProducer 
 
     public void setInResearch(boolean inResearch) {
         isInResearch = inResearch;
+    }
+
+
+    public Technology getTechnologyInResearch() {
+        return technologyInResearch;
     }
 }

@@ -177,8 +177,15 @@ public class Game {
         System.out.println(" ");
         currentPlayer.takeTurn();
         executeCommandQueues();
+        applyAllTechnologies();
         removeDeadUnits();
         updateCurrPlayerTileStates();
+    }
+
+    private void applyAllTechnologies() {
+        for(Player p : players){
+            p.applyAllTechnologies();
+        }
     }
 
     public void removeDeadUnits() {
@@ -223,7 +230,7 @@ public class Game {
         System.out.println("\nSTRUCTURES:");
         for(Structure s : all_structures) {
             s.printCommandQueue();
-           // s.executeCommandQueue();
+            s.executeCommandQueue();
         }
 
         System.out.println("\nARMIES:");
