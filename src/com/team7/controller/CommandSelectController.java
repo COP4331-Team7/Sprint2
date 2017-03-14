@@ -7,6 +7,7 @@ import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
+import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.MainScreen.MainViewInfo;
@@ -22,6 +23,7 @@ public class CommandSelectController {
     private MainViewInfo mainViewInfo = null;
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionsScreen = null;
+    private CommandSelect commandSelect = null;
     private MainScreen mainScreen = null;
     private Game game = null;
 
@@ -31,6 +33,7 @@ public class CommandSelectController {
         this.mainViewImage = view.getMainViewImage();
         this.mainViewInfo = view.getMainViewInfo();
         this.optionsScreen = view.getOptionScreen();
+        this.commandSelect = view.getCommandSelect();
         this.mainScreen = view.getMainScreen();
         view.getMainScreen().getCommandSelect().setController( this );
         addActionListeners();
@@ -139,6 +142,18 @@ public class CommandSelectController {
         mainScreen.getExecuteCommandButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getExecuteCommandButton())
+
+                    // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
+                    if( commandSelect.getCurrMode() == 2 && (commandSelect.getCurrType() == 2 || commandSelect.getCurrType() == 3) && commandSelect.getCurrCommand() == 0 ) {
+                        executeReinforeCommand( getCurrentUnitSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        return;
+                    }
+                    // STRUCTURE POWERPLANT:ENERGY MINE:ORE FARM:FOOD CAPITAL: ALL3
+                    else if( commandSelect.getCurrMode() == 1 && (commandSelect.getCurrType() == 0 || commandSelect.getCurrType() == 4 || commandSelect.getCurrType() == 5  || commandSelect.getCurrType() == 6 ) && (commandSelect.getCurrCommand() == 4 || commandSelect.getCurrCommand() == 5  || commandSelect.getCurrCommand() == 6 || commandSelect.getCurrCommand() == 8 || commandSelect.getCurrCommand() == 9 || commandSelect.getCurrCommand() == 10) ) {
+                         executeAssignToCommand( getCurrentStructureSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        return;
+                    }
+                    else
 
                     queueCommand();
                     game.printCommandQueues();
