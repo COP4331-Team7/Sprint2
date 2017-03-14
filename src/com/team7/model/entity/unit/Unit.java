@@ -141,9 +141,7 @@ public abstract class Unit extends Entity {
 
         // do something with the command
         // each unit/structure receives specific list of commands
-        // so this could be abstract and implemented in the subclasses
-        System.out.println("in unit");
-
+        // this could be abstract and implemented in the subclasses
 
     }
 
