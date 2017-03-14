@@ -1,6 +1,7 @@
 package com.team7.model.entity.structure;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class StructureStats {
 
@@ -110,5 +111,14 @@ public class StructureStats {
 
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    public Integer searchProductionForValueByKey(String search) {
+        for (String key : getProductionRates().keySet()){
+            if (key.equals(search)){
+                return getProductionRates().get(key);
+            }
+        }
+        return -1;
     }
 }
