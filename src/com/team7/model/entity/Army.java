@@ -208,13 +208,45 @@ public class Army extends Entity {
             commandQueue.removeCommand();
     }
 
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
+
+        if(getCommandFromQueue() == null)
+            return;
 
         Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
 
-        // do something with the command
-        // each unit/structure receives specific list of commands
-        // this could be abstract and implemented in the subclasses
+        if(commandString.contains("attack")) {
+            int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            attack(map, dir);
+        }
+        else if(commandString.contains("defend")) {
+            int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            this.setDirection(dir);
+        }
+        else if(commandString.contains("move")) {
+           // TODO: handle movement
+
+        }
+        else if(commandString.contains("wait")) {
+            System.out.println("WAIT :)");
+        }
+        else if(commandString.contains("disband")) {
+            this.disband();
+        }
+        else if(commandString.contains("decommission")) {
+            this.decommission();
+        }
+        else if(commandString.contains("down")) {
+            this.powerDown();
+        }
+        else if(commandString.contains("up")) {
+            this.powerUp();
+        }
+        else if(commandString.contains("cancel")) {
+            //this.commandQueue.getCommands().clear();
+        }
+
 
     }
 
@@ -222,6 +254,7 @@ public class Army extends Entity {
         for(int i = 0; i < this.units.size(); i++){
             this.units.get(i).decommission();
         }
+        this.getOwner().removeArmy(this);
     }
 
     public void disband() {
@@ -329,8 +362,10 @@ public class Army extends Entity {
         // add worker to tile, advancement is handled at the end of each turn
         this.getOwner().addStructure(structure);
 
-
     }
 
 
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 }

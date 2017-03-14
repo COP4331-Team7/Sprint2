@@ -63,11 +63,6 @@ public class Colonist extends NonCombatUnit {
     @Override
     public void executeCommandQueue() {
 
-        if(getTurnsFrozen() > 0) {
-            subtractFrozenTurn();
-            return;
-        }
-
         if(getCommandFromQueue() == null)
             return;
 
@@ -92,6 +87,7 @@ public class Colonist extends NonCombatUnit {
                 break;
 
             case "MOVE":
+                //TODO
                 // move unit furthest allowable distance.
                 // if move doesn't complete in 1 turn, leave in queue
                 break;
