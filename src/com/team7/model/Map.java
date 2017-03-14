@@ -6,6 +6,7 @@ import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.StrictMath.abs;
 
@@ -13,7 +14,6 @@ import static java.lang.StrictMath.abs;
  * Map is composed of a 2d array of Tiles
  */
 public class Map{
-
 
     private Tile[][] grid;
     private static final int NUM_TILES_X = 40;
@@ -26,16 +26,18 @@ public class Map{
     public Tile[][] getGrid() {
         return grid;
     }
+
     private ArrayList<Tile> path = new ArrayList<Tile>();
     int index =0;
     //hardcoded Tiles to create our map grid
+
     private void createTilesForMap() {
         grid = new Tile[NUM_TILES_X][NUM_TILES_Y];
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
 
-                int n = ProbabilityGenerator.randomInteger(0, 3);
+                int n = ThreadLocalRandom.current().nextInt(0, 4);
                 switch (n) {
                     case 0:
                         grid[i][j] = new Tile(new Mountains(), i, j);
@@ -56,62 +58,6 @@ public class Map{
             }
         }
     }
-
-
- /* //TODO figure if this iterative method is needed, as it requires no global Set for Tiles
-    //TODO fix iterating by depth (radius)
- //calculates all Tiles in the radius of influence/visibility of the selected entity
-    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
-        int currentX;
-        int currentY;
-        int[] possibleDirections = {8, 9, 3, 2, 1, 7};
-
-        Set<Tile> tilesInRadius = new HashSet<>();
-        //bfs iteratively
-        Queue<Tile> tileQ = new LinkedList<>();
-        Queue<Integer> depthQ = new LinkedList<>();
-        depthQ.add(0);
-        tilesInRadius.add(currentTile);
-        tileQ.add(currentTile);
-        int currentDepth = 0;
-
-        while (!tileQ.isEmpty() && radius > currentDepth){
-            currentDepth = depthQ.remove();
-
-            Tile tmp = tileQ.remove();  //operate on current
-            tilesInRadius.add(tmp);
-            currentX = tmp.getxCoordinate();
-            currentY = tmp.getyCoordinate();
-            Tile childTile = tmp;
-            for(int direction : possibleDirections){
-                if (isEven(currentX) && isEven(currentY)){
-                    //calculate movement for even X, even Y
-                    childTile = moveTypeOne(currentX, currentY, direction);
-                } else if (isEven(currentX) && !isEven(currentY)){
-                    //calculate movement for even X, odd Y
-                    childTile = moveTypeTwo(currentX, currentY, direction);
-                } else if (!isEven(currentX) && isEven(currentY)){
-                    //calculate movement for odd X, even Y
-                    childTile = moveTypeOne(currentX, currentY, direction);
-                } else if (!isEven(currentX) && !isEven(currentY)) {
-                    //calculate movement for odd X, odd Y
-                    childTile = moveTypeTwo(currentX, currentY, direction);
-                }
-                // System.out.println("New Tile coords: " + childTile.getxCoordinate() + ", " + childTile.getyCoordinate());
-                if (!tilesInRadius.contains(childTile)){
-                    //tile is unvisited
-                    // System.out.println("adding new Tile to q");
-                    depthQ.add(currentDepth+1);
-                    tilesInRadius.add(childTile);
-                    tileQ.add(childTile);
-                }
-            }
-
-        }
-
-        return tilesInRadius;
-    }*/
-
 
     //calculates all Tiles in the radius of influence/visibility of the selected entity
     public Set<Tile> getTilesInRadius(Tile currentTile, int radius, Set<Tile> tileSet) {
@@ -183,14 +129,14 @@ public class Map{
                 break;
         }
 
-        if (isInbounds(tmpX,tmpY)){
+        if (isInBounds(tmpX,tmpY)){
             return grid[tmpX][tmpY];
         }
 
 
         return grid[x][y];
     }
-    public Tile moveUnit(Tile currentTile, int direction){
+    public Tile getAdjacentTile(Tile currentTile, int direction){
         int currentX = currentTile.getxCoordinate();
         int currentY = currentTile.getyCoordinate();
         if ((isEven(currentX) && isEven(currentY)) || (!isEven(currentX) && isEven(currentY))){
@@ -236,7 +182,7 @@ public class Map{
                 break;
         }
 
-        if (isInbounds(tmpX,tmpY)){
+        if (isInBounds(tmpX,tmpY)){
             return grid[tmpX][tmpY];
         }
 
@@ -244,7 +190,7 @@ public class Map{
         return grid[x][y];
     }
 
-    private boolean isInbounds(int x, int y){
+    private boolean isInBounds(int x, int y){
         if (x >= 0 && x < NUM_TILES_X && y >= 0 && y < NUM_TILES_Y){
             return true;
         }
@@ -254,6 +200,7 @@ public class Map{
     private boolean isEven(int num){
         return ((num & 1) == 0);
     }
+
 
 
 
@@ -373,4 +320,63 @@ public class Map{
             return (d1 + d2 + d3) / 2+1 ;
 
     }
+
+     /* //TODO figure if this iterative method is needed, as it requires no global Set for Tiles
+    //TODO fix iterating by depth (radius)
+ //calculates all Tiles in the radius of influence/visibility of the selected entity
+    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
+        int currentX;
+        int currentY;
+        int[] possibleDirections = {8, 9, 3, 2, 1, 7};
+
+        Set<Tile> tilesInRadius = new HashSet<>();
+        //bfs iteratively
+        Queue<Tile> tileQ = new LinkedList<>();
+        Queue<Integer> depthQ = new LinkedList<>();
+        depthQ.add(0);
+        tilesInRadius.add(currentTile);
+        tileQ.add(currentTile);
+        int currentDepth = 0;
+
+        while (!tileQ.isEmpty() && radius > currentDepth){
+            currentDepth = depthQ.remove();
+
+            Tile tmp = tileQ.remove();  //operate on current
+            tilesInRadius.add(tmp);
+            currentX = tmp.getxCoordinate();
+            currentY = tmp.getyCoordinate();
+            Tile childTile = tmp;
+            for(int direction : possibleDirections){
+                if (isEven(currentX) && isEven(currentY)){
+                    //calculate movement for even X, even Y
+                    childTile = moveTypeOne(currentX, currentY, direction);
+                } else if (isEven(currentX) && !isEven(currentY)){
+                    //calculate movement for even X, odd Y
+                    childTile = moveTypeTwo(currentX, currentY, direction);
+                } else if (!isEven(currentX) && isEven(currentY)){
+                    //calculate movement for odd X, even Y
+                    childTile = moveTypeOne(currentX, currentY, direction);
+                } else if (!isEven(currentX) && !isEven(currentY)) {
+                    //calculate movement for odd X, odd Y
+                    childTile = moveTypeTwo(currentX, currentY, direction);
+                }
+                // System.out.println("New Tile coords: " + childTile.getxCoordinate() + ", " + childTile.getyCoordinate());
+                if (!tilesInRadius.contains(childTile)){
+                    //tile is unvisited
+                    // System.out.println("adding new Tile to q");
+                    depthQ.add(currentDepth+1);
+                    tilesInRadius.add(childTile);
+                    tileQ.add(childTile);
+                }
+            }
+
+        }
+
+        return tilesInRadius;
+    }*/
+
+    public Tile getTile(int i, int j) {
+        return grid[i][j];
+    }
+
 }

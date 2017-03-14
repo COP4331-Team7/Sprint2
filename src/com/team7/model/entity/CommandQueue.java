@@ -11,8 +11,15 @@ public class CommandQueue {
         commands = new ArrayList<Command>();
     }
 
-    public void addCommand(Command command) {
+    public void queueCommand(Command command) {
         commands.add(command);
+    }
+
+    public void removeCommand() {
+        if(commands.size() == 0)
+            return;
+        else
+            commands.remove(0);
     }
 
     public void removeCommandByString(String commandString) {
@@ -23,6 +30,14 @@ public class CommandQueue {
         }
     }
 
+
+    public Command get(int index) {
+        return commands.get(index);
+    }
+
+    public int getSize() {
+        return commands.size();
+    }
 
 
 }

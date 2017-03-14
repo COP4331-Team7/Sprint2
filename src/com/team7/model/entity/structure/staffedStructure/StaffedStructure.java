@@ -1,5 +1,6 @@
 package com.team7.model.entity.structure.staffedStructure;
 
+import com.team7.model.entity.Command;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 
@@ -10,7 +11,6 @@ import java.util.ArrayList;
  */
 public abstract class StaffedStructure extends Structure {
     private ArrayList<Worker> workerStaff = new ArrayList<>();
-    private final int foodUpkeepPerWorker = 2; //all staffedStructures requires Nutrient from Player
     private int allocatedFood;
     private boolean hasEnoughFood;
 
@@ -22,9 +22,6 @@ public abstract class StaffedStructure extends Structure {
         this.workerStaff = workerStaff;
     }
 
-    public int getFoodUpkeepPerWorker() {
-        return foodUpkeepPerWorker;
-    }
 
     public int getAllocatedFood() {
         return allocatedFood;
@@ -47,7 +44,7 @@ public abstract class StaffedStructure extends Structure {
             //food upkeep only necessary once workers are actively staffing the structure
             return 0;
         }
-        int totalFoodUpkeep = workerStaff.size() * foodUpkeepPerWorker;
+        int totalFoodUpkeep = workerStaff.size() * workerStaff.get(0).getFoodUpkeep();
         changeAllocatedFood(0- totalFoodUpkeep);
         if (allocatedFood >= totalFoodUpkeep) {
             //workers are fed!
@@ -85,6 +82,32 @@ public abstract class StaffedStructure extends Structure {
             }
         }
         return foodUpkeepDuringConstruction;
+    }
+
+    @Override
+    public void executeCommandQueue() {
+
+        if(getTurnsFrozen() > 0) {
+            subtractFrozenTurn();
+            return;
+        }
+
+        if(getCommandFromQueue() == null)
+            return;
+
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "DO_SOMETHING":
+                // do something
+                break;
+
+            default:
+                break;
+        }
+
     }
 
 }

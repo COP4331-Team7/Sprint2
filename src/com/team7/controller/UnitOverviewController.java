@@ -1,6 +1,7 @@
 package com.team7.controller;
 
         import com.team7.model.Game;
+        import com.team7.view.UnitScreen.UnitScreen;
         import com.team7.view.View;
 
         import java.awt.event.ActionEvent;
@@ -11,40 +12,43 @@ public class UnitOverviewController {
 
     private Game game = null;
     private View view = null;
+    private UnitScreen unitScreen = null;
 
     public UnitOverviewController(Game game, View view) {
         this.game = game;
         this.view = view;
+        this.unitScreen = view.getUnitScreen();
         addActionListeners();
     }
 
     private void addActionListeners() {
 
-        view.getUnitScreen().getMainScreenButton().addActionListener(new ActionListener() {
+        unitScreen.getMainScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getUnitScreen().getMainScreenButton())
+                if (e.getSource() == unitScreen.getMainScreenButton())
                     view.setCurrScreen("MAIN");
             }
         });
-        view.getUnitScreen().getStructureScreenButton().addActionListener(new ActionListener() {
+        unitScreen.getStructureScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getUnitScreen().getStructureScreenButton())
+                if (e.getSource() == unitScreen.getStructureScreenButton())
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
-        view.getUnitScreen().getOptionScreenButton().addActionListener(new ActionListener() {
+        unitScreen.getOptionScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == view.getUnitScreen().getOptionScreenButton())
+                if (e.getSource() == unitScreen.getOptionScreenButton())
                     view.getOptionScreen().showScreenSelectBtns();
                 view.setCurrScreen("OPTIONS");
             }
         });
-
-
-
+        unitScreen.getMapScreenSelectButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == unitScreen.getMapScreenSelectButton())
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
+                view.setCurrScreen("MAP_SCREEN");
+            }
+        });
 
     }
-
-
-
 }

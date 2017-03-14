@@ -19,7 +19,6 @@ public class IdManager {
         this.player = p;
     }
 
-
     // loop through player's entities to get available IDs and generate one
     // returns an id of -1 if something is wrong!!
     public int generateID(Entity entity) {
@@ -30,36 +29,44 @@ public class IdManager {
                 return -1;
             }
 
-            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+
             if(entity instanceof Explorer) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Explorer){
+                    if(player.getUnits().get(i) instanceof Explorer){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof Colonist) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof Colonist){
+                    if(player.getUnits().get(i) instanceof Colonist){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof MeleeUnit) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof MeleeUnit){
+                    if(player.getUnits().get(i) instanceof MeleeUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
             else if(entity instanceof RangedUnit) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
                 for(int i = 0; i < player.getUnits().size(); i++){
-                    if(entity instanceof RangedUnit){
+                    if(player.getUnits().get(i) instanceof RangedUnit){
                         availableIDs.remove(Integer.valueOf(player.getUnits().get(i).getId()));
                     }
                 }
+                ID = availableIDs.get(0);
             }
-            ID = availableIDs.get(0);
+
         }
         else if(entity instanceof Worker) {
             if(player.getWorkers().size() >= 99){
@@ -72,19 +79,19 @@ public class IdManager {
             }
 
             for(int i = 0; i < player.getWorkers().size(); i++){
-                    availableIDs.remove(Integer.valueOf(player.getWorkers().get(i).getId()));
+                availableIDs.remove(Integer.valueOf(player.getWorkers().get(i).getId()));
             }
             ID = availableIDs.get(0);
         }
-        //TODO figure out logic now that structures is separated into two lists
         else if(entity instanceof Structure) {
-            if(player.getStaffedStructures().size() + player.getObservationTowers().size() >= 10) {
+            if(player.getStructures().size() >= 10) {
                 return -1;
             }
 
             ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
-            for(int i = 0; i < (player.getStaffedStructures().size() + player.getObservationTowers().size()); i++){
-                availableIDs.remove(Integer.valueOf(player.getStaffedStructures().get(i).getId()));
+            for(int i = 0; i < player.getStructures().size(); i++){
+                availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+
             }
             ID = availableIDs.get(0);
         }
@@ -102,7 +109,6 @@ public class IdManager {
 
         return ID;
     }
-
 
 
 }

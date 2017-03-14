@@ -2,16 +2,19 @@ package com.team7.model.entity.unit;
 
 
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
+import com.team7.model.entity.unit.combatUnit.CombatUnit;
+import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
 
 
-public class Unit extends Entity {
+public abstract class Unit extends Entity {
     private CommandQueue commandQueue;
     private String type;
     private UnitStats unitStats;
     private boolean isPowered;
-    int movesFrozen;
+    int turnsFrozen;
     private Army army;
     private int direction;
 
@@ -34,8 +37,15 @@ public class Unit extends Entity {
 
     // TODO: change this so it is not hardcoded
     public void powerUp() {
-        this.getUnitStats().setUpkeep(4);
-        this.setMovesFrozen(2);
+
+        if(this instanceof CombatUnit) {
+            this.getUnitStats().setUpkeep(4);
+        }
+        if(this instanceof NonCombatUnit) {
+            this.getUnitStats().setUpkeep(3);
+        }
+
+        this.setTurnsFrozen(2);
         isPowered = true;
     }
 
@@ -64,12 +74,17 @@ public class Unit extends Entity {
         this.army = army;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
+    }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
     }
 
     public int getDirection() {
@@ -87,4 +102,54 @@ public class Unit extends Entity {
     public void setCommandQueue(CommandQueue commandQueue) {
         this.commandQueue = commandQueue;
     }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:   ");
+
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    public Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void removeCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return;
+        else
+            commandQueue.removeCommand();
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // this could be abstract and implemented in the subclasses
+
+    }
+
+    public boolean isAlive() {
+        return unitStats.getHealth() > 0;
+    }
+
+    public abstract void applyTechnology(String techInstance, String technologyStat, int level);
 }

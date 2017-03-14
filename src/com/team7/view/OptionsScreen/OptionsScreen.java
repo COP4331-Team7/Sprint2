@@ -35,7 +35,7 @@ public class OptionsScreen extends JPanel{
     public OptionsScreen() {
       //  resetControlsButton.setForeground( new Color(0xCD3700));
         resetControlsButton.setForeground( new Color(0xff000000));
-        resetControlsButton.setFont(new Font("plain", Font.BOLD, 30));
+        resetControlsButton.setFont(new Font("plain", Font.BOLD, 25));
 
 
         changeControlButton.setForeground( new Color(0xff000000));
@@ -44,7 +44,7 @@ public class OptionsScreen extends JPanel{
         label.setForeground( new Color(0xff000000));
         label.setBackground( new Color(0xffF5F5DC) );
         label.setOpaque(true);
-        label.setFont(new Font("plain", Font.BOLD, 30));
+        label.setFont(new Font("plain", Font.BOLD, 27));
 
         homeButton = new JButton("Home");
         homeButton.setForeground( new Color(0xff000000));
@@ -72,7 +72,7 @@ public class OptionsScreen extends JPanel{
         s1.setPaintTicks(true);
         s1.setSnapToTicks(true);
         s1.setMajorTickSpacing(5);
-        s1.setPreferredSize(new Dimension(440, 50));
+        s1.setPreferredSize(new Dimension(460, 50));
         p1.add(s1, BorderLayout.WEST);
         JLabel l1 = new JLabel("UNIT MOVEMENT SPEED          ");
         l1.setFont( new Font(  "plain", Font.BOLD, 18));
@@ -82,16 +82,16 @@ public class OptionsScreen extends JPanel{
         s2.setPaintTicks(true);
         s2.setSnapToTicks(true);
         s2.setMajorTickSpacing(5);
-        s2.setPreferredSize(new Dimension(440, 50));
+        s2.setPreferredSize(new Dimension(460, 50));
         p2.add(s2, BorderLayout.WEST);
         JLabel l3 = new JLabel("END TURN FOCUS SPEED          ");
         l3.setFont( new Font(  "plain", Font.BOLD, 18));
-        s3 = new JSlider(0, 20, 15);
+        s3 = new JSlider(0, 30, 20);
         s3.setMinorTickSpacing(1);
         s3.setPaintTicks(true);
         s3.setSnapToTicks(true);
         s3.setMajorTickSpacing(5);
-        s3.setPreferredSize(new Dimension(440, 50));
+        s3.setPreferredSize(new Dimension(460, 50));
         p3.add(l3, BorderLayout.WEST);
         p3.add(s3, BorderLayout.EAST);
         JPanel temp2 = new JPanel();
@@ -138,7 +138,7 @@ public class OptionsScreen extends JPanel{
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.repaint();
-        controlsList.setFont(new Font("plain", Font.BOLD, 45));
+        controlsList.setFont(new Font("plain", Font.BOLD, 40));
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
     }
 
@@ -166,9 +166,9 @@ public class OptionsScreen extends JPanel{
     }
     public int getFocusSpeed() {
         if(s3.getValue() == s3.getMaximum())
-            return 1 * 10;
+            return 10;
         else
-            return 15 * Math.abs(s3.getMaximum() - s3.getValue());
+            return 7 * Math.abs(s3.getMaximum() - s3.getValue());
     }
 
     public JButton getResetControlsButton() {
@@ -195,6 +195,13 @@ public class OptionsScreen extends JPanel{
     public JButton getHomeScreenButton() {
         return homeButton;
     }
+    public JButton getMapScreenSelectButton() {
+        return screenSelectBtns.getMapScreenSelectButton();
+    }
+    public JButton getTechnologyScreenButton(){
+        return screenSelectBtns.getTechnologyScreenSelectButton();
+    }
+
 
     public void setSlidersToDefault() {
         s1.setValue(10);

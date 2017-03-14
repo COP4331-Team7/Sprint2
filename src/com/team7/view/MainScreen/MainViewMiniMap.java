@@ -17,7 +17,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     private final static int BORDER_WIDTH = 30;
     private final static int BORDER_WIDTH2 = 10;
 
-    double stretch = 1.0;
+    double verticalStretch = 1.0;
 
 
     private MainViewImage mainViewImage;
@@ -29,13 +29,13 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         double ratio = fullMapImage.getWidth()/fullMapImage.getHeight();
 
         WIDTH =  (int)(SIZE *  ratio);
-        HEIGHT = (int)((SIZE /  ratio) * stretch);
+        HEIGHT = (int)((SIZE /  ratio) * verticalStretch);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         backgroundImg = new BufferedImage(WIDTH + BORDER_WIDTH/2, HEIGHT + BORDER_WIDTH/2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
 
         g2dss = (Graphics2D)backgroundImg2.createGraphics();
-        g2dss.setColor(new Color(0xffCABD80));
+        g2dss.setColor(new Color(0xffF5F5DC));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
@@ -65,7 +65,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         super.paintComponent( g );
         g.drawImage( backgroundImg2, 0, 0, this );
         g.drawImage( backgroundImg, BORDER_WIDTH2/2, BORDER_WIDTH2/2  , this );
-        g.drawImage( image, BORDER_WIDTH/2 , BORDER_WIDTH/2 , this );
+        g.drawImage( image, BORDER_WIDTH/2, BORDER_WIDTH/2, this );
     }
 
     public void drawMapArea() {

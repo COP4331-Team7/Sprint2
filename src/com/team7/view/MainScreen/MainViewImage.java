@@ -1,15 +1,10 @@
 package com.team7.view.MainScreen;
 
 import com.team7.Main;
-import com.team7.controller.PathSelectController;
-import com.team7.model.DrawableTileState;
+import com.team7.model.TileState;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
-import com.team7.model.terrain.Crater;
-import com.team7.model.terrain.Desert;
-import com.team7.model.terrain.Flatland;
-import com.team7.model.terrain.Mountains;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Set;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -54,7 +48,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         int x_dir;
         int y_dir;
 
-        BufferedImage tempImg ;
+        BufferedImage mapImage;
         Graphics2D g2ds;
 
         private MainViewMiniMap mainViewSelection;
@@ -103,8 +97,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             catch (IOException e) {}
 
             mainViewSelection.setMainViewImage( this );
-            tempImg = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-            g2ds = (Graphics2D)tempImg.createGraphics();
+            mapImage = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
+            g2ds = (Graphics2D) mapImage.createGraphics();
             g2ds.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2ds.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 
@@ -193,20 +187,20 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
         public void setMap(Map map) {
             this.grid = map.getGrid();
-            mainViewSelection.setMiniMapImage( getFullMapImage(), TILES_VISIBLE_X, TILES_VISIBLE_Y );
+            mainViewSelection.setMiniMapImage( getFullMapImage(false    ), TILES_VISIBLE_X, TILES_VISIBLE_Y );
             if(player == null)
                 return;
-            zoomToDestination(player.getRandomUnit().getLocation().getxCoordinate() - 11/2, player.getRandomUnit().getLocation().getyCoordinate() - 16/2, 60);
+            zoomToDestination(player.getFirstUnit().getLocation().getxCoordinate() - 11/2, player.getFirstUnit().getLocation().getyCoordinate() - 16/2, 60);
         }
 
          public void setCurrPlayer(Player p) {
               player = p;
             }
 
-         public BufferedImage getFullMapImage() {
+         public BufferedImage getFullMapImage(boolean drawAll) {
 
              BufferedImage mapImage;
-             mapImage = new BufferedImage(TILE_SIZE*MAP_TILE_WIDTH + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
+             mapImage = new BufferedImage(TILE_SIZE*(MAP_TILE_WIDTH+1) + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
              Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
              g2.setColor(new Color(0xFF000000));
              g2.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
@@ -247,7 +241,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                      x_offset += changePerStep * ++counter;
 
-                     DrawableTileState tileState = null;
+                     TileState tileState = null;
 
                      // get tile state based on current player
                      if (player != null) {
@@ -270,6 +264,41 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                          } else if (tileState.getTerrainType().equals("Flatland")) {
                              g2.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
                          }
+                         if(drawAll) {
+                             // draw units
+                             if (drawUnits) {
+                                 // explorer
+                                 if (tileState.getExplorer() > 0)
+                                     g2.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                                 // colonist
+                                 if (tileState.getColonist() > 0)
+                                     g2.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                                 // melee
+                                 if (tileState.getMeleeUnit() > 0)
+                                     g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                 // ranged
+                                 if (tileState.getRangeUnit() > 0)
+                                     g2.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             //draw resource counts
+                             if (drawResources) {
+                                 // ore
+                                 if (tileState.getOreQuantity() > 0) {
+                                     g2.setColor(new Color(0xFFDDAAAA));
+                                     g2.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                                 }
+                                 // energy
+                                 if (tileState.getEnergyQuantity() > 0) {
+                                     g2.setColor(new Color(0xaf75fff8));
+                                     g2.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                                 }
+                                 //food
+                                 if (tileState.getFoodQuantity() > 0) {
+                                     g2.setColor(new Color(0xAFAFFC00));
+                                     g2.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                                 }
+                             }
+                         }
 
                          // shroud tile
                          if(player != null)
@@ -288,24 +317,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
              return mapImage;
          }
 
-        public void highlightRadius(Set<Tile> tiles) {
-
-            if(player == null)
-                return;
-
-            for (int i = 0; i < grid.length; i++) {
-                for (int j = 0; j < grid[i].length; j++) {
-                    if( tiles.contains( grid[i][j] ) ) {
-                        grid[i][j].markVisible(player.getName());
-                    }
-                    else if(grid[i][j].getVisible(player.getName()) && !tiles.contains( grid[i][j] ) && PathSelectController.isRecording) {
-                        grid[i][j].markShrouded( player.getName() );
-                    }
-                    grid[i][j].refreshDrawableState();
-                }
-            }
-        }
-
         private BufferedImage drawSubsectionOfMap(int x, int y) {
 
             /*
@@ -319,7 +330,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
             g2ds.setFont(new Font("Arial", 0, 9));
             g2ds.setColor( new Color(0xffF5F5DC) );
-            g2ds.fillRect(0, 0, tempImg.getWidth(), tempImg.getHeight());
+            g2ds.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
 
             int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
             int x_offset, counter, step = 0;
@@ -362,7 +373,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                     x_offset += changePerStep * ++counter;
 
-                    DrawableTileState tileState = null;
+                    TileState tileState = null;
 
                     // get tile state based on current player
                     if( player != null) {
@@ -387,18 +398,27 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                         // draw units
                         if(drawUnits) {
+                            g2ds.setColor(Color.black);
                             // explorer
-                            if (tileState.getExplorer() > 0)
+                            if (tileState.getExplorer() > 0) {
                                 g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
                             // colonist
-                            if (tileState.getColonist() > 0)
+                            if (tileState.getColonist() > 0) {
                                 g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
                             // melee
-                            if (tileState.getMeleeUnit() > 0)
+                            if (tileState.getMeleeUnit() > 0) {
                                 g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
                             // ranged
-                            if (tileState.getRangeUnit() > 0)
+                            if (tileState.getRangeUnit() > 0){
                                 g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
                         }
                         //draw resource counts
                         if(drawResources) {
@@ -428,6 +448,154 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     if( grid[xx][yy].isSelectedPath )
                         g2ds.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
 
+
+
+
+                    //g2ds.setColor( Color.white );
+                    //g2ds.drawString( Integer.toString( xx ), x_coord + x_offset + 15, y_coord + 32);
+                    //g2ds.drawString( Integer.toString( yy ),  x_coord + x_offset + 35, y_coord + 32 );
+
+
+//                    /* draw bottom left circle, to be used later
+//                      g2ds.setColor(new Color(255, 128, 100, 150));
+//                      g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
+//
+//                      draw bottom right circle, to be used later
+//                      g2ds.setColor(new Color(255, 128, 100, 150));
+//                      g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
+//                    */
+
+                }
+            }
+
+            return mapImage;
+        }
+
+    public BufferedImage drawSubsectionOfMap() {
+
+            /*
+             *  --------------------------------------------------
+             * |   (x, y)      (x + 1, y)        (x + 2, y)    .. |
+             * | (x, y + 1)  (x + 1, y + 1)    (x + 2, y + 1)  .. |
+             * |     .             .                 .            |
+             * |     .             .                 .            |
+             *  --------------------------------------------------
+             */
+
+            int x = x_center;
+            int y = y_center;
+
+        g2ds.setFont(new Font("Arial", 0, 9));
+        g2ds.setColor( new Color(0xffF5F5DC) );
+        g2ds.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
+
+        int x_coord, y_coord;   // pixel coordinates of top left corner of image drawn
+        int x_offset, counter, step = 0;
+        int changePerStep = TILE_SIZE - (int)(TILE_SIZE/1.73);
+
+        for(int j = 0; j < TILES_VISIBLE_X; j++) {          // tile index on sub-screen
+
+            x_offset = changePerStep;
+            if(step % 2 == 0) {
+                x_offset += changePerStep;
+            }
+            else {
+                x_offset -= changePerStep;
+                x_offset += 10;
+            }
+            step++;
+
+            for(int i = 0; i < TILES_VISIBLE_Y; i++) {
+
+                counter = 0;
+
+                int xx = x + i;                // tile index on whole map
+                int yy;
+
+                if(y%2==1)
+                    yy = y-1 + j;
+                else
+                    yy = y+j;
+                if(xx < 0)                     // adjust if out of bounds
+                    xx = 0;
+                else if (xx >= MAP_TILE_WIDTH)
+                    xx = MAP_TILE_WIDTH - 1;
+                if(yy < 0)
+                    yy = 0;
+                else if(yy >= MAP_TILE_HEIGHT)
+                    yy = MAP_TILE_HEIGHT - 1;
+
+                x_coord = i * TILE_SIZE;
+                y_coord = (int)(j * TILE_SIZE / 2.4);
+
+                x_offset += changePerStep * ++counter;
+
+                TileState tileState = null;
+
+                // get tile state based on current player
+                if( player != null) {
+                    if (grid[xx][yy].getDrawableStateByPlayer(player.getName()) != null) {
+                        tileState = grid[xx][yy].getDrawableStateByPlayer(player.getName());
+                    }
+                }
+                // if tile not visible
+                if(tileState == null)
+                    g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+
+                else {
+                    // draw terrain
+                    if( tileState.getTerrainType().equals("Mountains"))
+                        g2ds.drawImage(tileImage_1, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Crater"))
+                        g2ds.drawImage(tileImage_2, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Desert"))
+                        g2ds.drawImage(tileImage_3, x_coord + x_offset, y_coord, null);
+                    else if (tileState.getTerrainType().equals("Flatland"))
+                        g2ds.drawImage(tileImage_4, x_coord + x_offset, y_coord, null);
+
+                    // draw units
+                    if(drawUnits) {
+                        // explorer
+                        if (tileState.getExplorer() > 0)
+                            g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                        // colonist
+                        if (tileState.getColonist() > 0)
+                            g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                        // melee
+                        if (tileState.getMeleeUnit() > 0)
+                            g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                        // ranged
+                        if (tileState.getRangeUnit() > 0)
+                            g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                    }
+                    //draw resource counts
+                    if(drawResources) {
+                        // ore
+                        if (tileState.getOreQuantity() > 0) {
+                            g2ds.setColor(new Color(0xFFDDAAAA));
+                            g2ds.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                        }
+                        // energy
+                        if (tileState.getEnergyQuantity() > 0) {
+                            g2ds.setColor(new Color(0xaf75fff8));
+                            g2ds.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                        }
+                        //food
+                        if (tileState.getFoodQuantity() > 0) {
+                            g2ds.setColor(new Color(0xAFAFFC00));
+                            g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                        }
+                    }
+
+                    // shroud tile
+                    if(grid[xx][yy].getShrouded(player.getName()))
+                        g2ds.drawImage(ghostImage, x_coord + x_offset, y_coord, null);
+
+                }
+
+                if( grid[xx][yy].isSelectedPath )
+                    g2ds.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
+
                     /* draw bottom left circle, to be used later
                       g2ds.setColor(new Color(255, 128, 100, 150));
                       g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
@@ -437,11 +605,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                       g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
                     */
 
-                }
             }
-
-            return tempImg;
         }
+
+        return mapImage;
+    }
 
         public void paintComponent( Graphics g )
         {
@@ -484,8 +652,6 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             if( x_center != x_destination || y_center != y_destination) {
                 new Thread( new Runnable()
                 {
-
-
                     public void run()
                     {
                         int x_diff = (x_destination - x_center);
@@ -521,10 +687,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                     repaint();
                                 }
                             });
-
-                            try{
-                                Thread.sleep(delayInMs);
-                            }
+                            try{ Thread.sleep(delayInMs); }
                             catch(Exception e) {}
                         }
                     }
@@ -539,10 +702,15 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             public void actionPerformed( ActionEvent e)
             {
                 timer.stop();
-                zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 30 );
+                zoomToDestination( x_center + x_dir, y_center + y_dir * 2, 15 );
                 timer.restart();
             }
         } );
+    }
+
+    public void setImage(BufferedImage img) {
+            this.image = img;
+            repaint();
     }
 
     public void drawResources(boolean draw) {

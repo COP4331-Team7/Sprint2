@@ -22,6 +22,7 @@ public class MainScreen extends JPanel {
         mainViewSelection = new MainViewMiniMap(  );
         mainAreaView = new MainViewImage( mainViewSelection );
         mainStatusInfo = new MainViewInfo( );
+        commandSelect = new CommandSelect();
 
         this.add( screenSelectBtns, BorderLayout.NORTH );
         this.add( mainAreaView, BorderLayout.CENTER );
@@ -31,11 +32,10 @@ public class MainScreen extends JPanel {
                                     // then add the single panel where we want both panels
 
         temp.add( mainStatusInfo, BorderLayout.WEST );
-        commandSelect = new CommandSelect();
         temp.add( commandSelect, BorderLayout.EAST);
         temp.add( mainViewSelection, BorderLayout.NORTH);
 
-        temp.setBackground(new Color(0xffCABD80));
+        temp.setBackground(new Color(0x0FCABD80));
         temp.setOpaque(true);
 
         this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
@@ -61,7 +61,9 @@ public class MainScreen extends JPanel {
     public JButton getOptionScreenButton() {
         return screenSelectBtns.getOptionsScreenSelectButton();
     }
-
+    public JButton getTechnologyScreenButton() {
+        return screenSelectBtns.getTechnologyScreenSelectButton();
+    }
 
     public ScreenSelectButtons getScreenSelectButtons() {
             return screenSelectBtns;

@@ -16,6 +16,7 @@ import com.team7.model.resource.Resource;
 import com.team7.model.terrain.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -50,14 +51,11 @@ public class Tile  {
     ArrayList<Army> armies;
     ArrayList<Worker> workers;
 
-
-    public boolean isVisible = false;
     public boolean isSelectedPath = false;
 
-
-    private DrawableTileState playerOneDraw;
-    private DrawableTileState playerTwoDraw;
-    private DrawableTileState realDraw;
+    private TileState playerOneDraw;
+    private TileState playerTwoDraw;
+    private TileState realDraw;
 
 
     private enum VisibilityState {
@@ -66,7 +64,6 @@ public class Tile  {
 
     private VisibilityState playerOneVisibility;
     private VisibilityState playerTwoVisibility;
-
 
     //a Tile must have a terrain, and an x/y coordinate
     public Tile(Terrain terrain, int xCoordinate, int yCoordinate) {
@@ -78,14 +75,14 @@ public class Tile  {
         workers = new ArrayList<>();
 
 
-        realDraw = new DrawableTileState();
+        realDraw = new TileState();
         realDraw.setTerrainType(terrain.getTerrainType());
 
         populateTileBasedOnTerrain(terrain);
 
         //copy real state to both players when Tile is initialized
-        playerOneDraw = new DrawableTileState(realDraw);
-        playerTwoDraw = new DrawableTileState(realDraw);
+        playerOneDraw = new TileState(realDraw);
+        playerTwoDraw = new TileState(realDraw);
 
         //set Tile enum visibility
         playerOneVisibility = VisibilityState.NonVisible;
@@ -118,28 +115,23 @@ public class Tile  {
         }
     }
 
-
     //Populate Resource for each tile
     public void populateResource(double probEnergy, double probOre, double probFood) {
-        if (ProbabilityGenerator.willOccur(probEnergy)) {
+        if (Math.random() < probEnergy) {
             energy = new Energy();
         }
-
-        if (ProbabilityGenerator.willOccur(probOre)) {
+        if (Math.random() < probOre) {
             ore = new Ore();
         }
-
-        if (ProbabilityGenerator.willOccur(probFood)) {
+        if (Math.random() < probFood) {
             food = new Food();
         }
-
-
     }
 
     //Populate Item for each tile
     public void populateItem(double prob) {
-        if (ProbabilityGenerator.willOccur(prob)) {
-            int rand = ProbabilityGenerator.randomInteger(0, 1);
+        if (Math.random() < prob) {
+            int rand = ThreadLocalRandom.current().nextInt(0, 2);
             if (rand == 0)
                 setItem(new OneShotItem());
 
@@ -151,8 +143,8 @@ public class Tile  {
     //TODO figure out if this violate TDA
     //Populate AreaEffect for each tile
     private void populateAreaEffect(double prob) {
-        if (ProbabilityGenerator.willOccur(prob)) {
-            int rand = ProbabilityGenerator.randomInteger(0, terrain.getAreaEffects().size() - 1);
+        if (Math.random() < prob) {
+            int rand = ThreadLocalRandom.current().nextInt(0, terrain.getAreaEffects().size());
             setAreaEffect(terrain.getAreaEffects().get(rand));
         }
     }
@@ -216,11 +208,11 @@ public class Tile  {
     public void updateTileToVisible(String playerToUpdate) {
         if (playerToUpdate.contains("One")) {
             playerOneVisibility = VisibilityState.Visible;
-            playerOneDraw = new DrawableTileState(realDraw);
+            playerOneDraw = new TileState(realDraw);
 
         } else {
             playerTwoVisibility = VisibilityState.Visible;
-            playerTwoDraw = new DrawableTileState(realDraw);
+            playerTwoDraw = new TileState(realDraw);
         }
     }
 
@@ -244,6 +236,11 @@ public class Tile  {
     }
 
 
+    public void refreshDrawableState_resources() {
+        realDraw.refreshResources( this);
+    }
+
+
     // Adds unit to Tile's ArrayList of Units
     public Unit addUnitToTile(Unit unit) {
 
@@ -256,6 +253,11 @@ public class Tile  {
     // Removes unit from Tile's ArrayList of Units
     public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
+                                            // TODO: fix
+        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null )
+            return;
+
+        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits( unit );
     }
 
     // Adds army to Tile's ArrayList of Armies
@@ -298,12 +300,14 @@ public class Tile  {
 
     public void setStructure(Structure structure) {
         this.structure = structure;
-        realDraw.setStructureType(structure.getType());
-        realDraw.setStructureStatus(structure.isPowered());
+        if(structure != null) {
+            realDraw.setStructureType(structure.getType());
+            realDraw.setStructureStatus(structure.isPowered());
+        }
     }
 
     //called by controller to determine which tile state to draw
-    public DrawableTileState getDrawableStateByPlayer(String playerName) {
+    public TileState getDrawableStateByPlayer(String playerName) {
         if(playerName.contains(("real"))) {
             return realDraw;
         }
@@ -380,4 +384,27 @@ public class Tile  {
         else
             playerTwoVisibility = VisibilityState.NonVisible;
     }
+
+    public int getOre() {
+        if(ore == null) return 0;
+
+        return ore.getStatInfluenceQuantity();
+    }
+
+    public int getFood() {
+        if(food == null) return 0;
+
+        return food.getStatInfluenceQuantity();
+    }
+
+    public int getEnergy() {
+        if(energy == null) return 0;
+
+        return energy.getStatInfluenceQuantity();
+    }
+
+    public ArrayList<Army> getArmies() {
+        return armies;
+    }
+
 }

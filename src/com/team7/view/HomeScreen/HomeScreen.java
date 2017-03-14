@@ -66,17 +66,17 @@ public class HomeScreen extends JPanel {
 
             g.setFont(new Font("phosphate",Font.BOLD, 28));
             g.setColor(new Color(0xffF5F5DC));
-            g.drawString("              space wars", 50, 50);
-            g.drawString("iteration 2: MAR - 15 - 2017", 50, 80);
-            g.drawString("               cop 4331", 50, 110);
+            g.drawString("              space wars", 50, 80);
+            g.drawString("iteration 2: MAR - 15 - 2017", 50, 110);
+            g.drawString("               cop 4331", 50, 150);
 
             g.setFont(new Font("phosphate",Font.BOLD, 26));
-            g.drawString("team7:   adam coverstone,", 50, 170);
-            g.drawString("               doug hewitt,", 70, 200);
-            g.drawString("               anip mehta,", 70, 230);
-            g.drawString("               or os,", 70, 260);
-            g.drawString("               thomas palmer,", 70, 290);
-            g.drawString("               jamie rodriguez", 70, 320);
+            g.drawString("team7:   adam coverstone,", 50, 200);
+            g.drawString("               doug hewitt,", 70, 230);
+            g.drawString("               anip mehta,", 70, 260);
+            g.drawString("               or os,", 70, 290);
+            g.drawString("               thomas palmer,", 70, 320);
+            g.drawString("               jamie rodriguez", 70, 350);
         }
 
         public JButton getQuitButton() {

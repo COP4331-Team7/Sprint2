@@ -1,13 +1,13 @@
 package com.team7.model.areaEffects;
 
-import com.team7.model.ProbabilityGenerator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Heals randomly
  */
 public class HealAreaEffect extends AreaEffect {
     public HealAreaEffect() {
-        setHealthEffect(ProbabilityGenerator.randomInteger(10,30));
+        setHealthEffect(ThreadLocalRandom.current().nextInt(10, 30));
         setInstantDeath(false);
         setType("HealAreaEffect");
     }

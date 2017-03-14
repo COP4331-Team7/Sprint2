@@ -1,5 +1,7 @@
 package com.team7.controller;
 
+import com.team7.Main;
+import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
 import com.team7.view.OptionsScreen.OptionsScreen;
@@ -23,10 +25,12 @@ public class OptionsController{
     private ConfigReader reader;
     private View view;
     private Game game ;
+    private MainViewImage mainViewImage;
 
     public OptionsController(View view, Game game) {
         this.view = view;
         this.game = game;
+        this.mainViewImage = view.getMainViewImage();
         this.optionsScreen = view.getOptionScreen();
         reader = new ConfigReader();
         addActionListeners();
@@ -91,11 +95,27 @@ public class OptionsController{
                     view.setCurrScreen("STRUCTURE_OVERVIEW");
             }
         });
+        optionsScreen.getMapScreenSelectButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getMapScreenSelectButton())
+                    view.getMapScreen().setImage( view.getMainViewImage().getFullMapImage(true) );
+                view.setCurrScreen("MAP_SCREEN");
+            }
+        });
+
+        optionsScreen.getTechnologyScreenButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getTechnologyScreenButton()){
+                    view.setCurrScreen("TECHNOLOGY");
+                }
+            }
+        });
 
         optionsScreen.getS1().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                view.getMainViewImage().setScrollSpeed( optionsScreen.getScrollSpeed() );
+                mainViewImage.setScrollSpeed( optionsScreen.getScrollSpeed() );
             }
         });
 
@@ -103,16 +123,16 @@ public class OptionsController{
             public void itemStateChanged(ItemEvent itemEvent) {
                 int state = itemEvent.getStateChange();
                 if (state == ItemEvent.SELECTED) {
-                    view.getMainViewImage().drawResources( true );
+                    mainViewImage.drawResources( true );
                     optionsScreen.getShowResourceButton().setForeground( new Color(0, 175, 0, 255) );
 
                     optionsScreen.getShowResourceButton().setText("Resource display [ON]");
                 } else {
-                    view.getMainViewImage().drawResources( false );
+                    mainViewImage.drawResources( false );
                     optionsScreen.getShowResourceButton().setForeground(new Color(0xCD3700) );
                     optionsScreen.getShowResourceButton().setText("Resource display [OFF]");
                 }
-                view.redrawView();
+                mainViewImage.reDrawMap();
             }
         };
         optionsScreen.getShowResourceButton().addItemListener(itemListener);
@@ -121,15 +141,15 @@ public class OptionsController{
             public void itemStateChanged(ItemEvent itemEvent) {
                 int state = itemEvent.getStateChange();
                 if (state == ItemEvent.SELECTED) {
-                    view.getMainViewImage().drawUnits( false );
+                    mainViewImage.drawUnits( false );
                     optionsScreen.getShowUnitsButton().setForeground( new Color(0xCD3700));
                     optionsScreen.getShowUnitsButton().setText("Unit display [OFF]");
                 } else {
-                    view.getMainViewImage().drawUnits( true );
+                    mainViewImage.drawUnits( true );
                     optionsScreen.getShowUnitsButton().setForeground( new Color(0, 155, 0, 255) );
                     optionsScreen.getShowUnitsButton().setText("Unit display [ON]");
                 }
-                view.redrawView();
+                mainViewImage.reDrawMap();
             }
         };
         optionsScreen.getShowUnitsButton().addItemListener(itemListener2);
@@ -140,6 +160,8 @@ public class OptionsController{
                     view.setCurrScreen("HOME");
             }
         });
+
+
 
     }
 

@@ -24,5 +24,7 @@ public class StructureScreen extends JPanel {
     public JButton getUnitScreenButton() {
         return screenSelectBtns.getUnitScreenButton();
     }
-
+    public JButton getMapScreenSelectButton() {
+        return screenSelectBtns.getMapScreenSelectButton();
+    }
 }

@@ -2,6 +2,7 @@ package com.team7.model.entity.structure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
@@ -14,7 +15,9 @@ public abstract class Structure extends Entity {
     private StructureStats stats;
     private String type;
     private boolean isPowered;
-    private int movesFrozen;
+
+    private int turnsFrozen;
+ 
     private int energyUpkeep;   //requires Power from Player
     private int oreUpkeep;      //requires Metal from Player
     private int allocatedEnergy;
@@ -23,6 +26,8 @@ public abstract class Structure extends Entity {
     private boolean isSufficientlySupplied;
     private ArrayList<Worker> workerAssigned = new ArrayList<>();
 
+
+    public abstract void applyTechnology(String techInstance, String technologyStat, int level);
 
     protected boolean checkConstructionComplete(){       //called at end of every turn
         if(levelOfCompletion >= 100){
@@ -71,6 +76,14 @@ public abstract class Structure extends Entity {
         return allocatedEnergy;
     }
 
+    public void changeEnergyUpkeep(int delta){
+        energyUpkeep += delta;
+    }
+
+    public void changeOreUpkeep(int delta){
+        oreUpkeep += delta;
+    }
+
     public void addStructureToCurrentTile(){
         getLocation().setStructure(this);
     }
@@ -107,12 +120,12 @@ public abstract class Structure extends Entity {
         isPowered = powered;
     }
 
-    public int getMovesFrozen() {
-        return movesFrozen;
+    public int getTurnsFrozen() {
+        return turnsFrozen;
     }
 
-    public void setMovesFrozen(int movesFrozen) {
-        this.movesFrozen = movesFrozen;
+    public void setTurnsFrozen(int movesFrozen) {
+        this.turnsFrozen = movesFrozen;
     }
 
     public int getEnergyUpkeep() {
@@ -174,4 +187,58 @@ public abstract class Structure extends Entity {
     public void setWorkerAssigned(ArrayList<Worker> workerAssigned) {
         this.workerAssigned = workerAssigned;
     }
+
+    public void subtractFrozenTurn() {
+        if(this.turnsFrozen > 0)
+            this.turnsFrozen = this.turnsFrozen - 1;
+    }
+
+    public void setCommandQueue(CommandQueue commandQueue) {
+        this.commandQueue = commandQueue;
+    }
+
+    public void queueCommand(Command command) {
+        if(commandQueue == null)
+            return;
+        else
+            commandQueue.queueCommand( command );
+    }
+
+    public void printCommandQueue(){
+        System.out.print("Player" + getOwner().getName() + " " + type + " " + getId() + " command queue:   ");
+
+        for(int i = 0; i < commandQueue.getSize(); i++) {
+            System.out.print(commandQueue.get(i).getCommandString());
+            if( i + 1 < commandQueue.getSize() && commandQueue.get(i+1) != null)
+                System.out.print(" , ");
+        }
+        if(commandQueue.getSize() == 0)
+            System.out.print("empty");
+        System.out.println();
+    }
+
+    public Command getCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return null;
+        else
+            return commandQueue.get(0);
+    }
+
+    public void removeCommandFromQueue() {
+        if(commandQueue.getSize() == 0)
+            return;
+        else
+            commandQueue.removeCommand();
+    }
+
+    public void executeCommandQueue() {
+
+        Command commandToExecute = getCommandFromQueue();
+
+        // do something with the command
+        // each unit/structure receives specific list of commands
+        // this could be abstract and implemented in the subclasses
+
+    }
+
 }
