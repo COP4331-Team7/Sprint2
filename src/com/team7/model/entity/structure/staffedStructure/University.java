@@ -129,7 +129,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
 
         setStats(new StructureStats(
                 0,
-                0,
+                3,
                 10,
                 10,
                 productionRateMap,
@@ -161,7 +161,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         if (techInstance.equals("University")){
 
             //reset stats except armor and health
-            StructureStats defaultStats = new StructureStats(0,0,getStats().getArmor(),10, getStats().getProductionRates(), getStats().getHealth(), 100);
+            StructureStats defaultStats = new StructureStats(0,3,getStats().getArmor(),10, getStats().getProductionRates(), getStats().getHealth(), 100);
             setStats(defaultStats);
 
             //all structure specific stuff
@@ -173,7 +173,7 @@ public class University extends StaffedStructure implements ITechnologyProducer 
                     getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
                     getStats().changeMaxArmor((level*2));

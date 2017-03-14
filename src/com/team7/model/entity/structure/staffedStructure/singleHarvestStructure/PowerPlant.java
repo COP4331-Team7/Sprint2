@@ -27,7 +27,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
         productionRateMap.put(harvestEnergy, 2);   //can harvest 2 energy per turn per worker per resource
         setStats(new StructureStats(
                 0,
-                0,
+                3,
                 10,
                 10,
                 productionRateMap,
@@ -60,7 +60,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
 
             setStats(new StructureStats(
                     0,
-                    0,
+                    3,
                     getStats().getArmor(),
                     10,
                     getStats().getProductionRates(),
@@ -77,7 +77,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
                     getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
                     getStats().changeMaxArmor((level*2));

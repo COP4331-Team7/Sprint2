@@ -16,15 +16,15 @@ public class ObservationTower extends Structure {
         setLocation(location);
         generateID();
         setCommandQueue( new CommandQueue() );
-        
+
         setStats(new StructureStats(
                 0,
-                100,
+                3,
                 10,
-                20,
+                10,
                 null,   //no production for Observation Tower
                 100,
-                200)
+                100)
         );
         setType("Observation Tower");
         setPowered(false);
@@ -38,22 +38,32 @@ public class ObservationTower extends Structure {
     @Override
     public void applyTechnology(String techInstance, String technologyStat, int level) {
         if (techInstance.equals("ObservationTower")){
+
+            setStats(new StructureStats(
+                    0,
+                    3,
+                    getStats().getMaxArmor(),
+                    20,
+                    null,   //no production for Observation Tower
+                    getStats().getHealth(),
+                    100)
+            );
             //all structure specific stuff
             switch (technologyStat){
                 case "VisibilityRadius":
                     setVisibilityRadius(level);
                     break;
                 case "AttackStrength":
-                    getStats().changeOffensiveDamage((level*10));
+                    getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level*10));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
-                    getStats().changeArmor((level*10));
+                    getStats().changeMaxArmor((level*2));
                     break;
                 case "Health":
-                    getStats().changeHealth((level*10));
+                    getStats().changeMaxHealth((level*20));
                     break;
                 case "Efficiency":
                     changeEnergyUpkeep((0-level));

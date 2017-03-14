@@ -38,7 +38,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         productionRateMap.put(produceWorker, 4);  //takes 4 turn to produce a worker
         setStats(new StructureStats(
                 0,
-                0,
+                5,
                 10,
                 10,
                 productionRateMap,
@@ -91,7 +91,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
 
             setStats(new StructureStats(
                     0,
-                    0,
+                    5,
                     getStats().getArmor(),
                     10,
                     getStats().getProductionRates(),
@@ -108,7 +108,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
                     getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
                     getStats().changeMaxArmor((level*2));

@@ -27,7 +27,7 @@ public class Mine extends StaffedStructure implements IHarvester {
         productionRateMap.put(harvestOre, 2);   //can harvest 2 ore per turn per worker per resource
         setStats(new StructureStats(
                 0,
-                0,
+                3,
                 10,
                 10,
                 productionRateMap,
@@ -75,7 +75,7 @@ public class Mine extends StaffedStructure implements IHarvester {
                     getStats().changeOffensiveDamage((level));
                     break;
                 case "DefenseStrength":
-                    getStats().changeDefensiveDamage((level));
+                    getStats().changeDefensiveDamage((level*3));
                     break;
                 case "ArmorStrength":
                     getStats().changeMaxArmor((level*2));
