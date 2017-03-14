@@ -115,9 +115,10 @@ public class TileState {
                 explorer++;
             if(unit instanceof Colonist)
                 colonist++;
-            if((Entity)unit instanceof Worker)
-                workerUnit++;
         }
+
+        workerUnit += tile.getWorkers().size();
+
 
 
         // area affect
@@ -250,4 +251,9 @@ public class TileState {
     public void setWorkableByPlayer2(boolean workableByPlayer2) {
         this.workableByPlayer2 = workableByPlayer2;
     }
+
+    public void decrementWorkers() {
+        workerUnit--;
+    }
+
 }

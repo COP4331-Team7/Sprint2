@@ -44,6 +44,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage invisible;
         private BufferedImage ghostImage;
         private BufferedImage yellowHighlightImage;
+        private BufferedImage workerImage;
 
         public int x_center, y_center;    // where the window is focused on
         private Timer timer = null;
@@ -96,6 +97,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
                invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/invisible.png"));
                yellowHighlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/yellowHighlight.png"));
+               workerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/workerImage.png"));
             }
             catch (IOException e) {}
 
@@ -282,6 +284,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                  // ranged
                                  if (tileState.getRangeUnit() > 0)
                                      g2.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                                 if (tileState.getWorkerUnit() > 0){
+                                     g2.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+                                 }
                              }
                              //draw resource counts
                              if (drawResources) {
@@ -420,6 +425,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             // ranged
                             if (tileState.getRangeUnit() > 0){
                                 g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
+
+                            if (tileState.getWorkerUnit() > 0){
+                                g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                         }
@@ -612,6 +622,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         // ranged
                         if (tileState.getRangeUnit() > 0)
                             g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+
+                        if (tileState.getWorkerUnit() > 0){
+                            g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+                        }
                     }
                     //draw resource counts
                     if(drawResources) {

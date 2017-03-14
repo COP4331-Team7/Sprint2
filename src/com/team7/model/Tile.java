@@ -275,10 +275,12 @@ public class Tile {
     public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
                                             // TODO: fix
-        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null )
+        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null ){
             return;
+        }
 
-        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits( unit );
+
+        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits(unit );
     }
 
     // Adds army to Tile's ArrayList of Armies
@@ -308,11 +310,15 @@ public class Tile {
     }
 
     // Removes worker from Tile's ArrayList of Workers
-    public Worker removeWorkerFromTile(Worker worker) {
+    public void removeWorkerFromTile(Worker worker) {
 
         this.workers.remove(worker);
 
-        return worker;
+        if( getDrawableStateByPlayer( worker.getOwner().getName() ) == null ){
+            return;
+        }
+        this.getDrawableStateByPlayer( worker.getOwner().getName() ).decrementWorkers();
+
     }
 
     public Structure getStructure() {
@@ -429,6 +435,7 @@ public class Tile {
         return armies;
     }
 
-
-
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
 }
