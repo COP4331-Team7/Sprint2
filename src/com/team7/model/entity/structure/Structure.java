@@ -6,6 +6,7 @@ import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
+import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
@@ -37,7 +38,26 @@ public abstract class Structure extends Entity {
         return false;
     }
 
-    public abstract int advanceConstruction(); //returns how much food was necessary that turn
+
+    public int advanceConstruction() {    //returns how much food was necessary that turn
+
+        int foodUpkeepDuringConstruction = 0;
+        if (!checkConstructionComplete()) {
+            //construction not complete
+            for(Worker worker : getWorkerAssigned()){
+                foodUpkeepDuringConstruction += 2;
+                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
+            }
+            if(checkConstructionComplete()){
+                if (this instanceof StaffedStructure){
+                    ((StaffedStructure)this).setWorkerStaff(getWorkerAssigned());  //move workers from building to staff
+                }
+                setPowered(true);   //construction has finished at this turn
+            }
+        }
+        return foodUpkeepDuringConstruction;
+    }
+
     public void influenceStructureAccordingToSupply(){
         if (!isSufficientlySupplied){
             degradeStructurePerformance();

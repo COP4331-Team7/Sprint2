@@ -73,20 +73,6 @@ public class ObservationTower extends Structure {
         }
     }
 
-    public int advanceConstruction() {
-        int foodUpkeepDuringConstruction = 0;
-        if (!checkConstructionComplete()) {
-            //construction not complete
-            for(Worker worker : getWorkerAssigned()){
-                foodUpkeepDuringConstruction += 2;
-                changeLevelOfCompletion(worker.getConstructionRate());  //increment construction according to number of workers
-            }
-            if(checkConstructionComplete()){
-                setPowered(true);   //construction has finished at this turn
-            }
-        }
-        return foodUpkeepDuringConstruction;
-    }
 
     @Override
     public void executeCommandQueue() {
