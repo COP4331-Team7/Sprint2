@@ -125,8 +125,8 @@ public class MainViewInfo extends JPanel {
             jPanel.add(armorLabel);
             jPanel.add(defensiveDamageLabel);
             jPanel.add(healthLabel);
-            jPanel.add(itemLabel);
             jPanel.add(upkeepLabel);
+            jPanel.add(itemLabel);
             jPanel.add(productionLabel);
             JLabel jj = new JLabel();
             jj.setBackground(   new Color(0xffF5F5DC) );
