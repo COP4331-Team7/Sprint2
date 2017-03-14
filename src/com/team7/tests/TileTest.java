@@ -13,8 +13,8 @@ public class TileTest {
 
     @Test
     public void calculateDistance() throws Exception{
-        Tile start = new Tile(new Desert(), 21,19);
-        Tile finish = new Tile(new Desert(), 22,19);
+        Tile start = new Tile(new Desert(), 10,29);
+        Tile finish = new Tile(new Desert(), 6,37);
         int x1=0,y1=0;
         int x2=0,y2=0;
         x1 = start.getxCoordinate();
@@ -35,6 +35,8 @@ public class TileTest {
         else if(x1%2!=0 && y1%2!= 0 && y1==y2) {
             System.out.println((d1 + d2 + d3) / 2 + 1);
         }
+        else if(x1%2==0 && x2%2==0 && y1%2==1 && y2%2==1)
+            System.out.println((d1+d2+d3)/2);
         else if(x1==x2 && y2%2==1)
             System.out.println((d1+d2+d3)/2+1);
 

@@ -31,7 +31,8 @@ public class MapTest {
         ArrayList<Tile> tiles = null;
         Set<Tile> openList = null;
         Set<Tile> closedList = null;
-        tiles  = map.findMinPath(grid[19][23], grid[21][16], openList, closedList);
+        Map.start = grid[10][30];
+        tiles  = map.findMinPath(grid[10][30], grid[6][37], openList, closedList);
         for (int i=tiles.size()-1;i>=0;i--){
             System.out.println(tiles.get(i).getxCoordinate()+","+ tiles.get(i).getyCoordinate());
         }

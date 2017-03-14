@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.copySign;
 
 /**
  * Map is composed of a 2d array of Tiles
@@ -19,7 +20,7 @@ public class Map{
     private static final int NUM_TILES_X = 40;
     private static final int NUM_TILES_Y = 40;
     int[] direction = {8,9,3,2,1,7};
-
+    public  static Tile start;
     public Map() {
         createTilesForMap(); //for purposes of later abstraction
     }
@@ -205,7 +206,7 @@ public class Map{
 
 
     public ArrayList<Tile> findMinPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
-        if(openList ==null || closedList ==null){
+        if(openList ==null || closedList ==null && openList.size()!=0 && closedList.size()!=0){
             openList = new HashSet<>();
             closedList = new HashSet<>();
         }
@@ -273,6 +274,7 @@ public class Map{
                 if(!closedList.contains(lowest))
                     closedList.add(lowest);
             openList.remove(lowest);
+        openList.clear();
             return path;
         }
 
@@ -301,6 +303,13 @@ public class Map{
     public int calculateDistance(Tile start, Tile destination){
         int x1=0,y1=0;
         int x2=0,y2=0;
+        int dx1=0,dx2=0,dy1=0,dy2=0;
+        int cross = 0;
+        dx1 = start.getxCoordinate() - destination.getxCoordinate();
+        dy1 = start.getyCoordinate() - destination.getyCoordinate();
+        dx2 = this.start.getxCoordinate() - destination.getxCoordinate();
+        dy2 = this.start.getyCoordinate() - destination.getyCoordinate();
+        cross = abs((dx1/2)*(dy2*2) - (dx2/2)*(dy1*2));
         x1 = start.getxCoordinate();
         y1 = start.getyCoordinate();
         x2 = destination.getxCoordinate();
@@ -312,12 +321,14 @@ public class Map{
 //            return (d1+d2+d3)/2-1;
 //        else if(y2%2==1 && y1%2== 1 && x1%2==0 && x2!=0)
 //            return (d1+d2+d3)/2-1;
+//        else if(x1%2==0 && x2%2==0 && y1%2==1 && y2%2==1)
+//            return (d1+d2+d3)/2+1;
 //        else if(y2%2!=0 && x2%2!= 0 && x1%2!=0 && y1%2!=1)
 //            return (d1 + d2 + d3) / 2 + 2;
 //        else if(x1%2==1 && x2%2==1 && y1%2==0 && y2%2!=0)
 //            return (d1 + d2 + d3) / 2 +1 ;
 //        else
-            return (d1 + d2 + d3) / 2+1 ;
+            return cross ;
 
     }
 
@@ -382,6 +393,7 @@ public class Map{
     public void clearPath() {
         index = 0;
         path.clear();
+        System.out.print("Clearing Path" +path.size());
     }
 
     public void clearSelectedTiles(){

@@ -87,19 +87,25 @@ public class PathSelectController {
         Set<Tile> closedList = null;
 
         // Tile endTile = pathTile.get(pathTile.size() - 1);
+        Map.start = map.getGrid()[25][10];
 
-        tiles  = map.findMinPath( startTile, selectedTile, openList, closedList);
+        tiles  = map.findMinPath( map.getGrid()[25][10], map.getGrid()[28][8], openList, closedList);
         for(Tile t : tiles) {
             t.isSelectedPath = true;
+        }
+        for (int i=tiles.size()-1;i>=0;i--){
+            System.out.println(tiles.get(i).getxCoordinate()+","+ tiles.get(i).getyCoordinate());
         }
         pathTile = tiles;
 
         // end of path
+
         selectedTile.isSelectedPath = false;
 
         mainViewImage.reDrawMap();
         map.clearPath();
         map.clearSelectedTiles();
+
     }
 
     public void startRecordingPath(Tile startTile, int unitMovement) {
