@@ -3,6 +3,7 @@ package com.team7.model.entity.structure.staffedStructure.singleHarvestStructure
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.structure.staffedStructure.IHarvester;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
@@ -20,6 +21,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
     public PowerPlant(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         productionRateMap.put(harvestEnergy, 2);   //can harvest 2 energy per turn per worker per resource

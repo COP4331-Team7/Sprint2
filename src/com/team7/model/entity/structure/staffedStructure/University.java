@@ -3,6 +3,7 @@ package com.team7.model.entity.structure.staffedStructure;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         setOwner(player);
         setLocation(location);
         generateID();
+
+        setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         //key: TYPE INSTANCE TECHNOLOGY

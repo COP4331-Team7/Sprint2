@@ -2,8 +2,12 @@ package com.team7.model;
 
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -58,10 +62,20 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        Capital c1 = new Capital(map.getGrid()[18][20],  players[0]);
+
+        //adding all types of structure to p0 for testing
+        Structure c1 = new Capital(map.getGrid()[25][20],  players[0]);
+        Structure university = new University(map.getGrid()[20][20], players[0]);
+        Structure obsTower = new ObservationTower(map.getGrid()[20][15], players[0]);
+        Structure fort = new Fort(map.getGrid()[20][25], players[0]);
+        Structure farm = new Farm(map.getGrid()[15][20], players[0]);
+
         players[0].addStructure(c1);
-        Capital c2 = new Capital(map.getGrid()[22][20],  players[0]);
-        players[0].addStructure(c2);
+        players[0].addStructure(university);
+        players[0].addStructure(obsTower);
+        players[0].addStructure(fort);
+        players[0].addStructure(farm);
+
 
         Army army0 = new Army(map.getGrid()[1][30],  players[0]);
         Army army1 = new Army(map.getGrid()[1][29],  players[1]);

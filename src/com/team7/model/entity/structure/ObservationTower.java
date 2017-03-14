@@ -3,6 +3,7 @@ package com.team7.model.entity.structure;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Worker;
 
 
@@ -14,6 +15,8 @@ public class ObservationTower extends Structure {
         setOwner(player);
         setLocation(location);
         generateID();
+        setCommandQueue( new CommandQueue() );
+        
         setStats(new StructureStats(
                 0,
                 100,
