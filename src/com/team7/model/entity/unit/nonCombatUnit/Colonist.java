@@ -4,13 +4,13 @@ import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.Worker;
-import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.UnitStats;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 
-public class Colonist extends NonCombatUnit {
+public class Colonist extends Unit {
 
     public Colonist(Tile startTile, Player player) {
         setOwner(player);

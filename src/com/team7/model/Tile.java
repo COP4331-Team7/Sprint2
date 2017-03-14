@@ -31,7 +31,7 @@ import java.util.ArrayList;
  *  A Visible tile will return 'realDraw' to Controller
  *  A Shrouded tile will return 'playerXDraw' to Controller
  */
-public class Tile {
+public class Tile  {
     private AreaEffect areaEffect;
     private Decal decal;
     private Item item;
@@ -58,6 +58,7 @@ public class Tile {
     private DrawableTileState playerOneDraw;
     private DrawableTileState playerTwoDraw;
     private DrawableTileState realDraw;
+
 
     private enum VisibilityState {
         Visible, NonVisible, Shrouded

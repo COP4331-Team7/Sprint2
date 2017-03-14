@@ -3,9 +3,10 @@ package com.team7.model.entity.unit.nonCombatUnit;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.CommandQueue;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.UnitStats;
 
-public class Explorer extends NonCombatUnit {
+public class Explorer extends Unit {
 
     boolean isProspecting;
 
