@@ -144,7 +144,7 @@ public class Game {
                 tile.refreshDrawableState();    // update realDraw
 
                 if (harvestableTiles.contains(tile)){
-                    tile.refre
+                    tile.refreshDrawableState_harvestable();
                 }
 
                 if( prospectedTiles.contains( tile )  ) {
