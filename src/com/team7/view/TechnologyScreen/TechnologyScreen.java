@@ -29,9 +29,9 @@ public class TechnologyScreen extends JPanel {
     private DefaultListModel<String> defaultTechnologiesListModel = new DefaultListModel<>();
     private JScrollPane technologyStatScrollPane = new JScrollPane(technologiesList);
 
-    private JPanel buttonPanel = new JPanel(new BorderLayout());
+    private JPanel buttonPanel = new JPanel(new GridLayout(0, 3));
 
-    private JPanel buttonTechTypePanel = new JPanel( new GridLayout(0, 3) );
+//    private JPanel buttonTechTypePanel = new JPanel( new GridLayout(0, 3) );
 
     private JPanel instanceAndStatPanesPanel = new JPanel(new GridLayout(0,2));
 
@@ -45,24 +45,49 @@ public class TechnologyScreen extends JPanel {
         technologyInstanceList.setModel(defaultInstanceListModel);
         technologiesList.setModel(defaultTechnologiesListModel);
 
-
         //add lists to the grid (0x2) panel
         instanceAndStatPanesPanel.add(instanceScrollPane);
         instanceAndStatPanesPanel.add(technologyStatScrollPane);
 
+        workerButton.setFont(new Font("Serif", Font.BOLD, 22));
+        workerButton.setForeground( new Color(0xff000000) );
+        workerButton.setBackground(new Color(0xffF5F5DC));
+        workerButton.setOpaque(true);
+        workerButton.setPreferredSize( new Dimension(200, 50  ) );
 
+        unitButton.setFont(new Font("Serif", Font.BOLD, 22));
+        unitButton.setForeground( new Color(0xff000000) );
+        unitButton.setBackground(new Color(0xffF5F5DC));
+        unitButton.setOpaque(true);
+        unitButton.setPreferredSize( new Dimension(200, 50  ) );
 
-        buttonTechTypePanel.add(unitButton);
-        buttonTechTypePanel.add(workerButton);
-        buttonTechTypePanel.add(structureButton);
+        structureButton.setFont(new Font("Serif", Font.BOLD, 22));
+        structureButton.setForeground( new Color(0xff000000) );
+        structureButton.setBackground(new Color(0xffF5F5DC));
+        structureButton.setOpaque(true);
+        structureButton.setPreferredSize( new Dimension(200, 50  ) );
+
+//        buttonTechTypePanel.add(unitButton);
+//        buttonTechTypePanel.add(workerButton);
+//        buttonTechTypePanel.add(structureButton);
 
         buttonPanel.add(unitButton, BorderLayout.SOUTH);
         buttonPanel.add(workerButton, BorderLayout.WEST);
         buttonPanel.add(structureButton, BorderLayout.EAST);
 
-        this.add(buttonPanel, BorderLayout.CENTER);
-        this.add(buttonTechTypePanel, BorderLayout.SOUTH);
-        this.add(instanceAndStatPanesPanel, BorderLayout.EAST);
+//        this.add(buttonPanel, BorderLayout.CENTER);
+//        this.add(buttonTechTypePanel, BorderLayout.SOUTH);
+//        this.add(instanceAndStatPanesPanel, BorderLayout.EAST);
+
+        JPanel temp = new JPanel( new BorderLayout() );
+        temp.add(buttonPanel, BorderLayout.NORTH );
+        temp.add(instanceAndStatPanesPanel, BorderLayout.CENTER);
+        this.add(temp, BorderLayout.SOUTH);
+
+        temp.setPreferredSize( new Dimension( (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.8), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.75) ) );
+
+        this.setBackground(new Color(0xffF5F5DC));
+        this.setOpaque(true);
 
         this.repaint();
 
