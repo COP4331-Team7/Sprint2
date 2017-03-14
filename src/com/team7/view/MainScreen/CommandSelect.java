@@ -253,15 +253,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void keyReleased(KeyEvent e) {}
     public void keyPressed(KeyEvent e)  {
 
-        // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
-        if( currMode == 2 && (currType == 2 || currType == 3) && currCommand == 0 && (e.getKeyChar()-48 != 65487) ) {
-            controller.executeReinforeCommand( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
-        }
-        // STRUCTURE POWERPLANT:ENERGY MINE:ORE FARM:FOOD CAPITAL: ALL3
-        if( currMode == 1 && (currType == 0 || currType == 4 || currType == 5  || currType == 6 ) && (currCommand == 4 || currCommand == 5  || currCommand == 6 || currCommand == 8 || currCommand == 9 || currCommand == 10) && (e.getKeyChar()-48 != 65487) ) {
-            controller.executeAssignToCommand( controller.getCurrentStructureSelection(  currMode, currType, currTypeInstance ) );
-        }
-
         // zoom to current selection
         if( e.getKeyChar() == 'f') {
             controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
