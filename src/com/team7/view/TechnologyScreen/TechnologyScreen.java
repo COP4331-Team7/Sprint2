@@ -98,6 +98,8 @@ public class TechnologyScreen extends JPanel {
         JPanel t = new JPanel( new BorderLayout() );
 
         universityLabel.setFont(new Font("Serif", Font.BOLD, 35));
+        universityLabel.setBackground(new Color(0xffF5F5DC));
+        universityLabel.setOpaque(true);
 
         t.add(universityLabel, BorderLayout.NORTH);
         t.add(universityPanel, BorderLayout.CENTER);

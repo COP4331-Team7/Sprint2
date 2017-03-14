@@ -162,17 +162,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     };
 
-    private final static String[] structureCommands = {
-            "attack",
-            "make",
-            "defend",
-            "heal/repair unit",
-            "decommission",
-            "power down",
-            "power up",
-            "cancel queued orders"
-    };
-
     private int currMode = -1;
     private int currType = -1;
     private int currTypeInstance = -1;
@@ -209,8 +198,20 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else
             typeLabel.setText("TYPE (SHIFT + \u2190 / \u2192): " ); //left / right arrow
 
-        if(currMode == 1)
-            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?structureCommands[currCommand]:"")); //up / down arrow
+        if(currMode == 1 && currType == 0)           // CAPITAL
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?capitalCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 1)       // FORT
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?fortCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 2)         // UNIVERSITY
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?universityCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?observationCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 4)        // FARM
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?farmCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 5)        // MINE
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?mineCommands[currCommand]:"")); //up / down arrow
+        else if(currMode == 1 && currType == 6)        // POWER PLANT
+            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?powerPlantCommands[currCommand]:"")); //up / down arrow
 
         else if (currMode == 2 && currType == 0)    //explorer
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?explorerCommands[currCommand]:"")); //up / down arrow
@@ -220,11 +221,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?rangedCommands[currCommand]:"")); //up / down arrow
         else if (currMode == 2 && currType == 3)    //colonist
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?meleeCommands[currCommand]:"")); //up / down arrow
-
-        else if (currMode == 2)    //explorer
-            commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
-
-
 
         else if (currMode == 3)
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?armyCommands[currCommand]:"")); //up / down arrow
@@ -248,7 +244,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
                     typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentArmySelection( currType, currTypeInstance ).getId() );
                     break;
             }
-
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
@@ -259,11 +254,13 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public void keyPressed(KeyEvent e)  {
 
         // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
-        if(currMode == 2 && (currType == 2 || currType ==3) && currCommand == 0 && (e.getKeyChar()-48 != 65487)) {
-            controller.executeReinforeCommand( e.getKeyChar(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
+        if( currMode == 2 && (currType == 2 || currType == 3) && currCommand == 0 && (e.getKeyChar()-48 != 65487) ) {
+            controller.executeReinforeCommand( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
         }
-
-        /////////
+        // STRUCTURE POWERPLANT:ENERGY MINE:ORE FARM:FOOD CAPITAL: ALL3
+        if( currMode == 1 && (currType == 0 || currType == 4 || currType == 5  || currType == 6 ) && (currCommand == 4 || currCommand == 5  || currCommand == 6 || currCommand == 8 || currCommand == 9 || currCommand == 10) && (e.getKeyChar()-48 != 65487) ) {
+            controller.executeAssignToCommand( controller.getCurrentStructureSelection(  currMode, currType, currTypeInstance ) );
+        }
 
         // zoom to current selection
         if( e.getKeyChar() == 'f') {
