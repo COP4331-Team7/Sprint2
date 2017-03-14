@@ -439,14 +439,19 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     if( grid[xx][yy].isSelectedPath )
                         g2ds.drawImage(highlightImage, x_coord + x_offset, y_coord, null);
 
-                    /* draw bottom left circle, to be used later
-                      g2ds.setColor(new Color(255, 128, 100, 150));
-                      g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
+                    //g2ds.setColor( Color.white );
+                    //g2ds.drawString( Integer.toString( xx ), x_coord + x_offset + 15, y_coord + 32);
+                    //g2ds.drawString( Integer.toString( yy ),  x_coord + x_offset + 35, y_coord + 32 );
 
-                      draw bottom right circle, to be used later
-                      g2ds.setColor(new Color(255, 128, 100, 150));
-                      g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
-                    */
+
+//                    /* draw bottom left circle, to be used later
+//                      g2ds.setColor(new Color(255, 128, 100, 150));
+//                      g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
+//
+//                      draw bottom right circle, to be used later
+//                      g2ds.setColor(new Color(255, 128, 100, 150));
+//                      g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
+//                    */
 
                 }
             }

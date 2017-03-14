@@ -130,6 +130,21 @@ public class Player {
         return tileRadiusMap;
     }
 
+    public HashMap<Tile, Integer> getAllProspectedTile() {
+        HashMap<Tile, Integer> tileRadiusMap = new HashMap<>();
+
+        for (Unit unit : units) {
+            if(unit.getType().contains("Explorer") && ((Explorer)(unit)).isProspecting() ) {
+                Tile tile = unit.getLocation();
+                int radius = unit.getVisibilityRadius();
+                tileRadiusMap.put(tile, radius);
+            }
+        }
+
+        return tileRadiusMap;
+    }
+
+
     // Unit and Army helper functions
     public ArrayList<Unit> getUnits() {
         return units;

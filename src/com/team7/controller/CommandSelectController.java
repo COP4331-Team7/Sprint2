@@ -70,6 +70,7 @@ public class CommandSelectController {
     }
 
     public void updateStatusView(int currMode, int currType, int id) {
+
         mainViewInfo.updateStats( getCurrentSelection(currMode, currType, id) );
     }
 

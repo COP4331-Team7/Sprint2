@@ -114,17 +114,14 @@ public class Tile {
         }
     }
 
-
     //Populate Resource for each tile
     public void populateResource(double probEnergy, double probOre, double probFood) {
         if (Math.random() < probEnergy) {
             energy = new Energy();
         }
-
         if (Math.random() < probOre) {
             ore = new Ore();
         }
-
         if (Math.random() < probFood) {
             food = new Food();
         }
@@ -238,6 +235,11 @@ public class Tile {
     }
 
 
+    public void refreshDrawableState_resources() {
+        realDraw.refreshResources( this);
+    }
+
+
     // Adds unit to Tile's ArrayList of Units
     public Unit addUnitToTile(Unit unit) {
 
@@ -251,6 +253,9 @@ public class Tile {
     public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
                                             // TODO: fix
+        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null )
+            return;
+
         this.getDrawableStateByPlayer( unit.getOwner().getName() ).decrementMeleeUnits();
     }
 
@@ -376,4 +381,23 @@ public class Tile {
         else
             playerTwoVisibility = VisibilityState.NonVisible;
     }
+
+    public int getOre() {
+        if(ore == null) return 0;
+
+        return ore.getStatInfluenceQuantity();
+    }
+
+    public int getFood() {
+        if(food == null) return 0;
+
+        return food.getStatInfluenceQuantity();
+    }
+
+    public int getEnergy() {
+        if(energy == null) return 0;
+
+        return energy.getStatInfluenceQuantity();
+    }
+
 }

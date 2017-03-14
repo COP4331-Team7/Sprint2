@@ -71,23 +71,39 @@ public class Game {
     public void updateCurrPlayerTileStates(){
 
         HashMap<Tile, Integer> currentPlayerTileRadiusMap = currentPlayer.getAllTileRadiusMap();
+        HashMap<Tile, Integer> currentPlayerProspectedTiles = currentPlayer.getAllProspectedTile();
+
         Set<Tile> visibleTiles = new HashSet<>();
+        Set<Tile> prospectedTiles = new HashSet<>();
         //1
         for (Tile tileKey: currentPlayerTileRadiusMap.keySet()){
             visibleTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerTileRadiusMap.get(tileKey), null));
         }
+        for (Tile tileKey: currentPlayerProspectedTiles.keySet()){
+            prospectedTiles.addAll(map.getTilesInRadius(tileKey, currentPlayerProspectedTiles.get(tileKey), null));
+        }
+
         //2
         //iterate through entire map and update each tile
         for (Tile[] tileArray : map.getGrid()) {
             for (Tile tile : tileArray) {
                 //3
+
+                tile.refreshDrawableState();    // update realDraw
+
+                if( prospectedTiles.contains( tile )  ) {
+                    tile.refreshDrawableState_resources( );
+                }
+
                 if( visibleTiles.contains(tile ) ) {
+
                     tile.markVisible(currentPlayer.getName());
+
                 }
                 else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) && PathSelectController.isRecording) {
-                   tile.markShrouded( currentPlayer.getName() );
+                    tile.markShrouded( currentPlayer.getName() );
                 }
-                tile.refreshDrawableState();
+
             }
         }
     }

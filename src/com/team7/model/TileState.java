@@ -59,11 +59,23 @@ public class TileState {
         this.rangeUnit = state.rangeUnit;
         this.explorer = state.explorer;
         this.workerUnit = state.workerUnit;
+
         this.ore = state.ore;
         this.food = state.food;
         this.energy = state.energy;
+
         this.areaEffectType = state.areaEffectType;
     }
+
+    public void refreshResources(Tile state) {
+        if( state.getResources().size() > 0 )
+            this.ore = state.getOre();
+        if( state.getResources().size() > 1 )
+            this.food = state.getFood();
+        if( state.getResources().size() > 2 )
+            this.energy = state.getEnergy();
+    }
+
 
     public void refresh(Tile tile) {
 
@@ -80,6 +92,7 @@ public class TileState {
         else if (tile.getTerrain() instanceof Flatland) {
             terrainType = "Flatland";
         }
+
         // set units
         meleeUnit = 0; rangeUnit = 0; explorer = 0; colonist = 0; workerUnit = 0;
         for(Unit unit : tile.getUnits()) {
@@ -95,16 +108,16 @@ public class TileState {
                 workerUnit++;
         }
 
-        // set resources
-        energy = 0; ore = 0; food = 0;
-        for(Resource resource : tile.getResources()) {
-            if(resource instanceof Energy)
-                energy += resource.getStatInfluenceQuantity();
-            if(resource instanceof Food)
-                food += resource.getStatInfluenceQuantity();
-            if(resource instanceof Ore)
-                ore += resource.getStatInfluenceQuantity();
-        }
+//        // set resources
+//        energy = 0; ore = 0; food = 0;
+//        for(Resource resource : tile.getResources()) {
+//            if(resource instanceof Energy)
+//                energy += resource.getStatInfluenceQuantity();
+//            if(resource instanceof Food)
+//                food += resource.getStatInfluenceQuantity();
+//            if(resource instanceof Ore)
+//                ore += resource.getStatInfluenceQuantity();
+//        }
 
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)

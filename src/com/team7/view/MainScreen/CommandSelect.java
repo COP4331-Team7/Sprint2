@@ -52,7 +52,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "MOVE",
     };
     private final static String[] structureTypes = {
-            "BASE"
+            "BASE",
     };
     private final static String[] unitTypes = {
             "EXPLORER",
@@ -71,6 +71,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "BATTLE GROUP",
             "REINFORCEMENTS"
     };
+
     // unit specific command lists
     private final static String[] meleeCommands = {
             "REINFORCE",
@@ -150,8 +151,6 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
         else if (currMode == 2)    //explorer
             commandLabel.setText("COMMAND (\u2191 / \u2193): " + ((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
-
-
 
 
 
