@@ -26,7 +26,8 @@ public class Map{
     public Tile[][] getGrid() {
         return grid;
     }
-
+    private ArrayList<Tile> path = new ArrayList<Tile>();
+    int index =0;
     private void createTilesForMap() {
         grid = new Tile[NUM_TILES_X][NUM_TILES_Y];
 
@@ -129,6 +130,121 @@ public class Map{
             }
         }
         return tileSet;
+    }
+
+    public ArrayList<Tile> findMinPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
+        if(openList ==null || closedList ==null){
+            openList = new HashSet<>();
+            closedList = new HashSet<>();
+        }
+
+        openList.add(start);
+        if(start.getxCoordinate() == destination.getxCoordinate() && start.getyCoordinate() == destination.getyCoordinate()) {
+            System.out.println("Entered if");
+            closedList.add(destination);
+            path.add(index,destination);
+            index++;
+            return path;
+        }
+
+        else if (isEven(start.getyCoordinate())) {
+            for (int i : direction) {
+//                        System.out.println("Adding to open List");
+                Tile tile = moveTypeOne(start.getxCoordinate(), start.getyCoordinate(), i);
+                if (tile.getxCoordinate() == destination.getxCoordinate() && tile.getyCoordinate() == destination.getyCoordinate()) {
+                    closedList.add(tile);
+                    path.add(index,tile);
+                    index++;
+                    return path;
+                }
+                else if (!openList.contains(tile) && !closedList.contains(tile)) {
+                    openList.add(moveTypeOne(start.getxCoordinate(), start.getyCoordinate(), i));
+                }
+//                        else openList.add(moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i));
+            }
+
+        }
+
+        else {
+            for (int i : direction) {
+
+                Tile tile = moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i);
+                if (tile.getxCoordinate() == destination.getxCoordinate() && tile.getyCoordinate() == destination.getyCoordinate()) {
+                    closedList.add(tile);
+                    path.add(index,tile);
+                    index++;
+                    return path;
+                }
+                else if (!openList.contains(tile) && !closedList.contains(tile)) {
+                    openList.add(moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i));
+                }
+            }
+
+        }
+
+
+
+        System.out.println("Adding to closed tiles" + start.getxCoordinate() + "," + start.getyCoordinate());
+        closedList.add(start);
+        path.add(index,start);
+        index++;
+        openList.remove(start);
+        Tile lowest = getLowest(destination, openList);
+        if(path!=null){
+            index = 0;
+            path = new ArrayList<Tile>();
+        }
+        findMinPath(lowest, destination, openList, closedList);
+        path.add(index,lowest);
+        index++;
+
+        if(!closedList.contains(lowest))
+            closedList.add(lowest);
+        openList.remove(lowest);
+        return path;
+    }
+
+    public Tile getLowest(Tile destination, Set<Tile> openList){
+
+        for (Tile tile : openList) {
+            System.out.println("Distance"+tile.getxCoordinate()+","+tile.getyCoordinate()+"   "+String.valueOf(calculateDistance(tile,destination)));
+        }
+        int min = 30;
+        int curr=0;
+        Tile minTile=null;
+        for(Tile tile : openList){
+            curr = calculateDistance(tile, destination);
+            if(curr<min){
+                min = curr;
+                minTile =tile;
+            }
+        }
+        Tile lowest = minTile;
+        System.out.println("Lowest node"+lowest.getxCoordinate()+","+lowest.getyCoordinate());
+        return lowest;
+    }
+
+    public int calculateDistance(Tile start, Tile destination){
+        int x1=0,y1=0;
+        int x2=0,y2=0;
+        x1 = start.getxCoordinate();
+        y1 = start.getyCoordinate();
+        x2 = destination.getxCoordinate();
+        y2 = destination.getyCoordinate();
+        int d1 = Math.abs(x1-x2)*2;
+        int d2 = Math.abs(y1-y2)/2;
+        int d3 = Math.abs((x1-x2)*2+(y1-y2)/2);
+//        if(y2%2==1 && y1%2== 1 && x1%2!=0 && x2!=0)
+//            return (d1+d2+d3)/2-1;
+//        else if(y2%2==1 && y1%2== 1 && x1%2==0 && x2!=0)
+//            return (d1+d2+d3)/2-1;
+//        else if(y2%2!=0 && x2%2!= 0 && x1%2!=0 && y1%2!=1)
+//            return (d1 + d2 + d3) / 2 + 2;
+//        else if(x1%2==1 && x2%2==1 && y1%2==0 && y2%2!=0)
+//            return (d1 + d2 + d3) / 2 +1 ;
+//        else
+        return (d1 + d2 + d3) / 2+1 ;
+
     }
 
     private Tile moveTypeOne(int x, int y, int direction){
