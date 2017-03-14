@@ -38,10 +38,12 @@ public abstract class Unit extends Entity {
     // TODO: change this so it is not hardcoded
     public void powerUp() {
 
-        if(this instanceof CombatUnit)
+        if(this instanceof CombatUnit) {
             this.getUnitStats().setUpkeep(4);
-        if(this instanceof NonCombatUnit)
+        }
+        if(this instanceof NonCombatUnit) {
             this.getUnitStats().setUpkeep(3);
+        }
 
         this.setTurnsFrozen(2);
         isPowered = true;
@@ -142,9 +144,6 @@ public abstract class Unit extends Entity {
         // do something with the command
         // each unit/structure receives specific list of commands
         // so this could be abstract and implemented in the subclasses
-        System.out.println("in unit");
-
-
     }
 
     public boolean isAlive() {
