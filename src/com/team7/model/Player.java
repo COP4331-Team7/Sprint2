@@ -65,7 +65,7 @@ public class Player {
         moveUnitsTowardsArmy();
         subtractMovesFrozen();
         checkUnitArmyStructs();
-
+        subtractUnitUpkeep();
     }
 
     // move each unit towards destination tile
@@ -142,6 +142,18 @@ public class Player {
                 removeStructure(this.structures.get(i));
             }
         }
+
+    }
+
+    private void subtractUnitUpkeep() {
+        int sum = 0;
+
+        // add all unit stats
+        for(int i = 0; i < this.units.size(); i++){
+            sum += this.units.get(i).getUnitStats().getUpkeep();
+        }
+
+        nutrients = nutrients - sum;
 
     }
 
