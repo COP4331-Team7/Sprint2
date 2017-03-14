@@ -3,8 +3,15 @@ package com.team7.model.entity;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 
 import java.util.ArrayList;
@@ -13,8 +20,8 @@ public class Army extends Entity {
 
     private CommandQueue commandQueue;
     private ArrayList<Unit> units;
-    private ArrayList<Unit> battleGroup;            //TODO
-    private ArrayList<Unit> reinforcements;         //TODO
+    private ArrayList<Unit> battleGroup;
+    private ArrayList<Unit> reinforcements;
     private ArrayList<Worker> workers;
     private int slowestSpeed;
     private int greatestVis;
@@ -35,6 +42,7 @@ public class Army extends Entity {
         this.slowestSpeed = 100;
         this.greatestVis = 1;
         this.turnsFrozen = 0;
+        this.direction = 1;
     }
 
 
@@ -284,7 +292,43 @@ public class Army extends Entity {
     }
 
     //TODO
-    public void buildStructure(String string) {
+    public void buildStructure(String buildingType) {
+        // create structure
+        Structure structure;
+        if(buildingType == "Observation Tower") {
+            structure = new ObservationTower(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Capital") {
+            structure = new Capital(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Fort") {
+            structure = new Fort(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "University") {
+            structure = new University(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Farm") {
+            structure = new Farm(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Mine") {
+            structure = new Mine(this.getLocation(), this.getOwner());
+        }
+        else if(buildingType == "Power Plant") {
+            structure = new PowerPlant(this.getLocation(), this.getOwner());
+        }
+        else {
+            System.out.println("Not a correct building type");
+            return;
+        }
+
+        // add workers to construction
+        for(int i = 0; i < workers.size(); i++) {
+            structure.addWorkerToConstruction(workers.get(i));
+        }
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getLocation().setStructure(structure);
+
 
     }
 
