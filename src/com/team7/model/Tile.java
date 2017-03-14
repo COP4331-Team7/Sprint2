@@ -256,7 +256,7 @@ public class Tile {
         if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null )
             return;
 
-        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decrementMeleeUnits();
+        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits( unit );
     }
 
     // Adds army to Tile's ArrayList of Armies

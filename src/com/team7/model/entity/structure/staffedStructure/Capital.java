@@ -2,6 +2,7 @@ package com.team7.model.entity.structure.staffedStructure;
 
 import com.team7.model.Player;
 import com.team7.model.Tile;
+import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
 
@@ -24,6 +25,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
     public Capital(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();
         productionRateMap.put(harvestOre, 2);   //can harvest 2 ore per turn per worker per resource

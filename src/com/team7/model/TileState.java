@@ -8,6 +8,7 @@ import com.team7.model.entity.Worker;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import com.team7.model.resource.Energy;
 import com.team7.model.resource.Food;
@@ -58,6 +59,7 @@ public class TileState {
         this.meleeUnit = state.meleeUnit;
         this.rangeUnit = state.rangeUnit;
         this.explorer = state.explorer;
+        this.colonist = state.colonist;
         this.workerUnit = state.workerUnit;
 
         this.ore = state.ore;
@@ -102,7 +104,7 @@ public class TileState {
                 rangeUnit++;
             if(unit instanceof Explorer)
                 explorer++;
-            if(unit instanceof com.team7.model.entity.unit.nonCombatUnit.Colonist)
+            if(unit instanceof Colonist)
                 colonist++;
             if((Entity)unit instanceof Worker)
                 workerUnit++;
@@ -207,7 +209,17 @@ public class TileState {
         return colonist;
     }
 
-    public void decrementMeleeUnits() {
-        meleeUnit--;
+    public void decremenUnits(Unit unit) {
+        if (unit.getType().contains("Explorer"))
+            explorer--;
+        if (unit.getType().contains("Colonist"))
+            colonist--;
+        if (unit.getType().contains("Melee"))
+            meleeUnit--;
+        if (unit.getType().contains("Range"))
+            rangeUnit--;
+
+        System.out.println(unit.getType() + "decremented");
     }
+
 }

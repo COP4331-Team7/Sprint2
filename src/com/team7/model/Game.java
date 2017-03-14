@@ -2,6 +2,7 @@ package com.team7.model;
 
 import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -56,14 +57,14 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
         addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
 
-        Army army0 = new Army(map.getGrid()[10][30],  players[0]);
-        Army army1 = new Army(map.getGrid()[10][29],  players[1]);
-        Unit melee1 = new MeleeUnit(this.map.getGrid()[10][30], players[0]);
-        Unit melee2 = new  MeleeUnit(this.map.getGrid()[10][29], players[1]);
-        addUnitToPlayer( players[0], melee1 );
-        addUnitToPlayer( players[1], melee2 );
-        army0.addUnitToArmy(melee1);
-        army1.addUnitToArmy(melee2);
+//        Army army0 = new Army(map.getGrid()[10][30],  players[0]);
+//        Army army1 = new Army(map.getGrid()[10][29],  players[1]);
+//        Unit melee1 = new MeleeUnit(this.map.getGrid()[10][30], players[0]);
+//        Unit melee2 = new  MeleeUnit(this.map.getGrid()[10][29], players[1]);
+//        addUnitToPlayer( players[0], melee1 );
+//        addUnitToPlayer( players[1], melee2 );
+//        army0.addUnitToArmy(melee1);
+//        army1.addUnitToArmy(melee2);
 
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
@@ -156,14 +157,30 @@ public class Game {
         ArrayList<Unit> p1_units = players[0].getUnits();
         ArrayList<Unit> p2_units = players[1].getUnits();
         ArrayList<Unit> all_units = new ArrayList<>(p1_units);
-        all_units.addAll(p2_units);
+        all_units.addAll( p2_units );
+
+        ArrayList<Structure> p1_structures = players[0].getStructures();
+        ArrayList<Structure> p2_structures = players[1].getStructures();
+        ArrayList<Structure> all_structures = new ArrayList<>(p1_structures);
+        all_structures.addAll( p2_structures );
 
         // execute queues of all units in game
         // some commands won't finish executing within 1 tick, they update & remain in queue
+        System.out.println();
+
         for(Unit u : all_units) {
             u.printCommandQueue();
             u.executeCommandQueue();
         }
+
+
+        for(Structure s : all_structures) {
+            s.printCommandQueue();
+           // s.executeCommandQueue();
+        }
+
+
+
     }
 
     public void printCommandQueues() {
