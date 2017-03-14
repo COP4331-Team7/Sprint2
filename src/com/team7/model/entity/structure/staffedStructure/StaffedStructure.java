@@ -82,5 +82,4 @@ public abstract class StaffedStructure extends Structure {
         }
         return foodUpkeepDuringConstruction;
     }
-
 }

@@ -22,9 +22,13 @@ public class MainScreenController {
     private MainViewImage mainViewImage = null;
     private OptionsScreen optionScreen = null;
     private MapScreen mapScreen = null;
+    private StructureOverviewController structureOverviewController = null;
+    private UnitOverviewController unitOverviewController = null;
 
 
-    public MainScreenController(Game game, View view) {
+    public MainScreenController(Game game, View view,
+                                StructureOverviewController structureScreenController,
+                                UnitOverviewController unitOverviewController) {
         this.game = game;
         this.view = view;
         this.mainViewImage = view.getMainViewImage();
@@ -33,6 +37,8 @@ public class MainScreenController {
         this.mainViewInfo = view.getMainViewInfo();
         this.optionScreen = view.getOptionScreen();
         this.mapScreen = view.getMapScreen();
+        this.structureOverviewController = structureScreenController;
+        this.unitOverviewController = unitOverviewController;
 
         addActionListeners();
         view.setMap( game.getMap() );
@@ -54,7 +60,8 @@ public class MainScreenController {
                     game.nextTurn();
 
                     endTurnViewRefresh();
-
+                    structureOverviewController.setCurrentPlayer(game.getCurrentPlayer());
+                    unitOverviewController.setCurrentPlayer(game.getCurrentPlayer());
                     // TODO: fix
                     mainViewImage.zoomToDestination(game.getCurrentPlayer().getFirstUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getFirstUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
                     giveCommandViewFocus();
@@ -85,7 +92,7 @@ public class MainScreenController {
         mainScreen.getStructureScreenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == mainScreen.getStructureScreenButton())
-                view.setCurrScreen("STRUCTURE_OVERVIEW");
+                view.setCurrScreen("STRUCTURE_OVERVIEW", game.getCurrentPlayer());
             }
         });
         mainScreen.getScreenSelectButtons().getMapScreenSelectButton().addActionListener(new ActionListener() {

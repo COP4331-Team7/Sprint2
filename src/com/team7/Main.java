@@ -21,13 +21,14 @@ public class Main {
 
         // Controller
         HomeScreenController hsc = new HomeScreenController(game, view);
-        StructureOverviewController soc = new StructureOverviewController(game, view);
-        UnitOverviewController uoc = new UnitOverviewController(game, view);
-        MainScreenController ssc = new MainScreenController(game, view);
+        StructureOverviewController soc = new StructureOverviewController(view, game.getCurrentPlayer());
+        UnitOverviewController uoc = new UnitOverviewController(view, game.getCurrentPlayer());
         PathSelectController psc = new PathSelectController(game, view );
         CommandSelectController csc = new CommandSelectController(game, view);
         OptionsController optionsController = new OptionsController(view, game);
         MapScreenController mapScreenController = new MapScreenController(game, view);
+        ResearchScreenController roc = new ResearchScreenController();
+        MainScreenController ssc = new MainScreenController(game, view, soc, uoc);
 
     }
 

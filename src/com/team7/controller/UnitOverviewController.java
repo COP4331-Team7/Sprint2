@@ -1,6 +1,7 @@
 package com.team7.controller;
 
         import com.team7.model.Game;
+        import com.team7.model.Player;
         import com.team7.view.UnitScreen.UnitScreen;
         import com.team7.view.View;
 
@@ -10,12 +11,12 @@ package com.team7.controller;
 
 public class UnitOverviewController {
 
-    private Game game = null;
+    private Player currentPlayer = null;
     private View view = null;
     private UnitScreen unitScreen = null;
 
-    public UnitOverviewController(Game game, View view) {
-        this.game = game;
+    public UnitOverviewController(View view, Player p) {
+        this.currentPlayer = p;
         this.view = view;
         this.unitScreen = view.getUnitScreen();
         addActionListeners();
@@ -50,5 +51,9 @@ public class UnitOverviewController {
             }
         });
 
+    }
+
+    public void setCurrentPlayer(Player p) {
+        currentPlayer = p;
     }
 }

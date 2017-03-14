@@ -1,6 +1,7 @@
 package com.team7.view;
 
 import com.team7.model.Map;
+import com.team7.model.Player;
 import com.team7.view.HomeScreen.HomeScreen;
 import com.team7.view.MainScreen.CommandSelect;
 import com.team7.view.MainScreen.MainScreen;
@@ -70,6 +71,7 @@ public class View
     public void setCurrScreen(String selected_screen) {
         frame.setCurrScreen( selected_screen );
     }
+    public void setCurrScreen(String structure_overview, Player currentPlayer) {frame.setCurrScreen(structure_overview, currentPlayer);}
 
     public void redrawView() {
         frame.redrawView();
@@ -142,29 +144,39 @@ public class View
 
             getContentPane().removeAll();   // clear screen
 
-            if(selected_screen == "HOME") {
-                displayHomeScreen();
-            }
-            else if (selected_screen == "MAIN") {
-                displayMainScreen();
-                mainScreen.getCommandSelect().setFocusable(true);
-                mainScreen.getCommandSelect().requestFocus();
-            }
-            else if (selected_screen == "UNIT_OVERVIEW") {
-                displayUnitOverviewScreen();
-            }
-            else if (selected_screen == "STRUCTURE_OVERVIEW") {
-                displayStructureOverviewScreen();
-            }
-            else if (selected_screen == "OPTIONS") {
-                displayOptionScreen();
-            }
-            else if (selected_screen == "MAP_SCREEN") {
-                displayMapScreen();
+            switch (selected_screen) {
+                case "HOME":
+                    displayHomeScreen();
+                    break;
+                case "MAIN":
+                    displayMainScreen();
+                    mainScreen.getCommandSelect().setFocusable(true);
+                    mainScreen.getCommandSelect().requestFocus();
+                    break;
+                case "UNIT_OVERVIEW":
+                    displayUnitOverviewScreen();
+                    break;
+                case "STRUCTURE_OVERVIEW":
+                    displayStructureOverviewScreen();
+                    break;
+                case "OPTIONS":
+                    displayOptionScreen();
+                    break;
+                case "MAP_SCREEN":
+                    displayMapScreen();
+                    break;
             }
 
             revalidate();
             repaint();
+        }
+
+        public void setCurrScreen(String selected_string, Player currentPlayer) {
+            switch(selected_string) {
+                case "STRUCTURE_OVERVIEW":
+                    structureScreen.setStructureModel(currentPlayer.getStructures());
+                    setCurrScreen(selected_string);
+            }
         }
 
         private void displayHomeScreen() {

@@ -81,4 +81,11 @@ public class StructureStats {
     public void changeMaxArmor(int delta){
         maxArmor += delta;
     }
+
+    public String print() {
+        return "Offensive Damage: " + offensiveDamage
+                + "\nDefensive Damage: " + defensiveDamage
+                + "\nArmor: " + armor
+                + "\nHealth: " + health;
+    }
 }
