@@ -14,9 +14,16 @@ public class Command {
     public Command(String string) {
         commandString = string;
 
-        if(commandString.contains("MAKE BASE"))
+        if(commandString.contains("MAKE BASE")){
             wait += 5;
+        }
 
+
+    }
+
+    public Command(String string, int wait){
+        commandString = string;
+        this.wait = wait;
     }
 
     public String getCommandString() {
