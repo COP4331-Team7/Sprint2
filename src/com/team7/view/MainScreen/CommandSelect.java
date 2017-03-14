@@ -69,17 +69,13 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "REINFORCE",
             "DECOMMISSION",
             "POWER DOWN",
-            "POWER UP",
-            "MOVE",
-            "MELEE ATTACK",
+            "POWER UP"
     };
     private final static String[] rangedCommands = {
             "REINFORCE",
             "DECOMMISSION",
             "POWER DOWN",
-            "POWER UP",
-            "MOVE",
-            "RANGE ATTACK",
+            "POWER UP"
     };
     private final static String[] colonistCommands = {
             "DECOMMISSION",
@@ -98,50 +94,41 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     };
 
     private final static String[] powerPlantCommands = {
-            "attack",
-            "make",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"
+            "cancel queued orders",
+            "assign workers to harvest energy",
+            "unassign all workers"
     };
     private final static String[] mineCommands = {
-            "attack",
-            "make",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"
+            "cancel queued orders",
+            "assign workers to harvest ore",
+            "unassign all workers"
     };
     private final static String[] farmCommands = {
-            "attack",
-            "make",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"
+            "cancel queued orders",
+            "assign workers to harvest food",
+            "unassign all workers"
     };
     private final static String[] observationCommands = {
-            "attack",
-            "make",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
             "cancel queued orders"
     };
     private final static String[] universityCommands = {
-            "attack",
-            "make",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
@@ -149,21 +136,25 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
 
     };
     private final static String[] capitalCommands = {
-            "attack",
-            "make",
+            "make explorer",
+            "make worker",
             "defend",
             "heal/repair unit",
             "decommission",
             "power down",
             "power up",
-            "cancel queued orders"
+            "cancel queued orders",
+            "assign workers to harvest food",
+            "assign workers to harvest ore",
+            "assign workers to harvest energy",
+            "unassign all workers"
 
     };
     private final static String[] fortCommands = {
             "attack",
-            "make",
+            "train recruit with worker",
+            "train recruit with soldier",
             "defend",
-            "heal/repair unit",
             "decommission",
             "power down",
             "power up",
@@ -453,7 +444,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         else if(currMode == 1 && currType == 1)       // FORT
             sb.append(((currCommand != -1)?fortCommands[currCommand]:"")); //up / down arrow
         else if(currMode == 1 && currType == 2)         // UNIVERSITY
-            sb.append(((currCommand != -1)?unitCommands[currCommand]:"")); //up / down arrow
+            sb.append(((currCommand != -1)?universityCommands[currCommand]:"")); //up / down arrow
         else if(currMode == 1 && currType == 3)        // OBSERVATION TOWER
             sb.append(((currCommand != -1)?observationCommands[currCommand]:"")); //up / down arrow
         else if(currMode == 1 && currType == 4)        // FARM

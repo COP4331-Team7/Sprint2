@@ -173,11 +173,11 @@ public class Player {
         }
 
         for (Structure structure : structures){
-            if (structure.isPowered()){
+       //     if (structure.isPowered()){
                 Tile tile = structure.getLocation();
                 int radius = structure.getVisibilityRadius();
                 tileRadiusMap.put(tile, radius);
-            }
+          //  }
         }
 
         return tileRadiusMap;
