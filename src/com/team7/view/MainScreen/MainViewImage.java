@@ -422,21 +422,48 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
                         //draw resource counts
                         if(drawResources) {
-                            // ore
-                            if (tileState.getOreQuantity() > 0) {
-                                g2ds.setColor(new Color(0xFFDDAAAA));
-                                g2ds.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+
+
+                            if(player.getName().equals("One")){
+                                if(tileState.isProspectedByPlayer1()){
+                                    //draw ore
+                                    if (tileState.getOreQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xFFDDAAAA));
+                                        g2ds.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                                    }
+                                    // energy
+                                    if (tileState.getEnergyQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xaf75fff8));
+                                        g2ds.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                                    }
+                                    //food
+                                    if (tileState.getFoodQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xAFAFFC00));
+                                        g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                                    }
+                                }
                             }
-                            // energy
-                            if (tileState.getEnergyQuantity() > 0) {
-                                g2ds.setColor(new Color(0xaf75fff8));
-                                g2ds.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+
+                            if(player.getName().equals("Two")){
+                                if(tileState.isProspectedByPlayer2()){
+                                    //draw ore
+                                    if (tileState.getOreQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xFFDDAAAA));
+                                        g2ds.drawString(Integer.toString(tileState.getOreQuantity()), x_coord + x_offset + 16, y_coord + 30);
+                                    }
+                                    // energy
+                                    if (tileState.getEnergyQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xaf75fff8));
+                                        g2ds.drawString(Integer.toString(tileState.getEnergyQuantity()), x_coord + x_offset + 30, y_coord + 30);
+                                    }
+                                    //food
+                                    if (tileState.getFoodQuantity() > 0) {
+                                        g2ds.setColor(new Color(0xAFAFFC00));
+                                        g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                                    }
+                                }
                             }
-                            //food
-                            if (tileState.getFoodQuantity() > 0) {
-                                g2ds.setColor(new Color(0xAFAFFC00));
-                                g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
-                            }
+
                         }
 
                         // shroud tile

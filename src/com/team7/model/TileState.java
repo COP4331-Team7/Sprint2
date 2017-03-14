@@ -39,6 +39,9 @@ public class TileState {
     private int food;
     private int energy;
 
+    private boolean prospectedByPlayer1;
+    private boolean prospectedByPlayer2;
+
     public TileState(){}
 
     //copy constructor
@@ -113,16 +116,6 @@ public class TileState {
                 workerUnit++;
         }
 
-//        // set resources
-//        energy = 0; ore = 0; food = 0;
-//        for(Resource resource : tile.getResources()) {
-//            if(resource instanceof Energy)
-//                energy += resource.getStatInfluenceQuantity();
-//            if(resource instanceof Food)
-//                food += resource.getStatInfluenceQuantity();
-//            if(resource instanceof Ore)
-//                ore += resource.getStatInfluenceQuantity();
-//        }
 
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
@@ -223,5 +216,19 @@ public class TileState {
             rangeUnit--;
     }
 
+    public boolean isProspectedByPlayer1() {
+        return prospectedByPlayer1;
+    }
 
+    public void setProspectedByPlayer1(boolean prospectedByPlayer1) {
+        this.prospectedByPlayer1 = prospectedByPlayer1;
+    }
+
+    public boolean isProspectedByPlayer2() {
+        return prospectedByPlayer2;
+    }
+
+    public void setProspectedByPlayer2(boolean prospectedByPlayer2) {
+        this.prospectedByPlayer2 = prospectedByPlayer2;
+    }
 }

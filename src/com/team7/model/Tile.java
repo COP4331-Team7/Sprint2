@@ -236,10 +236,17 @@ public class Tile {
 
 
     public void refreshDrawableState_resources(String s) {
-        if(s.contains("One"))
-             playerOneDraw.refreshResources( this);
-        if(s.contains("Two"))
-             playerTwoDraw.refreshResources( this);
+        realDraw.refreshResources(this);
+        if(s.contains("One")){
+            realDraw.setProspectedByPlayer1(true);
+            playerOneDraw.setProspectedByPlayer1(true);
+            playerOneDraw.refreshResources(this);
+        }
+        if(s.contains("Two")){
+            realDraw.setProspectedByPlayer2(true);
+            playerTwoDraw.setProspectedByPlayer2(true);
+            playerTwoDraw.refreshResources(this);
+        }
     }
 
     public void refreshDrawableState_harvestable(){
