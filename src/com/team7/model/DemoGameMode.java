@@ -56,7 +56,6 @@ public class DemoGameMode {
         addUnitToPlayer(player2, new Explorer(grid[28][19], player2));
         addUnitToPlayer(player2, new Explorer(grid[15][24], player2));
 
-
 //        addUnitToPlayer(player1, new Explorer(grid[17][20], player1));
 //        addUnitToPlayer(player2, new Explorer(grid[21][20], player2));
 
