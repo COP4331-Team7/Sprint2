@@ -209,7 +209,7 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
             ((StaffedStructure) this).assignHarvestFood(numberWorkers);
             removeCommandFromQueue();
         }
-        else if(commandString.contains("ore")) {
+        else if(commandString.contains("harvest ore")) {
             int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
             ((StaffedStructure) this).assignHarvestOre(numberWorkers);
             removeCommandFromQueue();

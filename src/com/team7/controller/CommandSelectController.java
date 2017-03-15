@@ -265,7 +265,7 @@ public class CommandSelectController {
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
         Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
-
+        System.out.println(command.getCommandString());
 
         army.queueCommand(command);
         clearCommandView();
