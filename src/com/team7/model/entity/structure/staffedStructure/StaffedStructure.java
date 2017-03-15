@@ -96,6 +96,46 @@ public abstract class StaffedStructure extends Structure {
         }
     }
 
+    public void assignHarvestEnergy(int numberWorkers) {
+        for(int i = 0; i < numberWorkers; i++) {
+            if(getUnassignedWorker() != null) {
+                getUnassignedWorker().setAssignedEnergy(true);
+            }
+        }
+    }
+
+    public void assignHarvestFood(int numberWorkers) {
+        for(int i = 0; i < numberWorkers; i++) {
+            if(getUnassignedWorker() != null) {
+                getUnassignedWorker().setAssignedFood(true);
+            }
+        }
+    }
+
+    public void assignHarvestOre(int numberWorkers) {
+        for(int i = 0; i < numberWorkers; i++) {
+            if(getUnassignedWorker() != null) {
+                getUnassignedWorker().setAssignedOre(true);
+            }
+        }
+    }
+
+    public void assignHarvestResearch(int numberWorkers) {
+        for(int i = 0; i < numberWorkers; i++) {
+            if(getUnassignedWorker() != null) {
+                getUnassignedWorker().setAssignedResearch(true);
+            }
+        }
+    }
+
+    public void unassign() {
+        for(int i = 0; i < workerStaff.size(); i++) {
+            workerStaff.get(i).setAssignedFood(false);
+            workerStaff.get(i).setAssignedEnergy(false);
+            workerStaff.get(i).setAssignedOre(false);
+            workerStaff.get(i).setAssignedResearch(false);
+        }
+    }
 
     @Override
     public void executeCommandQueue() {
@@ -125,6 +165,16 @@ public abstract class StaffedStructure extends Structure {
 
     public void addWorkerToStaff(Worker worker){
         this.workerStaff.add(worker);
+    }
+
+
+    private Worker getUnassignedWorker() {
+        for(int i = 0; i < workerStaff.size(); i++) {
+            if(!workerStaff.get(i).isAssigned()) {
+                return workerStaff.get(i);
+            }
+        }
+        return null;
     }
 
 }
