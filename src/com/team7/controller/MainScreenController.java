@@ -66,7 +66,9 @@ public class MainScreenController {
                     structureOverviewController.setCurrentPlayer(game.getCurrentPlayer());
                     unitOverviewController.setCurrentPlayer(game.getCurrentPlayer());
                     // TODO: fix
-                    mainViewImage.zoomToDestination(game.getCurrentPlayer().getFirstUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getFirstUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+                    if(view.getOptionScreen().getFocusSpeed() > 0)
+                        mainViewImage.zoomToDestination(game.getCurrentPlayer().getFirstUnit().getLocation().getxCoordinate() - 11 / 2, game.getCurrentPlayer().getFirstUnit().getLocation().getyCoordinate() - 16 / 2, view.getOptionScreen().getFocusSpeed());
+
                     giveCommandViewFocus();
                 }
             }

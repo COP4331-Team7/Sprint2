@@ -133,7 +133,7 @@ public class CommandSelectController {
         Army army = getCurrentArmySelection(currType, currTypeInstance);
 
         if(unit != null)
-            mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
+            mainViewImage.zoomToDestination(unit.getLocation().getxCoordinate() - 11 / 2, unit.getLocation().getyCoordinate() - 16 / 2, 50);
         else if( structure != null)
             mainViewImage.zoomToDestination(structure.getLocation().getxCoordinate() - 11 / 2, structure.getLocation().getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
         else if( army != null)

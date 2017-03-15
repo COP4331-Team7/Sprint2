@@ -175,8 +175,11 @@ public class OptionsScreen extends JPanel{
             return Math.abs(s1.getMaximum() - s1.getValue());
     }
     public int getFocusSpeed() {
-        if(s3.getValue() == s3.getMaximum())
+        if(s3.getValue() == s3.getMaximum() )
             return 10;
+        else if ( (s3.getValue() == s3.getMinimum()) ) {
+            return 0;
+        }
         else
             return 7 * Math.abs(s3.getMaximum() - s3.getValue());
     }
