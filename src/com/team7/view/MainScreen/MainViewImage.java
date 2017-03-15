@@ -578,8 +578,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
 
                     //g2ds.setColor( Color.white );
-                    //g2ds.drawString( Integer.toString( xx ), x_coord + x_offset + 15, y_coord + 32);
-                    //g2ds.drawString( Integer.toString( yy ),  x_coord + x_offset + 35, y_coord + 32 );
+//                    g2ds.drawString( Integer.toString( xx ), x_coord + x_offset + 15, y_coord + 32);
+//                    g2ds.drawString( Integer.toString( yy ),  x_coord + x_offset + 35, y_coord + 32 );
 
 
 //                      //draw bottom left circle, to be used later
