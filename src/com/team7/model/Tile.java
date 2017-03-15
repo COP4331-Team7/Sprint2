@@ -428,7 +428,7 @@ public class Tile {
     public ArrayList<Army> getArmies() {
         return armies;
     }
-
+    public ArrayList<Worker> getWorkers() { return  workers;}
 
 
 }

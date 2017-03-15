@@ -5,6 +5,14 @@ import com.team7.model.areaEffects.HealAreaEffect;
 import com.team7.model.areaEffects.InstantDeathAreaEffect;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
+import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -19,6 +27,8 @@ import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
 
+import java.sql.Struct;
+
 /**
  * Copy tile state
  */
@@ -29,7 +39,6 @@ public class TileState {
     private int explorer;
     private int meleeUnit;
     private int rangeUnit;
-    private int workerUnit;
     private String areaEffectType;
     private String decal;
     private String itemType;
@@ -38,6 +47,56 @@ public class TileState {
     private int ore;
     private int food;
     private int energy;
+
+    public int getRallyPoint() {
+        return rallyPoint;
+    }
+
+    private int rallyPoint;
+
+    public int getFarm() {
+        return farm;
+    }
+
+    private int farm;
+
+    public int getFort() {
+        return fort;
+    }
+
+    private int fort;
+
+    public int getMine() {
+        return mine;
+    }
+
+    public int getObs_tower() {
+        return obs_tower;
+    }
+
+    public int getUniversity() {
+        return university;
+    }
+
+    public int getWorker() {
+        return worker;
+    }
+
+    public int getCapital() {
+        return capital;
+    }
+
+    public int getPowerplant() {
+        return powerplant;
+    }
+
+    private int mine;
+    private int obs_tower;
+
+    private int university;
+    private int worker;
+    private int capital;
+    private int powerplant;
 
     private boolean prospectedByPlayer1;
     private boolean prospectedByPlayer2;
@@ -58,6 +117,14 @@ public class TileState {
         this.ore = stateToCopy.ore;
         this.food = stateToCopy.food;
         this.energy = stateToCopy.energy;
+
+        this.farm = stateToCopy.farm;
+        this.fort = stateToCopy.fort;
+        this.mine = stateToCopy.mine;
+        this.obs_tower = stateToCopy.obs_tower;
+        this.university = stateToCopy.university;
+        this.worker = stateToCopy.worker;
+        this.powerplant = stateToCopy.powerplant;
     }
 
     public void refresh(TileState state) {
@@ -66,7 +133,14 @@ public class TileState {
         this.rangeUnit = state.rangeUnit;
         this.explorer = state.explorer;
         this.colonist = state.colonist;
-        this.workerUnit = state.workerUnit;
+
+        this.farm = state.farm;
+        this.fort = state.fort;
+        this.mine = state.mine;
+        this.obs_tower = state.obs_tower;
+        this.university = state.university;
+        this.worker = state.worker;
+        this.powerplant = state.powerplant;
 
 //        this.ore = state.ore;
 //        this.food = state.food;
@@ -105,7 +179,7 @@ public class TileState {
         }
 
         // set units
-        meleeUnit = 0; rangeUnit = 0; explorer = 0; colonist = 0; workerUnit = 0;
+        meleeUnit = 0; rangeUnit = 0; explorer = 0; colonist = 0;
         for(Unit unit : tile.getUnits()) {
             if(unit instanceof MeleeUnit)
                 meleeUnit++;
@@ -115,10 +189,24 @@ public class TileState {
                 explorer++;
             if(unit instanceof Colonist)
                 colonist++;
-            if((Entity)unit instanceof Worker)
-                workerUnit++;
+
         }
 
+        // structures
+        if(tile.getStructure() instanceof Capital)
+            capital++;
+        if(tile.getStructure() instanceof Farm)
+            farm++;
+        if(tile.getStructure() instanceof PowerPlant)
+            powerplant++;
+        if(tile.getStructure() instanceof Mine)
+            mine++;
+        if(tile.getStructure() instanceof Fort)
+            fort++;
+        if(tile.getStructure() instanceof University)
+            university++;
+        if(tile.getStructure() instanceof ObservationTower)
+            obs_tower++;
 
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
@@ -186,10 +274,6 @@ public class TileState {
 
     public void setTerrainType(String terrainType) {
         this.terrainType = terrainType;
-    }
-
-    public int getWorkerUnit() {
-        return workerUnit;
     }
 
     public int getRangeUnit() {

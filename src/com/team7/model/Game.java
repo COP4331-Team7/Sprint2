@@ -25,29 +25,27 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
-    private Player[] players = null;
+    private Player[] players = new Player[2];
     private Map map;
     private int turn;
     private Player currentPlayer;
 
-    public Game() {
+    public Game(Player p1, Player p2) {
+        players[0] = p1;
+        players[1] = p2;
         turn = 0;
+        currentPlayer = players[0];
     }
 
     public void newGameState() {
 
         // create two players
-        this.players = new Player[]{
-                                     new Player("One"),
-                                     new Player("Two")
-                                    };
+
 
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
-        currentPlayer = players[0];
-        turn = 0;
 
         //TODO: fix
         // set Player One starting units
@@ -242,19 +240,19 @@ public class Game {
         // some commands won't finish executing within 1 tick, they update & remain in queue
         System.out.println("\nUNITS:");
         for(Unit u : all_units) {
-           // u.printCommandQueue();
+            u.printCommandQueue();
             u.executeCommandQueue();
         }
 
         System.out.println("\nSTRUCTURES:");
         for(Structure s : all_structures) {
-          //  s.printCommandQueue();
+            s.printCommandQueue();
             s.executeCommandQueue();
         }
 
         System.out.println("\nARMIES:");
         for(Army a : all_armies) {
-           // a.printCommandQueue();
+            a.printCommandQueue();
             // s.executeCommandQueue();
         }
 

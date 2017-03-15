@@ -108,7 +108,7 @@ public class View
 
         public Screen( int width, int height)
         {
-            this.setTitle( " " );
+            this.setTitle( "" );
             this.setSize( width, height );
             addMenu();
 
