@@ -104,10 +104,6 @@ public class Mine extends StaffedStructure implements IHarvester {
     @Override
     public void executeCommandQueue() {
 
-        if(getTurnsFrozen() > 0) {
-            subtractFrozenTurn();
-            return;
-        }
 
         if(getCommandFromQueue() == null)
             return;
@@ -117,8 +113,40 @@ public class Mine extends StaffedStructure implements IHarvester {
 
         switch ( commandString ) {
 
-            case "DO_SOMETHING":
-                // do something
+            case "defend":
+                this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+                removeCommandFromQueue();
+                break;
+
+            case "decomission":
+                this.decommission();
+                removeCommandFromQueue();
+                break;
+
+            case "down":
+                this.powerDown();
+                removeCommandFromQueue();
+                break;
+
+            case "up":
+                this.powerUp();
+                removeCommandFromQueue();
+                break;
+
+            case "cancel":
+                this.getCommandQueue().cancelCommands();
+                removeCommandFromQueue();
+                break;
+
+            case "assign":
+                int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                ((StaffedStructure) this).assignHarvestOre(numberWorkers);
+                removeCommandFromQueue();
+                break;
+
+            case "unassign":
+                unassign();
+                removeCommandFromQueue();
                 break;
 
             default:

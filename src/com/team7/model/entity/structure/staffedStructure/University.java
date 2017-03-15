@@ -215,10 +215,6 @@ public class University extends StaffedStructure implements ITechnologyProducer 
     @Override
     public void executeCommandQueue() {
 
-        if(getTurnsFrozen() > 0) {
-            subtractFrozenTurn();
-            return;
-        }
 
         if(getCommandFromQueue() == null)
             return;
@@ -234,6 +230,50 @@ public class University extends StaffedStructure implements ITechnologyProducer 
         }
         else {
             commandToExecute.decrementWait();
+        }
+
+        String commandString = commandToExecute.getCommandString();
+
+        switch ( commandString ) {
+
+            case "defend":
+                this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+                removeCommandFromQueue();
+                break;
+
+            case "decomission":
+                this.decommission();
+                removeCommandFromQueue();
+                break;
+
+            case "down":
+                this.powerDown();
+                removeCommandFromQueue();
+                break;
+
+            case "up":
+                this.powerUp();
+                removeCommandFromQueue();
+                break;
+
+            case "cancel":
+                this.getCommandQueue().cancelCommands();
+                removeCommandFromQueue();
+                break;
+
+            case "assign":
+                int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                ((StaffedStructure) this).assignHarvestResearch(numberWorkers);
+                removeCommandFromQueue();
+                break;
+
+            case "unassign":
+                unassign();
+                removeCommandFromQueue();
+                break;
+
+            default:
+                break;
         }
 
     }

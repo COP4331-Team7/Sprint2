@@ -38,7 +38,6 @@ public abstract class Unit extends Entity {
         isPowered = powered;
     }
 
-    // TODO: change this so it is not hardcoded
     public void powerUp() {
 
         if(this instanceof CombatUnit) {
@@ -52,7 +51,6 @@ public abstract class Unit extends Entity {
         isPowered = true;
     }
 
-    // TODO: change this so it is not hardcoded
     public void powerDown() {
 
         this.getUnitStats().setUpkeep(1);
