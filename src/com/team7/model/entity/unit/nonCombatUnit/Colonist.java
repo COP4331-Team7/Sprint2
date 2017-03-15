@@ -30,6 +30,7 @@ public class Colonist extends NonCombatUnit {
     }
 
     public void buildCapital() {
+        System.out.println("buildCapital called");
         // create capital, 5 workers and 2 melee units
         Structure capital = new Capital(this.getLocation(), this.getOwner());
         this.getOwner().addStructure(capital);
@@ -46,11 +47,6 @@ public class Colonist extends NonCombatUnit {
         this.getOwner().addWorker(worker4);
         this.getOwner().addWorker(worker5);
 
-        getLocation().addWorkerToTile( worker1 );
-        getLocation().addWorkerToTile( worker2 );
-        getLocation().addWorkerToTile( worker3 );
-        getLocation().addWorkerToTile( worker4 );
-        getLocation().addWorkerToTile( worker5 );
 
         ((StaffedStructure) capital).addWorkerToStaff(worker1);
         ((StaffedStructure) capital).addWorkerToStaff(worker2);
