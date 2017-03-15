@@ -6,6 +6,8 @@ import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,6 +135,22 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         soldierTrainTicks += delta;
     }
 
+    public void buildUnit(String unitType) {
+        // create structure
+        Unit unit = new MeleeUnit(this.getLocation(), this.getOwner());;
+        if(unitType == "Melee") {
+            unit = new MeleeUnit(this.getLocation(), this.getOwner());
+        }
+        else if(unitType == "Ranged") {
+            unit = new RangedUnit(this.getLocation(), this.getOwner());
+        }
+
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getOwner().addUnit(unit);
+
+    }
+
     @Override
     public void executeCommandQueue() {
 
@@ -149,12 +167,50 @@ public class Fort extends StaffedStructure implements IUnitProducer {
 
         switch ( commandString ) {
 
-            case "DO_SOMETHING":
-                // do something
+            case "defend":
+                this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+                removeCommandFromQueue();
+                break;
+
+            case "decomission":
+                this.decommission();
+                removeCommandFromQueue();
+                break;
+
+            case "down":
+                this.powerDown();
+                removeCommandFromQueue();
+                break;
+
+            case "up":
+                this.powerUp();
+                removeCommandFromQueue();
+                break;
+
+            case "cancel":
+                this.getCommandQueue().cancelCommands();
+                removeCommandFromQueue();
+                break;
+
+            case "attack":
+                int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                // TODO: Attack function
+                removeCommandFromQueue();
+                break;
+
+            case "melee":
+                buildUnit("Melee");
+                removeCommandFromQueue();
+                break;
+
+            case "ranged":
+                buildUnit("Ranged");
+                removeCommandFromQueue();
                 break;
 
             default:
                 break;
+
         }
 
     }

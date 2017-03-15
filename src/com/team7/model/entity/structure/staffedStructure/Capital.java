@@ -4,8 +4,17 @@ import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
+import com.team7.model.entity.Worker;
+import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.StructureStats;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
+import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,6 +150,26 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         }
     }
 
+
+    public void makeExplorer() {
+        // create structure
+        Unit unit = new Explorer(this.getLocation(), this.getOwner());;
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getOwner().addUnit(unit);
+
+    }
+
+    public void makeWorker() {
+        // create structure
+        Worker worker = new Worker(this.getLocation(), this.getOwner());;
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getOwner().addWorker(worker);
+        this.addWorkerToStaff(worker);
+
+    }
+
     @Override
     public void executeCommandQueue() {
 
@@ -158,8 +187,61 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         switch ( commandString ) {
 
             case "DO_SOMETHING":
-                // do something
+            case "defend":
+                this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+                removeCommandFromQueue();
                 break;
+
+            case "decomission":
+                this.decommission();
+                removeCommandFromQueue();
+                break;
+
+            case "down":
+                this.powerDown();
+                removeCommandFromQueue();
+                break;
+
+            case "up":
+                this.powerUp();
+                removeCommandFromQueue();
+                break;
+
+            case "cancel":
+                this.getCommandQueue().cancelCommands();
+                removeCommandFromQueue();
+                break;
+
+            case "food":
+                int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                ((StaffedStructure) this).assignHarvestFood(numberWorkers);
+                removeCommandFromQueue();
+                break;
+
+            case "ore":
+                numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                ((StaffedStructure) this).assignHarvestOre(numberWorkers);
+                removeCommandFromQueue();
+                break;
+
+            case "energy":
+                 numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+                ((StaffedStructure) this).assignHarvestEnergy(numberWorkers);
+                removeCommandFromQueue();
+                break;
+
+            case "unassign":
+                unassign();
+                removeCommandFromQueue();
+                break;
+
+            case "explorer":
+                makeExplorer();
+                removeCommandFromQueue();
+
+            case "worker":
+                makeWorker();
+                removeCommandFromQueue();
 
             default:
                 break;

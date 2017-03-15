@@ -154,8 +154,8 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     };
     private final static String[] fortCommands = {
             "attack",
-            "train recruit with worker",
-            "train recruit with soldier",
+            "train melee with worker",
+            "train ranged with soldier",
             "defend",
             "decommission",
             "power down",
