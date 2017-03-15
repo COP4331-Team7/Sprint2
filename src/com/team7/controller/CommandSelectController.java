@@ -224,6 +224,9 @@ public class CommandSelectController {
 
         System.out.println(command.getCommandString());
 
+        PathSelectController pathSelectController = new PathSelectController(game, view);
+        pathSelectController.drawRenforce(pathSelectController.reEnforce(u),u);
+
         u.queueCommand(command);
         clearCommandView();
         giveCommandViewFocus();

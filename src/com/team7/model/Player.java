@@ -268,7 +268,6 @@ public class Player {
     // Removes unit from Player's ArrayList of Units
     public Unit removeUnit(Unit unit) {
         this.units.remove(unit);
-        if(unit.getLocation()!=null)
         unit.getLocation().removeUnitFromTile(unit);
     return unit;
     }
@@ -426,7 +425,7 @@ public class Player {
         if (!unit.isAlive()) {
             if(removeUnit(unit)!=null) {
                 destination.setDecal(new Decal());
-                //TODO why do I need to pass string for decal
+                removeUnit(unit);
                 t.setDecal("decal");
                 unit.setLocation(null);
                 System.out.println("Unit died");
