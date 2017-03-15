@@ -417,7 +417,7 @@ public class Player {
 
     public boolean moveUnit(Unit unit, Tile destination) {
         if (!unit.isAlive()) {
-            destination.removeUnitFromTile(unit);
+            removeUnit(unit);
             destination.setDecal(new Decal());
             unit.setLocation(null);
             System.out.println("Unit died");
@@ -436,7 +436,7 @@ public class Player {
 
         }
         if (!unit.isAlive()) {
-            destination.removeUnitFromTile(unit);
+            removeUnit(unit);
             destination.setDecal(new Decal());
             unit.setLocation(null);
             System.out.println("Unit died");
