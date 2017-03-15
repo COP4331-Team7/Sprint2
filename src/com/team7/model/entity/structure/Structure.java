@@ -297,6 +297,10 @@ public abstract class Structure extends Entity {
         }
     }
 
+    public boolean isAlive() {
+        return stats.getHealth() > 0;
+    }
+
     public CommandQueue getCommandQueue() {
         return commandQueue;
     }

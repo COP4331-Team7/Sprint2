@@ -117,7 +117,7 @@ public class Player {
         // check if any units are dead, if so remove from list
         int unitSize = this.units.size();
         for (int i = unitSize - 1; i >= 0; i--) {
-            if (this.units.get(i).getUnitStats().getHealth() <= 0) {
+            if (!this.units.get(i).isAlive()) {
                 removeUnit(this.units.get(i));
             }
         }
@@ -129,7 +129,7 @@ public class Player {
             int armyUnitSize = this.armies.get(i).getUnits().size();
             for (int j = armyUnitSize - 1; j >= 0; j--) {
                 // if any unit in the army is dead, remove it from the army
-                if (this.armies.get(i).getUnits().get(j).getUnitStats().getHealth() <= 0) {
+                if (!this.armies.get(i).getUnits().get(j).isAlive()) {
                     removeUnit(this.armies.get(i).getUnits().get(j));
                     this.armies.get(i).removeUnitFromArmy(this.armies.get(i).getUnits().get(j));
                 }
@@ -142,7 +142,7 @@ public class Player {
         int structureSize = this.structures.size();
         // check for any dead structures
         for (int i = structureSize - 1; i >= 0; i--) {
-            if (this.structures.get(i).getStats().getHealth() <= 0) {
+            if (!this.structures.get(i).isAlive()) {
                 removeStructure(this.structures.get(i));
             }
         }

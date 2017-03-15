@@ -227,7 +227,6 @@ public class Army extends Entity {
             removeCommandFromQueue();
         }
         else if(commandString.contains("move")) {
-           // TODO: handle movement
 
         }
         else if(commandString.contains("wait")) {
