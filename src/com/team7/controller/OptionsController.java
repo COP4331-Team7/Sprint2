@@ -167,10 +167,27 @@ public class OptionsController{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getFutureGameButton() ){
                     System.out.println("to the future");
-                    DemoGameMode dgm = new DemoGameMode(game);
+                    Player player1 = new Player("One");
+                    Player player2 = new Player("Two");
+                    Game demoGame      = new Game(player1, player2);
+                    DemoGameMode dgm = new DemoGameMode(demoGame);
                     dgm.activate();
-                    view.setMap(game.getMap());
+                    //re init all controllers
+                    HomeScreenController hsc = new HomeScreenController(demoGame, view);
+                    StructureOverviewController soc = new StructureOverviewController(view, demoGame.getCurrentPlayer());
+                    UnitOverviewController uoc = new UnitOverviewController(view, demoGame.getCurrentPlayer());
+                    PathSelectController psc = new PathSelectController(demoGame, view );
+                    CommandSelectController csc = new CommandSelectController(demoGame, view);
+                    OptionsController optionsController = new OptionsController(view, demoGame);
+                    MapScreenController mapScreenController = new MapScreenController(demoGame, view);
+                    ResearchScreenController roc = new ResearchScreenController();
+                    MainScreenController ssc = new MainScreenController(demoGame, view, soc, uoc);
+                    TechnologyScreenController technologyScreenController = new TechnologyScreenController(demoGame, view);
+
+
+                    view.setMap(demoGame.getMap());
                     mainViewImage.reDrawMap();
+
 
                 }
             }
