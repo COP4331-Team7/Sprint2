@@ -343,6 +343,14 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                              if (tileState.getFarm() > 0) {
                                  g2.drawImage(farmImage, x_coord + x_offset + 10, y_coord, null);
                              }
+
+
+                             if(tileState.getWorkerUnit() > 0) {
+                                 g2ds.setColor(new Color(250, 128, 100, 85));
+                                 g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
+                                 g2ds.setColor(new Color(255, 255, 255, 255));
+                                 g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 29, y_coord + 46 );
+                             }
                          }
 
 
@@ -562,7 +570,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.setColor(new Color(250, 128, 100, 85));
                             g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
                             g2ds.setColor(new Color(255, 255, 255, 255));
-                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 42 );
+                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 29, y_coord + 46 );
                         }
 
                         // shroud tile

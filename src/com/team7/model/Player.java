@@ -1,5 +1,6 @@
 package com.team7.model;
 
+import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
@@ -18,6 +19,7 @@ import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,6 +39,7 @@ public class Player {
     private int power;      //from harvested energy
     private int nutrients;  //from harvested food
     private int metal;      //from harvested ore
+    private PathSelectController controller = null;
 
     private String name;    //used to check player type easily
 
@@ -689,7 +692,9 @@ public class Player {
         System.out.println();
     }
 
-
+    public void setMovementController(PathSelectController controller) {
+        this.controller = controller;
+    }
 
     private void applyTechnology(Technology tech){
         String techType = tech.getTechnologyType();
