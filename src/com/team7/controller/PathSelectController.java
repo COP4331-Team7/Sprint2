@@ -112,33 +112,40 @@ public class PathSelectController {
         new Thread( new Runnable() {
                 public void run() {
 
-                    for(Tile tile: pathTile)
+                    for (Tile tile : pathTile)
                         tile.isSelectedPath = false;
 
                     for (int i = 0; i < pathTile.size(); i++) {
-                        game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
-                        game.updateCurrPlayerTileStates();
-                        miniMap.setMiniMapImage( mainViewImage.getFullMapImage(false) );
-
-                        final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
-                        SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
-                        {
-                            public void run() {
-                                mainViewImage.setImage(mapSubsection);
+                        if (!game.getCurrentPlayer().moveUnit(unit, pathTile.get(i))) {
+//                            game.updateCurrPlayerTileStates();
+                            mainViewImage.reDrawMap();
+                            break;
                             }
-                        });
-                        try {
-                            Thread.sleep(moveAnimationSpeed);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        else {// move the unit
+                            game.updateCurrPlayerTileStates();
+                            miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                            final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                            SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                            {
+                                public void run() {
+                                    mainViewImage.setImage(mapSubsection);
+                                }
+                            });
+                            try {
+                                Thread.sleep(moveAnimationSpeed);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (i == pathTile.size() - 1)
+                                mainViewImage.zoomToDestination(pathTile.get(pathTile.size() - 1).getxCoordinate() - 11 / 2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16 / 2, 30);
                         }
-
-                        if(i == pathTile.size() - 1)
-                            mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
-
                     }
                 }
         }).start();
+
+
 
     }
 

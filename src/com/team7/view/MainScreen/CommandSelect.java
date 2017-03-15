@@ -427,8 +427,10 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     public String getCommand() {
         StringBuilder sb = new StringBuilder();
 
-        if(currMode == 1 && currType == 0)           // CAPITAL
-            sb.append(((currCommand != -1)?capitalCommands[currCommand]:"")); //up / down arrow
+        if(currMode == 1 && currType == 0) {         // CAPITAL
+            sb.append(((currCommand != -1) ? capitalCommands[currCommand] : "")); //up / down arrow
+        System.out.println("inserting to command");
+        }
         else if(currMode == 1 && currType == 1)       // FORT
             sb.append(((currCommand != -1)?fortCommands[currCommand]:"")); //up / down arrow
         else if(currMode == 1 && currType == 2)         // UNIVERSITY
