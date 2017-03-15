@@ -477,26 +477,46 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                         // draw units
                         if(drawUnits) {
-                            g2ds.setColor(Color.black);
+                            g2ds.setColor(Color.white);
                             // explorer
                             if (tileState.getExplorer() == 1) {
                                 g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
-                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+//                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // colonist
                             if (tileState.getColonist() == 1) {
                                 g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
-                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+//                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // melee
                             if (tileState.getMeleeUnit() == 1) {
                                 g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
-                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+//                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // ranged
                             if (tileState.getRangeUnit() ==1){
                                 g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
-                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+//                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
+
+                            if (tileState.getExplorer() > 1) {
+                                g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( Integer.toString(tileState.getExplorer()) , x_coord + x_offset + 45, y_coord + 40);
+                            }
+                            // colonist
+                            if (tileState.getColonist() > 1) {
+                                g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( Integer.toString(tileState.getExplorer())  , x_coord + x_offset + 45, y_coord + 40);
+                            }
+                            // melee
+                            if (tileState.getMeleeUnit() > 1) {
+                                g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( Integer.toString(tileState.getExplorer())  , x_coord + x_offset + 45, y_coord + 40);
+                            }
+                            // ranged
+                            if (tileState.getRangeUnit() > 1){
+                                g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( Integer.toString(tileState.getExplorer())  , x_coord + x_offset + 45, y_coord + 40);
                             }
 
 //                            if (tileState.getWorkerUnit() > 0){
