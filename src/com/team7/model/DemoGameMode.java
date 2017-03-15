@@ -1,9 +1,11 @@
 package com.team7.model;
 
+import com.team7.model.areaEffects.InstantDeathAreaEffect;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
@@ -16,7 +18,21 @@ import java.util.ArrayList;
  */
 public class DemoGameMode {
     Game game;
+    //have player1 be much better than player 2
 
+    //player 1
+    //advance observation radius technology to 3
+    //advance worker work radius technology to 3
+    //advance ranged unit attack strength to level 3, show that melee is still at 1
+    //create explorer with very large movement and prospecting
+    //show a food resource renewing
+
+
+    //player 2
+    //advance observation radius technology to 2
+    //worker work radius technology stays at 0
+    //create university, study work radius
+    //create explorer without prospecting, move him through instant death
     public DemoGameMode(Game game){
         this.game = game;
     }
@@ -38,6 +54,10 @@ public class DemoGameMode {
         //add an explorer to both players
         addUnitToPlayer(player1, new Explorer(grid[10][24], player1));
         addUnitToPlayer(player2, new Explorer(grid[28][19], player2));
+
+
+        grid[10][26].setAreaEffect(new InstantDeathAreaEffect());
+        grid[28][17].setAreaEffect(new InstantDeathAreaEffect());
 
         //add a ranged unit to player 1
         addUnitToPlayer(player1, new RangedUnit(grid[5][13], player1));
@@ -82,7 +102,8 @@ public class DemoGameMode {
         addStructureToPlayer(player2, new ObservationTower(grid[32][11], player2));
         addStructureToPlayer(player2, new ObservationTower(grid[21][26], player2));
 
-
+        //add university to player2
+        addStructureToPlayer(player2, new University(grid[30][32], player2));
 
 
         //advance p1 technologies
@@ -91,6 +112,7 @@ public class DemoGameMode {
         ArrayList<Technology> p1structureTech = p1Technologies.getStructureTechnologies();
         ArrayList<Technology> p1unitTech = p1Technologies.getUnitTechnologies();
 
+        //increment structures
         for(Technology t : p1structureTech){
             if (t.getTechnologyInstance().equals("ObservationTower") && t.getTechnologyStat().equals("VisibilityRadius")){
                 t.incrementTechnologyLevel();
@@ -102,22 +124,53 @@ public class DemoGameMode {
             }
         }
 
+        //worker harvest radius (highlight) to lvl 1
+        for(Technology t : p1workerTech){
+            if (t.getTechnologyStat().equals("HarvestRadius")){
+                t.incrementTechnologyLevel();
+            }
+        }
 
-        //have player1 be much better than player 2
+        //ranged attack to lvl 2
+        for(Technology t : p1unitTech){
+            if (t.getTechnologyInstance().equals("Ranged") && t.getTechnologyStat().equals("AttackStrength")){
+                t.incrementTechnologyLevel();
+                t.incrementTechnologyLevel();
+            }
+            if (t.getTechnologyInstance().equals("Explorer") && t.getTechnologyStat().equals("VisibilityRadius")){
+                t.incrementTechnologyLevel();
+                t.incrementTechnologyLevel();
+            }
+        }
 
-        //player 1
-        //advance observation radius technology to 3
-        //advance worker work radius technology to 3
-        //advance ranged unit attack strength to level 3, show that melee is still at 1
-        //create explorer with very large movement and prospecting
-        //show a food resource renewing
+        //advance p2 technologies
+        Technologies p2Technologies = player2.getTechnologies();
+        ArrayList<Technology> p2workerTech = p2Technologies.getWorkerTechnologies();
+        ArrayList<Technology> p2unitTech = p2Technologies.getUnitTechnologies();
+        ArrayList<Technology> p2structureTech = p2Technologies.getStructureTechnologies();
 
 
-        //player 2
-        //advance observation radius technology to 2
-        //worker work radius technology stays at 0
-        //create university, study work radius
-        //create explorer without prospecting, move him through instant death
+        //increment structures
+        for(Technology t : p2structureTech){
+            if (t.getTechnologyInstance().equals("ObservationTower") && t.getTechnologyStat().equals("VisibilityRadius")){
+                t.incrementTechnologyLevel();
+                t.incrementTechnologyLevel();
+            }
+            if (t.getTechnologyInstance().equals("Capital") && t.getTechnologyStat().equals("VisibilityRadius")){
+                t.incrementTechnologyLevel();
+                t.incrementTechnologyLevel();
+            }
+        }
+
+
+        for(Technology t : p2unitTech){
+            if (t.getTechnologyInstance().equals("Explorer") && t.getTechnologyStat().equals("VisibilityRadius")){
+                t.incrementTechnologyLevel();
+                t.incrementTechnologyLevel();
+            }
+        }
+
+
 
         game.updateCurrPlayerTileStates();
 
