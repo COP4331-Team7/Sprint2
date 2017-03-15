@@ -419,14 +419,17 @@ public class Player {
     }
 
     public boolean moveUnit(Unit unit, Tile destination) {
+        TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
         if (!unit.isAlive()) {
             removeUnit(unit);
             destination.setDecal(new Decal());
+            //TODO why do I need to pass string for decal
+            t.setDecal("decal");
             unit.setLocation(null);
             System.out.println("Unit died");
             return false;
         }
-        TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
+
         if (t.getAreaEffectType() != null) {
             if (t.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
                 unit.getUnitStats().setHealth(0);
@@ -441,6 +444,8 @@ public class Player {
         if (!unit.isAlive()) {
             removeUnit(unit);
             destination.setDecal(new Decal());
+            //TODO why do I need to pass string for decal
+            t.setDecal("decal");
             unit.setLocation(null);
             System.out.println("Unit died");
             return false;
