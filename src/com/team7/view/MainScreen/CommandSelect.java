@@ -30,7 +30,8 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
             "DECOMISSION",
             "POWER DOWN",
             "POWER UP",
-            "CANCEL QUEUED ORDERS"
+            "CANCEL QUEUED ORDERS",
+            "BUILD"
     };
     private final static String[] unitCommands = {
             "REINFORCE",

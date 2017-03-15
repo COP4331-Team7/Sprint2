@@ -360,6 +360,11 @@ public class Army extends Entity {
             return;
         }
 
+        if(workers.size() <= 0) {
+            System.out.println("Not enough workers to build");
+            return;
+        }
+
         // add workers to construction
         for(int i = 0; i < workers.size(); i++) {
             structure.addWorkerToConstruction(workers.get(i));
