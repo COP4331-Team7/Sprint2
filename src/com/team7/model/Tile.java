@@ -48,7 +48,12 @@ public class Tile {
 
 
     ArrayList<Unit> units;
-    ArrayList<Army> armies;
+
+    public void setArmies(ArrayList<Army> armies) {
+        this.armies = armies;
+    }
+
+    private ArrayList<Army> armies;
     ArrayList<Worker> workers;
 
     public boolean isSelectedPath = false;

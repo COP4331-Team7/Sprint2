@@ -19,6 +19,7 @@ public abstract class Unit extends Entity {
     int turnsFrozen;
     private Army army;
     private int direction;
+    private MovementCommand movementCommandQueue;
 
 
     public UnitStats getUnitStats() {
@@ -198,4 +199,12 @@ public abstract class Unit extends Entity {
     }
 
     public abstract void applyTechnology(String techInstance, String technologyStat, int level);
+
+    public MovementCommand getMovementCommandQueue() {
+        return movementCommandQueue;
+    }
+
+    public void setMovementCommandQueue(MovementCommand movementCommandQueue) {
+        this.movementCommandQueue = movementCommandQueue;
+    }
 }
