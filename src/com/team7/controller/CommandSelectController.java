@@ -224,6 +224,9 @@ public class CommandSelectController {
 
         System.out.println(command.getCommandString());
 
+        PathSelectController pathSelectController = new PathSelectController(game, view);
+        pathSelectController.drawRenforce(pathSelectController.reEnforce(u),u);
+
         u.queueCommand(command);
         clearCommandView();
         giveCommandViewFocus();
@@ -265,7 +268,7 @@ public class CommandSelectController {
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
         Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
-
+        System.out.println(command.getCommandString());
 
         army.queueCommand(command);
         clearCommandView();
