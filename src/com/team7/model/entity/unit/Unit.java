@@ -151,11 +151,33 @@ public abstract class Unit extends Entity {
 
     public void executeCommandQueue() {
 
-        Command commandToExecute = getCommandFromQueue();
+        if(getCommandFromQueue() == null)
+            return;
 
-        // do something with the command
-        // each unit/structure receives specific list of commands
-        // this could be abstract and implemented in the subclasses
+        Command commandToExecute = getCommandFromQueue();
+        String commandString = commandToExecute.getCommandString();
+
+        if(commandString.contains("REINFORCE")) {
+            int ID = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            this.getOwner().getArmyByID(ID).addUnitToArmy(this);
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("DECOMMISSION")) {
+            this.decommission();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("DOWN")) {
+            this.powerDown();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("UP")) {
+            this.powerUp();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("move")) {
+
+        }
+
 
     }
 

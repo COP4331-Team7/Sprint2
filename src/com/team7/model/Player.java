@@ -788,4 +788,13 @@ public class Player {
         }
     }
 
+    public Army getArmyByID(int ID) {
+        for(int i = 0; i < armies.size(); i++) {
+            if(armies.get(i).getId() == ID) {
+                return armies.get(i);
+            }
+        }
+        return null;
+    }
+
 }
