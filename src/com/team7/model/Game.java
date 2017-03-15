@@ -302,4 +302,8 @@ public class Game {
     public void setMap(Map map) {
         this.map = map;
     }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
 }
