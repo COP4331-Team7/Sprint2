@@ -3,6 +3,8 @@ package com.team7.controller;
 
 import com.team7.model.Map;
 import com.team7.model.Player;
+import com.team7.model.entity.Command;
+import com.team7.model.entity.MovementCommand;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
@@ -120,47 +122,115 @@ public class PathSelectController {
 
         if(unit == null || pathTile.size() == 0)
             return;
+        System.out.println("Destin: " +pathTile.get(pathTile.size()-1).getxCoordinate()+","+pathTile.get(pathTile.size()-1).getxCoordinate());
 
         startTile.removeUnitFromTile(unit);
         startTile.isSelectedPath = false;
+        if (unit.getCommandQueue().getCommandsList().size() > 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (Command command : unit.getCommandQueue().getCommandsList()){
+                        MovementCommand movementCommand = (MovementCommand) command;
+                        movementCommand.getDestinationTile().isSelectedPath = false;
+//                        tile.isSelectedPath = false;
+                    }
 
-        new Thread( new Runnable() {
+                    for (int k = 0; k < unit.getCommandQueue().getCommandsList().size(); k++) {
+
+                        MovementCommand movementCommand = (MovementCommand) unit.getCommandQueue().getCommandsList().get(k);
+                        System.out.println("In Command queue"+movementCommand.getDestinationTile().getxCoordinate()+","+movementCommand.getDestinationTile().getyCoordinate());
+                        game.getCurrentPlayer().moveUnit(unit, movementCommand.getDestinationTile());
+                        game.updateCurrPlayerTileStates();
+                        miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                        final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                        SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                        {
+                            public void run() {
+                                mainViewImage.setImage(mapSubsection);
+                            }
+                        });
+                        try {
+                            Thread.sleep(moveAnimationSpeed);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (k == unit.getCommandQueue().getCommandsList().size() - 1)
+                            mainViewImage.zoomToDestination(pathTile.get(pathTile.size() - 1).getxCoordinate() - 11 / 2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16 / 2, 30);
+
+                    }
+                    unit.getCommandQueue().getCommandsList().clear();
+                }
+
+            }).start();
+        }
+        else {
+
+            new Thread(new Runnable() {
                 public void run() {
 
                     for (Tile tile : pathTile)
                         tile.isSelectedPath = false;
 
+                    int totalMoves = unit.getUnitStats().getMovement();
+                    System.out.println("Maximum limit" + totalMoves);
+
                     for (int i = 0; i < pathTile.size(); i++) {
                         if (!game.getCurrentPlayer().moveUnit(unit, pathTile.get(i))) {
-//                            game.updateCurrPlayerTileStates();
                             mainViewImage.reDrawMap();
                             break;
-                            }
-                        else {// move the unit
-                            game.updateCurrPlayerTileStates();
-                            miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
-
-                            final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
-                            SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
-                            {
-                                public void run() {
-                                    mainViewImage.setImage(mapSubsection);
+                        } else
+//                        if( unit.getCommandQueue().getCommandsList().size()==0){// move the uni// t
+                        {
+                            if (i >= totalMoves - 1) {
+                                for (int j = i; j < pathTile.size(); j++) {
+                                    MovementCommand command = new MovementCommand("MOVE", pathTile.get(j));
+                                    System.out.println("Adding to Queue" + pathTile.get(j).getxCoordinate()+","+pathTile.get(j).getyCoordinate());
+                                    unit.getCommandQueue().getCommandsList().add(command);
+                                    System.out.println("ArrayList size" + unit.getCommandQueue().getCommandsList().size());
                                 }
-                            });
-                            try {
-                                Thread.sleep(moveAnimationSpeed);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                break;
                             }
+//                                System.out.println(pathTile.get(i));
+//                                Command command = new MovementCommand("MOVE", pathTile.get(i));
+//                                System.out.println("Adding to Queue");
+//                                unit.getCommandQueue().getCommandsList().add(command);
+//                                System.out.println("ArrayList size" + unit.getCommandQueue().getCommandsList().size());
 
-                            if (i == pathTile.size() - 1)
-                                mainViewImage.zoomToDestination(pathTile.get(pathTile.size() - 1).getxCoordinate() - 11 / 2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16 / 2, 30);
+
+                            else {
+                                game.getCurrentPlayer().moveUnit(unit, pathTile.get(i));
+                                game.updateCurrPlayerTileStates();
+                                miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                                final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                                SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                                {
+                                    public void run() {
+                                        mainViewImage.setImage(mapSubsection);
+                                    }
+                                });
+                                try {
+                                    Thread.sleep(moveAnimationSpeed);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (i == pathTile.size() - 1)
+                                    mainViewImage.zoomToDestination(pathTile.get(pathTile.size() - 1).getxCoordinate() - 11 / 2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16 / 2, 30);
+                            }
                         }
                     }
                 }
-        }).start();
 
 
+            }).start();
+
+
+            System.out.println("Command Queue size: " + unit.getCommandQueue().getSize());
+        }
 
     }
 

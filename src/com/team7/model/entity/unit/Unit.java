@@ -1,12 +1,14 @@
 package com.team7.model.entity.unit;
 
 
-import com.team7.model.entity.Army;
-import com.team7.model.entity.Command;
-import com.team7.model.entity.CommandQueue;
-import com.team7.model.entity.Entity;
+import com.team7.model.Map;
+import com.team7.model.Tile;
+import com.team7.model.entity.*;
 import com.team7.model.entity.unit.combatUnit.CombatUnit;
 import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public abstract class Unit extends Entity {
@@ -17,6 +19,7 @@ public abstract class Unit extends Entity {
     int turnsFrozen;
     private Army army;
     private int direction;
+    private MovementCommand movementCommandQueue;
 
 
     public UnitStats getUnitStats() {
@@ -35,7 +38,6 @@ public abstract class Unit extends Entity {
         isPowered = powered;
     }
 
-    // TODO: change this so it is not hardcoded
     public void powerUp() {
 
         if(this instanceof CombatUnit) {
@@ -49,7 +51,6 @@ public abstract class Unit extends Entity {
         isPowered = true;
     }
 
-    // TODO: change this so it is not hardcoded
     public void powerDown() {
 
         this.getUnitStats().setUpkeep(1);
@@ -149,7 +150,7 @@ public abstract class Unit extends Entity {
             commandQueue.removeCommand();
     }
 
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
 
         if(getCommandFromQueue() == null)
             return;
@@ -175,7 +176,17 @@ public abstract class Unit extends Entity {
             removeCommandFromQueue();
         }
         else if(commandString.contains("MOVE")) {
+            if(commandToExecute instanceof MovementCommand){
+                ArrayList<Tile> tiles = map.findMinPath(this.getLocation(), ((MovementCommand) commandToExecute).getDestinationTile(), null, null);
+                ArrayList<Tile> reachableTiles = new ArrayList<Tile>();
+                for(int i = 0; i < this.getUnitStats().getMovement(); i++) {
+                    reachableTiles.add(tiles.get(tiles.size() - i - 1));
+                }
 
+                for(int i = 0; i < reachableTiles.size() - 1; i++) {
+                    this.getOwner().moveUnit(this, reachableTiles.get(i + 1));
+                }
+            }
         }
 
 
@@ -209,4 +220,12 @@ public abstract class Unit extends Entity {
     }
 
     public abstract void applyTechnology(String techInstance, String technologyStat, int level);
+
+    public MovementCommand getMovementCommandQueue() {
+        return movementCommandQueue;
+    }
+
+    public void setMovementCommandQueue(MovementCommand movementCommandQueue) {
+        this.movementCommandQueue = movementCommandQueue;
+    }
 }

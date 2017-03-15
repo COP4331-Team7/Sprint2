@@ -8,6 +8,8 @@ import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.CombatUnit;
+import com.team7.model.entity.unit.nonCombatUnit.NonCombatUnit;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ public abstract class Structure extends Entity {
     private StructureStats stats;
     private String type;
     private boolean isPowered;
-
+    private int direction;
     private int turnsFrozen;
  
     private int energyUpkeep;   //requires Power from Player
@@ -38,6 +40,9 @@ public abstract class Structure extends Entity {
         return false;
     }
 
+    public void decommission() {
+        this.getStats().setHealth(0);
+    }
 
     public int advanceConstruction() {    //returns how much food was necessary that turn
 
@@ -303,5 +308,30 @@ public abstract class Structure extends Entity {
 
     public CommandQueue getCommandQueue() {
         return commandQueue;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public void powerUp() {
+
+        this.energyUpkeep = energyUpkeep * 4;
+        this.oreUpkeep = oreUpkeep * 4;
+
+        this.setTurnsFrozen(2);
+        isPowered = true;
+    }
+
+    public void powerDown() {
+
+        this.energyUpkeep = energyUpkeep / 4;
+        this.oreUpkeep = oreUpkeep / 4;
+
+        isPowered = false;
     }
 }

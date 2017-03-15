@@ -75,16 +75,13 @@ public class Game {
         addArmyToPlayer(players[0], new Army(map.getGrid()[1][29],  players[0]));
         addArmyToPlayer(players[1], new Army(map.getGrid()[1][31],  players[1]));
 
-        System.out.println(players[0].getArmies());
-        System.out.println(players[1].getArmies());
 
-
-        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
-        addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][29], players[1]));
+        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
+        addUnitToPlayer( players[0], new  MeleeUnit(this.map.getGrid()[1][29], players[0]));
         addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][31], players[1]));
 
         players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 1));
-        players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 2));
+        players[0].getArmies().get(1).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 2));
         players[1].getArmies().get(0).addUnitToArmy(players[1].getUnits().get(players[1].getUnits().size() - 1));
 
 
@@ -236,7 +233,7 @@ public class Game {
         System.out.println("\nUNITS:");
         for(Unit u : all_units) {
             u.printCommandQueue();
-            u.executeCommandQueue();
+            u.executeCommandQueue(map);
         }
 
         System.out.println("\nSTRUCTURES:");
@@ -304,5 +301,13 @@ public class Game {
 
     public void setMap(Map map) {
         this.map = map;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

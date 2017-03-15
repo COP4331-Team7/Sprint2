@@ -417,6 +417,7 @@ public class Player {
     }
 
     public boolean moveUnit(Unit unit, Tile destination) {
+        System.out.println(destination);
         TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
         if (!unit.isAlive()) {
             removeUnit(unit);
@@ -427,8 +428,8 @@ public class Player {
             System.out.println("Unit died");
             return false;
         }
-
-        if (t.getAreaEffectType() != null) {
+        System.out.println("State" + t);
+        if (t.getAreaEffectType() != null ) {
             if (t.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
                 unit.getUnitStats().setHealth(0);
                 System.out.println(unit.getUnitStats().getHealth());

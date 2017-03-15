@@ -271,7 +271,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         // execute recorded path
         else if(isRecordingPath == true && e.getKeyChar() == '5') {
 
-            controller.queueCommand( pathSelectController.getDestinationTile() );
+            System.out.println(pathSelectController.getDestinationTile().getxCoordinate() + " " + pathSelectController.getDestinationTile().getyCoordinate());
 
             pathSelectController.drawPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;

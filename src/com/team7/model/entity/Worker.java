@@ -8,7 +8,10 @@ public class Worker extends Entity {
     private Army army;
     private int constructionRate;
     private boolean isFed;
-    private boolean isAssigned;
+    private boolean assignedEnergy;
+    private boolean assignedOre;
+    private boolean assignedFood;
+    private boolean assignedResearch;
     private int harvestRadius;
     private int foodUpkeep;
 
@@ -16,12 +19,16 @@ public class Worker extends Entity {
         setOwner(player);
         setLocation(startTile);
 
+        assignedEnergy = false;
+        assignedOre = false;
+        assignedFood = false;
+        assignedResearch = false;
+
         generateID();
         setArmy(null);
         setVisibilityRadius(2);
         constructionRate = 10;
         setFed(true);   //worker has enough food when created
-        setAssigned(false); //worker is not assigned until specified
 
         foodUpkeep = 5; //initially requires 5 food per turn
 
@@ -37,12 +44,9 @@ public class Worker extends Entity {
     }
 
     public boolean isAssigned() {
-        return isAssigned;
+        return assignedEnergy ||assignedFood || assignedOre || assignedResearch;
     }
 
-    public void setAssigned(boolean assigned) {
-        isAssigned = assigned;
-    }
 
     public int getConstructionRate() {
         return constructionRate;
@@ -100,5 +104,37 @@ public class Worker extends Entity {
 
     public void setHarvestRadius(int harvestRadius) {
         this.harvestRadius = harvestRadius;
+    }
+
+    public boolean isAssignedEnergy() {
+        return assignedEnergy;
+    }
+
+    public void setAssignedEnergy(boolean assignedEnergy) {
+        this.assignedEnergy = assignedEnergy;
+    }
+
+    public boolean isAssignedOre() {
+        return assignedOre;
+    }
+
+    public void setAssignedOre(boolean assignedOre) {
+        this.assignedOre = assignedOre;
+    }
+
+    public boolean isAssignedFood() {
+        return assignedFood;
+    }
+
+    public void setAssignedFood(boolean assignedFood) {
+        this.assignedFood = assignedFood;
+    }
+
+    public boolean isAssignedResearch() {
+        return assignedResearch;
+    }
+
+    public void setAssignedResearch(boolean assignedResearch) {
+        this.assignedResearch = assignedResearch;
     }
 }
