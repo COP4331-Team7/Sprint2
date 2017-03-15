@@ -1,13 +1,16 @@
 package com.team7.model;
 
 import com.team7.model.areaEffects.InstantDeathAreaEffect;
+import com.team7.model.entity.Army;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
+import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
 import java.util.ArrayList;
@@ -174,6 +177,19 @@ public class DemoGameMode {
 
 
 
+
+        addArmyToPlayer(player1, new Army(grid[2][30], player1));
+        addArmyToPlayer(player1, new Army(grid[1][29], player1));
+
+        addUnitToPlayer( player1, new MeleeUnit(grid[1][30], player1));
+        addUnitToPlayer( player1, new MeleeUnit(grid[1][30], player1));
+
+        player1.getArmies().get(0).addUnitToArmy(player1.getUnits().get(player1.getUnits().size() - 1));
+        player1.getArmies().get(1).addUnitToArmy(player1.getUnits().get(player1.getUnits().size() - 2));
+
+
+
+
         game.updateCurrPlayerTileStates();
 
     }
@@ -186,6 +202,10 @@ public class DemoGameMode {
     //create structure
     public void addStructureToPlayer(Player player, Structure structure){
         player.addStructure(structure);
+    }
+
+    public void addArmyToPlayer(Player player, Army army){
+        player.addArmy(army);
     }
 
 }
