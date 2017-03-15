@@ -16,7 +16,7 @@ public class Command {
         wait = 0;
 
         if(commandString.contains("MAKE BASE")){
-            wait += 5;
+            wait += 0;  // todo:change
         }
 
 
