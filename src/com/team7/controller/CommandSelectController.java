@@ -155,8 +155,8 @@ public class CommandSelectController {
                     }
                     else
 
-                    queueCommand();
-                    game.printCommandQueues();
+                        queueCommand();
+                        game.printCommandQueues();
 
                 clearCommandView();
                 giveCommandViewFocus();
@@ -210,6 +210,9 @@ public class CommandSelectController {
 
         System.out.println("Option pane on display reinforce !");
         // int id = Integer.parseInt(String.valueOf(idString));
+
+
+        //queueCommand();
 
         // queueCommand();
         clearCommandView();

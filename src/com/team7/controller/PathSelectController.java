@@ -2,6 +2,7 @@ package com.team7.controller;
 
 
 import com.team7.model.Map;
+import com.team7.model.Player;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
@@ -16,6 +17,7 @@ import com.team7.view.View;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
@@ -43,8 +45,11 @@ public class PathSelectController {
         this.miniMap = view.getMainScreen().getMiniMap();
         this.commandView = view.getCommandSelect();
 
+        Player[] players = this.game.getPlayers();
+        players[0].setMovementController(this);
+        players[1].setMovementController(this);
 
-         configReader = new ConfigReader();
+        configReader = new ConfigReader();
 
         commandView.setController(this);
     }
@@ -81,6 +86,15 @@ public class PathSelectController {
         mainViewImage.reDrawMap();
     }
 
+    public ArrayList<Tile> findMinPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
+
+
+
+
+
+        return null;
+    }
+
     public void startRecordingPath(Tile startTile, int unitMovement) {
 
         moveLimit = unitMovement;
@@ -112,33 +126,40 @@ public class PathSelectController {
         new Thread( new Runnable() {
                 public void run() {
 
-                    for(Tile tile: pathTile)
+                    for (Tile tile : pathTile)
                         tile.isSelectedPath = false;
 
                     for (int i = 0; i < pathTile.size(); i++) {
-                        game.getCurrentPlayer().moveUnit(unit, pathTile.get(i)); //  move the unit
-                        game.updateCurrPlayerTileStates();
-                        miniMap.setMiniMapImage( mainViewImage.getFullMapImage(false) );
-
-                        final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
-                        SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
-                        {
-                            public void run() {
-                                mainViewImage.setImage(mapSubsection);
+                        if (!game.getCurrentPlayer().moveUnit(unit, pathTile.get(i))) {
+//                            game.updateCurrPlayerTileStates();
+                            mainViewImage.reDrawMap();
+                            break;
                             }
-                        });
-                        try {
-                            Thread.sleep(moveAnimationSpeed);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        else {// move the unit
+                            game.updateCurrPlayerTileStates();
+                            miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                            final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                            SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                            {
+                                public void run() {
+                                    mainViewImage.setImage(mapSubsection);
+                                }
+                            });
+                            try {
+                                Thread.sleep(moveAnimationSpeed);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (i == pathTile.size() - 1)
+                                mainViewImage.zoomToDestination(pathTile.get(pathTile.size() - 1).getxCoordinate() - 11 / 2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16 / 2, 30);
                         }
-
-                        if(i == pathTile.size() - 1)
-                            mainViewImage.zoomToDestination( pathTile.get(pathTile.size() - 1).getxCoordinate() - 11/2, pathTile.get(pathTile.size() - 1).getyCoordinate() - 16/2, 30  );
-
                     }
                 }
         }).start();
+
+
 
     }
 

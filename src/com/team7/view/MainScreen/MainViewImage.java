@@ -68,6 +68,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private int scrollSpeed = 300; // ms
         private boolean drawResources = false;
         private boolean drawUnits = true;
+        private boolean drawAreaEffects = true;
 
         Player player = null;
 
@@ -89,7 +90,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                moneyBagImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moneyBag.png"));
                moonRockImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moonRock.png"));
                hieroglyphicBookImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/bookImage1.png"));
-               elixerShowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/elixirShowerImage.png"));
+               elixerShowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/elixir.png"));
                stormImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/stormImageBig.png"));
                colonistImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/colonistImage.png"));
                explorerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/explorerImage.png"));
@@ -323,6 +324,20 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                      g2.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
                                  }
                              }
+                             if(drawAreaEffects && tileState.getAreaEffectType()!=null) {
+                                 if (tileState.getAreaEffectType().equalsIgnoreCase("Heal")) {
+                                     g2.drawImage(elixerShowerImage, x_coord + x_offset + 10, y_coord, null);
+                                 }
+                                 if (tileState.getAreaEffectType().equalsIgnoreCase("Damage")) {
+                                     g2.drawImage(stormImage, x_coord + x_offset + 10, y_coord, null);
+                                 }
+                                 if (tileState.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
+                                     g2.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
+                                 }
+                             }
+
+
+
 
 
                              if (tileState.getCapital() > 0) {
@@ -342,6 +357,14 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                              }
                              if (tileState.getFarm() > 0) {
                                  g2.drawImage(farmImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+
+
+                             if(tileState.getWorkerUnit() > 0) {
+                                 g2ds.setColor(new Color(250, 128, 100, 85));
+                                 g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
+                                 g2ds.setColor(new Color(255, 255, 255, 255));
+                                 g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 29, y_coord + 46 );
                              }
                          }
 
@@ -518,6 +541,18 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             }
 
                         }
+                        if(drawAreaEffects && tileState.getAreaEffectType()!=null) {
+                            if (tileState.getAreaEffectType().equalsIgnoreCase("Heal")) {
+                                g2ds.drawImage(elixerShowerImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                            if (tileState.getAreaEffectType().equalsIgnoreCase("Damage")) {
+                                g2ds.drawImage(stormImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                            if (tileState.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
+                                g2ds.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
+                            }
+                        }
+
 
                         if (tileState.getCapital() > 0) {
                             g2ds.drawImage(baseImage, x_coord + x_offset + 10, y_coord, null);
@@ -562,7 +597,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.setColor(new Color(250, 128, 100, 85));
                             g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
                             g2ds.setColor(new Color(255, 255, 255, 255));
-                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 42 );
+                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 29, y_coord + 46 );
                         }
 
                         // shroud tile
@@ -716,6 +751,17 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if (tileState.getFoodQuantity() > 0) {
                             g2ds.setColor(new Color(0xAFAFFC00));
                             g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
+                        }
+                    }
+                    if(drawAreaEffects && tileState.getAreaEffectType()!=null) {
+                        if (tileState.getAreaEffectType().equalsIgnoreCase("Heal")) {
+                            g2ds.drawImage(elixerShowerImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getAreaEffectType().equalsIgnoreCase("Damage")) {
+                            g2ds.drawImage(stormImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
+                            g2ds.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
                         }
                     }
 
