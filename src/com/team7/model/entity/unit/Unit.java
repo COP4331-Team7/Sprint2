@@ -174,7 +174,7 @@ public abstract class Unit extends Entity {
             this.powerUp();
             removeCommandFromQueue();
         }
-        else if(commandString.contains("move")) {
+        else if(commandString.contains("MOVE")) {
 
         }
 

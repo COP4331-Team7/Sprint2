@@ -2,6 +2,8 @@ package com.team7.view.MainScreen;
 
 import com.team7.controller.CommandSelectController;
 import com.team7.controller.PathSelectController;
+import com.team7.model.entity.Command;
+import com.team7.model.entity.MovementCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +22,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private JLabel commandLabel;
 
     private final static String[] armyCommands = {
-            "attack",
-            "defend",
-            "move",
-            "wait",
-            "disband",
-            "decommission",
-            "power down",
-            "power up",
-            "cancel queued orders"
+            "ATTACK",
+            "DEFEND",
+            "MOVE",
+            "WAIT",
+            "DISBAND",
+            "DECOMISSION",
+            "POWER DOWN",
+            "POWER UP",
+            "CANCEL QUEUED ORDERS"
     };
     private final static String[] unitCommands = {
             "REINFORCE",
@@ -268,6 +270,9 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
         // execute recorded path
         else if(isRecordingPath == true && e.getKeyChar() == '5') {
+
+            controller.queueCommand( pathSelectController.getDestinationTile() );
+
             pathSelectController.drawPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }

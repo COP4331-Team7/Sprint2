@@ -57,6 +57,8 @@ public class Tile {
     private TileState playerTwoDraw;
     private TileState realDraw;
 
+
+
     private enum VisibilityState {
         Visible, NonVisible, Shrouded
     }
@@ -429,6 +431,12 @@ public class Tile {
         if(energy == null) return 0;
 
         return energy.getStatInfluenceQuantity();
+    }
+
+    public void renewFood() {
+        if (food != null){
+            food.changeResourceQuantity(5);
+        }
     }
 
     public ArrayList<Army> getArmies() {
