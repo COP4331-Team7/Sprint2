@@ -355,8 +355,6 @@ public class Player {
     }
 
     public Structure addStructure(Structure structure) {
-        // Ensures we are able to add a structure
-        if (structures.size() == 10) {
             // Ensures we are able to add a structure
             if (structures.size() >= 10) {
                 System.out.println("You have too many structures.");
@@ -370,7 +368,7 @@ public class Player {
             for (Technology structureTechnology : technologies.getStructureTechnologies()) {
                 applyTechnology(structureTechnology);
             }
-        }
+
 
             return structure;
         }
