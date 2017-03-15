@@ -373,5 +373,8 @@ public class Army extends Entity {
 
     public void setDirection(int direction) {
         this.direction = direction;
+        for(int i = 0; i < units.size(); i++){
+            units.get(i).setDirection(direction);
+        }
     }
 }
