@@ -86,7 +86,7 @@ public class PathSelectController {
         mainViewImage.reDrawMap();
     }
 
-    public ArrayList<Tile> findMinPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
+    public ArrayList<Tile> getPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
 
 
 

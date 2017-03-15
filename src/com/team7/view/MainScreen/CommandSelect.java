@@ -20,15 +20,15 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
     private JLabel commandLabel;
 
     private final static String[] armyCommands = {
-            "attack",
-            "defend",
-            "move",
-            "wait",
-            "disband",
-            "decommission",
-            "power down",
-            "power up",
-            "cancel queued orders"
+            "ATTACK",
+            "DEFEND",
+            "MOVE",
+            "WAIT",
+            "DISBAND",
+            "DECOMISSION",
+            "POWER DOWN",
+            "POWER UP",
+            "CANCEL QUEUED ORDERS"
     };
     private final static String[] unitCommands = {
             "REINFORCE",
@@ -244,6 +244,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
                     typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentArmySelection( currType, currTypeInstance ).getId() );
                     break;
             }
+            controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
@@ -259,14 +260,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
 
         // start recording path
-        if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
+        if(isRecordingPath == false && e.getKeyChar() == '5') {        // TODO: make compatible with both structures/ units
             if(controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) == null)
                 return;
             pathSelectController.startRecordingPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getLocation(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getUnitStats().getMovement()   );
             isRecordingPath = true;
         }
         // execute recorded path
-        else if( e.getKeyChar() == '5') {
+        else if(isRecordingPath == true && e.getKeyChar() == '5') {
             pathSelectController.drawPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
