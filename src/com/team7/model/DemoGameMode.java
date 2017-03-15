@@ -22,8 +22,8 @@ public class DemoGameMode {
         game.setMap(new Map());
         Player[] resetPlayers = {new Player("One"), new Player("Two")};
         game.setPlayers(resetPlayers);
+        game.setCurrentPlayer(game.getPlayers()[0]);
 
-        game.updateCurrPlayerTileStates();
 
         Player player1 = game.getPlayers()[0];
         Player player2 = game.getPlayers()[1];
@@ -40,7 +40,7 @@ public class DemoGameMode {
             player.setNutrients(1000);
             player.setPower(1000);
         }
-/*
+
 
 
         ObservationTower obsv1 = new ObservationTower(game.getMap().getGrid()[5][5], player1);
@@ -60,7 +60,7 @@ public class DemoGameMode {
         player1.addUnit(new Explorer(game.getMap().getGrid()[21][22], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[31][30], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[30][30], player1));
-*/
+
 
 
 

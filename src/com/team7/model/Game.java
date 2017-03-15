@@ -309,4 +309,8 @@ public class Game {
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 }
