@@ -1,6 +1,7 @@
 package com.team7.model;
 
 import com.team7.model.entity.structure.ObservationTower;
+import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 
 /**
@@ -19,11 +20,19 @@ public class DemoGameMode {
     public void activate(){
         //first reset game to default state
         game.setMap(new Map());
+        Player[] resetPlayers = {new Player("One"), new Player("Two")};
+        game.setPlayers(resetPlayers);
 
         game.updateCurrPlayerTileStates();
 
         Player player1 = game.getPlayers()[0];
         Player player2 = game.getPlayers()[1];
+
+        addUnitToPlayer( player1, new Explorer(game.getMap().getGrid()[35][20], player1) );
+
+        addUnitToPlayer( player2, new Explorer(game.getMap().getGrid()[5][7], player2) );
+
+        System.out.println("SIZE SHOULD BE 0" + player1.getStructures().size());
 
         //give both players a lot of nutrients, power, metal
         for(Player player : game.getPlayers()){
@@ -31,6 +40,7 @@ public class DemoGameMode {
             player.setNutrients(1000);
             player.setPower(1000);
         }
+/*
 
 
         ObservationTower obsv1 = new ObservationTower(game.getMap().getGrid()[5][5], player1);
@@ -50,6 +60,7 @@ public class DemoGameMode {
         player1.addUnit(new Explorer(game.getMap().getGrid()[21][22], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[31][30], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[30][30], player1));
+*/
 
 
 
@@ -74,4 +85,10 @@ public class DemoGameMode {
         game.updateCurrPlayerTileStates();
 
     }
+
+    // create a unit, add to player, place on map at [x][y]
+    public void addUnitToPlayer(Player player, Unit unit) {
+        player.addUnit(unit);
+    }
+
 }
