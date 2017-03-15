@@ -128,8 +128,8 @@ public class OptionsScreen extends JPanel{
         futureGameButton = new JButton("fast forward");
         futureGameButton.setForeground( new Color(0xff000000) );
         futureGameButton.setFont(new Font("plain", Font.BOLD, 20));
-        futureGameButton.setBackground(new Color(0xffCABD80));
-        futureGameButton.setOpaque(true);
+//        futureGameButton.setBackground(new Color(0xffCABD80));
+//        futureGameButton.setOpaque(true);
         btns.add( futureGameButton );
 
         btns.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));

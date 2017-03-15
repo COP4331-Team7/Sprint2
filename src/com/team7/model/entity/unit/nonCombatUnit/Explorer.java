@@ -23,7 +23,7 @@ public class Explorer extends NonCombatUnit {
         setArmy(null);
         setDirection(2);
         setProspecting(false);
-        setVisibilityRadius(1); //start technology level 1
+        setVisibilityRadius(3); //start technology level 1
     }
 
     public boolean isProspecting() {
