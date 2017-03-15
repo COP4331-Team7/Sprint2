@@ -21,6 +21,7 @@ public class Farm extends StaffedStructure implements IHarvester {
     public Farm(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
         setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();

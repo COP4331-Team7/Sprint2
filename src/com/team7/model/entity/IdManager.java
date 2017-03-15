@@ -1,7 +1,14 @@
 package com.team7.model.entity;
 
 import com.team7.model.Player;
+import com.team7.model.entity.structure.ObservationTower;
 import com.team7.model.entity.structure.Structure;
+import com.team7.model.entity.structure.staffedStructure.Capital;
+import com.team7.model.entity.structure.staffedStructure.Fort;
+import com.team7.model.entity.structure.staffedStructure.University;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.PowerPlant;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -88,11 +95,70 @@ public class IdManager {
                 return -1;
             }
 
-            ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
-            for(int i = 0; i < player.getStructures().size(); i++){
-                availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+            if(entity instanceof ObservationTower) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof ObservationTower){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
             }
-            ID = availableIDs.get(0);
+            else if(entity instanceof Capital) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof Capital){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+            else if(entity instanceof Fort) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof Fort){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+            else if(entity instanceof University) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof University){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+            else if(entity instanceof Farm) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof Farm){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+            else if(entity instanceof Mine) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof Mine){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+            else if(entity instanceof PowerPlant) {
+                ArrayList<Integer> availableIDs= new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
+                for(int i = 0; i < player.getStructures().size(); i++){
+                    if(player.getStructures().get(i) instanceof PowerPlant){
+                        availableIDs.remove(Integer.valueOf(player.getStructures().get(i).getId()));
+                    }
+                }
+                ID = availableIDs.get(0);
+            }
+
         }
         else if(entity instanceof Army) {
             if(player.getArmies().size() >= 10) {
