@@ -183,6 +183,15 @@ public class Game {
         applyAllTechnologies();
 //        removeDeadUnits();
         updateCurrPlayerTileStates();
+        renewFoodResource();
+    }
+
+    private void renewFoodResource() {
+        for (Tile[] tiles : map.getGrid()){
+            for (Tile tile : tiles){
+                tile.renewFood();
+            }
+        }
     }
 
     private void applyAllTechnologies() {
