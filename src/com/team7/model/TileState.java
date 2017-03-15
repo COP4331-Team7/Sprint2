@@ -198,7 +198,7 @@ public class TileState {
         if(tile.getStructure() instanceof ObservationTower)
             obs_tower++;
 
-
+        workerUnit = 0;
         workerUnit += tile.getWorkers().size();
 
         // area affect

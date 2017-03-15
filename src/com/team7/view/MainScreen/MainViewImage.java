@@ -323,6 +323,26 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                      g2.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
                                  }
                              }
+
+
+                             if (tileState.getCapital() > 0) {
+                                 g2.drawImage(baseImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             if (tileState.getFort() > 0) {
+                                 g2.drawImage(fortImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             if (tileState.getMine() > 0) {
+                                 g2.drawImage(mineImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             if (tileState.getUniversity() > 0) {
+                                 g2.drawImage(universityImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             if (tileState.getObs_tower() > 0) {
+                                 g2.drawImage(obsTowerImage, x_coord + x_offset + 10, y_coord, null);
+                             }
+                             if (tileState.getFarm() > 0) {
+                                 g2.drawImage(farmImage, x_coord + x_offset + 10, y_coord, null);
+                             }
                          }
 
 
@@ -448,10 +468,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
 
-                            if (tileState.getWorkerUnit() > 0){
-                                g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
-                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
-                            }
+//                            if (tileState.getWorkerUnit() > 0){
+//                                g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+//                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+//                            }
                         }
                         //draw resource counts
                         if(drawResources) {
@@ -542,8 +562,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.setColor(new Color(250, 128, 100, 85));
                             g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
                             g2ds.setColor(new Color(255, 255, 255, 255));
-                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 32 );
-                            System.out.println("yeeeeeeeeeeeet");
+                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 42 );
                         }
 
                         // shroud tile
