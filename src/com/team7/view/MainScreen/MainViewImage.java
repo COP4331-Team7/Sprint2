@@ -339,7 +339,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                  g2.drawImage(skullImage, x_coord + x_offset + 10, y_coord, null);
                                  System.out.println("Settinfg decal");
                              }
-                             if(tileState.getMeleeUnit() + tileState.getWorkerUnit() + tileState.getRangeUnit() >1)
+                             if(tileState.getArmy() > 0)
                              {
                                  g2.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
                              }
@@ -585,7 +585,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
 
 
-                        if(tileState.getMeleeUnit()  + tileState.getRangeUnit() >1)
+                        if(tileState.getArmy() > 0)
                         {
                             System.out.println("Creating army");
                             g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
@@ -754,7 +754,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
                     }
 
-                    if(tileState.getMeleeUnit() + tileState.getWorkerUnit() + tileState.getRangeUnit() >1)
+                    if(tileState.getArmy() > 0)
                     {
                         g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
                     }
