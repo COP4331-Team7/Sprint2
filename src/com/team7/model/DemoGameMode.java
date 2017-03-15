@@ -154,7 +154,6 @@ public class DemoGameMode {
         for(Technology t : p2structureTech){
             if (t.getTechnologyInstance().equals("ObservationTower") && t.getTechnologyStat().equals("VisibilityRadius")){
                 t.incrementTechnologyLevel();
-                t.incrementTechnologyLevel();
             }
             if (t.getTechnologyInstance().equals("Capital") && t.getTechnologyStat().equals("VisibilityRadius")){
                 t.incrementTechnologyLevel();
@@ -165,7 +164,6 @@ public class DemoGameMode {
 
         for(Technology t : p2unitTech){
             if (t.getTechnologyInstance().equals("Explorer") && t.getTechnologyStat().equals("VisibilityRadius")){
-                t.incrementTechnologyLevel();
                 t.incrementTechnologyLevel();
             }
         }
