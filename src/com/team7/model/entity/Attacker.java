@@ -2,6 +2,7 @@ package com.team7.model.entity;
 
 import com.team7.model.Map;
 import com.team7.model.Tile;
+import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -95,9 +96,9 @@ public class Attacker {
                         }
 
                         // if defender is alive,
-//                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
-//                            defend(getRandomAttackingUnit(), tile.getArmies().get(j).getUnits().get(k));
-//                        }
+                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
+                            defend(this.selectedUnits.get(0), tile.getArmies().get(j).getUnits().get(k));
+                        }
 
 
                     }
@@ -144,9 +145,9 @@ public class Attacker {
                     }
 
                     // if defender is alive,
-//                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
-//                        defend(getRandomAttackingUnit(), tile.getUnits().get(j));
-//                    }
+                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
+                        defend(this.selectedUnits.get(0), tile.getUnits().get(j));
+                    }
 
                 }
 
@@ -185,9 +186,9 @@ public class Attacker {
                     }
 
                     // if defender is alive,
-//                    if(tile.getStructure().getStats().getHealth() > 0){
-//                        defend(getRandomAttackingUnit(), tile.getStructure());
-//                    }
+                    if(tile.getStructure().getStats().getHealth() > 0){
+                        defend(this.selectedUnits.get(0), tile.getStructure());
+                    }
 
                 }
 
@@ -241,9 +242,9 @@ public class Attacker {
                         }
 
                         // if defender is alive,
-//                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
-//                            defend(getRandomAttackingUnit(), tile.getArmies().get(j).getUnits().get(k));
-//                        }
+                        if(tile.getArmies().get(j).getUnits().get(k).getUnitStats().getHealth() > 0){
+                            defend(this.selectedUnits.get(0), tile.getArmies().get(j).getUnits().get(k));
+                        }
 
                     }
                 }
@@ -289,9 +290,9 @@ public class Attacker {
                     }
 
                     // if defender is alive,
-//                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
-//                        defend(tile.getUnits().get(j), getRandomAttackingUnit());
-//                    }
+                    if(tile.getUnits().get(j).getUnitStats().getHealth() > 0){
+                        defend(this.selectedUnits.get(0), tile.getUnits().get(j));
+                    }
 
                 }
 
@@ -327,9 +328,9 @@ public class Attacker {
                     }
 
                     // if defender is alive,
-//                    if(tile.getStructure().getStats().getHealth() > 0){
-//                        defend(getRandomAttackingUnit(), tile.getStructure());
-//                    }
+                    if(tile.getStructure().getStats().getHealth() > 0){
+                        defend(this.selectedUnits.get(0), tile.getStructure());
+                    }
 
 
                 }
@@ -371,6 +372,31 @@ public class Attacker {
 
 
     }
+
+    public void defend(Unit attacker, Structure defender) {
+
+        int defendDirection = defender.getDirection();
+        int defendDamage = defender.getStats().getDefensiveDamage();
+
+        // conditional statement to check directions
+        if((attackDirection == 1 && defendDirection == 9) || (attackDirection == 2 && defendDirection == 8) || (attackDirection == 3 && defendDirection == 7) || (attackDirection == 7 && defendDirection == 3) || (attackDirection == 8 && defendDirection == 2) || (attackDirection == 9 && defendDirection == 1)){
+
+            int health = attacker.getUnitStats().getHealth();
+            int armor = attacker.getUnitStats().getArmor();
+
+            if (defendDamage >= health + armor) {
+                attacker.getUnitStats().setHealth(0);
+                attacker.getUnitStats().setArmor(0);
+            } else if (defendDamage < armor) {
+                attacker.getUnitStats().setArmor(armor - defendDamage);
+            } else {
+                defendDamage -= armor;
+                attacker.getUnitStats().setArmor(0);
+                attacker.getUnitStats().setHealth(health - defendDamage);
+            }
+        }
+    }
+
 
 
     // calculate total melee damage from this tile
