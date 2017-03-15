@@ -211,6 +211,9 @@ public class CommandSelectController {
         System.out.println("Option pane on display reinforce !");
         // int id = Integer.parseInt(String.valueOf(idString));
 
+
+        //queueCommand();
+
         // queueCommand();
         clearCommandView();
         giveCommandViewFocus();

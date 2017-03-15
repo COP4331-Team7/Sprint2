@@ -156,7 +156,7 @@ public class Tile {
     public void setAreaEffect(AreaEffect areaEffect) {
         this.areaEffect = areaEffect;
         realDraw.setAreaEffectType(areaEffect.getType());
-        //  realTileState.setAreaEffect(areaEffect);
+//          realTileState.setAreaEffect(areaEffect);
     }
 
     public Decal getDecal() {
