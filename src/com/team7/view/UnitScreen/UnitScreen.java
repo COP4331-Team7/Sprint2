@@ -1,9 +1,6 @@
 package com.team7.view.UnitScreen;
 
-import com.team7.model.entity.Army;
-import com.team7.model.entity.Command;
-import com.team7.model.entity.CommandQueue;
-import com.team7.model.entity.Worker;
+import com.team7.model.entity.*;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.ScreenSelectButtons;
 
@@ -98,9 +95,9 @@ public class UnitScreen extends JPanel {
         //Queue Panel
         JPanel queuePanel = new JPanel(new BorderLayout());
         JPanel queueButtonsPanel = new JPanel(new GridLayout(1,3));
-        queueButtonsPanel.add(moveOrderUp);
+        //queueButtonsPanel.add(moveOrderUp);
         queueButtonsPanel.add(cancelCommand);
-        queueButtonsPanel.add(moveOrderDown);
+        //queueButtonsPanel.add(moveOrderDown);
         moveOrderUp.setOpaque(true);
         cancelCommand.setOpaque(true);
         moveOrderDown.setOpaque(true);
@@ -213,7 +210,12 @@ public class UnitScreen extends JPanel {
         }
 
         for (Command c: commands) {
-            queueModel.addElement(c.getCommandString());
+            if (c.getCommandString().equals("MOVE")) {
+                MovementCommand m = (MovementCommand)(c);
+                queueModel.addElement(m.getCommandString() + " " + m.getDestinationTile().print());
+            } else {
+                queueModel.addElement(c.getCommandString());
+            }
         }
     }
 

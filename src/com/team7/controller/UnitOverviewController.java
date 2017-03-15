@@ -176,7 +176,7 @@ public class UnitOverviewController {
                         for (Unit u: currentlySelectedArmy.getUnits()) {
                             if (selected.equals(u.getType() + " " + u.getId())) {
                                 currentlySelectedArmy.removeUnitFromArmy(u);
-                                unitScreen.updateArmyContentsList(currentlySelectedArmy); 
+                                unitScreen.updateArmyContentsList(currentlySelectedArmy);
                             }
                         }
                     }
