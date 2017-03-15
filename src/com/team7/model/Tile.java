@@ -289,7 +289,7 @@ public class Tile {
 //        }
 
 
-        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits(unit );
+//        this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits(unit );
     }
 
     // Adds army to Tile's ArrayList of Armies

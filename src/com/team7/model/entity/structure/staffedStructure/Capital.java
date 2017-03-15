@@ -184,68 +184,56 @@ public class Capital extends StaffedStructure implements IHarvester, IUnitProduc
         Command commandToExecute = getCommandFromQueue();
         String commandString = commandToExecute.getCommandString();
 
-        switch ( commandString ) {
-
-            case "DO_SOMETHING":
-            case "defend":
-                this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
-                removeCommandFromQueue();
-                break;
-
-            case "decomission":
-                this.decommission();
-                removeCommandFromQueue();
-                break;
-
-            case "down":
-                this.powerDown();
-                removeCommandFromQueue();
-                break;
-
-            case "up":
-                this.powerUp();
-                removeCommandFromQueue();
-                break;
-
-            case "cancel":
-                this.getCommandQueue().cancelCommands();
-                removeCommandFromQueue();
-                break;
-
-            case "food":
-                int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
-                ((StaffedStructure) this).assignHarvestFood(numberWorkers);
-                removeCommandFromQueue();
-                break;
-
-            case "ore":
-                numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
-                ((StaffedStructure) this).assignHarvestOre(numberWorkers);
-                removeCommandFromQueue();
-                break;
-
-            case "energy":
-                 numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
-                ((StaffedStructure) this).assignHarvestEnergy(numberWorkers);
-                removeCommandFromQueue();
-                break;
-
-            case "unassign":
-                unassign();
-                removeCommandFromQueue();
-                break;
-
-            case "explorer":
-                makeExplorer();
-                removeCommandFromQueue();
-
-            case "worker":
-                makeWorker();
-                removeCommandFromQueue();
-
-            default:
-                break;
+        if(commandString.contains("defend")) {
+            this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+            removeCommandFromQueue();
         }
+        else if(commandString.contains("decomission")) {
+            this.decommission();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("down")) {
+            this.powerDown();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("up")) {
+            this.powerUp();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("cancel")) {
+            this.getCommandQueue().cancelCommands();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("food")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).assignHarvestFood(numberWorkers);
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("ore")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).assignHarvestOre(numberWorkers);
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("energy")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).assignHarvestEnergy(numberWorkers);
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("unassign")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).unassign();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("worker")) {
+            makeWorker();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("explorer")) {
+            makeExplorer();
+            removeCommandFromQueue();
+        }
+
+
 
     }
 }
