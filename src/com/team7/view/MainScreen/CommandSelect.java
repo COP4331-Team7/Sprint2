@@ -259,14 +259,14 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
         }
 
         // start recording path
-        if( e.getKeyChar() == '0') {        // TODO: make compatible with both structures/ units
+        if(isRecordingPath == false && e.getKeyChar() == '5') {        // TODO: make compatible with both structures/ units
             if(controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) == null)
                 return;
             pathSelectController.startRecordingPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getLocation(), controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ).getUnitStats().getMovement()   );
             isRecordingPath = true;
         }
         // execute recorded path
-        else if( e.getKeyChar() == '5') {
+        else if(isRecordingPath == true && e.getKeyChar() == '5') {
             pathSelectController.drawPath( controller.getCurrentUnitSelection(  currMode, currType, currTypeInstance ) );
             isRecordingPath = false;
         }
