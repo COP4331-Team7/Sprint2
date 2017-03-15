@@ -146,7 +146,7 @@ public class MainViewInfo extends JPanel {
             this.add(jPanel, BorderLayout.SOUTH );
 
             setMinimumSize(new Dimension(323, 200));
-            //this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+//            this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
 
             repaint();
         }

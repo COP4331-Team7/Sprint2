@@ -109,10 +109,29 @@ public class TechnologyScreen extends JPanel {
 
         temp.setPreferredSize( new Dimension( (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.8), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.75) ) );
 
+       // technologyStatScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+        universitiesScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 2));
+        workerButton.setBackground(new Color(0xffCABD80));
+        workerButton.setOpaque(true);
+        unitButton.setBackground(new Color(0xffCABD80));
+        unitButton.setOpaque(true);
+        structureButton.setBackground(new Color(0xffCABD80));
+        structureButton.setOpaque(true);
+
+        instanceScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 2));
+        technologyStatScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 2));
+
+
+        //temp.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+
+
         this.setBackground(new Color(0xffF5F5DC));
         this.setOpaque(true);
 
         this.repaint();
+
+        this.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
+
 
     }
 
