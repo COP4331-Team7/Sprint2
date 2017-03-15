@@ -181,6 +181,29 @@ public abstract class Unit extends Entity {
 
     }
 
+    public String printStats() {
+        return getUnitStats().print() + "\nVisbility Radius: " + getVisibilityRadius();
+    }
+
+    public void moveCommandUp(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.raiseCommand(selected_value);
+        }
+    }
+
+
+    public void moveCommandDown(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.lowerCommand(selected_value);
+        }
+    }
+
+    public void removeCommandByString(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.removeCommandByString(selected_value);
+        }
+    }
+
     public boolean isAlive() {
         return unitStats.getHealth() > 0;
     }

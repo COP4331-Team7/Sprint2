@@ -249,14 +249,15 @@ public class StructureScreen extends JPanel {
 
     public Structure updatedStructureSelection(ArrayList<Structure> structures) {
         String selectedValue = (String)structureList.getSelectedValue();
-
-        for (Structure s: structures) {
-            if (selectedValue.equals(s.getType() + " " + s.getId())) {
-                setStatsBox(s);
-                setComboBoxModel(s.getType());
-                setStrucQueueListModel(s);
-                setStatusBox(s);
-                return s;
+        if (selectedValue != null) {
+            for (Structure s: structures) {
+                if (selectedValue.equals(s.getType() + " " + s.getId())) {
+                    setStatsBox(s);
+                    setComboBoxModel(s.getType());
+                    setStrucQueueListModel(s);
+                    setStatusBox(s);
+                    return s;
+                }
             }
         }
         return null;

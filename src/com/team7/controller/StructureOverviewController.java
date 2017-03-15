@@ -118,32 +118,35 @@ public class StructureOverviewController {
                 if (e.getSource() == structureScreen.getAssignmentButton()) {
                     String assignmentType = (String) structureScreen.getDropDownBar().getSelectedItem();
                     int allocationPercent = (int) structureScreen.getAllocationInput().getValue();
+                    double allocationDecimal = (double)(allocationPercent)/100;
                     if (currentlySelectedStructure != null) {
-                        int allocationValue = 0;
+                        int allocationValue;
                         switch (assignmentType) {
                             case "Allocate Metal (Percentage 0-100)":
-                                allocationValue = (int)allocationPercent/100*currentPlayer.getMetal();
+                                allocationValue = (int)(allocationDecimal*currentPlayer.getMetal());
                                 if (allocationValue <= currentPlayer.getMetal()) {
                                     currentlySelectedStructure.setAllocatedResources("Ore", allocationValue);
                                     currentPlayer.spendMetal(allocationValue);
+                                    structureScreen.setStatusBox(currentlySelectedStructure);
                                 }
                                 break;
                             case "Allocate Power (Percentage 0-100)":
-                                allocationValue = (int)allocationPercent/100*currentPlayer.getPower();
+                                allocationValue = (int)allocationDecimal*currentPlayer.getPower();
                                 if (allocationValue <= currentPlayer.getPower()) {
                                     currentlySelectedStructure.setAllocatedResources("Energy", allocationValue);
                                     currentPlayer.spendPower(allocationValue);
+                                    structureScreen.setStatusBox(currentlySelectedStructure);
                                 }
                                 break;
                             case "Allocate Nutrient (Percentage 0-100)":
-                                allocationValue = (int)allocationPercent/100*currentPlayer.getNutrients();
+                                allocationValue = (int)allocationDecimal*currentPlayer.getNutrients();
                                 if (allocationValue <= currentPlayer.getNutrients()) {
                                     currentlySelectedStructure.setAllocatedResources("Nutrients", allocationValue);
                                     currentPlayer.spendFood(allocationValue);
+                                    structureScreen.setStatusBox(currentlySelectedStructure);
                                 }
                         }
                         structureScreen.setAvailibleResources(currentPlayer.getMetal(), currentPlayer.getPower(), currentPlayer.getNutrients());
-                        System.out.println("Allocated " + allocationValue);
                     }
                 }
             }
