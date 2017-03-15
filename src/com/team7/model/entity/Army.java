@@ -334,25 +334,25 @@ public class Army extends Entity {
     public void buildStructure(String buildingType) {
         // create structure
         Structure structure;
-        if(buildingType == "Observation Tower") {
+        if(buildingType == "observationTower") {
             structure = new ObservationTower(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "Capital") {
+        else if(buildingType == "capital") {
             structure = new Capital(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "Fort") {
+        else if(buildingType == "fort") {
             structure = new Fort(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "University") {
+        else if(buildingType == "university") {
             structure = new University(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "Farm") {
+        else if(buildingType == "farm") {
             structure = new Farm(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "Mine") {
+        else if(buildingType == "mine") {
             structure = new Mine(this.getLocation(), this.getOwner());
         }
-        else if(buildingType == "Power Plant") {
+        else if(buildingType == "powerplant") {
             structure = new PowerPlant(this.getLocation(), this.getOwner());
         }
         else {

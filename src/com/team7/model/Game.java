@@ -43,7 +43,6 @@ public class Game {
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
-        // set Player One starting units
         addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[4][17], players[0]) );
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[6][7], players[0]) );
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[7][24], players[0]) );
@@ -52,6 +51,7 @@ public class Game {
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-5][24],  players[1]) );
         addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-7][34],  players[1]) );
         addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-9][17],  players[1]) );
+
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }

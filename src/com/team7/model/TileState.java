@@ -38,6 +38,7 @@ public class TileState {
     private int ore;
     private int food;
     private int energy;
+    private int army;
 
     public int getRallyPoint() {
         return rallyPoint;
@@ -108,6 +109,7 @@ public class TileState {
         this.ore = stateToCopy.ore;
         this.food = stateToCopy.food;
         this.energy = stateToCopy.energy;
+        this.army = stateToCopy.army;
 
         this.farm = stateToCopy.farm;
         this.fort = stateToCopy.fort;
@@ -132,6 +134,7 @@ public class TileState {
         this.university = state.university;
         this.workerUnit = state.workerUnit;
         this.powerplant = state.powerplant;
+        this.army = state.army;
 
 //        this.ore = state.ore;
 //        this.food = state.food;
@@ -197,6 +200,8 @@ public class TileState {
             university++;
         if(tile.getStructure() instanceof ObservationTower)
             obs_tower++;
+
+        army = tile.getArmies().size();
 
         workerUnit = 0;
         workerUnit += tile.getWorkers().size();
@@ -332,4 +337,7 @@ public class TileState {
         workerUnit--;
     }
 
+    public int getArmy() {
+        return army;
+    }
 }

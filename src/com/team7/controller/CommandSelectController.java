@@ -160,6 +160,9 @@ public class CommandSelectController {
                     else if( commandSelect.getCurrMode() == 3 && commandSelect.getCurrCommand() == 0) {
                         executeAttackCommand(  getCurrentArmySelection( commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
                     }
+                    else if( commandSelect.getCurrMode() == 3 && commandSelect.getCurrCommand() == 9) {
+                        executeBuildCommand(  getCurrentArmySelection( commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                    }
                     else
 
                         queueCommand();
@@ -179,13 +182,6 @@ public class CommandSelectController {
 
         Command command = new Command( mainScreen.getCommandSelect().getCommand() );
 
-
-//        if(mainScreen.getCommandSelect().getCommand().contains("MOVE")) {
-//            String commandString = mainScreen.getCommandSelect().getCommand();
-//            Tile destTile =
-//                    command = new MovementCommand()
-//        }
-
         Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
@@ -198,21 +194,6 @@ public class CommandSelectController {
             army.queueCommand( command );
     }
 
-//    public void queueCommand(Tile destinationTile) {
-//        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
-//                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
-//            return;
-//
-//        Command command = new MovementCommand( mainScreen.getCommandSelect().getCommand(), destinationTile );
-//
-//        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-//        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-//
-//        if(unit != null)
-//            unit.queueCommand( command );
-//        else if (army != null)
-//            army.queueCommand( command );
-//    }
 
     public void printCurrPlayersUnitsCommandQueues(){
         System.out.println("\nPlayer " + game.getCurrentPlayer().getName() + "'s unit's command queues: ");
@@ -239,19 +220,13 @@ public class CommandSelectController {
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
         System.out.println("Option pane on display reinforce !");
-//        int id = Integer.parseInt(String.valueOf(idString));
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
 
+        System.out.println(command.getCommandString());
 
-        //queueCommand();
-
-        // queueCommand();
-        System.out.println("Called Reinforcement function");
-        PathSelectController pathSelectController = new PathSelectController(game, view);
-
-//        pathSelectController.startRecordingPath(u.getLocation(), u.getUnitStats().getMovement());;
-        pathSelectController.drawRenforce(pathSelectController.reEnforce(u),u);
-//        clearCommandView();
-//        giveCommandViewFocus();
+        u.queueCommand(command);
+        clearCommandView();
+        giveCommandViewFocus();
     }
 
     public void executeAttackCommand(Army a) {
@@ -260,14 +235,13 @@ public class CommandSelectController {
 
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
-////        int id = Integer.parseInt(String.valueOf(idString));
-//
-//
-//        //queueCommand();
-//
-//        // queueCommand();
-//        clearCommandView();
-//        giveCommandViewFocus();
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
+
+        System.out.println(command.getCommandString());
+
+        a.queueCommand(command);
+        clearCommandView();
+        giveCommandViewFocus();
     }
 
     public void executeAssignToCommand(Structure structure) {
@@ -276,14 +250,29 @@ public class CommandSelectController {
 
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
-        Command command = new Command( mainScreen.getCommandSelect().getCommand() + s);
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
 
-        System.out.println(command.getCommandString());
 
-        // queueCommand();
+        structure.queueCommand(command);
         clearCommandView();
         giveCommandViewFocus();
     }
+
+    public void executeBuildCommand(Army army) {
+
+        String s = new String( "Enter building type (farm, mine, powerPlant, fort, university, observationTower):" );
+
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
+
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() + " " + input);
+
+
+        army.queueCommand(command);
+        clearCommandView();
+        giveCommandViewFocus();
+    }
+
+
 
     public int getNumCapital() {
         return game.getCurrentPlayer().getNumCapital();
