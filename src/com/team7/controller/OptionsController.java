@@ -169,6 +169,7 @@ public class OptionsController{
                     System.out.println("to the future");
                     DemoGameMode dgm = new DemoGameMode(game);
                     dgm.activate();
+                    view.setMap(game.getMap());
                     mainViewImage.reDrawMap();
 
                 }
