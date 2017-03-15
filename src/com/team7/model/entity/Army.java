@@ -216,40 +216,40 @@ public class Army extends Entity {
         Command commandToExecute = getCommandFromQueue();
         String commandString = commandToExecute.getCommandString();
 
-        if(commandString.contains("attack")) {
+        if(commandString.contains("ATTACK")) {
             int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
             attack(map, dir);
             removeCommandFromQueue();
         }
-        else if(commandString.contains("defend")) {
+        else if(commandString.contains("DEFEND")) {
             int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
             this.setDirection(dir);
             removeCommandFromQueue();
         }
-        else if(commandString.contains("move")) {
+        else if(commandString.contains("MOVE")) {
 
         }
-        else if(commandString.contains("wait")) {
+        else if(commandString.contains("WAIT")) {
             System.out.println("WAIT :)");
             removeCommandFromQueue();
         }
-        else if(commandString.contains("disband")) {
+        else if(commandString.contains("DISBAND")) {
             this.disband();
             removeCommandFromQueue();
         }
-        else if(commandString.contains("decommission")) {
+        else if(commandString.contains("DECOMISSION")) {
             this.decommission();
             removeCommandFromQueue();
         }
-        else if(commandString.contains("down")) {
+        else if(commandString.contains("DOWN")) {
             this.powerDown();
             removeCommandFromQueue();
         }
-        else if(commandString.contains("up")) {
+        else if(commandString.contains("UP")) {
             this.powerUp();
             removeCommandFromQueue();
         }
-        else if(commandString.contains("cancel")) {
+        else if(commandString.contains("CANCEL")) {
             this.commandQueue.cancelCommands();
         }
 

@@ -3,8 +3,10 @@ package com.team7.controller;
 
 import com.team7.model.Game;
 import com.team7.model.Player;
+import com.team7.model.Tile;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.Command;
+import com.team7.model.entity.MovementCommand;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.unit.Unit;
 import com.team7.view.MainScreen.CommandSelect;
@@ -172,6 +174,13 @@ public class CommandSelectController {
 
         Command command = new Command( mainScreen.getCommandSelect().getCommand() );
 
+
+//        if(mainScreen.getCommandSelect().getCommand().contains("MOVE")) {
+//            String commandString = mainScreen.getCommandSelect().getCommand();
+//            Tile destTile =
+//                    command = new MovementCommand()
+//        }
+
         Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Structure structure = getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
         Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
@@ -180,6 +189,22 @@ public class CommandSelectController {
             unit.queueCommand( command );
         else if (structure != null)
             structure.queueCommand( command );
+        else if (army != null)
+            army.queueCommand( command );
+    }
+
+    public void queueCommand(Tile destinationTile) {
+        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
+                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
+            return;
+
+        Command command = new MovementCommand( mainScreen.getCommandSelect().getCommand(), destinationTile );
+
+        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+
+        if(unit != null)
+            unit.queueCommand( command );
         else if (army != null)
             army.queueCommand( command );
     }
