@@ -39,6 +39,11 @@ public class Game {
     }
 
     public void newGameState() {
+        // create two players
+
+        // create map and populate it with items/resources/area effects
+        this.map = new Map();
+
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();

@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -46,7 +45,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage yellowHighlightImage;
         private BufferedImage workerImage;
 
-        public int x_center, y_center;    // where the window is focused on
+         private BufferedImage farmImage;
+         private BufferedImage mineImage;
+         private BufferedImage powerplantImage;
+         private BufferedImage fortImage;
+         private BufferedImage obsTowerImage;
+         private BufferedImage universityImage;
+
+         private BufferedImage rallyImage;
+
+    public int x_center, y_center;    // where the window is focused on
         private Timer timer = null;
         int x_dir;
         int y_dir;
@@ -97,6 +105,15 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
                invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/invisible.png"));
                yellowHighlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/yellowHighlight.png"));
+
+                farmImage  = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/farm.png"));
+                mineImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/mine.png"));
+                powerplantImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/powerplant.png"));
+                fortImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/fort.png"));
+                obsTowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/ot.png"));
+                universityImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/university.png"));
+
+                rallyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/flag.png"));
                workerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/workerImage.png"));
             }
             catch (IOException e) {}
@@ -308,6 +325,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                              }
                          }
 
+
+
+
                          // shroud tile
                          if(player != null)
                            if (grid[xx][yy].getShrouded(player.getName())) {
@@ -479,6 +499,30 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
                         }
 
+                        if (tileState.getCapital() > 0) {
+                            g2ds.drawImage(baseImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getFort() > 0) {
+                            g2ds.drawImage(fortImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getMine() > 0) {
+                            g2ds.drawImage(mineImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getUniversity() > 0) {
+                            g2ds.drawImage(universityImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getObs_tower() > 0) {
+                            g2ds.drawImage(obsTowerImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+                        if (tileState.getFarm() > 0) {
+                            g2ds.drawImage(farmImage, x_coord + x_offset + 10, y_coord, null);
+                        }
+
+
+//                        if (tileState.getRallyPoint() > 0) {
+//                            g2ds.drawImage(rallyImage, x_coord + x_offset + 10, y_coord, null);
+//                        }
+
                         //drawing workable tiles overlay
                         if(player.getName().equals("One")){
                             if(tileState.isWorkableByPlayer1()){
@@ -492,6 +536,14 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 //draw tile overlay
                                 g2ds.drawImage(yellowHighlightImage, x_coord + x_offset, y_coord, null);
                             }
+                        }
+
+                        if(tileState.getWorkerUnit() > 0) {
+                            g2ds.setColor(new Color(250, 128, 100, 85));
+                            g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
+                            g2ds.setColor(new Color(255, 255, 255, 255));
+                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 32 );
+                            System.out.println("yeeeeeeeeeeeet");
                         }
 
                         // shroud tile
@@ -511,14 +563,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 //                    g2ds.drawString( Integer.toString( yy ),  x_coord + x_offset + 35, y_coord + 32 );
 
 
-//                    /* draw bottom left circle, to be used later
+//                      //draw bottom left circle, to be used later
 //                      g2ds.setColor(new Color(255, 128, 100, 150));
 //                      g2ds.fillOval(x_coord + x_offset + 15, y_coord + 32, 18, 18);
 //
-//                      draw bottom right circle, to be used later
+//                      //draw bottom right circle, to be used later
 //                      g2ds.setColor(new Color(255, 128, 100, 150));
 //                      g2ds.fillOval(x_coord + x_offset + 35, y_coord + 32, 18, 18);
-//                    */
+
+
+
 
                 }
             }
@@ -644,6 +698,29 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.setColor(new Color(0xAFAFFC00));
                             g2ds.drawString(Integer.toString(tileState.getFoodQuantity()), x_coord + x_offset + 44, y_coord + 30);
                         }
+                    }
+
+
+                    if (tileState.getFarm() > 0) {
+
+                    }
+                    if (tileState.getFort() > 0) {
+
+                    }
+                    if (tileState.getMine() > 0) {
+
+                    }
+                    if (tileState.getObs_tower() > 0) {
+
+                    }
+                    if (tileState.getPowerplant() > 0) {
+
+                    }
+                    if (tileState.getUniversity() > 0) {
+
+                    }
+                    if (tileState.getWorkerUnit() > 0) {
+
                     }
 
                     // shroud tile
