@@ -244,6 +244,7 @@ public class CommandSelect extends JPanel implements KeyListener, MapStats {
                     typeInstanceLabel.setText("TYPE INSTANCE (\u2190 / \u2192): " +  controller.getCurrentArmySelection( currType, currTypeInstance ).getId() );
                     break;
             }
+            controller.zoomToCurrSelection( currMode, currType, currTypeInstance );
             controller.updateStatusView( currMode, currType, currTypeInstance  );
         }
 
