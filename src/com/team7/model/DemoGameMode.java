@@ -18,7 +18,9 @@ public class DemoGameMode {
     //adds and changes everything!!!
     public void activate(){
         //first reset game to default state
-        game.newGameState();
+        game.setMap(new Map());
+
+        game.updateCurrPlayerTileStates();
 
         Player player1 = game.getPlayers()[0];
         Player player2 = game.getPlayers()[1];
@@ -48,6 +50,11 @@ public class DemoGameMode {
         player1.addUnit(new Explorer(game.getMap().getGrid()[21][22], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[31][30], player1));
         player1.addUnit(new Explorer(game.getMap().getGrid()[30][30], player1));
+
+
+
+
+
         //have player1 be much better than player 2
 
         //player 1
@@ -63,6 +70,8 @@ public class DemoGameMode {
         //worker work radius technology stays at 0
         //create university, study work radius
         //create explorer without prospecting, move him through instant death
+
+        game.updateCurrPlayerTileStates();
 
     }
 }
