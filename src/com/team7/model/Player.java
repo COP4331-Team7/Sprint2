@@ -1,5 +1,6 @@
 package com.team7.model;
 
+import com.team7.controller.PathSelectController;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.Entity;
 import com.team7.model.entity.Worker;
@@ -73,7 +74,7 @@ public class Player {
         for(int i = 0; i < units.size(); i++) {
             if(units.get(i).getArmy() != null) {
                 if(!units.get(i).checkAtRallyPoint()) {
-                    // TODO: move unit towards rallyPoint
+
                     System.out.println("Moving towards rallypoint");
                 }
                 // TODO: if unit is at rallypoint, remove exchange from reinforcements to battlegroup

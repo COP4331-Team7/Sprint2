@@ -45,8 +45,6 @@ public class Game {
         this.map = new Map();
 
 
-        // create map and populate it with items/resources/area effects
-        this.map = new Map();
 
         //TODO: fix
         // set Player One starting units
@@ -89,7 +87,10 @@ public class Game {
         players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 2));
         players[1].getArmies().get(0).addUnitToArmy(players[1].getUnits().get(players[1].getUnits().size() - 1));
 
-        players[1].getArmies().get(0).queueCommand(new Command("attack 2"));
+
+//        players[0].getArmies().get(0).queueCommand(new Command("attack 2"));
+
+
 //        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
