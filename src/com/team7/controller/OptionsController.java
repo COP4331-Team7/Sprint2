@@ -1,6 +1,7 @@
 package com.team7.controller;
 
 import com.team7.Main;
+import com.team7.model.DemoGameMode;
 import com.team7.view.MainScreen.MainViewImage;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
 import com.team7.model.Game;
@@ -158,6 +159,18 @@ public class OptionsController{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getHomeScreenButton() )
                     view.setCurrScreen("HOME");
+            }
+        });
+
+        optionsScreen.getFutureGameButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getFutureGameButton() ){
+                    System.out.println("to the future");
+                    DemoGameMode dgm = new DemoGameMode(game);
+                    dgm.activate();
+                    mainViewImage.reDrawMap();
+
+                }
             }
         });
 

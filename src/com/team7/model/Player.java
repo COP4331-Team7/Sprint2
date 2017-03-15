@@ -355,8 +355,6 @@ public class Player {
     }
 
     public Structure addStructure(Structure structure) {
-        // Ensures we are able to add a structure
-        if (structures.size() == 10) {
             // Ensures we are able to add a structure
             if (structures.size() >= 10) {
                 System.out.println("You have too many structures.");
@@ -370,7 +368,7 @@ public class Player {
             for (Technology structureTechnology : technologies.getStructureTechnologies()) {
                 applyTechnology(structureTechnology);
             }
-        }
+
 
             return structure;
         }
@@ -419,14 +417,17 @@ public class Player {
     }
 
     public boolean moveUnit(Unit unit, Tile destination) {
+        TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
         if (!unit.isAlive()) {
             removeUnit(unit);
             destination.setDecal(new Decal());
+            //TODO why do I need to pass string for decal
+            t.setDecal("decal");
             unit.setLocation(null);
             System.out.println("Unit died");
             return false;
         }
-        TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
+
         if (t.getAreaEffectType() != null) {
             if (t.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
                 unit.getUnitStats().setHealth(0);
@@ -441,6 +442,8 @@ public class Player {
         if (!unit.isAlive()) {
             removeUnit(unit);
             destination.setDecal(new Decal());
+            //TODO why do I need to pass string for decal
+            t.setDecal("decal");
             unit.setLocation(null);
             System.out.println("Unit died");
             return false;

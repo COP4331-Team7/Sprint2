@@ -335,6 +335,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                      g2.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
                                  }
                              }
+                             if(tileState.getDecal()!=null){
+                                 g2.drawImage(skullImage, x_coord + x_offset + 10, y_coord, null);
+                                 System.out.println("Settinfg decal");
+                             }
 
 
 
@@ -552,6 +556,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 g2ds.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
                             }
                         }
+                        if(tileState.getDecal()!=null){
+                            g2ds.drawImage(skullImage, x_coord + x_offset + 10, y_coord, null);
+                        }
 
 
                         if (tileState.getCapital() > 0) {
@@ -763,6 +770,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if (tileState.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
                             g2ds.drawImage(ventImage, x_coord + x_offset + 10, y_coord, null);
                         }
+                    }
+                    if(tileState.getDecal()!=null){
+                        g2ds.drawImage(skullImage, x_coord + x_offset + 10, y_coord, null);
                     }
 
 
