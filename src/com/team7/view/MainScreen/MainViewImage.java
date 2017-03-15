@@ -584,16 +584,12 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             g2ds.drawImage(farmImage, x_coord + x_offset + 10, y_coord, null);
                         }
 
-
                         if(tileState.getArmy() > 0)
                         {
                             System.out.println("Creating army");
                             g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
                         }
 
-//                        if (tileState.getRallyPoint() > 0) {
-//                            g2ds.drawImage(rallyImage, x_coord + x_offset + 10, y_coord, null);
-//                        }
 
                         //drawing workable tiles overlay
                         if(player.getName().equals("One")){

@@ -39,56 +39,19 @@ public class Game {
     }
 
     public void newGameState() {
-        // create two players
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
+        addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[4][17], players[0]) );
+        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[6][7], players[0]) );
+        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[7][24], players[0]) );
 
-
-        //TODO: fix
-        // set Player One starting units
-        addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
-        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
-        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
-        addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
-        addUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
         // set Player Two starting units
-        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
-        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
-        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
-        addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
-        addUnitToPlayer( players[1], new RangedUnit(this.map.getGrid()[28][15], players[1]) );
+        addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-5][24],  players[1]) );
+        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-7][34],  players[1]) );
+        addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-9][17],  players[1]) );
 
-
-        //adding all types of structure to p1 for testing
-
-        addStructureToPlayer(players[0], new Capital(map.getGrid()[25][20],  players[0]));
-        addStructureToPlayer(players[0], new Farm(map.getGrid()[15][20], players[0]));
-        addStructureToPlayer(players[0], new Farm(map.getGrid()[16][20], players[0]));
-        addStructureToPlayer(players[0], new University(map.getGrid()[20][20], players[0]));
-        addStructureToPlayer(players[1], new ObservationTower(map.getGrid()[20][15], players[1]));
-        addStructureToPlayer(players[1], new Fort(map.getGrid()[20][25], players[1]));
-
-
-        addArmyToPlayer(players[0], new Army(map.getGrid()[1][30],  players[0]));
-        addArmyToPlayer(players[0], new Army(map.getGrid()[1][29],  players[0]));
-        addArmyToPlayer(players[1], new Army(map.getGrid()[1][31],  players[1]));
-
-
-        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
-        addUnitToPlayer( players[0], new  MeleeUnit(this.map.getGrid()[1][29], players[0]));
-        addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][31], players[1]));
-
-        players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 1));
-        players[0].getArmies().get(1).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 2));
-        players[1].getArmies().get(0).addUnitToArmy(players[1].getUnits().get(players[1].getUnits().size() - 1));
-
-
-//        players[0].getArmies().get(0).queueCommand(new Command("attack 2"));
-
-
-//        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }
@@ -179,8 +142,8 @@ public class Game {
         executeCommandQueues();
         applyAllTechnologies();
 //        removeDeadUnits();
-        updateCurrPlayerTileStates();
         renewFoodResource();
+        updateCurrPlayerTileStates();
     }
 
     private void renewFoodResource() {

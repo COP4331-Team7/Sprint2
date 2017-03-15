@@ -54,7 +54,11 @@ public class DemoGameMode {
         //add an explorer to both players
         addUnitToPlayer(player1, new Explorer(grid[10][24], player1));
         addUnitToPlayer(player2, new Explorer(grid[28][19], player2));
+        addUnitToPlayer(player2, new Explorer(grid[15][24], player2));
 
+
+//        addUnitToPlayer(player1, new Explorer(grid[17][20], player1));
+//        addUnitToPlayer(player2, new Explorer(grid[21][20], player2));
 
         grid[10][26].setAreaEffect(new InstantDeathAreaEffect());
         grid[28][17].setAreaEffect(new InstantDeathAreaEffect());
@@ -96,11 +100,11 @@ public class DemoGameMode {
 
         //add observation towers to both players
         addStructureToPlayer(player1, new ObservationTower(grid[13][8], player1));
-        addStructureToPlayer(player1, new ObservationTower(grid[17][25], player1));
+        // addStructureToPlayer(player1, new ObservationTower(grid[17][25], player1));
         addStructureToPlayer(player1, new ObservationTower(grid[23][7], player1));
 
         addStructureToPlayer(player2, new ObservationTower(grid[32][11], player2));
-        addStructureToPlayer(player2, new ObservationTower(grid[21][26], player2));
+        addStructureToPlayer(player2, new ObservationTower(grid[21][30], player2));
 
         //add university to player2
         addStructureToPlayer(player2, new University(grid[30][32], player2));

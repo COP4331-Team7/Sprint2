@@ -51,7 +51,6 @@ public class Colonist extends NonCombatUnit {
         this.getOwner().addWorker(worker4);
         this.getOwner().addWorker(worker5);
 
-
         ((StaffedStructure) capital).addWorkerToStaff(worker1);
         ((StaffedStructure) capital).addWorkerToStaff(worker2);
         ((StaffedStructure) capital).addWorkerToStaff(worker3);
@@ -64,7 +63,6 @@ public class Colonist extends NonCombatUnit {
         // sacrifice colonist from tile and player
         this.getLocation().removeUnitFromTile(this);
         this.getOwner().removeUnit(this);
-
     }
 
     @Override
