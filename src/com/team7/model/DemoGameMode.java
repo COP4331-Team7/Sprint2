@@ -28,7 +28,6 @@ public class DemoGameMode {
             player.setMetal(1000);
             player.setNutrients(1000);
             player.setPower(1000);
-            player.addStructure(new ObservationTower(game.getMap().getGrid()[12][12], player));
         }
 
 
