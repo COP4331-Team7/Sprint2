@@ -248,4 +248,16 @@ public class OptionsScreen extends JPanel{
         return s1;
     }
 
+
+    public JSlider getS3() {
+        return s3;
+    }
+
+    public void setS3(JSlider s3) {
+        this.s3 = s3;
+    }
+
+    public void resetS3Value(){
+        s3.setValue(s3.getMinimum());
+    }
 }

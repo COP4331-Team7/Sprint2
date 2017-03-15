@@ -6,6 +6,8 @@ import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
 import com.team7.model.entity.structure.StructureStats;
 import com.team7.model.entity.unit.Unit;
+import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,6 +135,22 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         soldierTrainTicks += delta;
     }
 
+    public void buildUnit(String unitType) {
+        // create structure
+        Unit unit = new MeleeUnit(this.getLocation(), this.getOwner());;
+        if(unitType == "Melee") {
+            unit = new MeleeUnit(this.getLocation(), this.getOwner());
+        }
+        else if(unitType == "Ranged") {
+            unit = new RangedUnit(this.getLocation(), this.getOwner());
+        }
+
+
+        // add worker to tile, advancement is handled at the end of each turn
+        this.getOwner().addUnit(unit);
+
+    }
+
     @Override
     public void executeCommandQueue() {
 
@@ -147,15 +165,51 @@ public class Fort extends StaffedStructure implements IUnitProducer {
         Command commandToExecute = getCommandFromQueue();
         String commandString = commandToExecute.getCommandString();
 
-        switch ( commandString ) {
-
-            case "DO_SOMETHING":
-                // do something
-                break;
-
-            default:
-                break;
+        if(commandString.contains("defend")) {
+            this.setDirection(0);       //TODO: FIX!!!!!! HARDCODED!!!!!! need to get direction from controller
+            removeCommandFromQueue();
         }
+        else if(commandString.contains("decomission")) {
+            this.decommission();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("down")) {
+            this.powerDown();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("up")) {
+            this.powerUp();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("cancel")) {
+            this.getCommandQueue().cancelCommands();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("assign")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).assignHarvestOre(numberWorkers);
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("unassign")) {
+            int numberWorkers = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            ((StaffedStructure) this).unassign();
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("melee")) {
+            buildUnit("Melee");
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("ranged")) {
+            buildUnit("Ranged");
+            removeCommandFromQueue();
+        }
+        else if(commandString.contains("attack")) {
+            int dir = Integer.parseInt(commandString.substring(commandString.length() - 1));
+            // TODO: Attack function
+            removeCommandFromQueue();
+        }
+
+
 
     }
 }

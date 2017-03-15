@@ -166,6 +166,7 @@ public class OptionsController{
         optionsScreen.getFutureGameButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == optionsScreen.getFutureGameButton() ){
+                    optionsScreen.resetS3Value();
                     System.out.println("to the future");
                     Player player1 = new Player("One");
                     Player player2 = new Player("Two");
