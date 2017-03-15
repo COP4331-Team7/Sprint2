@@ -182,7 +182,7 @@ public class Army extends Entity {
     }
 
     public void printCommandQueue(){
-        System.out.print("Player" + getOwner().getName() + " " + "ARMY" + " " + getId() + " command queue:   ");
+        System.out.print("Player" + getOwner().getName() + " " + "Army" + " " + getId() + " command queue:   ");
 
         for(int i = 0; i < commandQueue.getSize(); i++) {
             System.out.print(commandQueue.get(i).getCommandString());

@@ -3,10 +3,7 @@ package com.team7.model;
 import com.team7.model.areaEffects.DamageAreaEffect;
 import com.team7.model.areaEffects.HealAreaEffect;
 import com.team7.model.areaEffects.InstantDeathAreaEffect;
-import com.team7.model.entity.Entity;
-import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.ObservationTower;
-import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.Fort;
 import com.team7.model.entity.structure.staffedStructure.University;
@@ -18,16 +15,10 @@ import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
-import com.team7.model.resource.Energy;
-import com.team7.model.resource.Food;
-import com.team7.model.resource.Ore;
-import com.team7.model.resource.Resource;
 import com.team7.model.terrain.Crater;
 import com.team7.model.terrain.Desert;
 import com.team7.model.terrain.Flatland;
 import com.team7.model.terrain.Mountains;
-
-import java.sql.Struct;
 
 /**
  * Copy tile state
@@ -78,8 +69,8 @@ public class TileState {
         return university;
     }
 
-    public int getWorker() {
-        return worker;
+    public int getWorkerUnit() {
+        return workerUnit;
     }
 
     public int getCapital() {
@@ -94,7 +85,7 @@ public class TileState {
     private int obs_tower;
 
     private int university;
-    private int worker;
+    private int workerUnit;
     private int capital;
     private int powerplant;
 
@@ -123,7 +114,7 @@ public class TileState {
         this.mine = stateToCopy.mine;
         this.obs_tower = stateToCopy.obs_tower;
         this.university = stateToCopy.university;
-        this.worker = stateToCopy.worker;
+        this.workerUnit = stateToCopy.workerUnit;
         this.powerplant = stateToCopy.powerplant;
     }
 
@@ -139,7 +130,7 @@ public class TileState {
         this.mine = state.mine;
         this.obs_tower = state.obs_tower;
         this.university = state.university;
-        this.worker = state.worker;
+        this.workerUnit = state.workerUnit;
         this.powerplant = state.powerplant;
 
 //        this.ore = state.ore;
@@ -189,7 +180,6 @@ public class TileState {
                 explorer++;
             if(unit instanceof Colonist)
                 colonist++;
-
         }
 
         // structures
@@ -207,6 +197,9 @@ public class TileState {
             university++;
         if(tile.getStructure() instanceof ObservationTower)
             obs_tower++;
+
+
+        workerUnit += tile.getWorkers().size();
 
         // area affect
         if(tile.getAreaEffect() instanceof DamageAreaEffect)
@@ -334,4 +327,9 @@ public class TileState {
     public void setWorkableByPlayer2(boolean workableByPlayer2) {
         this.workableByPlayer2 = workableByPlayer2;
     }
+
+    public void decrementWorkers() {
+        workerUnit--;
+    }
+
 }

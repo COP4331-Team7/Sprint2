@@ -270,7 +270,7 @@ public class Player {
 
     // Checks if we have 25 Units, returns true if too many
     public boolean checkMaxUnitsFull(){
-        if(this.units.size() == 25){
+        if(this.units.size() >= 25){
             System.out.println("You have too many units.");
             return true;
         }
@@ -320,7 +320,7 @@ public class Player {
     public Worker addWorker(Worker worker) {
 
         // Ensures we are able to have a unit
-        if(this.workers.size() == 100){
+        if(this.workers.size() >= 100){
             return null;
         }
 
@@ -354,7 +354,7 @@ public class Player {
 
     public Structure addStructure(Structure structure) {
           // Ensures we are able to add a structure
-        if(structures.size() == 10){
+        if(structures.size() >= 10){
             System.out.println("You have too many structures.");
             return null;
         }
@@ -433,8 +433,8 @@ public class Player {
     public Army addArmy(Army army) {
 
         // Ensures we are able to have a unit
-        if(this.armies.size() == 10){
-            System.out.println("You have too many units.");
+        if(this.armies.size() >= 10){
+            System.out.println("You have too many armies.");
             return army;
         }
 

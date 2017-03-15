@@ -21,6 +21,7 @@ public class Mine extends StaffedStructure implements IHarvester {
     public Mine(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
         setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();

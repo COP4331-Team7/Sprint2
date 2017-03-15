@@ -21,7 +21,7 @@ public class Map{
     int[] direction = {8,9,3,2,1,7};
 
     public Map() {
-        createTilesForMap(); //for purposes of later abstraction
+        createOGMap(); //for purposes of later abstraction
     }
     public Tile[][] getGrid() {
         return grid;
@@ -51,6 +51,46 @@ public class Map{
                     default:
                         System.out.println("Incorrect range in createTilesForMap, n = " + n);
                         break;
+                }
+            }
+        }
+    }
+
+    private void createOGMap() {
+        grid = new Tile[40][40];
+
+
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 40; j++){
+                if (i >= 0 && i <= 9){
+                    if (j >= 0 && j <= 9){
+                        grid[i][j] = new Tile(new Mountains(), i, j);
+                        grid[39-i][39-j]= new Tile(new Mountains(), 39 - i, 39 - j);
+                    } else if (j > 9 && j <= 19){
+                        grid[i][j] = new Tile(new Crater(), i, j);
+                        grid[39-i][39-j]= new Tile(new Crater(), 39 - i, 39 - j);
+                    } else if (j > 19 && j <= 29){
+                        grid[i][j] = new Tile(new Desert(), i, j);
+                        grid[39-i][39-j]= new Tile(new Desert(), 39 - i, 39 - j);
+                    } else if (j > 29 && j <= 39){
+                        grid[i][j] = new Tile(new Crater(), i, j);
+                        grid[39-i][39-j]= new Tile(new Flatland(), 39 - i, 39 - j);
+                    }
+                }
+                else{
+                    if (j >= 0 && j <= 9){
+                        grid[i][j] = new Tile(new Mountains(), i, j);
+                        grid[39-i][39-j]= new Tile(new Crater(), 39 - i, 39 - j);
+                    } else if (j > 9 && j <= 19){
+                        grid[i][j] = new Tile(new Flatland(), i, j);
+                        grid[39-i][39-j]= new Tile(new Flatland(), 39 - i, 39 - j);
+                    } else if (j > 19 && j <= 29){
+                        grid[i][j] = new Tile(new Desert(), i, j);
+                        grid[39-i][39-j]= new Tile(new Desert(), 39 - i, 39 - j);
+                    } else if (j > 29 && j <= 39){
+                        grid[i][j] = new Tile(new Flatland(), i, j);
+                        grid[39-i][39-j]= new Tile(new Crater(), 39 - i, 39 - j);
+                    }
                 }
             }
         }

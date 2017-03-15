@@ -12,11 +12,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Player p1 = new Player("One");
-        Player p2 = new Player("Two");
-
         // Model
-        Game game = new Game(p1, p2);
+        Player player1 = new Player("One");
+        Player player2 = new Player("Two");
+        Game game      = new Game(player1, player2);
+
         game.newGameState();
 
         // View

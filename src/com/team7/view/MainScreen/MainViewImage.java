@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 
 public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
@@ -44,6 +43,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private BufferedImage invisible;
         private BufferedImage ghostImage;
         private BufferedImage yellowHighlightImage;
+        private BufferedImage workerImage;
 
          private BufferedImage farmImage;
          private BufferedImage mineImage;
@@ -114,6 +114,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                 universityImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/university.png"));
 
                 rallyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/flag.png"));
+               workerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/workerImage.png"));
             }
             catch (IOException e) {}
 
@@ -300,6 +301,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                  // ranged
                                  if (tileState.getRangeUnit() > 0)
                                      g2.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+                                 if (tileState.getWorkerUnit() > 0){
+                                     g2.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+                                 }
                              }
                              //draw resource counts
                              if (drawResources) {
@@ -443,6 +447,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                                 g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
+
+                            if (tileState.getWorkerUnit() > 0){
+                                g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+                                g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
+                            }
                         }
                         //draw resource counts
                         if(drawResources) {
@@ -529,11 +538,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                             }
                         }
 
-                        if(tileState.getWorker() > 0) {
+                        if(tileState.getWorkerUnit() > 0) {
                             g2ds.setColor(new Color(250, 128, 100, 85));
                             g2ds.fillOval(x_coord + x_offset + 25, y_coord + 32, 20, 20);
                             g2ds.setColor(new Color(255, 255, 255, 255));
-                            g2ds.drawString( Integer.toString( tileState.getWorker() ),  x_coord + x_offset + 25, y_coord + 32 );
+                            g2ds.drawString( Integer.toString( tileState.getWorkerUnit() ),  x_coord + x_offset + 25, y_coord + 32 );
                             System.out.println("yeeeeeeeeeeeet");
                         }
 
@@ -667,6 +676,10 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         // ranged
                         if (tileState.getRangeUnit() > 0)
                             g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
+
+                        if (tileState.getWorkerUnit() > 0){
+                            g2ds.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
+                        }
                     }
                     //draw resource counts
                     if(drawResources) {
@@ -706,7 +719,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     if (tileState.getUniversity() > 0) {
 
                     }
-                    if (tileState.getWorker() > 0) {
+                    if (tileState.getWorkerUnit() > 0) {
 
                     }
 

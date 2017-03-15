@@ -11,6 +11,7 @@ import com.team7.model.entity.structure.staffedStructure.Fort;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.structure.staffedStructure.University;
 import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Farm;
+import com.team7.model.entity.structure.staffedStructure.singleHarvestStructure.Mine;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
 import com.team7.model.entity.unit.combatUnit.RangedUnit;
@@ -38,26 +39,24 @@ public class Game {
     }
 
     public void newGameState() {
-
         // create two players
-
-
 
         // create map and populate it with items/resources/area effects
         this.map = new Map();
 
 
+        // create map and populate it with items/resources/area effects
+        this.map = new Map();
+
         //TODO: fix
         // set Player One starting units
         addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][7], players[0]) );
-        //addUnitToPlayer( players[0], new Explorer(this.map.getGrid()[5][10], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[5][22], players[0]) );
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][14], players[0]) );
         addUnitToPlayer( players[0], new Colonist(this.map.getGrid()[10][20], players[0]) );
         addUnitToPlayer( players[0], new RangedUnit(this.map.getGrid()[10][30], players[0]) );
         // set Player Two starting units
         addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-9],  players[1]) );
-       // addUnitToPlayer( players[1], new Explorer(this.map.getGrid()[40-12][40-5],  players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-7][40-25], players[1]) );
         addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[40-5][40-15], players[1]) );
         addUnitToPlayer( players[1], new Colonist(this.map.getGrid()[40-15][10],  players[1]) );
@@ -65,54 +64,33 @@ public class Game {
 
 
         //adding all types of structure to p1 for testing
-        Structure c1 = new Capital(map.getGrid()[25][20],  players[0]);
-        Structure university = new University(map.getGrid()[20][20], players[0]);
-        Structure obsTower = new ObservationTower(map.getGrid()[20][15], players[0]);
-        Structure fort = new Fort(map.getGrid()[20][25], players[0]);
-        Structure farm = new Farm(map.getGrid()[15][20], players[0]);
-       // Structure farm2 = new Farm(map.getGrid()[16][20], players[0]);
 
-        players[0].addStructure(c1);
-        players[0].addStructure(university);
-        players[0].addStructure(obsTower);
-        players[0].addStructure(fort);
-        players[0].addStructure(farm);
-        //players[0].addStructure(farm2);
+        addStructureToPlayer(players[0], new Capital(map.getGrid()[25][20],  players[0]));
+        addStructureToPlayer(players[0], new Farm(map.getGrid()[15][20], players[0]));
+        addStructureToPlayer(players[0], new Farm(map.getGrid()[16][20], players[0]));
+        addStructureToPlayer(players[0], new University(map.getGrid()[20][20], players[0]));
+        addStructureToPlayer(players[1], new ObservationTower(map.getGrid()[20][15], players[1]));
+        addStructureToPlayer(players[1], new Fort(map.getGrid()[20][25], players[1]));
 
 
-        Worker w1 = new Worker(map.getGrid()[25][20], players[0]);
-        addWorkerToPlayer(players[0], w1);
-        ((StaffedStructure)c1).addWorkerToStaff(w1);
+        addArmyToPlayer(players[0], new Army(map.getGrid()[1][30],  players[0]));
+        addArmyToPlayer(players[0], new Army(map.getGrid()[1][29],  players[0]));
+        addArmyToPlayer(players[1], new Army(map.getGrid()[1][31],  players[1]));
+
+        System.out.println(players[0].getArmies());
+        System.out.println(players[1].getArmies());
 
 
-        Army army0 = new Army(map.getGrid()[1][30],  players[0]);
-        Army army1 = new Army(map.getGrid()[1][29],  players[1]);
-        Army army2 = new Army(map.getGrid()[1][31],  players[1]);
+        addUnitToPlayer( players[1], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
+        addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][29], players[1]));
+        addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][31], players[1]));
 
-        players[0].addArmy(army0);
-        players[1].addArmy(army1);
-        players[1].addArmy(army2);
+        players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 1));
+        players[0].getArmies().get(0).addUnitToArmy(players[0].getUnits().get(players[0].getUnits().size() - 2));
+        players[1].getArmies().get(0).addUnitToArmy(players[1].getUnits().get(players[1].getUnits().size() - 1));
 
-
-        Unit melee1 = new  MeleeUnit(this.map.getGrid()[1][30], players[0]);
-        Unit melee2 = new  MeleeUnit(this.map.getGrid()[1][29], players[1]);
-        Unit melee3 = new  MeleeUnit(this.map.getGrid()[1][31], players[1]);
-
-
-        addUnitToPlayer( players[0], melee1 );
-        addUnitToPlayer( players[1], melee2 );
-        addUnitToPlayer( players[1], melee3 );
-
-
-        army0.addUnitToArmy(melee1);
-        army1.addUnitToArmy(melee2);
-        army2.addUnitToArmy(melee3);
-
-        players[0].addArmy( army0 );
-        players[1].addArmy( army1 );
-        players[1].addArmy( army2 );
-
-        army0.queueCommand(new Command("attack 1"));
+        players[1].getArmies().get(0).queueCommand(new Command("attack 2"));
+//        army0.queueCommand(new Command("attack 1"));
 
         updateCurrPlayerTileStates();  // update tile states so view renders accordingly
     }
@@ -127,6 +105,13 @@ public class Game {
         player.addWorker(worker);
     }
 
+    public void addStructureToPlayer(Player player, Structure structure){
+        player.addStructure(structure);
+    }
+
+    public void addArmyToPlayer(Player player, Army army){
+        player.addArmy(army);
+    }
 
     //called at the end of each turn and everytime gamestate changes (namely movement)
     //1. find all tiles currently visited by current player, along with the radius
@@ -253,7 +238,7 @@ public class Game {
         System.out.println("\nARMIES:");
         for(Army a : all_armies) {
             a.printCommandQueue();
-            // s.executeCommandQueue();
+            a.executeCommandQueue(map);
         }
 
 
