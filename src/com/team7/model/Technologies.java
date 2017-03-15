@@ -23,7 +23,7 @@ public class Technologies {
 
 //////////
         //Unit technology
-        unitTechnologies.add(new Technology("unit", "Explorer", "VisibilityRadius", 1, 5));
+        unitTechnologies.add(new Technology("unit", "Explorer", "VisibilityRadius", 2, 5));
         unitTechnologies.add(new Technology("unit" ,"Explorer",  "AttackStrength", 0, 0));
         unitTechnologies.add(new Technology("unit", "Explorer" , "DefenseStrength", 0, 5));
         unitTechnologies.add(new Technology("unit", "Explorer", "ArmorStrength", 0, 5));
