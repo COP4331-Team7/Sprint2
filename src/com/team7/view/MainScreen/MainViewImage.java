@@ -611,11 +611,11 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
 
 
-                        if(tileState.getMeleeUnit()  + tileState.getRangeUnit() >1)
-                        {
-                         //   System.out.println("Creating army");
-                            g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
-                        }
+//                        if(tileState.getMeleeUnit()  + tileState.getRangeUnit() >1)
+//                        {
+//                         //   System.out.println("Creating army");
+//                            g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
+//                        }
 
                         if (tileState.getRallyPoint() > 0) {
                             g2ds.drawImage(rallyImage, x_coord + x_offset + 10, y_coord, null);
