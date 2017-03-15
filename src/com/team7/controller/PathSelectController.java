@@ -31,6 +31,7 @@ public class PathSelectController {
     public static boolean isRecording = false;
     private Tile selectedTile = null;
     private Tile startTile = null;
+    private Tile destTile = null;
     private ConfigReader configReader;
     private ArrayList<Tile> pathTile = new ArrayList<Tile>();;
     private int moveLimit;
@@ -80,6 +81,8 @@ public class PathSelectController {
         else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 3);
         }
+
+        destTile = selectedTile;
 
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
@@ -171,6 +174,10 @@ public class PathSelectController {
 
     public void reDraw() {
         mainViewImage.reDrawMap();
+    }
+
+    public Tile getDestinationTile() {
+        return destTile;
     }
 
 }
