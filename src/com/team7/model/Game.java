@@ -302,5 +302,7 @@ public class Game {
         System.exit(0);
     }
 
-
+    public void setMap(Map map) {
+        this.map = map;
+    }
 }
