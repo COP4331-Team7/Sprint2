@@ -121,8 +121,6 @@ public class PathSelectController {
         if(unit == null || pathTile.size() == 0)
             return;
 
-
-
         startTile.removeUnitFromTile(unit);
         startTile.isSelectedPath = false;
 

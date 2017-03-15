@@ -32,6 +32,8 @@ public class OptionsScreen extends JPanel{
     private JButton homeButton;
     private JPanel bPanel;
 
+    private JButton futureGameButton = null;
+
     public OptionsScreen() {
       //  resetControlsButton.setForeground( new Color(0xCD3700));
         resetControlsButton.setForeground( new Color(0xff000000));
@@ -116,12 +118,20 @@ public class OptionsScreen extends JPanel{
         showUnitsButton.setForeground( new Color(0, 175, 0, 255) );
         showUnitsButton.setFont(new Font("plain", Font.BOLD, 20));
 
-        JPanel btns = new JPanel( new GridLayout(0, 3) );
+        JPanel btns = new JPanel( new GridLayout(0, 4) );
         btns.add(changeControlButton, BorderLayout.WEST);
         changeControlButton.setForeground( new Color(0xff000000) );
         changeControlButton.setFont(new Font("plain", Font.BOLD, 20));
         btns.add( showUnitsButton );
         btns.add( showResourceButton );
+
+        futureGameButton = new JButton("fast forward");
+        futureGameButton.setForeground( new Color(0xff000000) );
+        futureGameButton.setFont(new Font("plain", Font.BOLD, 20));
+        futureGameButton.setBackground(new Color(0xffCABD80));
+        futureGameButton.setOpaque(true);
+        btns.add( futureGameButton );
+
         btns.setBorder(BorderFactory.createLineBorder(new Color(0xffCABD80), 3));
         btns.setBackground(new Color(0xffCABD80));
         btns.setOpaque(true);
@@ -214,6 +224,10 @@ public class OptionsScreen extends JPanel{
     }
     public JToggleButton getShowUnitsButton() {
         return showUnitsButton;
+    }
+
+    public JButton getFutureGameButton() {
+        return futureGameButton;
     }
 
     public void showHomeScreenOnly() {

@@ -161,6 +161,16 @@ public class OptionsController{
             }
         });
 
+        optionsScreen.getFutureGameButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == optionsScreen.getFutureGameButton() )
+
+                    System.out.println("to the future");
+
+
+            }
+        });
+
 
 
     }
