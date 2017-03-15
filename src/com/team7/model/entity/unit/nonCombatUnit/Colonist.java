@@ -94,17 +94,17 @@ public class Colonist extends NonCombatUnit {
                 break;
 
             case "MOVE":
-                if(commandToExecute instanceof MovementCommand){
-                    ArrayList<Tile> tiles = map.findMinPath(this.getLocation(), ((MovementCommand) commandToExecute).getDestinationTile(), null, null);
-                    ArrayList<Tile> reachableTiles = new ArrayList<Tile>();
-                    for(int i = 0; i < this.getUnitStats().getMovement(); i++) {
-                        reachableTiles.add(tiles.get(tiles.size() - i - 1));
-                    }
-
-                    for(int i = 0; i < reachableTiles.size() - 1; i++) {
-                        this.getOwner().moveUnit(this, reachableTiles.get(i + 1));
-                    }
-                }
+//                if(commandToExecute instanceof MovementCommand){
+//                    ArrayList<Tile> tiles = map.findMinPath(this.getLocation(), ((MovementCommand) commandToExecute).getDestinationTile(), null, null);
+//                    ArrayList<Tile> reachableTiles = new ArrayList<Tile>();
+//                    for(int i = 0; i < this.getUnitStats().getMovement(); i++) {
+//                        reachableTiles.add(tiles.get(tiles.size() - i - 1));
+//                    }
+//
+//                    for(int i = 0; i < reachableTiles.size() - 1; i++) {
+//                        this.getOwner().moveUnit(this, reachableTiles.get(i + 1));
+//                    }
+//                }
                 break;
 
             case "MAKE BASE":

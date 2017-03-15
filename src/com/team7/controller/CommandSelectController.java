@@ -193,21 +193,21 @@ public class CommandSelectController {
             army.queueCommand( command );
     }
 
-    public void queueCommand(Tile destinationTile) {
-        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
-                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
-            return;
-
-        Command command = new MovementCommand( mainScreen.getCommandSelect().getCommand(), destinationTile );
-
-        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
-
-        if(unit != null)
-            unit.queueCommand( command );
-        else if (army != null)
-            army.queueCommand( command );
-    }
+//    public void queueCommand(Tile destinationTile) {
+//        if(getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null &&
+//                getCurrentStructureSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance()) == null)
+//            return;
+//
+//        Command command = new MovementCommand( mainScreen.getCommandSelect().getCommand(), destinationTile );
+//
+//        Unit unit = getCurrentUnitSelection(mainScreen.getCommandSelect().getCurrMode(), mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+//        Army army = getCurrentArmySelection(mainScreen.getCommandSelect().getCurrType(), mainScreen.getCommandSelect().getCurrTypeInstance());
+//
+//        if(unit != null)
+//            unit.queueCommand( command );
+//        else if (army != null)
+//            army.queueCommand( command );
+//    }
 
     public void printCurrPlayersUnitsCommandQueues(){
         System.out.println("\nPlayer " + game.getCurrentPlayer().getName() + "'s unit's command queues: ");

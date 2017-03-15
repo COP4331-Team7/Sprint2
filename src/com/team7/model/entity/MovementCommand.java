@@ -8,7 +8,7 @@ public class MovementCommand extends Command {
     Tile destinationTile;
 
     public MovementCommand(String string, Tile destination) {
-        setCommandString("move Move");
+        setCommandString("MOVE");
         setWait(0);
         destinationTile = destination;
     }
