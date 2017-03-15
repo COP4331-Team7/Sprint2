@@ -158,7 +158,7 @@ public class Game {
                     tile.markVisible(currentPlayer.getName());
 
                 }
-                else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) && PathSelectController.isRecording) {
+                else if(tile.getVisible(currentPlayer.getName()) && !visibleTiles.contains( tile ) ) {
                     tile.markShrouded( currentPlayer.getName() );
                 }
 
