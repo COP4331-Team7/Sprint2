@@ -291,16 +291,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                              // draw units
                              if (drawUnits) {
                                  // explorer
-                                 if (tileState.getExplorer() > 0)
+                                 if (tileState.getExplorer() == 1)
                                      g2.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
                                  // colonist
-                                 if (tileState.getColonist() > 0)
+                                 if (tileState.getColonist() == 1 )
                                      g2.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
                                  // melee
-                                 if (tileState.getMeleeUnit() > 0)
+                                 if (tileState.getMeleeUnit() == 1)
                                      g2.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
                                  // ranged
-                                 if (tileState.getRangeUnit() > 0)
+                                 if (tileState.getRangeUnit() == 1)
                                      g2.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
                                  if (tileState.getWorkerUnit() > 0){
                                      g2.drawImage(workerImage, x_coord + x_offset + 10, y_coord, null);
@@ -479,22 +479,22 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         if(drawUnits) {
                             g2ds.setColor(Color.black);
                             // explorer
-                            if (tileState.getExplorer() > 0) {
+                            if (tileState.getExplorer() == 1) {
                                 g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // colonist
-                            if (tileState.getColonist() > 0) {
+                            if (tileState.getColonist() == 1) {
                                 g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // melee
-                            if (tileState.getMeleeUnit() > 0) {
+                            if (tileState.getMeleeUnit() == 1) {
                                 g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
                             // ranged
-                            if (tileState.getRangeUnit() > 0){
+                            if (tileState.getRangeUnit() ==1){
                                 g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
                                 g2ds.drawString( player.getName() , x_coord + x_offset + 20, y_coord + 30);
                             }
@@ -585,8 +585,9 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                         }
 
 
-                        if(tileState.getMeleeUnit() + tileState.getWorkerUnit() + tileState.getRangeUnit() >1)
+                        if(tileState.getMeleeUnit()  + tileState.getRangeUnit() >1)
                         {
+                            System.out.println("Creating army");
                             g2ds.drawImage(armyImage, x_coord + x_offset + 10, y_coord, null);
                         }
 
@@ -735,16 +736,16 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
                     // draw units
                     if(drawUnits) {
                         // explorer
-                        if (tileState.getExplorer() > 0)
+                        if (tileState.getExplorer() == 1)
                             g2ds.drawImage(explorerImage, x_coord + x_offset + 10, y_coord, null);
                         // colonist
-                        if (tileState.getColonist() > 0)
+                        if (tileState.getColonist() == 1)
                             g2ds.drawImage(colonistImage, x_coord + x_offset + 10, y_coord, null);
                         // melee
-                        if (tileState.getMeleeUnit() > 0)
+                        if (tileState.getMeleeUnit() == 1)
                             g2ds.drawImage(meleeImage, x_coord + x_offset + 10, y_coord, null);
                         // ranged
-                        if (tileState.getRangeUnit() > 0)
+                        if (tileState.getRangeUnit() ==1)
                             g2ds.drawImage(rangeImage, x_coord + x_offset + 10, y_coord, null);
 
                         if (tileState.getWorkerUnit() > 0){

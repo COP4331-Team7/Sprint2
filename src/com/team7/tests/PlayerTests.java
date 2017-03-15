@@ -2,6 +2,7 @@ package com.team7.tests;
 
 import com.team7.model.Map;
 import com.team7.model.Player;
+import com.team7.model.Tile;
 import com.team7.model.entity.Army;
 import com.team7.model.entity.Attacker;
 import com.team7.model.entity.unit.Unit;
@@ -10,6 +11,9 @@ import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -168,6 +172,40 @@ public class PlayerTests {
 //        assertEquals(player1.getUnits().get(1).getUnitStats().getHealth(), 100);
 
 
+    }
+    @Test
+    public void reEnforce(){
+        Map map = new Map();
+        Player testPLayer = new Player("playerOne");
+        Unit melee3 = new MeleeUnit(map.getGrid()[1][10], testPLayer);
+        Unit melee = new MeleeUnit(map.getGrid()[2][10], testPLayer);
+        Unit melee2 = new MeleeUnit(map.getGrid()[2][10], testPLayer);
+        Unit colonist = new Colonist(map.getGrid()[1][0], testPLayer);
+        Army army = new Army(map.getGrid()[2][10],  testPLayer);
+        testPLayer.addUnit(melee);
+        testPLayer.addUnit(melee2);
+        testPLayer.addUnit(melee3);
+        testPLayer.addUnit(colonist);
+        testPLayer.addArmy(army);
+        army.addUnitToArmy(melee);
+        army.addUnitToArmy(melee2);
+        for(Unit unit: testPLayer.getUnits()){
+            if(unit.getLocation() != testPLayer.getArmies().get(0).getLocation()) {
+                System.out.println("Reinforcement");
+                ArrayList<Tile> tiles = null;
+                Set<Tile> openList = null;
+                Set<Tile> closedList = null;
+                tiles = map.findMinPath(unit.getLocation(), testPLayer.getArmies().get(0).getLocation(), openList, closedList);
+                if (tiles == null) {
+                    System.out.println("No Path Found");
+                } else {
+                    System.out.println(tiles.size());
+                    for (int i = tiles.size() - 1; i >= 0; i--) {
+                        System.out.println(tiles.get(i).getxCoordinate() + "," + tiles.get(i).getyCoordinate());
+                    }
+                }
+            }
+        }
     }
 
 

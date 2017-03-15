@@ -71,11 +71,12 @@ public class Game {
         addStructureToPlayer(players[1], new Fort(map.getGrid()[20][25], players[1]));
 
 
-        addArmyToPlayer(players[0], new Army(map.getGrid()[1][30],  players[0]));
+        addArmyToPlayer(players[0], new Army(map.getGrid()[2][30],  players[0]));
         addArmyToPlayer(players[0], new Army(map.getGrid()[1][29],  players[0]));
         addArmyToPlayer(players[1], new Army(map.getGrid()[1][31],  players[1]));
 
 
+        addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
         addUnitToPlayer( players[0], new MeleeUnit(this.map.getGrid()[1][30], players[0]));
         addUnitToPlayer( players[0], new  MeleeUnit(this.map.getGrid()[1][29], players[0]));
         addUnitToPlayer( players[1], new  MeleeUnit(this.map.getGrid()[1][31], players[1]));

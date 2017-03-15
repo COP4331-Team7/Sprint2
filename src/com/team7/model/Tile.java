@@ -282,9 +282,9 @@ public class Tile {
     public void removeUnitFromTile(Unit unit) {
         this.units.remove(unit);
                                             // TODO: fix
-        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null ){
-            return;
-        }
+//        if( getDrawableStateByPlayer( unit.getOwner().getName() ) == null ){
+//            return ;
+//        }
 
 
         this.getDrawableStateByPlayer( unit.getOwner().getName() ).decremenUnits(unit );

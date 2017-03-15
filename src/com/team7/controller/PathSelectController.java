@@ -35,7 +35,8 @@ public class PathSelectController {
     private Tile startTile = null;
     private Tile destTile = null;
     private ConfigReader configReader;
-    private ArrayList<Tile> pathTile = new ArrayList<Tile>();;
+    public static ArrayList<Tile> pathTile = new ArrayList<Tile>();
+
     private int moveLimit;
     private int moveAnimationSpeed = 10 * 30;
 
@@ -65,22 +66,17 @@ public class PathSelectController {
 
 //        selectedTile.isSelectedPath = false;
 
-        if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
+        if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northwest"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 7);
-        }
-        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest"))) {
+        } else if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southwest"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 1);
-        }
-        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "South"))) {
+        } else if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "South"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 2);
-        }
-        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "North"))) {
+        } else if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "North"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 8);
-        }
-        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast"))) {
+        } else if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Northeast"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 9);
-        }
-        else if(direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
+        } else if (direction.equals(configReader.getValueByKey(game.getCurrentPlayer().getName(), "Southeast"))) {
             selectedTile = map.getAdjacentTile(selectedTile, 3);
         }
 
@@ -91,10 +87,7 @@ public class PathSelectController {
         mainViewImage.reDrawMap();
     }
 
-    public ArrayList<Tile> getPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
-
-
-
+    public ArrayList<Tile> getPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList) {
 
 
         return null;
@@ -107,22 +100,22 @@ public class PathSelectController {
         pathTile.clear();
         this.startTile = startTile;
 
-        if( selectedTile != null )
+        if (selectedTile != null)
             selectedTile.isSelectedPath = false;
 
         isRecording = true;
         selectedTile = startTile;
         startTile.isSelectedPath = true;
-        mainViewImage.zoomToDestination( startTile.getxCoordinate() - 11/2, startTile.getyCoordinate() - 16/2, 30);
+        mainViewImage.zoomToDestination(startTile.getxCoordinate() - 11 / 2, startTile.getyCoordinate() - 16 / 2, 30);
     }
 
-    public void drawPath(Unit unit){
+    public void drawPath(Unit unit) {
 
         moveAnimationSpeed = optionsScreen.getUnitSpeed() * 20;
 
-        if(unit == null || pathTile.size() == 0)
+        if (unit == null || pathTile.size() == 0)
             return;
-        System.out.println("Destin: " +pathTile.get(pathTile.size()-1).getxCoordinate()+","+pathTile.get(pathTile.size()-1).getxCoordinate());
+        System.out.println("Destin: " + pathTile.get(pathTile.size() - 1).getxCoordinate() + "," + pathTile.get(pathTile.size() - 1).getxCoordinate());
 
         startTile.removeUnitFromTile(unit);
         startTile.isSelectedPath = false;
@@ -130,7 +123,8 @@ public class PathSelectController {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (Command command : unit.getCommandQueue().getCommandsList()){
+                    for (Command command : unit.getCommandQueue().getCommandsList()) {
+                        System.out.println(command);
                         MovementCommand movementCommand = (MovementCommand) command;
                         movementCommand.getDestinationTile().isSelectedPath = false;
 //                        tile.isSelectedPath = false;
@@ -139,7 +133,7 @@ public class PathSelectController {
                     for (int k = 0; k < unit.getCommandQueue().getCommandsList().size(); k++) {
 
                         MovementCommand movementCommand = (MovementCommand) unit.getCommandQueue().getCommandsList().get(k);
-                        System.out.println("In Command queue"+movementCommand.getDestinationTile().getxCoordinate()+","+movementCommand.getDestinationTile().getyCoordinate());
+                        System.out.println("In Command queue" + movementCommand.getDestinationTile().getxCoordinate() + "," + movementCommand.getDestinationTile().getyCoordinate());
                         game.getCurrentPlayer().moveUnit(unit, movementCommand.getDestinationTile());
                         game.updateCurrPlayerTileStates();
                         miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
@@ -165,8 +159,7 @@ public class PathSelectController {
                 }
 
             }).start();
-        }
-        else {
+        } else {
 
             new Thread(new Runnable() {
                 public void run() {
@@ -178,7 +171,11 @@ public class PathSelectController {
                     System.out.println("Maximum limit" + totalMoves);
 
                     for (int i = 0; i < pathTile.size(); i++) {
-                        if (!game.getCurrentPlayer().moveUnit(unit, pathTile.get(i))) {
+                        if(unit==null)
+                        {
+                            System.out.print("Unit died");
+                        }
+                        else if (!game.getCurrentPlayer().moveUnit(unit, pathTile.get(i))) {
                             mainViewImage.reDrawMap();
                             break;
                         } else
@@ -187,7 +184,7 @@ public class PathSelectController {
                             if (i >= totalMoves - 1) {
                                 for (int j = i; j < pathTile.size(); j++) {
                                     MovementCommand command = new MovementCommand("MOVE", pathTile.get(j));
-                                    System.out.println("Adding to Queue" + pathTile.get(j).getxCoordinate()+","+pathTile.get(j).getyCoordinate());
+                                    System.out.println("Adding to Queue" + pathTile.get(j).getxCoordinate() + "," + pathTile.get(j).getyCoordinate());
                                     unit.getCommandQueue().getCommandsList().add(command);
                                     System.out.println("ArrayList size" + unit.getCommandQueue().getCommandsList().size());
                                 }
@@ -234,8 +231,8 @@ public class PathSelectController {
 
     }
 
-    public void zoomToTile( Tile tile ) {
-        if(tile == null)
+    public void zoomToTile(Tile tile) {
+        if (tile == null)
             return;
         view.getMainViewImage().zoomToDestination(tile.getxCoordinate() - 11 / 2, tile.getyCoordinate() - 16 / 2, optionsScreen.getFocusSpeed());
     }
@@ -248,4 +245,135 @@ public class PathSelectController {
         return destTile;
     }
 
+    public ArrayList<Tile> reEnforce(Unit unit) {
+        ArrayList<Tile> path = null;
+            if (unit.getLocation() != game.getCurrentPlayer().getArmies().get(0).getLocation()) {
+                path = game.getCurrentPlayer().reEnforce(game.getMap(), unit);
+                if(path!=null)
+                {
+                    for (Tile tile : path) {
+                        tile.isSelectedPath = true;
+                    }
+                    reDraw();
+                }
+
+            }
+        return path;
+        }
+
+    public void drawRenforce(ArrayList<Tile> tiles, Unit unit) {
+        isRecording = true;
+        if (unit.getCommandQueue().getCommandsList().size() > 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (Command command : unit.getCommandQueue().getCommandsList()) {
+                        System.out.println(command);
+                        MovementCommand movementCommand = (MovementCommand) command;
+                        movementCommand.getDestinationTile().isSelectedPath = false;
+//                        tile.isSelectedPath = false;
+                    }
+
+                    for (int k = 0; k < unit.getCommandQueue().getCommandsList().size(); k++) {
+
+                        MovementCommand movementCommand = (MovementCommand) unit.getCommandQueue().getCommandsList().get(k);
+                        System.out.println("In Command queue" + movementCommand.getDestinationTile().getxCoordinate() + "," + movementCommand.getDestinationTile().getyCoordinate());
+                        game.getCurrentPlayer().moveUnit(unit, movementCommand.getDestinationTile());
+                        game.updateCurrPlayerTileStates();
+                        miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                        final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                        SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                        {
+                            public void run() {
+                                mainViewImage.setImage(mapSubsection);
+                            }
+                        });
+                        try {
+                            Thread.sleep(moveAnimationSpeed);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (k == unit.getCommandQueue().getCommandsList().size() - 1)
+                            mainViewImage.zoomToDestination(tiles.get(tiles.size() - 1).getxCoordinate() - 11 / 2, tiles.get(tiles.size() - 1).getyCoordinate() - 16 / 2, 30);
+
+                    }
+                    unit.getCommandQueue().getCommandsList().clear();
+                }
+
+            }).start();
+        } else {
+            System.out.println("Trying to move");
+
+            new Thread(new Runnable() {
+                public void run() {
+
+                    for (Tile tile : tiles)
+                        tile.isSelectedPath = false;
+
+                    int totalMoves = unit.getUnitStats().getMovement();
+                    System.out.println("Maximum limit" + totalMoves);
+
+                    for (int i = 0; i < tiles.size(); i++) {
+                        if(unit==null)
+                        {
+                            System.out.print("Unit died");
+                        }
+                        else if (!game.getCurrentPlayer().moveUnit(unit, tiles.get(i))) {
+                            mainViewImage.reDrawMap();
+                            break;
+                        } else
+//                        if( unit.getCommandQueue().getCommandsList().size()==0){// move the uni// t
+                        {
+                            System.out.println("Trying to move deep");
+                            if (i >= totalMoves - 1) {
+                                for (int j = i; j < tiles.size(); j++) {
+                                    MovementCommand command = new MovementCommand("MOVE", tiles.get(j));
+                                    System.out.println("Adding to Queue" + tiles.get(j).getxCoordinate() + "," + tiles.get(j).getyCoordinate());
+                                    unit.getCommandQueue().getCommandsList().add(command);
+                                    System.out.println("ArrayList size" + unit.getCommandQueue().getCommandsList().size());
+                                }
+                                break;
+                            }
+//                                System.out.println(pathTile.get(i));
+//                                Command command = new MovementCommand("MOVE", pathTile.get(i));
+//                                System.out.println("Adding to Queue");
+//                                unit.getCommandQueue().getCommandsList().add(command);
+//                                System.out.println("ArrayList size" + unit.getCommandQueue().getCommandsList().size());
+
+
+                            else {
+                                game.getCurrentPlayer().moveUnit(unit, tiles.get(i));
+                                game.updateCurrPlayerTileStates();
+                                miniMap.setMiniMapImage(mainViewImage.getFullMapImage(false));
+
+                                final BufferedImage mapSubsection = mainViewImage.drawSubsectionOfMap();
+                                SwingUtilities.invokeLater(new Runnable()   // queue frame i on EDT for display
+                                {
+                                    public void run() {
+                                        mainViewImage.setImage(mapSubsection);
+                                    }
+                                });
+                                try {
+                                    Thread.sleep(moveAnimationSpeed);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (i == tiles.size() - 1)
+                                    mainViewImage.zoomToDestination(tiles.get(tiles.size() - 1).getxCoordinate() - 11 / 2, tiles.get(tiles.size() - 1).getyCoordinate() - 16 / 2, 30);
+                            }
+                        }
+                    }
+                }
+
+
+            }).start();
+
+
+            System.out.println("Command Queue size: " + unit.getCommandQueue().getSize());
+        }
+
+    }
 }

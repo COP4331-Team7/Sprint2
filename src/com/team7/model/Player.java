@@ -23,6 +23,7 @@ import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Player {
     private ArrayList<Unit> units;
@@ -267,9 +268,9 @@ public class Player {
     // Removes unit from Player's ArrayList of Units
     public Unit removeUnit(Unit unit) {
         this.units.remove(unit);
+        if(unit.getLocation()!=null)
         unit.getLocation().removeUnitFromTile(unit);
-
-        return unit;
+    return unit;
     }
 
     // Checks if we have 25 Units, returns true if too many
@@ -418,18 +419,28 @@ public class Player {
 
     public boolean moveUnit(Unit unit, Tile destination) {
         System.out.println(destination);
+        if(destination.getDrawableStateByPlayer(unit.getOwner().getName())==null){
+            return true;
+        }
         TileState t = destination.getDrawableStateByPlayer(unit.getOwner().getName());
         if (!unit.isAlive()) {
-            removeUnit(unit);
-            destination.setDecal(new Decal());
-            //TODO why do I need to pass string for decal
-            t.setDecal("decal");
-            unit.setLocation(null);
-            System.out.println("Unit died");
-            return false;
+            if(removeUnit(unit)!=null) {
+                destination.setDecal(new Decal());
+                //TODO why do I need to pass string for decal
+                t.setDecal("decal");
+                unit.setLocation(null);
+                System.out.println("Unit died");
+                return false;
+            }
+            else {
+                destination.setDecal(new Decal());
+                t.setDecal("decal");
+                unit.setLocation(null);
+                return false;
+            }
         }
         System.out.println("State" + t);
-        if (t.getAreaEffectType() != null ) {
+        if (t.getAreaEffectType() != null) {
             if (t.getAreaEffectType().equalsIgnoreCase("InstantDeath")) {
                 unit.getUnitStats().setHealth(0);
                 System.out.println(unit.getUnitStats().getHealth());
@@ -799,6 +810,38 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public ArrayList<Tile> reEnforce( Map map, Unit unit) {
+        Player player = this;
+        ArrayList<Tile> tiles = null;
+        Set<Tile> openList = null;
+        Set<Tile> closedList = null;
+        int j=0;
+        ArrayList<Tile> reverse = new ArrayList<Tile>();
+
+        System.out.println("Reinforcement");
+
+        tiles = map.findMinPath(unit.getLocation(), player.getArmies().get(0).getLocation(), openList, closedList);
+        if (tiles == null) {
+            System.out.println("No Possible Path");
+            return null;
+        } else {
+
+            System.out.println(tiles.size());
+            for (int i = tiles.size() - 1; i >= 0; i--) {
+                System.out.println(tiles.get(i).getxCoordinate() + "," + tiles.get(i).getyCoordinate());
+            }
+//            map.clearSelectedTiles();
+//            map.clearPath();
+            map.clearIndex();
+            for(int i=tiles.size()-1;i>=0;i--){
+                reverse.add(j,tiles.get(i));
+                j++;
+            }
+            reverse.add(j,unit.getOwner().getArmy(0).getLocation());
+            return reverse;
+        }
     }
 
 }

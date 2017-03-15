@@ -28,10 +28,12 @@ public class CommandSelectController {
     private CommandSelect commandSelect = null;
     private MainScreen mainScreen = null;
     private Game game = null;
+    private View view=null;
 
 
     public CommandSelectController(Game game, View view) {
         this.game = game;
+        this.view = view;
         this.mainViewImage = view.getMainViewImage();
         this.mainViewInfo = view.getMainViewInfo();
         this.optionsScreen = view.getOptionScreen();
@@ -243,8 +245,13 @@ public class CommandSelectController {
         //queueCommand();
 
         // queueCommand();
-        clearCommandView();
-        giveCommandViewFocus();
+        System.out.println("Called Reinforcement function");
+        PathSelectController pathSelectController = new PathSelectController(game, view);
+
+//        pathSelectController.startRecordingPath(u.getLocation(), u.getUnitStats().getMovement());;
+        pathSelectController.drawRenforce(pathSelectController.reEnforce(u),u);
+//        clearCommandView();
+//        giveCommandViewFocus();
     }
 
     public void executeAttackCommand(Army a) {

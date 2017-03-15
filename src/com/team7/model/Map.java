@@ -151,13 +151,14 @@ public class Map{
             for (int i : direction) {
 //                        System.out.println("Adding to open List");
                 Tile tile = moveTypeOne(start.getxCoordinate(), start.getyCoordinate(), i);
+                System.out.println("Is passable"+tile.getTerrain().isPassable());
                 if (tile.getxCoordinate() == destination.getxCoordinate() && tile.getyCoordinate() == destination.getyCoordinate()) {
                     closedList.add(tile);
                     path.add(index,tile);
                     index++;
                     return path;
                 }
-                else if (!openList.contains(tile) && !closedList.contains(tile)) {
+                else if (!openList.contains(tile) && !closedList.contains(tile) && !(tile.getTerrain() instanceof Mountains)) {
                     openList.add(moveTypeOne(start.getxCoordinate(), start.getyCoordinate(), i));
                 }
 //                        else openList.add(moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i));
@@ -169,13 +170,14 @@ public class Map{
             for (int i : direction) {
 
                 Tile tile = moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i);
+                System.out.println("Is passable"+tile.getTerrain().isPassable());
                 if (tile.getxCoordinate() == destination.getxCoordinate() && tile.getyCoordinate() == destination.getyCoordinate()) {
                     closedList.add(tile);
                     path.add(index,tile);
                     index++;
                     return path;
                 }
-                else if (!openList.contains(tile) && !closedList.contains(tile)) {
+                else if (!openList.contains(tile) && !closedList.contains(tile) && !(tile.getTerrain() instanceof Mountains)) {
                     openList.add(moveTypeTwo(start.getxCoordinate(), start.getyCoordinate(), i));
                 }
             }
@@ -190,6 +192,10 @@ public class Map{
         index++;
         openList.remove(start);
         Tile lowest = getLowest(destination, openList);
+        if(lowest==null){
+            return null;
+        }
+
         if(path!=null){
             index = 0;
             path = new ArrayList<Tile>();
@@ -198,7 +204,7 @@ public class Map{
         path.add(index,lowest);
         index++;
 
-        if(!closedList.contains(lowest))
+        if(!closedList.contains(lowest) && lowest.getTerrain().isPassable())
             closedList.add(lowest);
         openList.remove(lowest);
         return path;
@@ -209,7 +215,7 @@ public class Map{
         for (Tile tile : openList) {
             System.out.println("Distance"+tile.getxCoordinate()+","+tile.getyCoordinate()+"   "+String.valueOf(calculateDistance(tile,destination)));
         }
-        int min = 30;
+        int min = 200;
         int curr=0;
         Tile minTile=null;
         for(Tile tile : openList){
@@ -220,6 +226,7 @@ public class Map{
             }
         }
         Tile lowest = minTile;
+        if(lowest!=null)
         System.out.println("Lowest node"+lowest.getxCoordinate()+","+lowest.getyCoordinate());
         return lowest;
     }
@@ -354,62 +361,31 @@ public class Map{
     }
 
 
-     /* //TODO figure if this iterative method is needed, as it requires no global Set for Tiles
-    //TODO fix iterating by depth (radius)
- //calculates all Tiles in the radius of influence/visibility of the selected entity
-    public Set<Tile> getTilesInRadius(Tile currentTile, int radius) {
-        int currentX;
-        int currentY;
-        int[] possibleDirections = {8, 9, 3, 2, 1, 7};
 
-        Set<Tile> tilesInRadius = new HashSet<>();
-        //bfs iteratively
-        Queue<Tile> tileQ = new LinkedList<>();
-        Queue<Integer> depthQ = new LinkedList<>();
-        depthQ.add(0);
-        tilesInRadius.add(currentTile);
-        tileQ.add(currentTile);
-        int currentDepth = 0;
 
-        while (!tileQ.isEmpty() && radius > currentDepth){
-            currentDepth = depthQ.remove();
+public void clearIndex(){
+    index = 0;
+}
+    public void clearPath() {
+        index = 0;
+        path.clear();
+    }
 
-            Tile tmp = tileQ.remove();  //operate on current
-            tilesInRadius.add(tmp);
-            currentX = tmp.getxCoordinate();
-            currentY = tmp.getyCoordinate();
-            Tile childTile = tmp;
-            for(int direction : possibleDirections){
-                if (isEven(currentX) && isEven(currentY)){
-                    //calculate movement for even X, even Y
-                    childTile = moveTypeOne(currentX, currentY, direction);
-                } else if (isEven(currentX) && !isEven(currentY)){
-                    //calculate movement for even X, odd Y
-                    childTile = moveTypeTwo(currentX, currentY, direction);
-                } else if (!isEven(currentX) && isEven(currentY)){
-                    //calculate movement for odd X, even Y
-                    childTile = moveTypeOne(currentX, currentY, direction);
-                } else if (!isEven(currentX) && !isEven(currentY)) {
-                    //calculate movement for odd X, odd Y
-                    childTile = moveTypeTwo(currentX, currentY, direction);
-                }
-                // System.out.println("New Tile coords: " + childTile.getxCoordinate() + ", " + childTile.getyCoordinate());
-                if (!tilesInRadius.contains(childTile)){
-                    //tile is unvisited
-                    // System.out.println("adding new Tile to q");
-                    depthQ.add(currentDepth+1);
-                    tilesInRadius.add(childTile);
-                    tileQ.add(childTile);
-                }
+    public void clearSelectedTiles(){
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+
+                grid[i][j].isSelectedPath = false;
+
             }
-
         }
-
-        return tilesInRadius;
-    }*/
-
+    }
     public Tile getTile(int i, int j) {
         return grid[i][j];
     }
+
+
+
 
 }
