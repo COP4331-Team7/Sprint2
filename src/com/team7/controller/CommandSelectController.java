@@ -212,6 +212,7 @@ public class CommandSelectController {
        // int id = Integer.parseInt(String.valueOf(idString));
 
         //queueCommand();
+
         clearCommandView();
         giveCommandViewFocus();
     }
