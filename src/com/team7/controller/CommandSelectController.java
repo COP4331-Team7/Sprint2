@@ -155,8 +155,8 @@ public class CommandSelectController {
                     }
                     else
 
-                    queueCommand();
-                    game.printCommandQueues();
+                        queueCommand();
+                        game.printCommandQueues();
 
                 clearCommandView();
                 giveCommandViewFocus();

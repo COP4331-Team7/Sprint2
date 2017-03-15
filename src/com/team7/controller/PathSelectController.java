@@ -2,6 +2,7 @@ package com.team7.controller;
 
 
 import com.team7.model.Map;
+import com.team7.model.Player;
 import com.team7.view.MainScreen.MainScreen;
 import com.team7.view.MainScreen.MainViewMiniMap;
 import com.team7.view.OptionsScreen.ConfigurableControls.ConfigReader;
@@ -16,6 +17,7 @@ import com.team7.view.View;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class PathSelectController {
     private Game game = null;
@@ -43,8 +45,11 @@ public class PathSelectController {
         this.miniMap = view.getMainScreen().getMiniMap();
         this.commandView = view.getCommandSelect();
 
+        Player[] players = this.game.getPlayers();
+        players[0].setMovementController(this);
+        players[1].setMovementController(this);
 
-         configReader = new ConfigReader();
+        configReader = new ConfigReader();
 
         commandView.setController(this);
     }
@@ -79,6 +84,15 @@ public class PathSelectController {
         pathTile.add(selectedTile);
         selectedTile.isSelectedPath = true;
         mainViewImage.reDrawMap();
+    }
+
+    public ArrayList<Tile> findMinPath(Tile start, Tile destination, Set<Tile> openList, Set<Tile> closedList){
+
+
+
+
+
+        return null;
     }
 
     public void startRecordingPath(Tile startTile, int unitMovement) {
