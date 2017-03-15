@@ -32,7 +32,7 @@ public class ObservationTower extends Structure {
         setVisibilityRadius(4);
         setEnergyUpkeep(5);
         setOreUpkeep(5);
-        setLevelOfCompletion(95);
+        setLevelOfCompletion(100);
     }
 
     @Override
