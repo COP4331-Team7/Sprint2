@@ -147,13 +147,16 @@ public class CommandSelectController {
 
                     // UNIT MELEE/RANGE REINFORCE COMMAND, USER NEED TO INPUT ARMY ID, and command will execute
                     if( commandSelect.getCurrMode() == 2 && (commandSelect.getCurrType() == 2 || commandSelect.getCurrType() == 3) && commandSelect.getCurrCommand() == 0 ) {
-                        executeReinforeCommand( getCurrentUnitSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        executeReinforceCommand( getCurrentUnitSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
                         return;
                     }
                     // STRUCTURE POWERPLANT:ENERGY MINE:ORE FARM:FOOD CAPITAL: ALL3
                     else if( commandSelect.getCurrMode() == 1 && (commandSelect.getCurrType() == 0 || commandSelect.getCurrType() == 4 || commandSelect.getCurrType() == 5  || commandSelect.getCurrType() == 6 ) && (commandSelect.getCurrCommand() == 4 || commandSelect.getCurrCommand() == 5  || commandSelect.getCurrCommand() == 6 || commandSelect.getCurrCommand() == 8 || commandSelect.getCurrCommand() == 9 || commandSelect.getCurrCommand() == 10) ) {
-                         executeAssignToCommand( getCurrentStructureSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
+                        executeAssignToCommand( getCurrentStructureSelection(  commandSelect.getCurrMode(), commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
                         return;
+                    }
+                    else if( commandSelect.getCurrMode() == 3 && commandSelect.getCurrCommand() == 0) {
+                        executeAttackCommand(  getCurrentArmySelection( commandSelect.getCurrType(), commandSelect.getCurrTypeInstance() ) );
                     }
                     else
 
@@ -227,14 +230,14 @@ public class CommandSelectController {
         mainViewInfo.clearStats();
     }
 
-    public void executeReinforeCommand(Unit u) {
+    public void executeReinforceCommand(Unit u) {
 
         String s = new String( "Enter army ID that " + u.getType() + " " + u.getId() + " will reinforce" );
 
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
         System.out.println("Option pane on display reinforce !");
-        // int id = Integer.parseInt(String.valueOf(idString));
+//        int id = Integer.parseInt(String.valueOf(idString));
 
 
         //queueCommand();
@@ -244,13 +247,31 @@ public class CommandSelectController {
         giveCommandViewFocus();
     }
 
+    public void executeAttackCommand(Army a) {
+
+        String s = new String( "Enter direction to attack: " );
+
+        String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
+
+////        int id = Integer.parseInt(String.valueOf(idString));
+//
+//
+//        //queueCommand();
+//
+//        // queueCommand();
+//        clearCommandView();
+//        giveCommandViewFocus();
+    }
+
     public void executeAssignToCommand(Structure structure) {
 
         String s = new String( "Enter # workers to assign to " + structure.getType() + " " + structure.getId() + " ." );
 
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
-        System.out.println("Option pane on display! assignment");
+        Command command = new Command( mainScreen.getCommandSelect().getCommand() + s);
+
+        System.out.println(command.getCommandString());
 
         // queueCommand();
         clearCommandView();
