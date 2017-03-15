@@ -11,8 +11,12 @@ import com.team7.view.View;
 public class Main {
 
     public static void main(String[] args) {
+
         // Model
-        Game game = new Game();
+        Player player1 = new Player("One");
+        Player player2 = new Player("Two");
+        Game game      = new Game(player1, player2);
+
         game.newGameState();
 
         // View

@@ -3,8 +3,10 @@ package com.team7.tests;
 import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.entity.Army;
+import com.team7.model.entity.Attacker;
 import com.team7.model.entity.unit.Unit;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+import com.team7.model.entity.unit.combatUnit.RangedUnit;
 import com.team7.model.entity.unit.nonCombatUnit.Colonist;
 import com.team7.model.entity.unit.nonCombatUnit.Explorer;
 import org.junit.Test;
@@ -126,4 +128,49 @@ public class PlayerTests {
 
     }
 
+    @Test
+    // This tests the attacking for a single unit
+    public void testAttackMelee() throws Exception {
+
+        // create map and player
+        Map map = new Map();
+        Player player1 = new Player("One");
+        Player player2 = new Player("Two");
+
+        // create units and give them to player
+        Unit melee = new MeleeUnit(map.getGrid()[1][29], player1);
+        Unit ranged = new RangedUnit(map.getGrid()[1][31], player2);
+        player1.addUnit(melee);
+        player2.addUnit(ranged);
+
+        // check Melee units only get the tile next to it
+        Attacker attacker = new Attacker(map, melee, 2);
+
+        attacker.attack();
+
+        assertEquals(player2.getUnits().get(0).getUnitStats().getArmor(), 0);
+        assertTrue(player2.getUnits().get(0).getUnitStats().getHealth() < 100);
+
+
+//        // check ranged attack
+//        attacker = new Attacker(map, ranged, 4);
+//
+//        attacker.attack();
+//        assertEquals(player1.getUnits().get(0).getUnitStats().getArmor(), 0);
+//        assertTrue(player1.getUnits().get(0).getUnitStats().getHealth() < 100);
+
+
+        // check you can't attack a teammate
+//        attacker = new Attacker(map, melee, 2);
+//        attacker.attack();
+//
+//        assertEquals(player1.getUnits().get(1).getUnitStats().getArmor(), 10);
+//        assertEquals(player1.getUnits().get(1).getUnitStats().getHealth(), 100);
+
+
+    }
+
+
 }
+
+

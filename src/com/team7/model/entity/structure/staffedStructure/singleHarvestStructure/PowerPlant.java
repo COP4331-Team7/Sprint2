@@ -21,6 +21,7 @@ public class PowerPlant extends StaffedStructure implements IHarvester {
     public PowerPlant(Tile location, Player player) {
         setOwner(player);
         setLocation(location);
+        generateID();
         setCommandQueue( new CommandQueue() );
 
         HashMap<String, Integer> productionRateMap = new HashMap<>();

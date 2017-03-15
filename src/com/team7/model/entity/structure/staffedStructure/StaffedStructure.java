@@ -71,10 +71,8 @@ public abstract class StaffedStructure extends Structure {
     //iterate through all workers and return their current tile mapped with their harvest radius
     public HashMap<Tile, Integer> getHarvestableTilesByWorkers(){
         HashMap<Tile, Integer> harvestableTiles = new HashMap<>();
-        System.out.println("finding all harvestable tiles");
         for (Worker worker : workerStaff){
             if(!worker.isAssigned()){
-                System.out.println("adding worker to harvestable tiles at: "+ worker.getLocation().getxCoordinate() + "," + worker.getLocation().getyCoordinate());
                 harvestableTiles.put(worker.getLocation(), worker.getHarvestRadius());
             }
         }

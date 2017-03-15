@@ -209,10 +209,12 @@ public class CommandSelectController {
         String input = JOptionPane.showInputDialog(mainScreen.getParent(), s, null);
 
         System.out.println("Option pane on display reinforce !");
-       // int id = Integer.parseInt(String.valueOf(idString));
+        // int id = Integer.parseInt(String.valueOf(idString));
+
 
         //queueCommand();
 
+        // queueCommand();
         clearCommandView();
         giveCommandViewFocus();
     }
@@ -225,7 +227,7 @@ public class CommandSelectController {
 
         System.out.println("Option pane on display! assignment");
 
-        //queueCommand();
+        // queueCommand();
         clearCommandView();
         giveCommandViewFocus();
     }
