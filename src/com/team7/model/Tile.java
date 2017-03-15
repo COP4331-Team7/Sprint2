@@ -210,6 +210,8 @@ public class Tile {
         return yCoordinate;
     }
 
+    public String print() {return "(" + xCoordinate + "," + yCoordinate + ")";}
+
     //once a Tile is visible to a Player, his Tile state would match the real state
     public void updateTileToVisible(String playerToUpdate) {
         if (playerToUpdate.contains("One")) {

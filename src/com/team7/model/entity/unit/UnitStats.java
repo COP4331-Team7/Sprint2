@@ -122,6 +122,15 @@ public class UnitStats {
     public int getMaxHealth() {
         return maxHealth;
     }
+
+    public String print() {
+        return "Offensive Damage: " + offensiveDamage
+                + "\nDefensive Damage: " + defensiveDamage
+                + "\nArmor: " + armor
+                + "\nMovement: " + movement
+                + "\nHealth: " + health
+                + "\nUpkeep: " + upkeep;
+    }
 }
 
 

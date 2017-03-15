@@ -370,6 +370,25 @@ public class Army extends Entity {
 
     }
 
+    public void moveCommandUp(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.raiseCommand(selected_value);
+        }
+    }
+
+
+    public void moveCommandDown(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.lowerCommand(selected_value);
+        }
+    }
+
+    public void removeCommandByString(String selected_value) {
+        if (commandQueue.getSize() != 0) {
+            commandQueue.removeCommandByString(selected_value);
+        }
+    }
+
 
     public void setDirection(int direction) {
         this.direction = direction;
