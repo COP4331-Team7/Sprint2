@@ -1,5 +1,6 @@
 package com.team7.model.entity.unit.combatUnit;
 
+import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
@@ -24,7 +25,7 @@ public class MeleeUnit extends CombatUnit {
 
 
     @Override
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
 
         if(getCommandFromQueue() == null)
             return;

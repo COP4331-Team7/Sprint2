@@ -227,7 +227,7 @@ public class Game {
         System.out.println("\nUNITS:");
         for(Unit u : all_units) {
             u.printCommandQueue();
-            u.executeCommandQueue();
+            u.executeCommandQueue(map);
         }
 
         System.out.println("\nSTRUCTURES:");

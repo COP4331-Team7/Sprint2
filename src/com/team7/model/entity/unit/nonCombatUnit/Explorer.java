@@ -1,5 +1,6 @@
 package com.team7.model.entity.unit.nonCombatUnit;
 
+import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
@@ -40,7 +41,7 @@ public class Explorer extends NonCombatUnit {
     }
 
     @Override
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
 
 
         if(getCommandFromQueue() == null)

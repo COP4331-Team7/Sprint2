@@ -13,4 +13,11 @@ public class MovementCommand extends Command {
         destinationTile = destination;
     }
 
+    public Tile getDestinationTile() {
+        return destinationTile;
+    }
+
+    public void setDestinationTile(Tile destinationTile) {
+        this.destinationTile = destinationTile;
+    }
 }

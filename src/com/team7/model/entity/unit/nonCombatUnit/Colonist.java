@@ -1,15 +1,19 @@
 package com.team7.model.entity.unit.nonCombatUnit;
 
+import com.team7.model.Map;
 import com.team7.model.Player;
 import com.team7.model.Tile;
 import com.team7.model.entity.Command;
 import com.team7.model.entity.CommandQueue;
+import com.team7.model.entity.MovementCommand;
 import com.team7.model.entity.Worker;
 import com.team7.model.entity.structure.Structure;
 import com.team7.model.entity.structure.staffedStructure.Capital;
 import com.team7.model.entity.structure.staffedStructure.StaffedStructure;
 import com.team7.model.entity.unit.UnitStats;
 import com.team7.model.entity.unit.combatUnit.MeleeUnit;
+
+import java.util.ArrayList;
 
 public class Colonist extends NonCombatUnit {
 
@@ -64,7 +68,7 @@ public class Colonist extends NonCombatUnit {
     }
 
     @Override
-    public void executeCommandQueue() {
+    public void executeCommandQueue(Map map) {
 
         if(getCommandFromQueue() == null)
             return;
@@ -90,9 +94,17 @@ public class Colonist extends NonCombatUnit {
                 break;
 
             case "MOVE":
-                //TODO
-                // move unit furthest allowable distance.
-                // if move doesn't complete in 1 turn, leave in queue
+                if(commandToExecute instanceof MovementCommand){
+                    ArrayList<Tile> tiles = map.findMinPath(this.getLocation(), ((MovementCommand) commandToExecute).getDestinationTile(), null, null);
+                    ArrayList<Tile> reachableTiles = new ArrayList<Tile>();
+                    for(int i = 0; i < this.getUnitStats().getMovement(); i++) {
+                        reachableTiles.add(tiles.get(tiles.size() - i - 1));
+                    }
+
+                    for(int i = 0; i < reachableTiles.size() - 1; i++) {
+                        this.getOwner().moveUnit(this, reachableTiles.get(i + 1));
+                    }
+                }
                 break;
 
             case "MAKE BASE":
