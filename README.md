@@ -3,9 +3,9 @@ Second Iteration of OOP Turn-Based Strategy Game
 
 <!--[Iteration 1 requirements](demo/Iteration1_Requirements.pdf)-->
 
-#Running the Game
+# Running the Game
 
-##Download a JAR file containing the packaged Java application
+## Download a JAR file containing the packaged Java application
 Click [here](Sprint1.jar) or use the UNIX/Linux command *wget* to download the JAR file:
  
 ```javascript
