@@ -16,3 +16,5 @@ Run from the command line or double-click the executable JAR file:
 ```javascript
 java -jar Sprint2.jar 
 ```
+
+![alt tag](demo/toggle_turn.gif)
