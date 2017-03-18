@@ -19,4 +19,6 @@ java -jar Sprint2.jar
 
 <!-- ![alt tag](demo/toggle_turn.gif) -->
 
+### Each Player starts with 2 Explorers and 1 Colonist
+
 ![alt tag](demo/prospect.gif)
