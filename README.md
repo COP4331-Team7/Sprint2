@@ -17,4 +17,6 @@ Run from the command line or double-click the executable JAR file:
 java -jar Sprint2.jar 
 ```
 
-![alt tag](demo/toggle_turn.gif)
+<!-- ![alt tag](demo/toggle_turn.gif) -->
+
+![alt tag](demo/prospect.gif)
