@@ -1,5 +1,5 @@
 # Space Wars: Iteration 2
-Second Iteration of OOP Turn-Based Strategy Game
+OOP Turn-Based Strategy Game
 
 <!--[Iteration 1 requirements](demo/Iteration1_Requirements.pdf)-->
 
