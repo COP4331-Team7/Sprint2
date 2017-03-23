@@ -20,7 +20,7 @@ java -jar Sprint2.jar
 ***
 
 
-### Each player begins with 2 Explorers and 1 Colonist
+### Each player starts with 2 Explorers and a Colonist
 
 
 
