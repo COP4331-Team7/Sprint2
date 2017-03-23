@@ -17,8 +17,20 @@ Run from the command line or double-click the executable JAR file:
 java -jar Sprint2.jar 
 ```
 
-<!-- ![alt tag](demo/toggle_turn.gif) -->
+
 
 ### Each player starts with 2 Explorers and 1 Colonist
 
-![alt tag](demo/prospect.gif)
+
+
+
+![alt tag](demo/prospect_fast.gif)
+
+<!--
+
+### Each player starts with 2 Explorers and 1 Colonist
+
+-->
+
+![alt tag](demo/MoveAndBase.gif)
+
