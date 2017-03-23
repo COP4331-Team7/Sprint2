@@ -17,9 +17,10 @@ Run from the command line or double-click the executable JAR file:
 java -jar Sprint2.jar 
 ```
 
+***
 
 
-### Each player starts with 2 Explorers and 1 Colonist
+### Each player begins with 2 Explorers and 1 Colonist
 
 
 
