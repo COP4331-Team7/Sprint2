@@ -33,5 +33,5 @@ java -jar Sprint2.jar
 
 -->
 
-![alt tag](demo/MoveAndBase.gif)
+![alt tag](demo/makeBaseSlow.gif)
 
