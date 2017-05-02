@@ -24,7 +24,7 @@ public class MainViewInfo extends JPanel {
     private JLabel playerNameLabel;
     private JPanel jPanel;
     private JLabel currSelectionName;
-
+    private static final long serialVersionUID = 1L;
 
     public MainViewInfo()
         {
@@ -238,7 +238,3 @@ public class MainViewInfo extends JPanel {
 
 
 }
-
-
-
-

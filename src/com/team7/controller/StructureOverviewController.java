@@ -77,7 +77,7 @@ public class StructureOverviewController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == structureScreen.getMoveOrderUp()) {
-                    String selected_value = (String) structureScreen.getStrucQueueList().getSelectedValue();
+                    String selected_value = structureScreen.getStrucQueueList().getSelectedValue();
                     if (selected_value != null && currentlySelectedStructure != null) {
                         currentlySelectedStructure.moveCommandUp(selected_value);
                         structureScreen.setStrucQueueListModel(currentlySelectedStructure);
@@ -90,7 +90,7 @@ public class StructureOverviewController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == structureScreen.getMoveOrderDown()) {
-                    String selectedValue = (String) structureScreen.getStrucQueueList().getSelectedValue();
+                    String selectedValue = structureScreen.getStrucQueueList().getSelectedValue();
                     if (selectedValue != null && currentlySelectedStructure != null) {
                         currentlySelectedStructure.moveCommandDown(selectedValue);
                         structureScreen.setStrucQueueListModel(currentlySelectedStructure);
@@ -103,7 +103,7 @@ public class StructureOverviewController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == structureScreen.getCancelCommand()) {
-                    String selectedValue = (String) structureScreen.getStrucQueueList().getSelectedValue();
+                    String selectedValue = structureScreen.getStrucQueueList().getSelectedValue();
                     if (selectedValue != null && currentlySelectedStructure != null) {
                         currentlySelectedStructure.removeCommandByString(selectedValue);
                         structureScreen.setStrucQueueListModel(currentlySelectedStructure);

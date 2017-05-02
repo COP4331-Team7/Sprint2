@@ -118,6 +118,7 @@ public class TechnologyScreenController {
         //click listener for technology list
         technologyScreen.getTechnologyInstanceList().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
+              @SuppressWarnings("unchecked")
                 JList<String> list = (JList<String>)evt.getSource();
                 if (evt.getClickCount() == 2) {
                     switch (currentMode){
@@ -141,7 +142,9 @@ public class TechnologyScreenController {
         //click listener for stat list which allows you to choose a university to assign
         technologyScreen.getTechnologiesList().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                JList<String> list = (JList<String>)e.getSource();
+              @SuppressWarnings("unchecked")
+              JList<String> list = (JList<String>)e.getSource();
+
                 if (e.getClickCount() == 2) {
                     if(universities.isEmpty()){
                         //dont show popup if player has no universities

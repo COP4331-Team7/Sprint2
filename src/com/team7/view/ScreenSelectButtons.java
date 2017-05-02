@@ -11,6 +11,7 @@ public class ScreenSelectButtons extends JPanel {
         private JButton optionsScreenSelectButton;
         private JButton mapScreenSelectButton;
         private JButton technologyScreenSelectButton;
+        private static final long serialVersionUID = 1L;
 
         public ScreenSelectButtons() {
             mainScreenSelectButton      = new JButton("MAIN SCREEN");

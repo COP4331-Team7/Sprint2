@@ -22,8 +22,8 @@ public class StructureScreen extends JPanel {
     private JPanel spacer = new JPanel();
 
     //Lists
-    private JList structureList = new JList();
-    private JList structureQueueList = new JList();
+    private JList<String> structureList = new JList<String>();
+    private JList<String> structureQueueList = new JList<String>();
 
     //Models
     private DefaultListModel<String> strucListModel = new DefaultListModel<>();
@@ -53,7 +53,7 @@ public class StructureScreen extends JPanel {
     private Border coloredLine;
 
     //ComboBoxes (Drop down menus)
-    private JComboBox dropDownBox = new JComboBox();
+    private JComboBox<String> dropDownBox = new JComboBox<String>();
 
     //Spinners (Number input)
     private JSpinner allocationInput = new JSpinner(spinnerModel);
@@ -64,7 +64,7 @@ public class StructureScreen extends JPanel {
     //Colors
     private Color lightColor = new Color(0xffF5F5DC);
     private Color darkColor = new Color(0xffCABD80);
-    
+    private static final long serialVersionUID = 1L;
 
     public StructureScreen() {
         //Add Screen Select btns
@@ -202,7 +202,7 @@ public class StructureScreen extends JPanel {
         repaint();
     }
 
-    public JList getStructureList() {
+    public JList<String> getStructureList() {
         return structureList;
     }
 
@@ -248,7 +248,7 @@ public class StructureScreen extends JPanel {
     }
 
     public Structure updatedStructureSelection(ArrayList<Structure> structures) {
-        String selectedValue = (String)structureList.getSelectedValue();
+        String selectedValue = structureList.getSelectedValue();
         if (selectedValue != null) {
             for (Structure s: structures) {
                 if (selectedValue.equals(s.getType() + " " + s.getId())) {
@@ -294,11 +294,11 @@ public class StructureScreen extends JPanel {
         return cancelCommand;
     }
 
-    public JList getStrucQueueList() {
+    public JList<String> getStrucQueueList() {
         return structureQueueList;
     }
 
-    public JComboBox getDropDownBar() {
+    public JComboBox<String> getDropDownBar() {
         return dropDownBox;
     }
 

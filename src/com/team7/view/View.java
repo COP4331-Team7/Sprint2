@@ -27,6 +27,7 @@ public class View
     private static final int WIDTH  = (int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int HEIGHT = (int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private Screen frame = null;
+    private static final long serialVersionUID = 1L;
 
     public View()
     {
@@ -105,6 +106,7 @@ public class View
         private StructureScreen structureScreen = null;
         private MapScreen mapScreen = null;
         private TechnologyScreen technologyScreen = null;
+        private static final long serialVersionUID = 1L;
 
         public Screen( int width, int height)
         {
@@ -280,7 +282,3 @@ public class View
     }
 
 }
-
-
-
-

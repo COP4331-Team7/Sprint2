@@ -41,6 +41,7 @@ public class TechnologyScreen extends JPanel {
     private JPanel universityPanel = new JPanel(new BorderLayout());
 
     private JLabel universityLabel = new JLabel("All Universities");
+    private static final long serialVersionUID = 1L;
 
 
     public TechnologyScreen() {
@@ -230,4 +231,3 @@ public class TechnologyScreen extends JPanel {
         setUniversitiesListModel(universities);
     }
 }
-

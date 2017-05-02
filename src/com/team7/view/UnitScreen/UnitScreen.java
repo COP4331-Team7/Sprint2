@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class UnitScreen extends JPanel {
     //Lists
-    private JList unitList = new JList<>();
-    private JList queue = new JList<>();
-    private JList armyList = new JList<String>();
-    private JList unitsInArmyList = new JList<>();
+    private JList<String> unitList = new JList<String>();
+    private JList<String> queue = new JList<String>();
+    private JList<String> armyList = new JList<String>();
+    private JList<String> unitsInArmyList = new JList<String>();
 
     //JScrollPanes
     private JScrollPane unitListScrollPane;
@@ -61,6 +61,8 @@ public class UnitScreen extends JPanel {
 
     //Borders
     private Border coloredLine;
+    private static final long serialVersionUID = 1L;
+
 
     public UnitScreen() {
 
@@ -266,7 +268,7 @@ public class UnitScreen extends JPanel {
     }
 
     public Unit updateSelectedUnit(ArrayList<Unit> units) {
-        String selected = (String) unitList.getSelectedValue();
+        String selected = unitList.getSelectedValue();
         if (selected != null) {
             for (Unit u: units) {
                 if (selected.equals(u.getType() + " " + u.getId())) {
@@ -282,7 +284,7 @@ public class UnitScreen extends JPanel {
     }
 
     public Army updateSelectedArmy(ArrayList<Army> armies) {
-        String selected = (String) armyList.getSelectedValue();
+        String selected = armyList.getSelectedValue();
         if (selected != null) {
             for (Army a: armies) {
                 if (selected.equals("Army " + a.getId())) {
@@ -312,6 +314,6 @@ public class UnitScreen extends JPanel {
     public JButton getDecomissionArmyButton() {return decomissionArmy;}
     public JButton getAddUnitButton() {return addUnit;}
     public JButton getRemoveUnitButton() {return removeUnit;}
-    public JList getQueue() {return queue;}
-    public JList getUnitsInArmyList() {return unitsInArmyList;}
+    public JList<String> getQueue() {return queue;}
+    public JList<String> getUnitsInArmyList() {return unitsInArmyList;}
 }

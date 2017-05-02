@@ -33,6 +33,7 @@ public class OptionsScreen extends JPanel{
     private JPanel bPanel;
 
     private JButton futureGameButton = null;
+    private static final long serialVersionUID = 1L;
 
     public OptionsScreen() {
       //  resetControlsButton.setForeground( new Color(0xCD3700));

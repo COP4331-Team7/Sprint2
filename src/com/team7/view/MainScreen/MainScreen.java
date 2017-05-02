@@ -13,6 +13,7 @@ public class MainScreen extends JPanel {
     private MainViewInfo mainStatusInfo = null;
     private MainViewMiniMap mainViewSelection = null;
     private CommandSelect commandSelect = null;
+    private static final long serialVersionUID = 1L;
 
     public MainScreen() {
 

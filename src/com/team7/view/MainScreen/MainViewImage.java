@@ -21,8 +21,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
         private int TILES_VISIBLE_Y;
         private final static double mapScale_x = 0.95;  // what % of screen the map takes up
         private final static double mapScale_y = 0.60;
-        
-        public static BufferedImage image;
+
+        public BufferedImage image;
         private BufferedImage tileImage_1, tileImage_2, tileImage_3, tileImage_4;
         private BufferedImage moneyBagImage;
         private BufferedImage moonRockImage;
@@ -53,6 +53,8 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
          private BufferedImage universityImage;
 
          private BufferedImage rallyImage;
+         private static final long serialVersionUID = 1L;
+
 
     public int x_center, y_center;    // where the window is focused on
         private Timer timer = null;
@@ -83,45 +85,45 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
             this.mainViewSelection = ms;
 
             try {
-               tileImage_1 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/a.png"));
-               tileImage_2 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/b.png"));
-               tileImage_3 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/c.png"));
-               tileImage_4 = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/d.png"));
-               moneyBagImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moneyBag.png"));
-               moonRockImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/moonRock.png"));
-               hieroglyphicBookImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/items/bookImage1.png"));
-               elixerShowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/elixir.png"));
-               stormImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/stormImageBig.png"));
-               colonistImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/colonistImage.png"));
-               explorerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/explorerImage.png"));
-               oneShotImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/obstacles/oneShot.png"));
-               obstacleImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/obstacles/stopIcon.png"));
-               meleeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/meleeImage.png"));
-               rangeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/rangeImage.png"));
-               armyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/armyImagepng.png"));
-               ventImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/areaEffects/vent.png"));
-               skullImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/decals/skullImage.png"));
-               baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/baseImage.png"));
-               ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/dark_image.png"));
-               highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/highlight.png"));
-               invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/invisible.png"));
-               yellowHighlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/terrains/yellowHighlight.png"));
+               tileImage_1 = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/a.png"));
+               tileImage_2 = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/b.png"));
+               tileImage_3 = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/c.png"));
+               tileImage_4 = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/d.png"));
+               moneyBagImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/items/moneyBag.png"));
+               moonRockImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/items/moonRock.png"));
+               hieroglyphicBookImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/items/bookImage1.png"));
+               elixerShowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/areaEffects/elixir.png"));
+               stormImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/areaEffects/stormImageBig.png"));
+               colonistImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/colonistImage.png"));
+               explorerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/explorerImage.png"));
+               oneShotImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/obstacles/oneShot.png"));
+               obstacleImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/obstacles/stopIcon.png"));
+               meleeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/meleeImage.png"));
+               rangeImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/rangeImage.png"));
+               armyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/armyImagepng.png"));
+               ventImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/areaEffects/vent.png"));
+               skullImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/decals/skullImage.png"));
+               baseImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/baseImage.png"));
+               ghostImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/dark_image.png"));
+               highlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/highlight.png"));
+               invisible = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/invisible.png"));
+               yellowHighlightImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/terrains/yellowHighlight.png"));
 
-                farmImage  = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/farm.png"));
-                mineImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/mine.png"));
-                powerplantImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/powerplant.png"));
-                fortImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/fort.png"));
-                obsTowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/ot.png"));
-                universityImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/university.png"));
+                farmImage  = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/farm.png"));
+                mineImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/mine.png"));
+                powerplantImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/powerplant.png"));
+                fortImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/fort.png"));
+                obsTowerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/ot.png"));
+                universityImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/university.png"));
 
-                rallyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/structures/flag.png"));
-               workerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/units/workerImage.png"));
+                rallyImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/structures/flag.png"));
+               workerImage = ImageIO.read(Main.class.getClass().getResourceAsStream("/resource/units/workerImage.png"));
             }
             catch (IOException e) {}
 
             mainViewSelection.setMainViewImage( this );
             mapImage = new BufferedImage( MAP_IMAGE_WIDTH_IN_PIXELS, MAP_IMAGE_HEIGHT_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-            g2ds = (Graphics2D) mapImage.createGraphics();
+            g2ds = mapImage.createGraphics();
             g2ds.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2ds.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 
@@ -224,7 +226,7 @@ public class MainViewImage extends JPanel implements MouseListener, MapStats {
 
              BufferedImage mapImage;
              mapImage = new BufferedImage(TILE_SIZE*(MAP_TILE_WIDTH+1) + (int)(MAP_TILE_WIDTH * (TILE_SIZE - TILE_SIZE / 1.73) + TILE_SIZE)  , (int)(TILE_SIZE*MAP_TILE_HEIGHT/1.5), BufferedImage.TYPE_INT_ARGB);
-             Graphics2D g2 = (Graphics2D)mapImage.createGraphics();
+             Graphics2D g2 = mapImage.createGraphics();
              g2.setColor(new Color(0xFF000000));
              g2.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
              g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,

@@ -80,7 +80,7 @@ public class UnitOverviewController {
         unitScreen.addMoveCommandUpActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selected = (String) unitScreen.getQueue().getSelectedValue();
+                String selected = unitScreen.getQueue().getSelectedValue();
                 if (selected != null && currentlySelectedUnit != null) {
                     if (currentlySelectedUnit.getArmy() == null) {
                         currentlySelectedUnit.moveCommandUp(selected);
@@ -95,7 +95,7 @@ public class UnitOverviewController {
         unitScreen.addMoveCommandDownActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selected = (String) unitScreen.getQueue().getSelectedValue();
+                String selected = unitScreen.getQueue().getSelectedValue();
                 if (selected != null && currentlySelectedUnit != null) {
                     if (currentlySelectedUnit.getArmy() == null) {
                         currentlySelectedUnit.moveCommandDown(selected);
@@ -110,7 +110,7 @@ public class UnitOverviewController {
         unitScreen.addCancelCommandActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selected = (String) unitScreen.getQueue().getSelectedValue();
+                String selected = unitScreen.getQueue().getSelectedValue();
                 if (selected != null && currentlySelectedUnit != null) {
                     if (currentlySelectedUnit.getArmy() == null) {
                         currentlySelectedUnit.removeCommandByString(selected);
@@ -171,7 +171,7 @@ public class UnitOverviewController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == unitScreen.getRemoveUnitButton()) {
-                    String selected = (String) unitScreen.getUnitsInArmyList().getSelectedValue();
+                    String selected = unitScreen.getUnitsInArmyList().getSelectedValue();
                     if (currentlySelectedArmy != null && selected != null) {
                         for (Unit u: currentlySelectedArmy.getUnits()) {
                             if (selected.equals(u.getType() + " " + u.getId())) {

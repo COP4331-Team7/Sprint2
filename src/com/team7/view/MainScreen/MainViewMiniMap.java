@@ -16,6 +16,7 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     private static int SUB_WIDTH, SUB_HEIGHT;
     private final static int BORDER_WIDTH = 30;
     private final static int BORDER_WIDTH2 = 10;
+    private static final long serialVersionUID = 1L;
 
     double verticalStretch = 1.0;
 
@@ -34,15 +35,15 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
         backgroundImg = new BufferedImage(WIDTH + BORDER_WIDTH/2, HEIGHT + BORDER_WIDTH/2, BufferedImage.TYPE_INT_ARGB);
         backgroundImg2 = new BufferedImage(WIDTH + BORDER_WIDTH/2 + BORDER_WIDTH2, HEIGHT + BORDER_WIDTH/2  + BORDER_WIDTH2, BufferedImage.TYPE_INT_ARGB);
 
-        g2dss = (Graphics2D)backgroundImg2.createGraphics();
+        g2dss = backgroundImg2.createGraphics();
         g2dss.setColor(new Color(0xffF5F5DC));
         g2dss.fillRect(0, 0, backgroundImg2.getWidth(), backgroundImg2.getHeight() );
 
 
-        g2ds = (Graphics2D)backgroundImg.createGraphics();
+        g2ds = backgroundImg.createGraphics();
         g2ds.setColor(new Color(0xFF000000));
         g2ds.fillRect(0, 0, backgroundImg.getWidth(), backgroundImg.getHeight());
-        g2d = (Graphics2D)image.createGraphics();
+        g2d = image.createGraphics();
 
         g2d.setComposite(AlphaComposite.Src);
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
@@ -102,8 +103,8 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     public void setMiniMapImage(BufferedImage img, int x, int y) {
         TILES_VISIBLE_X = x;
         TILES_VISIBLE_Y = y;
-        SUB_WIDTH  = (int) (WIDTH * TILES_VISIBLE_Y /  MAP_TILE_WIDTH);
-        SUB_HEIGHT = (int)(HEIGHT * TILES_VISIBLE_X / MAP_TILE_HEIGHT);
+        SUB_WIDTH  =  (WIDTH * TILES_VISIBLE_Y /  MAP_TILE_WIDTH);
+        SUB_HEIGHT = (HEIGHT * TILES_VISIBLE_X / MAP_TILE_HEIGHT);
         fullMapImage = img;
     }
 
@@ -113,8 +114,8 @@ public class MainViewMiniMap extends JPanel implements MouseListener, MapStats {
     }
 
     public void setFocus(int x, int y) {
-        x_center = (int)(x  * WIDTH / MAP_TILE_WIDTH);
-        y_center = (int)(y  * HEIGHT / MAP_TILE_HEIGHT);
+        x_center = (x  * WIDTH / MAP_TILE_WIDTH);
+        y_center = (y  * HEIGHT / MAP_TILE_HEIGHT);
 
         if(x_center < 0)              // adjust if out of bounds
             x_center = 0;

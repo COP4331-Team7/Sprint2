@@ -10,6 +10,7 @@ public class HomeScreen extends JPanel {
 
     private HomeImage homeBackground = null;
     private HomeButtons homeButtons = null;
+    private static final long serialVersionUID = 1L;
 
     public HomeScreen() {
 
@@ -43,11 +44,12 @@ public class HomeScreen extends JPanel {
 
         private BufferedImage image;
         private Graphics2D g2d;
+        private static final long serialVersionUID = 1L;
 
         public HomeImage()
         {
             try {
-                image = ImageIO.read(getClass().getResourceAsStream("/terrains/homeScreenImage.png"));
+                image = ImageIO.read(getClass().getResourceAsStream("/resource/terrains/homeScreenImage.png"));
             }
             catch (IOException e) {
             }
@@ -93,6 +95,7 @@ public class HomeScreen extends JPanel {
         private JButton playButton = null;
         private JButton quitButton = null;
         private JButton options = null;
+        private static final long serialVersionUID = 1L;
 
         public HomeButtons() {
 
