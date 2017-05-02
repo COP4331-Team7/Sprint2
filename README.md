@@ -3,7 +3,6 @@ OOP Turn-Based Strategy Game
 
 <!--[Iteration 1 requirements](demo/Iteration1_Requirements.pdf)-->
 
-# Running the game
 ## Compile and run the source code
 
 ```javascript
@@ -31,16 +30,9 @@ java -jar Sprint2.jar
 
 ### Each player starts with 2 Explorers and a Colonist
 
-
-
-
 ![alt tag](demo/prospect_fast.gif)
 
-<!--
 
-### Each player starts with 2 Explorers and 1 Colonist
-
--->
 
 <!--
 ![alt tag](demo/makeBaseSlow.gif)
