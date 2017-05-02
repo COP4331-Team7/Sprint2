@@ -3,6 +3,7 @@ OOP Turn-Based Strategy Game
 
 <!--[Iteration 1 requirements](demo/Iteration1_Requirements.pdf)-->
 
+# Running the game
 ## Compile and run the source code
 
 ```javascript
