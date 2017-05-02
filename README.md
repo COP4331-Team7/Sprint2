@@ -13,13 +13,13 @@ javac @argfile
 java -cp src com.team7.Main
 ```
 
-## Download a JAR file containing the packaged Java application
+## Download and run a JAR file containing the packaged Java app
 Click [here](Sprint1.jar) or use the UNIX/Linux command *wget* to download the JAR file:
  
 ```javascript
 wget "https://raw.githubusercontent.com/COP4331-Team7/Sprint2/technology/Sprint2.jar" -O Sprint2.jar 
 ```
-## Run the JAR file (JRE required)
+
 Run from the command line or double-click the executable JAR file:
 ```javascript
 java -jar Sprint2.jar 
